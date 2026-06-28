@@ -184,6 +184,8 @@ ghcr.io/hardikidea/elearnmindset
 
 - [Operator runbook](docs/runbook.md)
 - [Deployment preparation guide](docs/deployment-preparation.md)
+- [AWS monthly cost estimate in INR](docs/aws-monthly-cost-estimate-inr.md)
+- [Indian school product pricing model](docs/indian-school-product-pricing.md)
 - [AWS architecture blueprint](docs/aws-architecture.md)
 - [Local setup](docs/setup.md)
 - [Docker architecture](docs/docker.md)

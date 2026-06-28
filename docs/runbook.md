@@ -6,6 +6,8 @@ Use this with the focused docs:
 
 - [Local setup](setup.md)
 - [Deployment preparation guide](deployment-preparation.md)
+- [AWS monthly cost estimate in INR](aws-monthly-cost-estimate-inr.md)
+- [Indian school product pricing model](indian-school-product-pricing.md)
 - [AWS architecture blueprint](aws-architecture.md)
 - [Docker architecture](docker.md)
 - [CI/CD pipeline](ci-cd.md)
