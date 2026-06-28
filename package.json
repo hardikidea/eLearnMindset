@@ -1,0 +1,21 @@
+{
+  "name": "elearn-mindset",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Dockerized Moodle platform for eLearn Mindset.",
+  "packageManager": "pnpm@11.7.0",
+  "scripts": {
+    "prepare": "husky",
+    "sync-overrides": "./scripts/sync-moodle-overrides.sh",
+    "precommit": "./scripts/pre-commit-check.sh",
+    "prepush": "./scripts/audit-changed.sh push",
+    "lint:changed": "./scripts/lint-changed.sh commit",
+    "audit:changed": "./scripts/audit-changed.sh push",
+    "validate": "./scripts/pre-commit-check.sh && ./scripts/audit-changed.sh push",
+    "validate:shell": "bash -n scripts/*.sh docker/moodle/*.sh",
+    "validate:compose": "docker compose config --quiet"
+  },
+  "devDependencies": {
+    "husky": "^9.1.7"
+  }
+}

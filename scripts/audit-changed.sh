@@ -1,0 +1,156 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+MODE="${1:-push}"
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+cd "${ROOT_DIR}"
+
+changed_files=()
+while IFS= read -r changed_file; do
+    changed_files+=("${changed_file}")
+done < <(./scripts/changed-files-from-main.sh "${MODE}")
+
+if [ "${#changed_files[@]}" -eq 0 ]; then
+    echo "No changed files found against main for audit checks."
+    exit 0
+fi
+
+root_node_audit_required=0
+npm_audit_dirs=()
+composer_audit_dirs=()
+trivy_paths=()
+missing_required_tool=0
+
+add_unique() {
+    value="$1"
+    shift
+    for existing in "$@"; do
+        [ "${existing}" = "${value}" ] && return 1
+    done
+    return 0
+}
+
+for changed_file in "${changed_files[@]}"; do
+    case "${changed_file}" in
+        package.json|pnpm-lock.yaml)
+            root_node_audit_required=1
+            ;;
+        */package-lock.json)
+            audit_dir="$(dirname "${changed_file}")"
+            if add_unique "${audit_dir}" "${npm_audit_dirs[@]}"; then
+                npm_audit_dirs+=("${audit_dir}")
+            fi
+            ;;
+        */package.json)
+            audit_dir="$(dirname "${changed_file}")"
+            if [ -f "${audit_dir}/package-lock.json" ] && add_unique "${audit_dir}" "${npm_audit_dirs[@]}"; then
+                npm_audit_dirs+=("${audit_dir}")
+            fi
+            ;;
+        */composer.lock)
+            audit_dir="$(dirname "${changed_file}")"
+            if add_unique "${audit_dir}" "${composer_audit_dirs[@]}"; then
+                composer_audit_dirs+=("${audit_dir}")
+            fi
+            ;;
+        */composer.json)
+            audit_dir="$(dirname "${changed_file}")"
+            if [ -f "${audit_dir}/composer.lock" ] && add_unique "${audit_dir}" "${composer_audit_dirs[@]}"; then
+                composer_audit_dirs+=("${audit_dir}")
+            fi
+            ;;
+    esac
+
+    case "${changed_file}" in
+        *.tf)
+            scan_path="$(dirname "${changed_file}")"
+            ;;
+        *Dockerfile|Dockerfile|*.Dockerfile|docker-compose.yml|compose.yml|compose.yaml|*.lock|package.json|*/package.json|composer.json|*/composer.json|.github/workflows/*.yml|.github/workflows/*.yaml)
+            scan_path="${changed_file}"
+            ;;
+        *)
+            scan_path=""
+            ;;
+    esac
+
+    if [ -n "${scan_path}" ] && add_unique "${scan_path}" "${trivy_paths[@]}"; then
+        trivy_paths+=("${scan_path}")
+    fi
+done
+
+if [ "${root_node_audit_required}" -eq 1 ]; then
+    if command -v node >/dev/null 2>&1 && command -v pnpm >/dev/null 2>&1; then
+        pnpm audit --prod
+    else
+        echo "Node.js and pnpm are required for root dependency audit because package.json or pnpm-lock.yaml changed." >&2
+        missing_required_tool=1
+    fi
+fi
+
+if [ "${#npm_audit_dirs[@]}" -gt 0 ]; then
+    if command -v node >/dev/null 2>&1 && command -v npm >/dev/null 2>&1; then
+        for audit_dir in "${npm_audit_dirs[@]}"; do
+            (cd "${audit_dir}" && npm audit --omit=dev)
+        done
+    else
+        echo "Node.js and npm are required for package-lock audit in changed package directories." >&2
+        missing_required_tool=1
+    fi
+fi
+
+if [ "${#composer_audit_dirs[@]}" -gt 0 ]; then
+    if command -v composer >/dev/null 2>&1; then
+        for audit_dir in "${composer_audit_dirs[@]}"; do
+            (cd "${audit_dir}" && composer audit --locked --no-dev --format=plain)
+        done
+    else
+        echo "Composer is required for composer.lock audit in changed Composer directories." >&2
+        missing_required_tool=1
+    fi
+fi
+
+if [ "${#trivy_paths[@]}" -gt 0 ]; then
+    if command -v trivy >/dev/null 2>&1; then
+        for scan_path in "${trivy_paths[@]}"; do
+            trivy fs \
+                --scanners vuln,misconfig \
+                --severity HIGH,CRITICAL \
+                --ignore-unfixed \
+                --exit-code 1 \
+                --skip-dirs moodledata,backups,moodle/.git \
+                "${scan_path}"
+        done
+    else
+        docker_bin="${DOCKER_BIN:-}"
+        if [ -z "${docker_bin}" ]; then
+            docker_bin="$(command -v docker || true)"
+        fi
+        if [ -z "${docker_bin}" ] && [ -x /usr/local/bin/docker ]; then
+            docker_bin="/usr/local/bin/docker"
+        fi
+
+        if [ -n "${docker_bin}" ]; then
+            for scan_path in "${trivy_paths[@]}"; do
+                "${docker_bin}" run --rm \
+                    -v "${ROOT_DIR}:/repo" \
+                    -w /repo \
+                    aquasec/trivy:0.71.2 fs \
+                    --scanners vuln,misconfig \
+                    --severity HIGH,CRITICAL \
+                    --ignore-unfixed \
+                    --exit-code 1 \
+                    --skip-dirs moodledata,backups,moodle/.git \
+                    "${scan_path}"
+            done
+        else
+            echo "Trivy or Docker is required for vulnerability and IaC audit of changed files." >&2
+            missing_required_tool=1
+        fi
+    fi
+fi
+
+if [ "${missing_required_tool}" -ne 0 ]; then
+    exit 1
+fi
+
+echo "Changed-file audit checks passed."

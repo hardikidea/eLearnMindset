@@ -37,6 +37,16 @@ The install script enables the `almondb` theme with the eLearn Mindset logo pale
 make sync-overrides
 ```
 
+Install the local Git hooks once after cloning:
+
+```bash
+pnpm install
+```
+
+Husky requires Node.js 18+ to install. If `pnpm install` reports `env: node: No such file or directory`, install Node.js or make your existing Node binary available on `PATH`, then rerun the command.
+
+The Husky pre-commit hook runs `sync-overrides` when the local Moodle checkout exists, blocks accidental commits of local runtime/state/secret files, and lints only files changed against `origin/main` or `main`. The pre-push hook runs dependency and vulnerability audits only for the changed files that need them.
+
 MailPit is configured as Moodle's local SMTP server:
 
 - SMTP from Moodle: `mailpit:1025`
@@ -98,6 +108,33 @@ make cron                      # run cron once
 make backup                    # database + moodledata backup
 make configure-mailpit         # re-apply MailPit SMTP config
 ```
+
+## Git Hooks
+
+Requires Node.js 18+ and pnpm.
+
+```bash
+pnpm install       # install dependencies and enable Husky hooks
+pnpm precommit    # run the same checks as the pre-commit hook
+pnpm prepush      # run the same checks as the pre-push hook
+pnpm validate     # run pre-commit and pre-push checks
+```
+
+Commit checks:
+
+- Sync `moodle-overrides/` into the ignored local `moodle/` checkout when `moodle/` exists.
+- Block staged runtime, state, or secret files such as `.env`, `moodle/`, `moodledata/`, `backups/`, `plugins/`, and Terraform state.
+- Lint only files changed against `origin/main` or `main`: shell, JSON, YAML, PHP, Terraform, Dockerfiles, Docker Compose, and Renovate config when the matching tools are installed.
+
+Push checks:
+
+- Audit only files changed against `origin/main` or `main`.
+- Run `pnpm audit --prod` when root Node dependency files changed.
+- Run `npm audit --omit=dev` for changed package-lock based packages.
+- Run `composer audit` for changed Composer lockfile based packages.
+- Run Trivy through local `trivy` or Docker for changed dependency, Docker, Terraform, Compose, and workflow files.
+
+Keep project Moodle customizations in `moodle-overrides/` so upgrades can safely replace the upstream Moodle checkout. Run `git fetch origin main` before a large branch push if your local `origin/main` is stale.
 
 ## Updating Moodle
 
