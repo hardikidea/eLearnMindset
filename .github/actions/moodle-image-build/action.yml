@@ -1,0 +1,48 @@
+name: Moodle Image Build
+description: Build a Moodle Docker image and optionally scan it with Trivy.
+
+inputs:
+  image_name:
+    description: Local image tag to build.
+    required: true
+  moodle_version:
+    description: Moodle Git tag to bake into the image.
+    required: true
+  include_moodle_source:
+    description: Whether to clone Moodle source into the image.
+    required: false
+    default: "true"
+  scan_image:
+    description: Whether to run a Trivy image scan.
+    required: false
+    default: "false"
+  trivy_version:
+    description: Trivy version to use when scan_image is true.
+    required: false
+    default: "v0.71.2"
+
+runs:
+  using: composite
+  steps:
+    - name: Build Moodle image
+      shell: bash
+      run: |
+        set -euo pipefail
+        docker build \
+          --build-arg INCLUDE_MOODLE_SOURCE="${{ inputs.include_moodle_source }}" \
+          --build-arg MOODLE_VERSION="${{ inputs.moodle_version }}" \
+          -f docker/moodle/Dockerfile \
+          -t "${{ inputs.image_name }}" \
+          .
+
+    - name: Scan Moodle image
+      if: inputs.scan_image == 'true'
+      uses: aquasecurity/trivy-action@v0.36.0
+      with:
+        version: ${{ inputs.trivy_version }}
+        image-ref: ${{ inputs.image_name }}
+        format: table
+        vuln-type: os,library
+        severity: HIGH,CRITICAL
+        ignore-unfixed: true
+        exit-code: "1"

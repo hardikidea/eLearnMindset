@@ -354,7 +354,7 @@ docs/update.md                        version references when needed
 
 Manual fallback path:
 
-Open a PR and let CI pass. After merge, run the GitHub Actions `CI/CD Pipeline` workflow for the target environment:
+Open a PR and let CI pass. After merge, run the GitHub Actions `Moodle Delivery Pipeline` workflow for the target environment:
 
 ```text
 publish_image=true

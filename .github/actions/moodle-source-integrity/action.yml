@@ -1,0 +1,36 @@
+name: Moodle Source Integrity
+description: Validate local scripts, Docker Compose, and the configured Moodle source checkout.
+
+inputs:
+  moodle_version:
+    description: Moodle Git tag expected in the local checkout.
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Create ENV file
+      shell: bash
+      run: cp .env.example .env
+
+    - name: Check shell syntax
+      shell: bash
+      run: |
+        set -euo pipefail
+        bash -n scripts/*.sh
+        bash -n docker/moodle/*.sh
+
+    - name: Validate Docker Compose
+      shell: bash
+      run: docker compose config --quiet
+
+    - name: Bootstrap Moodle source
+      shell: bash
+      run: ./scripts/bootstrap-moodle.sh
+
+    - name: Confirm Moodle tag
+      shell: bash
+      run: |
+        set -euo pipefail
+        test "$(git -C moodle describe --tags --exact-match)" = "${{ inputs.moodle_version }}"
+        git -C moodle log --oneline -1 public/version.php

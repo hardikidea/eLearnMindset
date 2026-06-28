@@ -1,0 +1,58 @@
+name: Static Quality Gate
+description: Run repository static checks for Renovate, shell, YAML, Dockerfile, and Terraform.
+
+inputs:
+  renovate_cli_version:
+    description: Renovate CLI version used for config validation.
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Setup Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: "24"
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_wrapper: false
+
+    - name: Install lint tools
+      shell: bash
+      run: |
+        set -euo pipefail
+        sudo apt-get update
+        sudo apt-get install -y --no-install-recommends shellcheck yamllint
+
+    - name: Validate Renovate config
+      shell: bash
+      run: npx --yes --package "renovate@${{ inputs.renovate_cli_version }}" -- renovate-config-validator --strict
+
+    - name: ShellCheck scripts
+      shell: bash
+      run: shellcheck scripts/*.sh docker/moodle/*.sh
+
+    - name: YAML lint
+      shell: bash
+      run: yamllint .github/workflows .github/actions docker-compose.yml
+
+    - name: Dockerfile lint
+      uses: hadolint/hadolint-action@v3.3.0
+      with:
+        dockerfile: docker/moodle/Dockerfile
+        config: .hadolint.yaml
+
+    - name: Terraform format
+      shell: bash
+      run: terraform fmt -check -recursive terraform
+
+    - name: Terraform validate without backend
+      shell: bash
+      run: |
+        set -euo pipefail
+        for dir in terraform/bootstrap terraform/envs/dev terraform/envs/stage terraform/envs/prod; do
+          terraform -chdir="${dir}" init -backend=false -input=false
+          terraform -chdir="${dir}" validate
+        done

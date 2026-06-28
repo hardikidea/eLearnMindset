@@ -1,4 +1,4 @@
-# CI/CD Pipeline
+# Moodle Delivery Pipeline
 
 The GitHub Actions workflow is defined in [.github/workflows/ci_cd_pipeline.yml](../.github/workflows/ci_cd_pipeline.yml).
 Manual server operation workflows are defined in:
@@ -7,31 +7,53 @@ Manual server operation workflows are defined in:
 - [.github/workflows/server_restore.yml](../.github/workflows/server_restore.yml)
 - [.github/workflows/moodle_version_upgrade.yml](../.github/workflows/moodle_version_upgrade.yml)
 
-The structure follows the CourseCloud reference at a high level: separate validation, image build, Terraform plan/apply, and deployment-oriented jobs. This project does not use the CourseCloud SSH role lookup; it uses GitHub OIDC directly.
+The structure follows the CourseCloud reference at a high level: separate quality gates, image packaging, Terraform plan/apply, service stabilization, and staged production approval. This project does not use the CourseCloud SSH role lookup; it uses GitHub OIDC directly.
 
 ## Jobs
 
 | Job | Purpose |
 | --- | --- |
-| `pr_or_main_gate` | Runs the main graph only for pull requests, `main`, manual runs, or branches with an open PR. |
-| `unit_tests` | Checks shell syntax, validates Docker Compose, bootstraps the configured Moodle tag, and confirms the checkout. |
-| `lint` | Validates Renovate config, runs ShellCheck, YAML lint, Hadolint, Terraform formatting, and Terraform no-backend validation. |
-| `validate_docs` | Validates local Markdown links in README, docs, and Terraform documentation. |
-| `security_audit` | Runs Composer audit for Moodle production PHP dependencies and Trivy filesystem/IaC scanning for high and critical findings. |
-| `build_image` | Builds the local Docker image, production image shape, and scans the production image. |
-| `build_background_image` | Builds the same Moodle image shape for cron/background compatibility. The ECS cron service uses the same published image with a different command. |
-| `integration_smoke` | Builds the local stack, installs Moodle with PostgreSQL, checks the home/login pages, and confirms the installed release. |
-| `compute_image_tag` | Produces immutable GHCR tags for PR, manual, and `main` runs. |
-| `publish_test_image` | Builds the production image with Moodle source and `moodle-overrides/` baked in, then pushes it to GHCR. |
-| `terraform_plan_dev`, `terraform_plan_stage`, `terraform_plan_prod` | Plans each environment through environment-specific AWS OIDC roles. |
-| `terraform_apply_dev`, `terraform_apply_stage`, `terraform_apply_prod` | Applies the selected environment after the image is published and plans pass. |
-| `deploy_dev`, `deploy_stage`, `deploy_prod` | Waits for the Moodle ECS web service to stabilize. |
-| `deploy_dev_background`, `deploy_stage_background`, `deploy_prod_background` | Waits for the Moodle ECS cron/background service to stabilize. |
-| `smoke_tests` | Checks the stage Moodle home and login pages after stage deployment. |
-| `e2e_tests` | Runs a Playwright suite from `e2e/` when the suite exists; otherwise records a clean no-op. |
-| `approve_prod_deploy` | Uses the `prod-approval` GitHub Environment as the production approval gate. |
-| `setup_behat_infra`, `run_behat_tests`, `publish_behat_report`, `teardown_behat_infra` | Optional Behat integration-test hooks for manual runs. |
-| `setup_phpunit_infra`, `run_phpunit_tests`, `publish_phpunit_report`, `teardown_phpunit_infra` | Optional PHPUnit integration-test hooks for manual runs. |
+| `change_eligibility` | Runs the graph only for pull requests, `main`, manual runs, or branches with an open PR. |
+| `source_integrity` | Checks shell syntax, validates Docker Compose, bootstraps the configured Moodle tag, and confirms the checkout. |
+| `static_quality` | Validates Renovate config, ShellCheck, YAML, Hadolint, Terraform formatting, and Terraform no-backend validation. |
+| `documentation_quality` | Validates local Markdown links in README, docs, and Terraform documentation. |
+| `supply_chain_security` | Runs Composer audit and Trivy filesystem/IaC scanning for high and critical findings. |
+| `application_image_ci` | Builds the local Docker image, builds the production image shape, and scans the production image. |
+| `worker_image_ci` | Builds the Moodle cron/worker-compatible image shape. The ECS cron service uses the same published image with a different command. |
+| `local_integration_smoke` | Builds the local stack, installs Moodle with PostgreSQL, checks home/login pages, and confirms the installed release. |
+| `release_metadata` | Produces immutable GHCR tags for PR, manual, and `main` runs. |
+| `publish_release_candidate` | Builds the production image with Moodle source and `moodle-overrides/` baked in, then pushes it to GHCR. |
+| `plan_dev_infrastructure`, `plan_stage_infrastructure`, `plan_prod_infrastructure` | Plans each environment through environment-specific AWS OIDC roles. |
+| `apply_dev_infrastructure`, `apply_stage_infrastructure`, `apply_prod_infrastructure` | Applies the selected environment after the image is published and plans pass. |
+| `stabilize_dev_web`, `stabilize_stage_web`, `stabilize_prod_web` | Waits for the Moodle ECS web service to stabilize. |
+| `stabilize_dev_worker`, `stabilize_stage_worker`, `stabilize_prod_worker` | Waits for the Moodle ECS cron/worker service to stabilize. |
+| `stage_smoke_validation` | Checks the stage Moodle home and login pages after stage deployment. |
+| `stage_browser_validation` | Runs a Playwright suite from `e2e/` when the suite exists; otherwise records a clean no-op. |
+| `production_change_approval` | Uses the `prod-approval` GitHub Environment as the production approval gate. |
+| `provision_behat_environment`, `behat_acceptance_tests`, `publish_behat_report`, `teardown_behat_environment` | Optional Behat integration-test hooks for manual runs. |
+| `provision_phpunit_environment`, `phpunit_integration_tests`, `publish_phpunit_report`, `teardown_phpunit_environment` | Optional PHPUnit integration-test hooks for manual runs. |
+
+## Composite Actions
+
+Reusable workflow logic lives under `.github/actions/`:
+
+| Action | Purpose |
+| --- | --- |
+| [change-eligibility](../.github/actions/change-eligibility/action.yml) | PR/main/manual run eligibility detection. |
+| [moodle-source-integrity](../.github/actions/moodle-source-integrity/action.yml) | Moodle source bootstrap and baseline project validation. |
+| [static-quality-gate](../.github/actions/static-quality-gate/action.yml) | Renovate, shell, YAML, Dockerfile, and Terraform static checks. |
+| [documentation-quality-gate](../.github/actions/documentation-quality-gate/action.yml) | Local Markdown documentation link validation. |
+| [supply-chain-security](../.github/actions/supply-chain-security/action.yml) | Composer audit plus Trivy repository/IaC scanning. |
+| [moodle-image-build](../.github/actions/moodle-image-build/action.yml) | Reusable Moodle Docker image build and optional image scan. |
+| [local-moodle-smoke](../.github/actions/local-moodle-smoke/action.yml) | Local Docker install and Moodle smoke test. |
+| [release-image-metadata](../.github/actions/release-image-metadata/action.yml) | Immutable GHCR image tag calculation. |
+| [ghcr-build-push](../.github/actions/ghcr-build-push/action.yml) | GHCR login and production image publish. |
+| [terraform-run](../.github/actions/terraform-run/action.yml) | OIDC-backed Terraform plan/apply. |
+| [ecs-service-wait](../.github/actions/ecs-service-wait/action.yml) | ECS web/worker service stabilization. |
+| [remote-moodle-smoke](../.github/actions/remote-moodle-smoke/action.yml) | Remote Moodle smoke checks from Terraform outputs. |
+| [playwright-e2e-if-present](../.github/actions/playwright-e2e-if-present/action.yml) | Conditional Playwright browser suite execution. |
+| [integration-test-workspace](../.github/actions/integration-test-workspace/action.yml) | Extended-test workspace metadata. |
+| [junit-placeholder](../.github/actions/junit-placeholder/action.yml) | Skipped JUnit artifact for future integration suites. |
 
 ## Triggers
 
@@ -91,7 +113,7 @@ The deployment path is gated by linting and vulnerability checks:
 - Composer audit checks Moodle production PHP dependencies from `moodle/composer.lock`.
 - Trivy scans the repository filesystem, Terraform/IaC, and the production Docker image for high and critical vulnerabilities.
 
-The `build_image` and `build_background_image` jobs require `unit_tests`, `lint`, and `security_audit` to pass before Docker images are built. The publish and apply jobs depend on the downstream smoke-tested image path. `bootstrap-moodle.sh` syncs `moodle-overrides/` for local CI checks, and the production Dockerfile copies the same overrides after cloning the configured Moodle tag.
+The `application_image_ci` and `worker_image_ci` jobs require `source_integrity`, `static_quality`, and `supply_chain_security` to pass before Docker images are built. The publish and apply jobs depend on the downstream smoke-tested image path. `bootstrap-moodle.sh` syncs `moodle-overrides/` for local CI checks, and the production Dockerfile copies the same overrides after cloning the configured Moodle tag.
 
 ## Renovate
 

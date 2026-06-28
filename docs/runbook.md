@@ -486,42 +486,42 @@ Renovate pipeline:
 
 Pipeline order:
 
-1. `pr_or_main_gate`
-2. `unit_tests`
-3. `lint`
-4. `validate_docs`
-5. `security_audit`
-6. `build_image`
-7. `build_background_image`
-8. `integration_smoke`
-9. `compute_image_tag`
-10. `publish_test_image`
-11. `terraform_plan_dev`
-12. `terraform_plan_stage`
-13. `terraform_plan_prod`
-14. `terraform_apply_dev`
-15. `deploy_dev`
-16. `deploy_dev_background`
-17. `terraform_apply_stage`
-18. `deploy_stage`
-19. `deploy_stage_background`
-20. `smoke_tests`
-21. `e2e_tests`
-22. `approve_prod_deploy`
-23. `terraform_apply_prod`
-24. `deploy_prod`
-25. `deploy_prod_background`
+1. `change_eligibility`
+2. `source_integrity`
+3. `static_quality`
+4. `documentation_quality`
+5. `supply_chain_security`
+6. `application_image_ci`
+7. `worker_image_ci`
+8. `local_integration_smoke`
+9. `release_metadata`
+10. `publish_release_candidate`
+11. `plan_dev_infrastructure`
+12. `plan_stage_infrastructure`
+13. `plan_prod_infrastructure`
+14. `apply_dev_infrastructure`
+15. `stabilize_dev_web`
+16. `stabilize_dev_worker`
+17. `apply_stage_infrastructure`
+18. `stabilize_stage_web`
+19. `stabilize_stage_worker`
+20. `stage_smoke_validation`
+21. `stage_browser_validation`
+22. `production_change_approval`
+23. `apply_prod_infrastructure`
+24. `stabilize_prod_web`
+25. `stabilize_prod_worker`
 
 Optional manual extended-test jobs are available behind `run_extended_tests=true`:
 
-1. `setup_behat_infra`
-2. `run_behat_tests`
+1. `provision_behat_environment`
+2. `behat_acceptance_tests`
 3. `publish_behat_report`
-4. `teardown_behat_infra`
-5. `setup_phpunit_infra`
-6. `run_phpunit_tests`
+4. `teardown_behat_environment`
+5. `provision_phpunit_environment`
+6. `phpunit_integration_tests`
 7. `publish_phpunit_report`
-8. `teardown_phpunit_infra`
+8. `teardown_phpunit_environment`
 
 Deployment is gated through linting, documentation validation, security audit, image build, smoke tests, and the `prod-approval` environment before production apply.
 

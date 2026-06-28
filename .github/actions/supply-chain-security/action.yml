@@ -1,0 +1,36 @@
+name: Supply Chain Security
+description: Run Composer audit and Trivy filesystem/IaC scanning.
+
+inputs:
+  trivy_version:
+    description: Trivy version to use.
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Bootstrap Moodle source
+      shell: bash
+      run: ./scripts/bootstrap-moodle.sh
+
+    - name: Composer vulnerability audit
+      shell: bash
+      run: |
+        set -euo pipefail
+        docker run --rm \
+          -v "${PWD}/moodle:/app" \
+          -w /app \
+          composer:2 \
+          composer audit --locked --no-dev --format=plain
+
+    - name: Trivy filesystem and IaC audit
+      uses: aquasecurity/trivy-action@v0.36.0
+      with:
+        version: ${{ inputs.trivy_version }}
+        scan-type: fs
+        scan-ref: .
+        scanners: vuln,misconfig
+        severity: HIGH,CRITICAL
+        ignore-unfixed: true
+        exit-code: "1"
+        skip-dirs: moodledata,backups,moodle/.git
