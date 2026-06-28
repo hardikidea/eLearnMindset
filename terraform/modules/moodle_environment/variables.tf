@@ -61,6 +61,12 @@ variable "desired_count" {
   description = "Desired ECS task count."
 }
 
+variable "cron_desired_count" {
+  type        = number
+  description = "Desired Moodle cron ECS task count."
+  default     = 1
+}
+
 variable "task_cpu" {
   type        = number
   description = "Fargate task CPU units."

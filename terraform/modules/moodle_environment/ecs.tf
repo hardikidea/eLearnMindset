@@ -197,7 +197,7 @@ resource "aws_ecs_service" "cron" {
   name                   = "${local.name_prefix}-cron"
   cluster                = aws_ecs_cluster.moodle.id
   task_definition        = aws_ecs_task_definition.cron.arn
-  desired_count          = 1
+  desired_count          = var.cron_desired_count
   launch_type            = "FARGATE"
   enable_execute_command = true
 

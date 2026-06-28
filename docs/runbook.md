@@ -9,6 +9,7 @@ Use this with the focused docs:
 - [CI/CD pipeline](ci-cd.md)
 - [Theme setup](theme.md)
 - [Moodle update process](update.md)
+- [Upgrade, backup, and restore](upgrade-backup-restore.md)
 - [Terraform infrastructure](../terraform/README.md)
 
 ## System Overview
@@ -304,7 +305,7 @@ ls -lt backups
 
 ## Local Restore Runbook
 
-Use this only for a local Docker restore. It deletes the local PostgreSQL Docker volume.
+Use this only for a local Docker restore. It recreates the local PostgreSQL database and replaces `moodledata/`.
 
 Set the backup folder:
 
@@ -312,30 +313,10 @@ Set the backup folder:
 BACKUP_DIR=backups/20260625-202342
 ```
 
-If the backup came from a different Moodle tag, inspect the recorded version and check out that tag before restoring:
+Restore database, `moodledata`, and the recorded Moodle tag:
 
 ```bash
-cat "${BACKUP_DIR}/moodle-version.txt"
-git -C moodle checkout <recorded-tag>
-```
-
-Restore database and `moodledata`:
-
-```bash
-docker compose down -v
-rm -rf moodledata
-tar -xzf "${BACKUP_DIR}/moodledata.tar.gz"
-docker compose up -d db redis mailpit moodle
-
-for attempt in {1..30}; do
-  docker compose exec -T db pg_isready -U moodle -d moodle && break
-  sleep 1
-done
-
-cat "${BACKUP_DIR}/postgres.sql" | docker compose exec -T db psql -U moodle -d moodle
-docker compose exec -T moodle php admin/cli/purge_caches.php
-./scripts/configure-mailpit.sh
-docker compose up -d cron
+./scripts/restore-backup.sh "${BACKUP_DIR}" --yes
 ```
 
 Verify:
@@ -362,6 +343,8 @@ docker compose up -d
 
 This project follows Moodle Git administrator guidance: use official release tags, not `main`.
 
+For the complete local and AWS server procedure, use [Upgrade, backup, and restore](upgrade-backup-restore.md).
+
 Check current version:
 
 ```bash
@@ -381,6 +364,12 @@ Update to a patch release:
 ./scripts/update-moodle.sh v5.2.2
 ```
 
+For local testing, optionally attempt automatic rollback if the upgrade fails:
+
+```bash
+./scripts/update-moodle.sh --restore-on-fail v5.2.2
+```
+
 The update script:
 
 1. Confirms the target tag exists upstream.
@@ -394,6 +383,12 @@ The update script:
 9. Purges caches.
 10. Disables maintenance mode.
 11. Starts cron.
+
+If an upgrade fails after the backup is created, the script prints a restore command like:
+
+```bash
+./scripts/restore-backup.sh "backups/20260628-113000" --yes
+```
 
 Post-update verification:
 
@@ -697,6 +692,23 @@ For AWS environments, use AWS-native backups:
 - Terraform remote state in S3 with versioning.
 
 Before production upgrades, confirm an RDS restore point and EFS backup exist.
+
+Manual GitHub Actions workflows are available for controlled operations:
+
+- `Moodle Version Upgrade`: validates the target Moodle tag, creates backups, deploys the new image with cron paused, runs Moodle CLI upgrade, and restarts cron.
+- `Server Backup`: creates an RDS snapshot and starts an EFS AWS Backup recovery point for `dev`, `stage`, or `prod`.
+- `Server Restore`: validates restore-point identifiers, pauses cron, optionally rolls ECS back to a previous task definition, purges caches, and restarts cron.
+
+Set these repository variables, or provide them as workflow inputs:
+
+```text
+BACKUP_VAULT_NAME=<aws-backup-vault-name>
+BACKUP_ROLE_ARN=<aws-backup-service-role-arn>
+```
+
+The restore workflow requires a confirmation phrase such as `RESTORE prod`. It does not automatically replace Terraform-owned RDS/EFS resources; use the [Upgrade, backup, and restore](upgrade-backup-restore.md) runbook for the data restore cutover.
+
+The upgrade workflow requires a confirmation phrase such as `UPGRADE prod v5.2.1`.
 
 ## Incident Response
 

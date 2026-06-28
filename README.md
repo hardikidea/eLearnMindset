@@ -152,7 +152,27 @@ For a future patch release, replace `v5.2.1` with the new official tag, for exam
 
 The update script takes a backup first, fetches tags, checks out the requested Moodle tag, syncs `moodle-overrides/`, runs Composer, runs Moodle's CLI upgrade, and purges caches.
 
+If an upgrade fails after the backup is created, restore the local Docker stack with:
+
+```bash
+./scripts/restore-backup.sh backups/YYYYMMDD-HHMMSS --yes
+```
+
+For local upgrade testing only, rollback can be attempted automatically:
+
+```bash
+./scripts/update-moodle.sh --restore-on-fail v5.2.2
+```
+
 Read the detailed update process in [docs/update.md](docs/update.md).
+
+For AWS environments, use the manual GitHub Actions workflows:
+
+- `Moodle Version Upgrade`: tag-based server upgrade with backup, deploy, Moodle CLI upgrade, and cron restart.
+- `Server Backup`: RDS snapshot plus EFS AWS Backup recovery point.
+- `Server Restore`: guarded ECS rollback and restore-point validation.
+
+The server restore workflow intentionally does not replace production RDS/EFS in place. Use the full [upgrade, backup, and restore runbook](docs/upgrade-backup-restore.md) for data restore cutover steps.
 
 ## Documentation
 
@@ -162,6 +182,7 @@ Read the detailed update process in [docs/update.md](docs/update.md).
 - [CI/CD pipeline](docs/ci-cd.md)
 - [Theme setup](docs/theme.md)
 - [Moodle updates](docs/update.md)
+- [Upgrade, backup, and restore runbook](docs/upgrade-backup-restore.md)
 - [Terraform infrastructure](terraform/README.md)
 
 ## CI Security And Renovate

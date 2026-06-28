@@ -53,6 +53,11 @@ variable "desired_count" {
   default = 2
 }
 
+variable "cron_desired_count" {
+  type    = number
+  default = 1
+}
+
 variable "task_cpu" {
   type    = number
   default = 2048

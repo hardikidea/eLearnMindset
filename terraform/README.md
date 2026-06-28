@@ -66,6 +66,10 @@ elearn-mindset-stage-github-actions
 elearn-mindset-prod-github-actions
 ```
 
+The same roles are used by the manual `Server Backup` and `Server Restore` GitHub Actions workflows. Re-apply the bootstrap layer after changing this repository so the roles include AWS Backup permissions for EFS recovery-point jobs.
+
+The `cron_desired_count` variable exists for the manual `Moodle Version Upgrade` workflow. Normal plans use the default `1`; the upgrade workflow temporarily applies `0` while Moodle database upgrade runs.
+
 ## GitHub Repository Setup
 
 Create GitHub repository variables:

@@ -1,6 +1,11 @@
 # CI/CD Pipeline
 
 The GitHub Actions workflow is defined in [.github/workflows/ci_cd_pipeline.yml](.github/workflows/ci_cd_pipeline.yml).
+Manual server operation workflows are defined in:
+
+- [.github/workflows/server_backup.yml](.github/workflows/server_backup.yml)
+- [.github/workflows/server_restore.yml](.github/workflows/server_restore.yml)
+- [.github/workflows/moodle_version_upgrade.yml](.github/workflows/moodle_version_upgrade.yml)
 
 The structure follows the CourseCloud reference at a high level: separate validation, image build, Terraform plan/apply, and deployment-oriented jobs. This project does not use the CourseCloud SSH role lookup; it uses GitHub OIDC directly.
 
@@ -24,6 +29,45 @@ The structure follows the CourseCloud reference at a high level: separate valida
 - Every branch push.
 - Pull requests.
 - Manual `workflow_dispatch`.
+
+## Manual Server Workflows
+
+Use these workflows from GitHub Actions for upgrade events and incident response.
+
+| Workflow | Purpose |
+| --- | --- |
+| `Moodle Version Upgrade` | Manually validates an official Moodle tag, backs up the target environment, builds and deploys the new image, runs Moodle CLI upgrade, and restarts cron. |
+| `Server Backup` | Manually creates an RDS DB snapshot and an EFS AWS Backup recovery point for `dev`, `stage`, or `prod`. |
+| `Server Restore` | Manually validates restore-point IDs, pauses cron, optionally rolls ECS back to a previous task definition, purges caches, and restarts cron. |
+
+`Server Restore` does not delete or replace Terraform-owned RDS/EFS resources automatically. Database and file restore still require the controlled AWS restore and Terraform cutover process in [docs/upgrade-backup-restore.md](upgrade-backup-restore.md).
+
+Required backup variables:
+
+```text
+BACKUP_VAULT_NAME=<aws-backup-vault-name>
+BACKUP_ROLE_ARN=<aws-backup-service-role-arn>
+```
+
+These can be set as repository variables or supplied as manual workflow inputs.
+
+The restore workflow requires a typed confirmation:
+
+```text
+RESTORE dev
+RESTORE stage
+RESTORE prod
+```
+
+The Moodle upgrade workflow requires this confirmation format:
+
+```text
+UPGRADE dev v5.2.1
+UPGRADE stage v5.2.1
+UPGRADE prod v5.2.1
+```
+
+It deploys the selected Moodle tag as an image tagged `moodle-upgrade-<run-id>-<run-attempt>`, applies Terraform with cron desired count `0`, runs `php admin/cli/upgrade.php --non-interactive` through ECS Exec, then applies Terraform again with cron desired count `1`.
 
 ## Quality Gates
 
@@ -85,6 +129,8 @@ Set these repository variables:
 ```text
 AWS_ACCOUNT_ID=<your AWS account id>
 AWS_REGION=us-west-2
+BACKUP_VAULT_NAME=<aws-backup-vault-name>
+BACKUP_ROLE_ARN=<aws-backup-service-role-arn>
 ```
 
 Set this repository secret for Renovate:

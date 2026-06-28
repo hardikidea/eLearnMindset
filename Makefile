@@ -1,7 +1,7 @@
 -include .env
 export
 
-.PHONY: bootstrap sync-overrides build up start down stop restart logs shell install configure-mailpit demo-data theme-install cron backup update status
+.PHONY: bootstrap sync-overrides build up start down stop restart logs shell install configure-mailpit demo-data theme-install cron backup restore update update-restore-on-fail status
 
 bootstrap:
 	./scripts/bootstrap-moodle.sh
@@ -56,8 +56,15 @@ cron:
 backup:
 	./scripts/backup.sh
 
+restore:
+	@test -n "$(BACKUP_DIR)" || (echo "Usage: make restore BACKUP_DIR=backups/YYYYMMDD-HHMMSS" && exit 1)
+	./scripts/restore-backup.sh "$(BACKUP_DIR)" --yes
+
 update:
 	./scripts/update-moodle.sh $(MOODLE_VERSION)
+
+update-restore-on-fail:
+	./scripts/update-moodle.sh --restore-on-fail $(MOODLE_VERSION)
 
 status:
 	docker compose ps

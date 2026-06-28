@@ -20,6 +20,10 @@ inputs:
   image_tag:
     description: Container image tag to deploy.
     required: true
+  cron_desired_count:
+    description: Desired count for the Moodle cron ECS service.
+    required: false
+    default: "1"
 
 runs:
   using: composite
@@ -58,7 +62,8 @@ runs:
             -input=false \
             -no-color \
             -out=tfplan \
-            -var "image_tag=${{ inputs.image_tag }}"
+            -var "image_tag=${{ inputs.image_tag }}" \
+            -var "cron_desired_count=${{ inputs.cron_desired_count }}"
 
           {
             echo "### Terraform plan: ${{ inputs.environment }}"
@@ -75,7 +80,8 @@ runs:
             -input=false \
             -auto-approve \
             -no-color \
-            -var "image_tag=${{ inputs.image_tag }}"
+            -var "image_tag=${{ inputs.image_tag }}" \
+            -var "cron_desired_count=${{ inputs.cron_desired_count }}"
         else
           echo "Unsupported Terraform command: ${{ inputs.command }}"
           exit 1

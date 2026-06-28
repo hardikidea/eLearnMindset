@@ -2,6 +2,10 @@
 
 This project follows the Moodle Git for Administrators approach: track official Moodle release tags and update by fetching and checking out a newer tag.
 
+For the complete local and AWS server upgrade event procedure, read [Upgrade, backup, and restore](upgrade-backup-restore.md).
+
+For AWS server environments, use the manual GitHub Actions `Moodle Version Upgrade` workflow. It accepts a Moodle Git tag, backs up the selected environment, deploys the new image with cron paused, runs Moodle CLI upgrade through ECS Exec, and restarts cron after success.
+
 ## Rules
 
 - Use official tags such as `v5.2.1`.
@@ -36,6 +40,27 @@ The backup is written under `backups/<timestamp>/` and includes:
 - `moodledata.tar.gz`
 - `moodle-version.txt`
 
+## Restore From Backup
+
+Use this for local Docker rollback after a failed or unwanted upgrade:
+
+```bash
+./scripts/restore-backup.sh backups/YYYYMMDD-HHMMSS --yes
+```
+
+The restore script:
+
+1. Reads the recorded Moodle tag from `moodle-version.txt` when available.
+2. Checks out that tag in `moodle/`.
+3. Syncs `moodle-overrides/` into the checkout.
+4. Stops Moodle and cron.
+5. Recreates the local PostgreSQL database from `postgres.sql`.
+6. Replaces `moodledata/` from `moodledata.tar.gz`.
+7. Reinstalls Composer dependencies for the restored Moodle tag.
+8. Purges caches, disables maintenance mode, reapplies MailPit SMTP, and restarts cron.
+
+This is destructive for the local Docker database and `moodledata/`. It requires `--yes` intentionally.
+
 ## Update to a New Patch Release
 
 ```bash
@@ -54,6 +79,20 @@ The script:
 8. Runs Moodle CLI upgrade.
 9. Purges caches.
 10. Disables maintenance mode.
+
+If any step fails after the backup is created, the script prints the exact restore command:
+
+```bash
+./scripts/restore-backup.sh "backups/YYYYMMDD-HHMMSS" --yes
+```
+
+For local-only upgrade testing, you can ask the script to attempt rollback automatically:
+
+```bash
+./scripts/update-moodle.sh --restore-on-fail v5.2.2
+```
+
+Use automatic rollback only for local Docker environments. For shared/stage/prod environments, restore intentionally from verified database and file backups.
 
 ## Major Upgrade Notes
 

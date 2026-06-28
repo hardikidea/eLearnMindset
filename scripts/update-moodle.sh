@@ -14,11 +14,38 @@ set -a
 source .env
 set +a
 
+RESTORE_ON_FAIL=0
+if [ "${1:-}" = "--restore-on-fail" ]; then
+    RESTORE_ON_FAIL=1
+    shift
+fi
+
 TARGET_VERSION="${1:-${MOODLE_VERSION:-}}"
 MOODLE_REPO="${MOODLE_REPO:-https://github.com/moodle/moodle.git}"
+BACKUP_DIR=""
+
+on_error() {
+    exit_code=$?
+    echo "Moodle update failed."
+    if [ -n "${BACKUP_DIR}" ]; then
+        echo "Backup is available at: ${BACKUP_DIR}"
+        echo "Restore manually with:"
+        echo "  ./scripts/restore-backup.sh \"${BACKUP_DIR}\" --yes"
+
+        if [ "${RESTORE_ON_FAIL}" -eq 1 ]; then
+            echo "Attempting automatic restore from ${BACKUP_DIR}"
+            ./scripts/restore-backup.sh "${BACKUP_DIR}" --yes || true
+        fi
+    else
+        echo "No restore backup was created by this run. The failure happened before backup completed."
+    fi
+    exit "${exit_code}"
+}
+
+trap on_error ERR
 
 if [ -z "${TARGET_VERSION}" ]; then
-    echo "Usage: ./scripts/update-moodle.sh v5.2.x"
+    echo "Usage: ./scripts/update-moodle.sh [--restore-on-fail] v5.2.x"
     exit 1
 fi
 
@@ -29,7 +56,11 @@ fi
 
 git ls-remote --exit-code --tags --refs "${MOODLE_REPO}" "${TARGET_VERSION}" >/dev/null
 
-./scripts/backup.sh
+backup_marker="$(mktemp)"
+BACKUP_DIR_FILE="${backup_marker}" ./scripts/backup.sh
+BACKUP_DIR="$(cat "${backup_marker}")"
+rm -f "${backup_marker}"
+echo "Pre-upgrade backup: ${BACKUP_DIR}"
 
 if docker compose ps --status running --quiet moodle | grep -q .; then
     docker compose exec -T moodle php admin/cli/maintenance.php --enable || true
@@ -57,3 +88,4 @@ docker compose up -d cron
 
 git -C moodle log --oneline -1 public/version.php
 echo "Moodle updated to ${TARGET_VERSION}"
+echo "Rollback backup retained at ${BACKUP_DIR}"

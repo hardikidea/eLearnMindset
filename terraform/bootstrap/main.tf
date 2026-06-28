@@ -191,6 +191,7 @@ data "aws_iam_policy_document" "github_actions_permissions" {
     actions = [
       "acm:DescribeCertificate",
       "application-autoscaling:*",
+      "backup:*",
       "cloudwatch:*",
       "ec2:*",
       "ecs:*",
@@ -246,6 +247,19 @@ data "aws_iam_policy_document" "github_actions_permissions" {
       "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${var.project_name}-*",
       "arn:aws:iam::${data.aws_caller_identity.current.account_id}:policy/${var.project_name}-*"
     ]
+  }
+
+  statement {
+    sid       = "AllowAwsBackupRolePass"
+    effect    = "Allow"
+    actions   = ["iam:PassRole"]
+    resources = ["*"]
+
+    condition {
+      test     = "StringEquals"
+      variable = "iam:PassedToService"
+      values   = ["backup.amazonaws.com"]
+    }
   }
 
   statement {

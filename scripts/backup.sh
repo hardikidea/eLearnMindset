@@ -14,10 +14,6 @@ fi
 POSTGRES_DB="${POSTGRES_DB:-moodle}"
 POSTGRES_USER="${POSTGRES_USER:-moodle}"
 
-STAMP="$(date +%Y%m%d-%H%M%S)"
-BACKUP_DIR="${ROOT_DIR}/backups/${STAMP}"
-mkdir -p "${BACKUP_DIR}"
-
 docker compose up -d db
 
 for attempt in {1..30}; do
@@ -33,6 +29,23 @@ for attempt in {1..30}; do
     sleep 1
 done
 
+MOODLE_TABLE_COUNT="$(
+    docker compose exec -T db psql -U "${POSTGRES_USER}" -d "${POSTGRES_DB}" -tAc \
+        "select count(*) from information_schema.tables where table_schema = 'public' and table_name like 'mdl_%';" \
+        | tr -d '[:space:]'
+)"
+
+if [ "${MOODLE_TABLE_COUNT:-0}" = "0" ] && [ "${ALLOW_EMPTY_MOODLE_BACKUP:-false}" != "true" ]; then
+    echo "Refusing to create backup: database ${POSTGRES_DB} has no Moodle tables with prefix mdl_." >&2
+    echo "Check that the correct Docker Compose project is running and port ${POSTGRES_PORT:-5440} is not owned by an old stack." >&2
+    echo "Set ALLOW_EMPTY_MOODLE_BACKUP=true only if you intentionally need an empty database backup." >&2
+    exit 1
+fi
+
+STAMP="$(date +%Y%m%d-%H%M%S)"
+BACKUP_DIR="${ROOT_DIR}/backups/${STAMP}"
+mkdir -p "${BACKUP_DIR}"
+
 docker compose exec -T db pg_dump -U "${POSTGRES_USER}" -d "${POSTGRES_DB}" > "${BACKUP_DIR}/postgres.sql"
 
 if [ -d moodledata ]; then
@@ -44,6 +57,10 @@ if [ -d moodle/.git ]; then
         git -C moodle describe --tags --always --dirty || true
         git -C moodle log --oneline -1 public/version.php || true
     } > "${BACKUP_DIR}/moodle-version.txt"
+fi
+
+if [ -n "${BACKUP_DIR_FILE:-}" ]; then
+    printf '%s\n' "${BACKUP_DIR}" > "${BACKUP_DIR_FILE}"
 fi
 
 echo "Backup written to ${BACKUP_DIR}"

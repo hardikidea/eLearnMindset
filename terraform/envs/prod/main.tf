@@ -55,6 +55,7 @@ module "moodle" {
   image_tag                      = var.image_tag
   ecr_repository_url             = local.ecr_repository_url
   desired_count                  = var.desired_count
+  cron_desired_count             = var.cron_desired_count
   task_cpu                       = var.task_cpu
   task_memory                    = var.task_memory
   database_instance_class        = var.database_instance_class
