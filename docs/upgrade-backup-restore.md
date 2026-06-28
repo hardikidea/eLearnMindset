@@ -461,6 +461,15 @@ Check the public URL from Terraform output:
 curl -fsS "$(terraform -chdir="terraform/envs/${ENVIRONMENT}" output -raw moodle_wwwroot)" >/tmp/moodle-server-home.html
 ```
 
+Check CloudWatch alarm state:
+
+```bash
+aws cloudwatch describe-alarms \
+  --alarm-names $(terraform -chdir="terraform/envs/${ENVIRONMENT}" output -json cloudwatch_alarm_names | jq -r '.[]') \
+  --query 'MetricAlarms[].{name:AlarmName,state:StateValue,reason:StateReason}' \
+  --output table
+```
+
 ### 8. Server Rollback
 
 Preferred manual pipeline path for application rollback:
@@ -521,6 +530,14 @@ aws ecs execute-command \
   --interactive \
   --command 'php admin/cli/purge_caches.php'
 ```
+
+Run drift detection after a restore or emergency rollback:
+
+```bash
+terraform -chdir="terraform/envs/${ENVIRONMENT}" plan -refresh-only -detailed-exitcode -input=false
+```
+
+Use the `Infrastructure Drift Detection` workflow for the shared GitHub-recorded version of the same check.
 
 ## Post-Event Checklist
 

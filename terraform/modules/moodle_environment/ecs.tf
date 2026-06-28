@@ -226,8 +226,8 @@ resource "aws_ecs_service" "cron" {
 }
 
 resource "aws_appautoscaling_target" "moodle" {
-  max_capacity       = max(var.desired_count * 3, 2)
-  min_capacity       = var.desired_count
+  max_capacity       = local.autoscaling_max
+  min_capacity       = local.autoscaling_min
   resource_id        = "service/${aws_ecs_cluster.moodle.name}/${aws_ecs_service.moodle.name}"
   scalable_dimension = "ecs:service:DesiredCount"
   service_namespace  = "ecs"
@@ -245,6 +245,22 @@ resource "aws_appautoscaling_policy" "cpu" {
       predefined_metric_type = "ECSServiceAverageCPUUtilization"
     }
 
-    target_value = 70
+    target_value = var.autoscaling_cpu_target
+  }
+}
+
+resource "aws_appautoscaling_policy" "memory" {
+  name               = "${local.name_prefix}-memory"
+  policy_type        = "TargetTrackingScaling"
+  resource_id        = aws_appautoscaling_target.moodle.resource_id
+  scalable_dimension = aws_appautoscaling_target.moodle.scalable_dimension
+  service_namespace  = aws_appautoscaling_target.moodle.service_namespace
+
+  target_tracking_scaling_policy_configuration {
+    predefined_metric_specification {
+      predefined_metric_type = "ECSServiceAverageMemoryUtilization"
+    }
+
+    target_value = var.autoscaling_memory_target
   }
 }

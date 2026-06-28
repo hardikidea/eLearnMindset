@@ -20,6 +20,10 @@ locals {
   moodle_wwwroot   = var.moodle_wwwroot != "" ? var.moodle_wwwroot : "http://${aws_lb.moodle.dns_name}"
   use_ssl_proxy    = startswith(local.moodle_wwwroot, "https://")
   effective_scheme = local.use_ssl_proxy ? "HTTPS" : "HTTP"
+  alarm_actions    = var.alarm_sns_topic_arns
+  ok_actions       = var.alarm_sns_topic_arns
+  autoscaling_min  = coalesce(var.autoscaling_min_capacity, var.desired_count)
+  autoscaling_max  = coalesce(var.autoscaling_max_capacity, max(var.desired_count * 3, 2))
 
   moodle_environment = [
     { name = "MOODLE_DB_TYPE", value = "pgsql" },
@@ -64,4 +68,12 @@ resource "random_password" "admin" {
   length           = 24
   special          = true
   override_special = "!#$%&*()-_=+[]{}<>:?"
+}
+
+resource "random_id" "final_snapshot" {
+  byte_length = 4
+
+  keepers = {
+    name_prefix = local.name_prefix
+  }
 }

@@ -67,6 +67,30 @@ variable "desired_count" {
   description = "Desired ECS task count."
 }
 
+variable "autoscaling_min_capacity" {
+  type        = number
+  description = "Minimum Moodle web ECS service capacity. When null, desired_count is used."
+  default     = null
+}
+
+variable "autoscaling_max_capacity" {
+  type        = number
+  description = "Maximum Moodle web ECS service capacity. When null, max(desired_count * 3, 2) is used."
+  default     = null
+}
+
+variable "autoscaling_cpu_target" {
+  type        = number
+  description = "Target average CPU utilization percentage for Moodle web service autoscaling."
+  default     = 70
+}
+
+variable "autoscaling_memory_target" {
+  type        = number
+  description = "Target average memory utilization percentage for Moodle web service autoscaling."
+  default     = 75
+}
+
 variable "cron_desired_count" {
   type        = number
   description = "Desired Moodle cron ECS task count."
@@ -108,6 +132,24 @@ variable "database_deletion_protection" {
   description = "Whether to enable RDS deletion protection."
 }
 
+variable "database_skip_final_snapshot" {
+  type        = bool
+  description = "Whether to skip the final RDS snapshot when the database is destroyed."
+  default     = false
+}
+
+variable "database_multi_az" {
+  type        = bool
+  description = "Whether to enable RDS Multi-AZ for the Moodle database."
+  default     = false
+}
+
+variable "database_performance_insights_enabled" {
+  type        = bool
+  description = "Whether to enable RDS Performance Insights."
+  default     = false
+}
+
 variable "redis_node_type" {
   type        = string
   description = "ElastiCache Redis node type."
@@ -128,4 +170,16 @@ variable "log_retention_days" {
   type        = number
   description = "CloudWatch log retention in days."
   default     = 30
+}
+
+variable "alarm_sns_topic_arns" {
+  type        = list(string)
+  description = "Optional SNS topic ARNs for CloudWatch alarm and OK actions."
+  default     = []
+}
+
+variable "enable_cloudwatch_alarms" {
+  type        = bool
+  description = "Create baseline Moodle CloudWatch alarms for ECS, ALB, RDS, and EFS."
+  default     = true
 }

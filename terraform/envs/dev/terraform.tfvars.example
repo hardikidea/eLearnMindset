@@ -2,6 +2,11 @@ image_tag = "replace-with-image-tag"
 # container_repository_url = "ghcr.io/hardikidea/elearnmindset"
 # container_registry_credentials_secret_arn = "arn:aws:secretsmanager:us-west-2:123456789012:secret:elearn-mindset/dev/ghcr-xxxxxx"
 
+# Optional capacity and alert tuning.
+# autoscaling_min_capacity = 1
+# autoscaling_max_capacity = 3
+# alarm_sns_topic_arns     = ["arn:aws:sns:us-west-2:123456789012:elearn-mindset-dev-alerts"]
+
 # Set these when DNS and ACM are ready.
 # route53_zone_id     = "Z1234567890ABC"
 # route53_record_name = "moodle-dev.example.com"

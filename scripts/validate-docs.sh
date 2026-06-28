@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-files=(README.md docs/*.md terraform/README.md)
+files=(README.md docs/*.md docs/adr/*.md terraform/README.md)
 
 ruby - "${files[@]}" <<'RUBY'
 require "pathname"

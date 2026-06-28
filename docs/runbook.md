@@ -5,11 +5,14 @@ This runbook is the operator entry point for the eLearn Mindset local Moodle sta
 Use this with the focused docs:
 
 - [Local setup](setup.md)
+- [AWS architecture blueprint](aws-architecture.md)
 - [Docker architecture](docker.md)
 - [CI/CD pipeline](ci-cd.md)
+- [Pipeline onboarding and troubleshooting](pipeline-onboarding.md)
 - [Theme setup](theme.md)
 - [Moodle update process](update.md)
 - [Upgrade, backup, and restore](upgrade-backup-restore.md)
+- [Architecture Decision Records](adr/README.md)
 - [Terraform infrastructure](../terraform/README.md)
 
 ## System Overview
@@ -31,6 +34,7 @@ Use this with the focused docs:
 | Terraform environments | `dev`, `stage`, `prod` |
 | AWS authentication | GitHub OIDC, no SSH keys |
 | Active theme | `almondb`, with eLearn Mindset palette overrides |
+| AWS alarms | ALB health/5xx, ECS CPU/memory, RDS CPU/storage, EFS I/O |
 
 ## Local Services
 
@@ -407,6 +411,7 @@ docker compose config --quiet
 bash -n scripts/*.sh docker/moodle/*.sh
 npx --yes --package renovate@43.243.0 -- renovate-config-validator --strict
 terraform fmt -check -recursive terraform
+docker run --rm -v "$PWD:/repo" -w /repo rhysd/actionlint:latest .github/workflows/*.yml
 ```
 
 Run ShellCheck with Docker:
@@ -484,6 +489,12 @@ Renovate pipeline:
 .github/workflows/renovate.yml
 ```
 
+Drift detection pipeline:
+
+```text
+.github/workflows/infrastructure_drift_detection.yml
+```
+
 Pipeline order:
 
 1. `change_eligibility`
@@ -511,6 +522,7 @@ Pipeline order:
 23. `apply_prod_infrastructure`
 24. `stabilize_prod_web`
 25. `stabilize_prod_worker`
+26. `production_smoke_validation`
 
 Optional manual extended-test jobs are available behind `run_extended_tests=true`:
 
@@ -523,7 +535,7 @@ Optional manual extended-test jobs are available behind `run_extended_tests=true
 7. `publish_phpunit_report`
 8. `teardown_phpunit_environment`
 
-Deployment is gated through linting, documentation validation, security audit, image build, smoke tests, and the `prod-approval` environment before production apply.
+Deployment is gated through linting, documentation validation, security audit, image build, smoke tests, and the `prod-approval` environment before production apply. Production deployment finishes with `production_smoke_validation`, which checks Moodle home and login pages from the Terraform `moodle_wwwroot` output.
 
 Required GitHub repository variables:
 

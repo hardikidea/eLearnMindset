@@ -6,6 +6,7 @@ Manual server operation workflows are defined in:
 - [.github/workflows/server_backup.yml](../.github/workflows/server_backup.yml)
 - [.github/workflows/server_restore.yml](../.github/workflows/server_restore.yml)
 - [.github/workflows/moodle_version_upgrade.yml](../.github/workflows/moodle_version_upgrade.yml)
+- [.github/workflows/infrastructure_drift_detection.yml](../.github/workflows/infrastructure_drift_detection.yml)
 
 The structure follows the CourseCloud reference at a high level: separate quality gates, image packaging, Terraform plan/apply, service stabilization, and staged production approval. This project does not use the CourseCloud SSH role lookup; it uses GitHub OIDC directly.
 
@@ -30,6 +31,7 @@ The structure follows the CourseCloud reference at a high level: separate qualit
 | `stage_smoke_validation` | Checks the stage Moodle home and login pages after stage deployment. |
 | `stage_browser_validation` | Runs a Playwright suite from `e2e/` when the suite exists; otherwise records a clean no-op. |
 | `production_change_approval` | Uses the `prod-approval` GitHub Environment as the production approval gate. |
+| `production_smoke_validation` | Checks the production Moodle home and login pages after prod ECS stabilization. |
 | `provision_behat_environment`, `behat_acceptance_tests`, `publish_behat_report`, `teardown_behat_environment` | Optional Behat integration-test hooks for manual runs. |
 | `provision_phpunit_environment`, `phpunit_integration_tests`, `publish_phpunit_report`, `teardown_phpunit_environment` | Optional PHPUnit integration-test hooks for manual runs. |
 
@@ -54,6 +56,7 @@ Reusable workflow logic lives under `.github/actions/`:
 | [playwright-e2e-if-present](../.github/actions/playwright-e2e-if-present/action.yml) | Conditional Playwright browser suite execution. |
 | [integration-test-workspace](../.github/actions/integration-test-workspace/action.yml) | Extended-test workspace metadata. |
 | [junit-placeholder](../.github/actions/junit-placeholder/action.yml) | Skipped JUnit artifact for future integration suites. |
+| [terraform-drift-detect](../.github/actions/terraform-drift-detect/action.yml) | Refresh-only Terraform drift detection for AWS environments. |
 
 ## Triggers
 
@@ -70,6 +73,7 @@ Use these workflows from GitHub Actions for upgrade events and incident response
 | `Moodle Version Upgrade` | Manually validates an official Moodle tag, backs up the target environment, builds and deploys the new image, runs Moodle CLI upgrade, and restarts cron. |
 | `Server Backup` | Manually creates an RDS DB snapshot and an EFS AWS Backup recovery point for `dev`, `stage`, or `prod`. |
 | `Server Restore` | Manually validates restore-point IDs, pauses cron, optionally rolls ECS back to a previous task definition, purges caches, and restarts cron. |
+| `Infrastructure Drift Detection` | Scheduled and manual Terraform refresh-only plans to detect out-of-band AWS changes. |
 
 `Server Restore` does not delete or replace Terraform-owned RDS/EFS resources automatically. Database and file restore still require the controlled AWS restore and Terraform cutover process in [docs/upgrade-backup-restore.md](upgrade-backup-restore.md).
 
@@ -100,6 +104,8 @@ UPGRADE prod v5.2.1
 
 It deploys the selected Moodle tag as an image tagged `moodle-upgrade-<run-id>-<run-attempt>`, applies Terraform with cron desired count `0`, runs `php admin/cli/upgrade.php --non-interactive` through ECS Exec, then applies Terraform again with cron desired count `1`.
 
+The drift workflow runs weekdays at `02:10 UTC` and supports manual `workflow_dispatch` for `dev`, `stage`, `prod`, or all environments. It fails by default when remote AWS resources differ from Terraform state.
+
 ## Quality Gates
 
 The deployment path is gated by linting and vulnerability checks:
@@ -107,6 +113,7 @@ The deployment path is gated by linting and vulnerability checks:
 - `renovate-config-validator --strict` validates [renovate.json](../renovate.json).
 - ShellCheck validates all project shell scripts under `scripts/` and `docker/moodle/`.
 - Yamllint validates GitHub workflow YAML and Docker Compose YAML.
+- Actionlint validates GitHub workflow syntax, expressions, and job dependencies.
 - Hadolint validates [docker/moodle/Dockerfile](../docker/moodle/Dockerfile) using [.hadolint.yaml](../.hadolint.yaml).
 - Terraform runs `terraform fmt -check -recursive terraform`.
 - Terraform validates `terraform/bootstrap` and each `terraform/envs/*` folder with `-backend=false`, so AWS credentials are not needed for static validation.
@@ -114,6 +121,8 @@ The deployment path is gated by linting and vulnerability checks:
 - Trivy scans the repository filesystem, Terraform/IaC, and the production Docker image for high and critical vulnerabilities.
 
 The `application_image_ci` and `worker_image_ci` jobs require `source_integrity`, `static_quality`, and `supply_chain_security` to pass before Docker images are built. The publish and apply jobs depend on the downstream smoke-tested image path. `bootstrap-moodle.sh` syncs `moodle-overrides/` for local CI checks, and the production Dockerfile copies the same overrides after cloning the configured Moodle tag.
+
+ECS deployment circuit breaker, target group health checks, service stabilization waits, stage smoke validation, and production smoke validation are the pipeline rollback signals. If production smoke fails after a Moodle CLI schema upgrade, follow [upgrade, backup, and restore](upgrade-backup-restore.md); do not rely on image rollback alone.
 
 ## Renovate
 
@@ -212,6 +221,7 @@ cp .env.example .env
 docker compose config --quiet
 ./scripts/validate-docs.sh
 npx --yes --package renovate@43.243.0 -- renovate-config-validator --strict
+docker run --rm -v "$PWD:/repo" -w /repo rhysd/actionlint:latest .github/workflows/*.yml
 docker compose build
 ./scripts/install-site.sh
 curl -fsS http://localhost:8080/ >/tmp/moodle-home.html

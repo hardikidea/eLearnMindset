@@ -643,3 +643,21 @@ jobs:
           aws_account_id: ${{ env.AWS_ACCOUNT_ID }}
           aws_region: ${{ env.AWS_REGION }}
           project_name: ${{ env.PROJECT_NAME }}
+
+  production_smoke_validation:
+    name: "[Prod] Smoke Validation"
+    runs-on: ubuntu-latest
+    needs: [stabilize_prod_web, stabilize_prod_worker]
+    if: needs.stabilize_prod_web.result == 'success' && needs.stabilize_prod_worker.result == 'success'
+    environment: prod
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Smoke-test production Moodle
+        uses: ./.github/actions/remote-moodle-smoke
+        with:
+          environment: prod
+          aws_account_id: ${{ env.AWS_ACCOUNT_ID }}
+          aws_region: ${{ env.AWS_REGION }}
+          project_name: ${{ env.PROJECT_NAME }}

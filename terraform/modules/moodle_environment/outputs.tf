@@ -42,3 +42,15 @@ output "redis_endpoint" {
 output "efs_file_system_id" {
   value = aws_efs_file_system.moodledata.id
 }
+
+output "cloudwatch_alarm_names" {
+  value = compact([
+    try(aws_cloudwatch_metric_alarm.alb_unhealthy_targets[0].alarm_name, ""),
+    try(aws_cloudwatch_metric_alarm.alb_5xx[0].alarm_name, ""),
+    try(aws_cloudwatch_metric_alarm.ecs_cpu_high[0].alarm_name, ""),
+    try(aws_cloudwatch_metric_alarm.ecs_memory_high[0].alarm_name, ""),
+    try(aws_cloudwatch_metric_alarm.rds_cpu_high[0].alarm_name, ""),
+    try(aws_cloudwatch_metric_alarm.rds_free_storage_low[0].alarm_name, ""),
+    try(aws_cloudwatch_metric_alarm.efs_io_limit_high[0].alarm_name, "")
+  ])
+}

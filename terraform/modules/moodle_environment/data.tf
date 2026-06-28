@@ -8,23 +8,29 @@ resource "aws_db_subnet_group" "moodle" {
 }
 
 resource "aws_db_instance" "moodle" {
-  identifier              = "${local.name_prefix}-postgres"
-  engine                  = "postgres"
-  engine_version          = "16"
-  instance_class          = var.database_instance_class
-  allocated_storage       = var.database_allocated_storage
-  max_allocated_storage   = var.database_max_allocated_storage
-  db_name                 = local.db_name
-  username                = local.db_username
-  password                = random_password.database.result
-  port                    = 5432
-  db_subnet_group_name    = aws_db_subnet_group.moodle.name
-  vpc_security_group_ids  = [aws_security_group.database.id]
-  publicly_accessible     = false
-  storage_encrypted       = true
-  backup_retention_period = var.database_backup_retention_days
-  deletion_protection     = var.database_deletion_protection
-  skip_final_snapshot     = true
+  identifier                            = "${local.name_prefix}-postgres"
+  engine                                = "postgres"
+  engine_version                        = "16"
+  instance_class                        = var.database_instance_class
+  allocated_storage                     = var.database_allocated_storage
+  max_allocated_storage                 = var.database_max_allocated_storage
+  db_name                               = local.db_name
+  username                              = local.db_username
+  password                              = random_password.database.result
+  port                                  = 5432
+  db_subnet_group_name                  = aws_db_subnet_group.moodle.name
+  vpc_security_group_ids                = [aws_security_group.database.id]
+  publicly_accessible                   = false
+  storage_encrypted                     = true
+  backup_retention_period               = var.database_backup_retention_days
+  deletion_protection                   = var.database_deletion_protection
+  skip_final_snapshot                   = var.database_skip_final_snapshot
+  final_snapshot_identifier             = "${local.name_prefix}-postgres-final-${random_id.final_snapshot.hex}"
+  copy_tags_to_snapshot                 = true
+  auto_minor_version_upgrade            = true
+  multi_az                              = var.database_multi_az
+  performance_insights_enabled          = var.database_performance_insights_enabled
+  performance_insights_retention_period = var.database_performance_insights_enabled ? 7 : null
 
   tags = merge(local.common_tags, {
     Name = "${local.name_prefix}-postgres"
@@ -36,9 +42,25 @@ resource "aws_efs_file_system" "moodledata" {
   performance_mode = "generalPurpose"
   throughput_mode  = "elastic"
 
+  lifecycle_policy {
+    transition_to_ia = "AFTER_30_DAYS"
+  }
+
+  lifecycle_policy {
+    transition_to_primary_storage_class = "AFTER_1_ACCESS"
+  }
+
   tags = merge(local.common_tags, {
     Name = "${local.name_prefix}-moodledata"
   })
+}
+
+resource "aws_efs_backup_policy" "moodledata" {
+  file_system_id = aws_efs_file_system.moodledata.id
+
+  backup_policy {
+    status = "ENABLED"
+  }
 }
 
 resource "aws_efs_access_point" "moodledata" {

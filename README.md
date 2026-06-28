@@ -183,17 +183,22 @@ ghcr.io/hardikidea/elearnmindset
 ## Documentation
 
 - [Operator runbook](docs/runbook.md)
+- [AWS architecture blueprint](docs/aws-architecture.md)
 - [Local setup](docs/setup.md)
 - [Docker architecture](docs/docker.md)
 - [CI/CD pipeline](docs/ci-cd.md)
+- [Pipeline onboarding and troubleshooting](docs/pipeline-onboarding.md)
 - [Theme setup](docs/theme.md)
 - [Moodle updates](docs/update.md)
 - [Upgrade, backup, and restore runbook](docs/upgrade-backup-restore.md)
+- [Architecture Decision Records](docs/adr/README.md)
 - [Terraform infrastructure](terraform/README.md)
 
 ## CI Security And Renovate
 
-The GitHub Actions Moodle Delivery Pipeline now uses reusable composite actions for source integrity, static quality, documentation validation, supply-chain security, image packaging, local/remote smoke checks, Terraform plan/apply, ECS web/worker stabilization, GHCR publishing, and the `prod-approval` environment gate.
+The GitHub Actions Moodle Delivery Pipeline now uses reusable composite actions for source integrity, static quality, documentation validation, supply-chain security, image packaging, local/remote smoke checks, Terraform plan/apply, ECS web/worker stabilization, production smoke validation, GHCR publishing, and the `prod-approval` environment gate.
+
+The `Infrastructure Drift Detection` workflow runs scheduled and manual refresh-only Terraform drift checks for dev, stage, and prod.
 
 Renovate runs on a weekday schedule from [.github/workflows/renovate.yml](.github/workflows/renovate.yml). Configure the `RENOVATE_TOKEN` repository secret so Renovate PRs can trigger the normal CI checks.
 

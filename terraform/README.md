@@ -24,11 +24,12 @@ Each environment creates:
 - ECS Fargate cluster.
 - Moodle web ECS service.
 - Moodle cron ECS service.
-- RDS PostgreSQL 16.
-- EFS file system and access point for `moodledata`.
+- RDS PostgreSQL 16 with encrypted storage, automated backups, optional Multi-AZ, optional Performance Insights, and final snapshot protection outside dev.
+- EFS file system, access point, lifecycle policy, and backup policy for `moodledata`.
 - ElastiCache Redis.
 - Secrets Manager secret for generated database and Moodle admin passwords.
 - CloudWatch log group.
+- CloudWatch alarms for ALB unhealthy targets, ALB 5xx, ECS CPU/memory, RDS CPU/storage, and EFS I/O.
 - IAM task execution and task roles.
 - Optional Route53 A and AAAA alias records for the environment ALB.
 - Security groups scoped between ALB, ECS, RDS, Redis, and EFS.
@@ -69,6 +70,23 @@ elearn-mindset-prod-github-actions
 The same roles are used by the manual `Server Backup` and `Server Restore` GitHub Actions workflows. Re-apply the bootstrap layer after changing this repository so the roles include AWS Backup permissions for EFS recovery-point jobs.
 
 The `cron_desired_count` variable exists for the manual `Moodle Version Upgrade` workflow. Normal plans use the default `1`; the upgrade workflow temporarily applies `0` while Moodle database upgrade runs.
+
+Stage and prod default to RDS Multi-AZ and Performance Insights. Dev keeps cheaper database defaults and skips final RDS snapshots on destroy. Shared environments keep final snapshots enabled and should keep deletion protection enabled.
+
+CloudWatch alarms are created by default. To send alarm and OK notifications, set `alarm_sns_topic_arns` in the environment tfvars file:
+
+```hcl
+alarm_sns_topic_arns = ["arn:aws:sns:us-west-2:123456789012:elearn-mindset-prod-alerts"]
+```
+
+Tune web autoscaling per environment when needed:
+
+```hcl
+autoscaling_min_capacity  = 2
+autoscaling_max_capacity  = 8
+autoscaling_cpu_target    = 65
+autoscaling_memory_target = 70
+```
 
 ## GitHub Repository Setup
 
@@ -111,6 +129,21 @@ terraform -chdir=terraform/envs/dev plan \
 ```
 
 Replace `dev` with `stage` or `prod` for other environments.
+
+## Drift Detection
+
+The [Infrastructure Drift Detection](../.github/workflows/infrastructure_drift_detection.yml) workflow runs refresh-only plans for dev, stage, and prod. It uses the same OIDC roles and backend configuration as the delivery pipeline.
+
+Run the same check locally for one environment:
+
+```bash
+terraform -chdir=terraform/envs/prod plan \
+  -refresh-only \
+  -detailed-exitcode \
+  -input=false
+```
+
+Exit code `0` means no drift. Exit code `2` means Terraform detected remote resource changes compared with state. Encode intentional drift in Terraform through a PR or revert accidental drift in AWS.
 
 ## Route53 DNS
 

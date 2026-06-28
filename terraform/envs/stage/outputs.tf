@@ -26,6 +26,10 @@ output "efs_file_system_id" {
   value = module.moodle.efs_file_system_id
 }
 
+output "cloudwatch_alarm_names" {
+  value = module.moodle.cloudwatch_alarm_names
+}
+
 output "route53_record_fqdn" {
   value = try(module.route53[0].record_fqdn, null)
 }

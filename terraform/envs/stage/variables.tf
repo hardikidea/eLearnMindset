@@ -58,6 +58,26 @@ variable "desired_count" {
   default = 2
 }
 
+variable "autoscaling_min_capacity" {
+  type    = number
+  default = null
+}
+
+variable "autoscaling_max_capacity" {
+  type    = number
+  default = null
+}
+
+variable "autoscaling_cpu_target" {
+  type    = number
+  default = 70
+}
+
+variable "autoscaling_memory_target" {
+  type    = number
+  default = 75
+}
+
 variable "cron_desired_count" {
   type    = number
   default = 1
@@ -98,6 +118,21 @@ variable "database_deletion_protection" {
   default = true
 }
 
+variable "database_skip_final_snapshot" {
+  type    = bool
+  default = false
+}
+
+variable "database_multi_az" {
+  type    = bool
+  default = true
+}
+
+variable "database_performance_insights_enabled" {
+  type    = bool
+  default = true
+}
+
 variable "redis_node_type" {
   type    = string
   default = "cache.t4g.small"
@@ -116,6 +151,16 @@ variable "enable_container_insights" {
 variable "log_retention_days" {
   type    = number
   default = 30
+}
+
+variable "enable_cloudwatch_alarms" {
+  type    = bool
+  default = true
+}
+
+variable "alarm_sns_topic_arns" {
+  type    = list(string)
+  default = []
 }
 
 variable "route53_zone_id" {

@@ -38,6 +38,9 @@ runs:
       shell: bash
       run: yamllint .github/workflows .github/actions docker-compose.yml
 
+    - name: GitHub Actions lint
+      uses: rhysd/actionlint@v1
+
     - name: Dockerfile lint
       uses: hadolint/hadolint-action@v3.3.0
       with:
