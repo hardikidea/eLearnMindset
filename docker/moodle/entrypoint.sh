@@ -33,8 +33,8 @@ prepare_moodle
 
 case "${1:-moodle-web}" in
     moodle-web)
-        php-fpm -D
-        exec nginx -g "daemon off;"
+        /usr/local/sbin/php-fpm -D
+        exec /usr/sbin/nginx -g "daemon off;"
         ;;
     moodle-cron-loop)
         exec moodle-cron-loop
@@ -43,4 +43,3 @@ case "${1:-moodle-web}" in
         exec "$@"
         ;;
 esac
-

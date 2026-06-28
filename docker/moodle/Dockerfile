@@ -55,8 +55,26 @@ COPY docker/moodle/cron-loop.sh /usr/local/bin/moodle-cron-loop
 COPY moodle-overrides/ /usr/local/share/moodle-overrides/
 
 RUN chmod +x /usr/local/bin/moodle-entrypoint /usr/local/bin/moodle-cron-loop \
-    && mkdir -p /var/www/moodle /var/www/moodledata \
-    && chown -R www-data:www-data /var/www/moodle /var/www/moodledata \
+    && mkdir -p \
+        /tmp/nginx/client_temp \
+        /tmp/nginx/fastcgi_temp \
+        /tmp/nginx/proxy_temp \
+        /tmp/nginx/scgi_temp \
+        /tmp/nginx/uwsgi_temp \
+        /usr/local/var/log \
+        /usr/local/var/run \
+        /var/lib/nginx \
+        /var/log/nginx \
+        /var/www/moodle \
+        /var/www/moodledata \
+    && chown -R www-data:www-data \
+        /tmp/nginx \
+        /usr/local/var/log \
+        /usr/local/var/run \
+        /var/lib/nginx \
+        /var/log/nginx \
+        /var/www/moodle \
+        /var/www/moodledata \
     && rm -f /etc/nginx/sites-enabled/default
 
 RUN if [ "${INCLUDE_MOODLE_SOURCE}" = "true" ]; then \
@@ -68,6 +86,8 @@ RUN if [ "${INCLUDE_MOODLE_SOURCE}" = "true" ]; then \
     fi
 
 WORKDIR /var/www/moodle
+
+USER www-data
 
 ENTRYPOINT ["moodle-entrypoint"]
 CMD ["moodle-web"]

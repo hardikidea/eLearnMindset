@@ -41,13 +41,13 @@ for changed_file in "${changed_files[@]}"; do
         *.tf)
             terraform_files+=("${changed_file}")
             ;;
-        *Dockerfile|Dockerfile|*.Dockerfile)
+        Dockerfile|*/Dockerfile|*.Dockerfile)
             dockerfiles+=("${changed_file}")
             ;;
     esac
 
     case "${changed_file}" in
-        docker-compose.yml|compose.yml|compose.yaml|docker/*|docker/**/*|.env.example)
+        docker-compose.yml|compose.yml|compose.yaml|docker/*|.env.example)
             compose_check_required=1
             ;;
         renovate.json|.github/renovate.json)

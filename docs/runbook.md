@@ -486,18 +486,44 @@ Renovate pipeline:
 
 Pipeline order:
 
-1. `validate`
-2. `lint`
-3. `security-audit`
-4. `local-image-build`
-5. `integration-smoke`
-6. `terraform-plan`
-7. `publish-image`
-8. `terraform-apply-dev`
-9. `terraform-apply-stage`
-10. `terraform-apply-prod`
+1. `pr_or_main_gate`
+2. `unit_tests`
+3. `lint`
+4. `validate_docs`
+5. `security_audit`
+6. `build_image`
+7. `build_background_image`
+8. `integration_smoke`
+9. `compute_image_tag`
+10. `publish_test_image`
+11. `terraform_plan_dev`
+12. `terraform_plan_stage`
+13. `terraform_plan_prod`
+14. `terraform_apply_dev`
+15. `deploy_dev`
+16. `deploy_dev_background`
+17. `terraform_apply_stage`
+18. `deploy_stage`
+19. `deploy_stage_background`
+20. `smoke_tests`
+21. `e2e_tests`
+22. `approve_prod_deploy`
+23. `terraform_apply_prod`
+24. `deploy_prod`
+25. `deploy_prod_background`
 
-Deployment is gated through linting, security audit, image build, and smoke tests.
+Optional manual extended-test jobs are available behind `run_extended_tests=true`:
+
+1. `setup_behat_infra`
+2. `run_behat_tests`
+3. `publish_behat_report`
+4. `teardown_behat_infra`
+5. `setup_phpunit_infra`
+6. `run_phpunit_tests`
+7. `publish_phpunit_report`
+8. `teardown_phpunit_infra`
+
+Deployment is gated through linting, documentation validation, security audit, image build, smoke tests, and the `prod-approval` environment before production apply.
 
 Required GitHub repository variables:
 
@@ -518,6 +544,7 @@ Required GitHub Environments:
 dev
 stage
 prod
+prod-approval
 ```
 
 Use approval rules for `stage` and `prod`.

@@ -34,10 +34,19 @@ on:
           - stage
           - prod
           - all
+      run_extended_tests:
+        description: "Run optional Behat and PHPUnit integration placeholders"
+        required: true
+        default: "false"
+        type: choice
+        options:
+          - "false"
+          - "true"
 
 permissions:
   id-token: write
   contents: read
+  pull-requests: read
   packages: write
   checks: write
 
@@ -47,14 +56,47 @@ env:
   PROJECT_NAME: elearn-mindset
   GHCR_IMAGE_NAME: ${{ vars.GHCR_IMAGE_NAME || 'ghcr.io/hardikidea/elearnmindset' }}
   MOODLE_VERSION: v5.2.1
-  IMAGE_TAG: ${{ github.sha }}
   TRIVY_VERSION: v0.71.2
   RENOVATE_CLI_VERSION: 43.243.0
 
 jobs:
-  validate:
-    name: Validate Project
+  pr_or_main_gate:
+    name: Run Tests On PR Or Main
     runs-on: ubuntu-latest
+    outputs:
+      has_pr: ${{ steps.detect.outputs.has_pr }}
+    steps:
+      - name: Detect PR, main, or manual run
+        id: detect
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+        run: |
+          set -euo pipefail
+
+          if [ "${{ github.event_name }}" = "pull_request" ] ||
+             [ "${{ github.event_name }}" = "workflow_dispatch" ] ||
+             [ "${{ github.ref }}" = "refs/heads/main" ]; then
+            echo "has_pr=true" >> "${GITHUB_OUTPUT}"
+            exit 0
+          fi
+
+          if gh pr list \
+            --repo "${{ github.repository }}" \
+            --head "${BRANCH_NAME}" \
+            --state open \
+            --json number \
+            --jq 'length > 0' | grep -q true; then
+            echo "has_pr=true" >> "${GITHUB_OUTPUT}"
+          else
+            echo "has_pr=false" >> "${GITHUB_OUTPUT}"
+          fi
+
+  unit_tests:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    needs: pr_or_main_gate
+    if: needs.pr_or_main_gate.outputs.has_pr == 'true'
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -79,8 +121,10 @@ jobs:
           git -C moodle log --oneline -1 public/version.php
 
   lint:
-    name: Lint And Static Analysis
+    name: Lint
     runs-on: ubuntu-latest
+    needs: pr_or_main_gate
+    if: needs.pr_or_main_gate.outputs.has_pr == 'true'
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -107,7 +151,7 @@ jobs:
         run: shellcheck scripts/*.sh docker/moodle/*.sh
 
       - name: YAML lint
-        run: yamllint .github/workflows docker-compose.yml
+        run: yamllint .github/workflows .github/actions docker-compose.yml
 
       - name: Dockerfile lint
         uses: hadolint/hadolint-action@v3.3.0
@@ -126,10 +170,23 @@ jobs:
             terraform -chdir="${dir}" validate
           done
 
-  security-audit:
+  validate_docs:
+    name: Validate Docs
+    runs-on: ubuntu-latest
+    needs: pr_or_main_gate
+    if: needs.pr_or_main_gate.outputs.has_pr == 'true'
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Validate local Markdown links
+        run: ./scripts/validate-docs.sh
+
+  security_audit:
     name: Dependency And Vulnerability Audit
     runs-on: ubuntu-latest
-    needs: [validate, lint]
+    needs: [pr_or_main_gate, unit_tests, lint]
+    if: needs.pr_or_main_gate.outputs.has_pr == 'true'
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -157,10 +214,11 @@ jobs:
           exit-code: "1"
           skip-dirs: moodledata,backups,moodle/.git
 
-  local-image-build:
-    name: Build Local And Production Images
+  build_image:
+    name: Build Image
     runs-on: ubuntu-latest
-    needs: [validate, lint, security-audit]
+    needs: [pr_or_main_gate, unit_tests, lint, security_audit]
+    if: needs.pr_or_main_gate.outputs.has_pr == 'true'
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -180,24 +238,43 @@ jobs:
             --build-arg INCLUDE_MOODLE_SOURCE=true \
             --build-arg MOODLE_VERSION="${MOODLE_VERSION}" \
             -f docker/moodle/Dockerfile \
-            -t "elearn-mindset-production:${IMAGE_TAG}" \
+            -t "elearn-mindset-production:${GITHUB_SHA}" \
             .
 
       - name: Scan production Docker image
         uses: aquasecurity/trivy-action@v0.36.0
         with:
           version: ${{ env.TRIVY_VERSION }}
-          image-ref: elearn-mindset-production:${{ env.IMAGE_TAG }}
+          image-ref: elearn-mindset-production:${{ github.sha }}
           format: table
           vuln-type: os,library
           severity: HIGH,CRITICAL
           ignore-unfixed: true
           exit-code: "1"
 
-  integration-smoke:
+  build_background_image:
+    name: Build Background Image
+    runs-on: ubuntu-latest
+    needs: [pr_or_main_gate, unit_tests, lint, security_audit]
+    if: needs.pr_or_main_gate.outputs.has_pr == 'true'
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Build cron-compatible Docker image
+        run: |
+          docker build \
+            --build-arg INCLUDE_MOODLE_SOURCE=true \
+            --build-arg MOODLE_VERSION="${MOODLE_VERSION}" \
+            -f docker/moodle/Dockerfile \
+            -t "elearn-mindset-cron:${GITHUB_SHA}" \
+            .
+
+  integration_smoke:
     name: Integration Smoke Test
     runs-on: ubuntu-latest
-    needs: local-image-build
+    needs: [pr_or_main_gate, build_image, build_background_image]
+    if: needs.pr_or_main_gate.outputs.has_pr == 'true'
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -236,37 +313,39 @@ jobs:
         if: always()
         run: docker compose down -v
 
-  terraform-plan:
-    name: Terraform Plan ${{ matrix.environment }}
+  compute_image_tag:
+    name: Compute Image Tag
     runs-on: ubuntu-latest
-    needs: [validate, lint]
-    if: vars.AWS_ACCOUNT_ID != ''
-    strategy:
-      fail-fast: false
-      matrix:
-        environment: [dev, stage, prod]
-    environment: ${{ matrix.environment }}
+    needs: pr_or_main_gate
+    if: needs.pr_or_main_gate.outputs.has_pr == 'true'
+    outputs:
+      image: ${{ steps.tag.outputs.image }}
+      tag: ${{ steps.tag.outputs.tag }}
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
+      - name: Compute tag
+        id: tag
+        run: |
+          set -euo pipefail
 
-      - name: Terraform plan
-        uses: ./.github/actions/terraform-run
-        with:
-          environment: ${{ matrix.environment }}
-          command: plan
-          aws_account_id: ${{ env.AWS_ACCOUNT_ID }}
-          aws_region: ${{ env.AWS_REGION }}
-          project_name: ${{ env.PROJECT_NAME }}
-          container_repository_url: ${{ env.GHCR_IMAGE_NAME }}
-          image_tag: ${{ env.IMAGE_TAG }}
+          tag="${GITHUB_SHA}"
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            tag="pr-${GITHUB_RUN_NUMBER}-${GITHUB_SHA:0:12}"
+          elif [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            tag="manual-${GITHUB_RUN_NUMBER}-${GITHUB_SHA:0:12}"
+          fi
 
-  publish-image:
-    name: Publish Image To GHCR
+          echo "tag=${tag}" >> "${GITHUB_OUTPUT}"
+          echo "image=${GHCR_IMAGE_NAME}:${tag}" >> "${GITHUB_OUTPUT}"
+          echo "Image: ${GHCR_IMAGE_NAME}:${tag}" >> "${GITHUB_STEP_SUMMARY}"
+
+  publish_test_image:
+    name: Build and publish test image
     runs-on: ubuntu-latest
-    needs: integration-smoke
-    if: github.ref == 'refs/heads/main' || (github.event_name == 'workflow_dispatch' && inputs.publish_image == 'true')
-    environment: dev
+    needs: [pr_or_main_gate, compute_image_tag, integration_smoke]
+    if: |
+      needs.pr_or_main_gate.outputs.has_pr == 'true' &&
+      (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) &&
+      (github.event_name != 'workflow_dispatch' || inputs.publish_image == 'true')
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -276,13 +355,81 @@ jobs:
         with:
           image_repository: ${{ env.GHCR_IMAGE_NAME }}
           moodle_version: ${{ env.MOODLE_VERSION }}
-          image_tag: ${{ env.IMAGE_TAG }}
+          image_tag: ${{ needs.compute_image_tag.outputs.tag }}
 
-  terraform-apply-dev:
-    name: Terraform Apply Dev
+  terraform_plan_dev:
+    name: "[Dev] Terraform Plan"
     runs-on: ubuntu-latest
-    needs: [terraform-plan, publish-image]
-    if: vars.AWS_ACCOUNT_ID != '' && (github.ref == 'refs/heads/main' || (github.event_name == 'workflow_dispatch' && inputs.apply_infrastructure == 'true' && (inputs.target_environment == 'dev' || inputs.target_environment == 'all')))
+    needs: [pr_or_main_gate, compute_image_tag, unit_tests, lint, validate_docs, security_audit]
+    if: vars.AWS_ACCOUNT_ID != '' && needs.pr_or_main_gate.outputs.has_pr == 'true'
+    environment: dev
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Terraform plan dev
+        uses: ./.github/actions/terraform-run
+        with:
+          environment: dev
+          command: plan
+          aws_account_id: ${{ env.AWS_ACCOUNT_ID }}
+          aws_region: ${{ env.AWS_REGION }}
+          project_name: ${{ env.PROJECT_NAME }}
+          container_repository_url: ${{ env.GHCR_IMAGE_NAME }}
+          image_tag: ${{ needs.compute_image_tag.outputs.tag }}
+
+  terraform_plan_stage:
+    name: "[Stage] Terraform Plan"
+    runs-on: ubuntu-latest
+    needs: [pr_or_main_gate, compute_image_tag, unit_tests, lint, validate_docs, security_audit]
+    if: vars.AWS_ACCOUNT_ID != '' && needs.pr_or_main_gate.outputs.has_pr == 'true'
+    environment: stage
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Terraform plan stage
+        uses: ./.github/actions/terraform-run
+        with:
+          environment: stage
+          command: plan
+          aws_account_id: ${{ env.AWS_ACCOUNT_ID }}
+          aws_region: ${{ env.AWS_REGION }}
+          project_name: ${{ env.PROJECT_NAME }}
+          container_repository_url: ${{ env.GHCR_IMAGE_NAME }}
+          image_tag: ${{ needs.compute_image_tag.outputs.tag }}
+
+  terraform_plan_prod:
+    name: "[Prod] Terraform Plan"
+    runs-on: ubuntu-latest
+    needs: [pr_or_main_gate, compute_image_tag, unit_tests, lint, validate_docs, security_audit]
+    if: vars.AWS_ACCOUNT_ID != '' && needs.pr_or_main_gate.outputs.has_pr == 'true'
+    environment: prod
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Terraform plan prod
+        uses: ./.github/actions/terraform-run
+        with:
+          environment: prod
+          command: plan
+          aws_account_id: ${{ env.AWS_ACCOUNT_ID }}
+          aws_region: ${{ env.AWS_REGION }}
+          project_name: ${{ env.PROJECT_NAME }}
+          container_repository_url: ${{ env.GHCR_IMAGE_NAME }}
+          image_tag: ${{ needs.compute_image_tag.outputs.tag }}
+
+  terraform_apply_dev:
+    name: "[Dev] Terraform Apply"
+    runs-on: ubuntu-latest
+    needs: [compute_image_tag, terraform_plan_dev, publish_test_image]
+    if: |
+      vars.AWS_ACCOUNT_ID != '' &&
+      ((github.event_name == 'push' && github.ref == 'refs/heads/main') ||
+        (github.event_name == 'workflow_dispatch' &&
+         inputs.apply_infrastructure == 'true' &&
+         (inputs.target_environment == 'dev' || inputs.target_environment == 'all')))
     environment: dev
     steps:
       - name: Checkout Code
@@ -297,13 +444,56 @@ jobs:
           aws_region: ${{ env.AWS_REGION }}
           project_name: ${{ env.PROJECT_NAME }}
           container_repository_url: ${{ env.GHCR_IMAGE_NAME }}
-          image_tag: ${{ env.IMAGE_TAG }}
+          image_tag: ${{ needs.compute_image_tag.outputs.tag }}
 
-  terraform-apply-stage:
-    name: Terraform Apply Stage
+  deploy_dev:
+    name: "[Dev] Deploy"
     runs-on: ubuntu-latest
-    needs: [terraform-plan, publish-image]
-    if: vars.AWS_ACCOUNT_ID != '' && (github.ref == 'refs/heads/main' || (github.event_name == 'workflow_dispatch' && inputs.apply_infrastructure == 'true' && (inputs.target_environment == 'stage' || inputs.target_environment == 'all')))
+    needs: terraform_apply_dev
+    if: needs.terraform_apply_dev.result == 'success'
+    environment: dev
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Wait for Moodle web service
+        uses: ./.github/actions/ecs-service-wait
+        with:
+          environment: dev
+          service_kind: web
+          aws_account_id: ${{ env.AWS_ACCOUNT_ID }}
+          aws_region: ${{ env.AWS_REGION }}
+          project_name: ${{ env.PROJECT_NAME }}
+
+  deploy_dev_background:
+    name: "[Dev] Deploy Background"
+    runs-on: ubuntu-latest
+    needs: terraform_apply_dev
+    if: needs.terraform_apply_dev.result == 'success'
+    environment: dev
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Wait for Moodle cron service
+        uses: ./.github/actions/ecs-service-wait
+        with:
+          environment: dev
+          service_kind: cron
+          aws_account_id: ${{ env.AWS_ACCOUNT_ID }}
+          aws_region: ${{ env.AWS_REGION }}
+          project_name: ${{ env.PROJECT_NAME }}
+
+  terraform_apply_stage:
+    name: "[Stage] Terraform Apply"
+    runs-on: ubuntu-latest
+    needs: [compute_image_tag, terraform_plan_stage, publish_test_image]
+    if: |
+      vars.AWS_ACCOUNT_ID != '' &&
+      ((github.event_name == 'push' && github.ref == 'refs/heads/main') ||
+        (github.event_name == 'workflow_dispatch' &&
+         inputs.apply_infrastructure == 'true' &&
+         (inputs.target_environment == 'stage' || inputs.target_environment == 'all')))
     environment: stage
     steps:
       - name: Checkout Code
@@ -318,13 +508,274 @@ jobs:
           aws_region: ${{ env.AWS_REGION }}
           project_name: ${{ env.PROJECT_NAME }}
           container_repository_url: ${{ env.GHCR_IMAGE_NAME }}
-          image_tag: ${{ env.IMAGE_TAG }}
+          image_tag: ${{ needs.compute_image_tag.outputs.tag }}
 
-  terraform-apply-prod:
-    name: Terraform Apply Prod
+  deploy_stage:
+    name: "[Stage] Deploy"
     runs-on: ubuntu-latest
-    needs: [terraform-plan, publish-image]
-    if: vars.AWS_ACCOUNT_ID != '' && (github.ref == 'refs/heads/main' || (github.event_name == 'workflow_dispatch' && inputs.apply_infrastructure == 'true' && (inputs.target_environment == 'prod' || inputs.target_environment == 'all')))
+    needs: terraform_apply_stage
+    if: needs.terraform_apply_stage.result == 'success'
+    environment: stage
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Wait for Moodle web service
+        uses: ./.github/actions/ecs-service-wait
+        with:
+          environment: stage
+          service_kind: web
+          aws_account_id: ${{ env.AWS_ACCOUNT_ID }}
+          aws_region: ${{ env.AWS_REGION }}
+          project_name: ${{ env.PROJECT_NAME }}
+
+  deploy_stage_background:
+    name: "[Stage] Deploy Background"
+    runs-on: ubuntu-latest
+    needs: terraform_apply_stage
+    if: needs.terraform_apply_stage.result == 'success'
+    environment: stage
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Wait for Moodle cron service
+        uses: ./.github/actions/ecs-service-wait
+        with:
+          environment: stage
+          service_kind: cron
+          aws_account_id: ${{ env.AWS_ACCOUNT_ID }}
+          aws_region: ${{ env.AWS_REGION }}
+          project_name: ${{ env.PROJECT_NAME }}
+
+  setup_behat_infra:
+    name: Setup Behat Infra
+    runs-on: ubuntu-latest
+    needs: publish_test_image
+    if: github.event_name == 'workflow_dispatch' && inputs.run_extended_tests == 'true' && needs.publish_test_image.result == 'success'
+    outputs:
+      workspace: ${{ steps.workspace.outputs.workspace }}
+    steps:
+      - name: Prepare Behat workspace metadata
+        id: workspace
+        run: |
+          workspace="behat-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          echo "workspace=${workspace}" >> "${GITHUB_OUTPUT}"
+          echo "Prepared ${workspace} for future Behat infrastructure." >> "${GITHUB_STEP_SUMMARY}"
+
+  setup_phpunit_infra:
+    name: Setup PHPUnit Integration Infra
+    runs-on: ubuntu-latest
+    needs: publish_test_image
+    if: github.event_name == 'workflow_dispatch' && inputs.run_extended_tests == 'true' && needs.publish_test_image.result == 'success'
+    outputs:
+      workspace: ${{ steps.workspace.outputs.workspace }}
+    steps:
+      - name: Prepare PHPUnit workspace metadata
+        id: workspace
+        run: |
+          workspace="phpunit-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          echo "workspace=${workspace}" >> "${GITHUB_OUTPUT}"
+          echo "Prepared ${workspace} for future PHPUnit integration infrastructure." >> "${GITHUB_STEP_SUMMARY}"
+
+  run_behat_tests:
+    name: Run Behat Tests
+    runs-on: ubuntu-latest
+    needs: setup_behat_infra
+    if: needs.setup_behat_infra.result == 'success'
+    steps:
+      - name: Create Behat placeholder JUnit report
+        run: |
+          mkdir -p test-results/behat
+          cat > test-results/behat/junit.xml <<'XML'
+          <?xml version="1.0" encoding="UTF-8"?>
+          <testsuites>
+            <testsuite name="behat" tests="1" skipped="1">
+              <testcase classname="behat" name="infrastructure_not_configured">
+                <skipped message="Behat infrastructure is not configured in this repository yet." />
+              </testcase>
+            </testsuite>
+          </testsuites>
+          XML
+
+      - name: Upload Behat report
+        uses: actions/upload-artifact@v4
+        with:
+          name: behat-test-results-${{ github.run_number }}
+          path: test-results/behat
+          if-no-files-found: error
+
+  run_phpunit_tests:
+    name: Run PHPUnit Tests
+    runs-on: ubuntu-latest
+    needs: setup_phpunit_infra
+    if: needs.setup_phpunit_infra.result == 'success'
+    steps:
+      - name: Create PHPUnit placeholder JUnit report
+        run: |
+          mkdir -p test-results/phpunit
+          cat > test-results/phpunit/junit.xml <<'XML'
+          <?xml version="1.0" encoding="UTF-8"?>
+          <testsuites>
+            <testsuite name="phpunit" tests="1" skipped="1">
+              <testcase classname="phpunit" name="infrastructure_not_configured">
+                <skipped message="PHPUnit integration infrastructure is not configured in this repository yet." />
+              </testcase>
+            </testsuite>
+          </testsuites>
+          XML
+
+      - name: Upload PHPUnit report
+        uses: actions/upload-artifact@v4
+        with:
+          name: phpunit-test-results-${{ github.run_number }}
+          path: test-results/phpunit
+          if-no-files-found: error
+
+  publish_behat_report:
+    name: Publish Behat Report
+    runs-on: ubuntu-latest
+    needs: run_behat_tests
+    if: github.event_name == 'workflow_dispatch' && inputs.run_extended_tests == 'true' && needs.run_behat_tests.result == 'success'
+    steps:
+      - name: Download Behat report
+        uses: actions/download-artifact@v4
+        with:
+          name: behat-test-results-${{ github.run_number }}
+          path: test-results/behat
+
+      - name: Summarize Behat report
+        run: |
+          {
+            echo "### Behat report"
+            echo ""
+            echo "Uploaded artifact: behat-test-results-${GITHUB_RUN_NUMBER}"
+          } >> "${GITHUB_STEP_SUMMARY}"
+
+  publish_phpunit_report:
+    name: Publish PHPUnit Report
+    runs-on: ubuntu-latest
+    needs: run_phpunit_tests
+    if: github.event_name == 'workflow_dispatch' && inputs.run_extended_tests == 'true' && needs.run_phpunit_tests.result == 'success'
+    steps:
+      - name: Download PHPUnit report
+        uses: actions/download-artifact@v4
+        with:
+          name: phpunit-test-results-${{ github.run_number }}
+          path: test-results/phpunit
+
+      - name: Summarize PHPUnit report
+        run: |
+          {
+            echo "### PHPUnit report"
+            echo ""
+            echo "Uploaded artifact: phpunit-test-results-${GITHUB_RUN_NUMBER}"
+          } >> "${GITHUB_STEP_SUMMARY}"
+
+  teardown_behat_infra:
+    name: Teardown Behat Infrastructure
+    runs-on: ubuntu-latest
+    needs: [setup_behat_infra, run_behat_tests]
+    if: always() && github.event_name == 'workflow_dispatch' && inputs.run_extended_tests == 'true'
+    steps:
+      - name: Teardown Behat metadata
+        run: echo "Teardown complete for ${{ needs.setup_behat_infra.outputs.workspace }}."
+
+  teardown_phpunit_infra:
+    name: Teardown PHPUnit Infrastructure
+    runs-on: ubuntu-latest
+    needs: [setup_phpunit_infra, run_phpunit_tests]
+    if: always() && github.event_name == 'workflow_dispatch' && inputs.run_extended_tests == 'true'
+    steps:
+      - name: Teardown PHPUnit metadata
+        run: echo "Teardown complete for ${{ needs.setup_phpunit_infra.outputs.workspace }}."
+
+  smoke_tests:
+    name: Run Smoke Tests
+    runs-on: ubuntu-latest
+    needs: [deploy_stage, deploy_stage_background]
+    if: needs.deploy_stage.result == 'success' && needs.deploy_stage_background.result == 'success'
+    environment: stage
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS OIDC
+        uses: ./.github/actions/aws-oidc
+        with:
+          environment: stage
+          aws_account_id: ${{ env.AWS_ACCOUNT_ID }}
+          aws_region: ${{ env.AWS_REGION }}
+          project_name: ${{ env.PROJECT_NAME }}
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_wrapper: false
+
+      - name: Check stage Moodle pages
+        run: |
+          set -euo pipefail
+
+          cd terraform/envs/stage
+          terraform init \
+            -backend-config="bucket=${PROJECT_NAME}-${AWS_ACCOUNT_ID}-${AWS_REGION}-tfstate" \
+            -backend-config="dynamodb_table=${PROJECT_NAME}-terraform-locks" \
+            -backend-config="key=${PROJECT_NAME}/stage.tfstate" \
+            -backend-config="region=${AWS_REGION}" \
+            -backend-config="encrypt=true"
+
+          wwwroot="$(terraform output -raw moodle_wwwroot)"
+          curl -fsS --retry 6 --retry-delay 10 --max-time 30 "${wwwroot%/}/" >/tmp/stage-home.html
+          curl -fsS --retry 6 --retry-delay 10 --max-time 30 "${wwwroot%/}/login/index.php" >/tmp/stage-login.html
+
+  e2e_tests:
+    name: Run E2E Tests
+    runs-on: ubuntu-latest
+    needs: smoke_tests
+    if: needs.smoke_tests.result == 'success'
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Run Playwright suite when present
+        run: |
+          set -euo pipefail
+
+          if [ ! -f e2e/package.json ]; then
+            echo "No e2e/package.json found. Add a Playwright suite under e2e/ to enable browser tests."
+            exit 0
+          fi
+
+          cd e2e
+          npm ci
+          npx playwright install --with-deps chromium
+          npm test
+
+  approve_prod_deploy:
+    name: Approve Prod Deploy
+    runs-on: ubuntu-latest
+    needs: [terraform_plan_prod, smoke_tests, e2e_tests]
+    if: |
+      always() &&
+      vars.AWS_ACCOUNT_ID != '' &&
+      ((github.event_name == 'push' && github.ref == 'refs/heads/main') ||
+        (github.event_name == 'workflow_dispatch' &&
+         inputs.apply_infrastructure == 'true' &&
+         (inputs.target_environment == 'prod' || inputs.target_environment == 'all'))) &&
+      needs.terraform_plan_prod.result == 'success' &&
+      (needs.smoke_tests.result == 'success' || needs.smoke_tests.result == 'skipped') &&
+      (needs.e2e_tests.result == 'success' || needs.e2e_tests.result == 'skipped')
+    environment: prod-approval
+    steps:
+      - name: Approval completed
+        run: echo "Production approval gate completed."
+
+  terraform_apply_prod:
+    name: "[Prod] Terraform Apply"
+    runs-on: ubuntu-latest
+    needs: [compute_image_tag, approve_prod_deploy, publish_test_image]
+    if: needs.approve_prod_deploy.result == 'success'
     environment: prod
     steps:
       - name: Checkout Code
@@ -339,4 +790,42 @@ jobs:
           aws_region: ${{ env.AWS_REGION }}
           project_name: ${{ env.PROJECT_NAME }}
           container_repository_url: ${{ env.GHCR_IMAGE_NAME }}
-          image_tag: ${{ env.IMAGE_TAG }}
+          image_tag: ${{ needs.compute_image_tag.outputs.tag }}
+
+  deploy_prod:
+    name: "[Prod] Deploy"
+    runs-on: ubuntu-latest
+    needs: terraform_apply_prod
+    if: needs.terraform_apply_prod.result == 'success'
+    environment: prod
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Wait for Moodle web service
+        uses: ./.github/actions/ecs-service-wait
+        with:
+          environment: prod
+          service_kind: web
+          aws_account_id: ${{ env.AWS_ACCOUNT_ID }}
+          aws_region: ${{ env.AWS_REGION }}
+          project_name: ${{ env.PROJECT_NAME }}
+
+  deploy_prod_background:
+    name: "[Prod] Deploy Background"
+    runs-on: ubuntu-latest
+    needs: terraform_apply_prod
+    if: needs.terraform_apply_prod.result == 'success'
+    environment: prod
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Wait for Moodle cron service
+        uses: ./.github/actions/ecs-service-wait
+        with:
+          environment: prod
+          service_kind: cron
+          aws_account_id: ${{ env.AWS_ACCOUNT_ID }}
+          aws_region: ${{ env.AWS_REGION }}
+          project_name: ${{ env.PROJECT_NAME }}

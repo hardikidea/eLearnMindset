@@ -17,6 +17,8 @@ set +a
 POSTGRES_DB="${POSTGRES_DB:-moodle}"
 POSTGRES_USER="${POSTGRES_USER:-moodle}"
 MOODLE_DB_PREFIX="${MOODLE_DB_PREFIX:-mdl_}"
+export MOODLE_RUNTIME_UID="${MOODLE_RUNTIME_UID:-$(id -u)}"
+export MOODLE_RUNTIME_GID="${MOODLE_RUNTIME_GID:-$(id -g)}"
 
 docker compose up -d db redis mailpit moodle
 

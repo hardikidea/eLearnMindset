@@ -16,7 +16,7 @@ locals {
   db_name          = "moodle"
   db_username      = "moodle"
   container_name   = "moodle"
-  container_port   = 80
+  container_port   = 8080
   moodle_wwwroot   = var.moodle_wwwroot != "" ? var.moodle_wwwroot : "http://${aws_lb.moodle.dns_name}"
   use_ssl_proxy    = startswith(local.moodle_wwwroot, "https://")
   effective_scheme = local.use_ssl_proxy ? "HTTPS" : "HTTP"

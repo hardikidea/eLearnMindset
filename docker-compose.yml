@@ -6,6 +6,7 @@ services:
       dockerfile: docker/moodle/Dockerfile
     env_file:
       - .env
+    user: "${MOODLE_RUNTIME_UID:-33}:${MOODLE_RUNTIME_GID:-33}"
     environment:
       TZ: ${TZ:-Asia/Kolkata}
     depends_on:
@@ -19,11 +20,11 @@ services:
       - ./moodle:/var/www/moodle:rw
       - ./moodledata:/var/www/moodledata:rw
     ports:
-      - "127.0.0.1:${MOODLE_HTTP_PORT:-8080}:80"
+      - "127.0.0.1:${MOODLE_HTTP_PORT:-8080}:8080"
     extra_hosts:
       - "host.docker.internal:host-gateway"
     healthcheck:
-      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1/health >/dev/null || exit 1"]
+      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:8080/health >/dev/null || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -37,6 +38,7 @@ services:
     command: moodle-cron-loop
     env_file:
       - .env
+    user: "${MOODLE_RUNTIME_UID:-33}:${MOODLE_RUNTIME_GID:-33}"
     environment:
       TZ: ${TZ:-Asia/Kolkata}
     depends_on:

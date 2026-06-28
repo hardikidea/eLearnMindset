@@ -193,7 +193,7 @@ ghcr.io/hardikidea/elearnmindset
 
 ## CI Security And Renovate
 
-The GitHub Actions pipeline now includes Renovate config validation, shell/YAML/Dockerfile/Terraform linting, Composer audit, Trivy filesystem/IaC scanning, and Trivy production image scanning.
+The GitHub Actions pipeline now includes Renovate config validation, documentation link validation, shell/YAML/Dockerfile/Terraform linting, Composer audit, Trivy filesystem/IaC scanning, Trivy production image scanning, GHCR image publishing, dev/stage/prod Terraform plan/apply jobs, ECS web/background deploy waits, stage smoke checks, and a `prod-approval` environment gate.
 
 Renovate runs on a weekday schedule from [.github/workflows/renovate.yml](.github/workflows/renovate.yml). Configure the `RENOVATE_TOKEN` repository secret so Renovate PRs can trigger the normal CI checks.
 

@@ -37,15 +37,17 @@ This follows the Moodle Git administrator guidance for newer Moodle versions.
 
 The image uses PHP 8.3 because Moodle 5.2 requires PHP 8.3 or PHP 8.4. Installed extensions include the PostgreSQL driver, GD, Intl, Mbstring, SOAP, Zip, Opcache, Exif, and Redis.
 
-Important PHP settings are in [docker/moodle/php.ini](docker/moodle/php.ini).
+Important PHP settings are in [docker/moodle/php.ini](../docker/moodle/php.ini).
 
 ## Config Generation
 
-On first container start, [docker/moodle/entrypoint.sh](docker/moodle/entrypoint.sh) copies a local `config.php` into `moodle/config.php` if one does not already exist. The config keeps `$CFG->routerconfigured = true`, and Nginx falls back missing paths to `r.php` so Moodle's clean router endpoints work.
+On first container start, [docker/moodle/entrypoint.sh](../docker/moodle/entrypoint.sh) copies a local `config.php` into `moodle/config.php` if one does not already exist. The config keeps `$CFG->routerconfigured = true`, and Nginx falls back missing paths to `r.php` so Moodle's clean router endpoints work.
 
 The generated config reads database and URL values from environment variables, so `.env` remains the main local configuration file.
 
-`MOODLE_REVERSEPROXY=false` is used for this plain HTTP local stack. Nginx listens on container ports `80` and `8080` so Moodle CLI health checks can reach the same `MOODLE_WWWROOT` URL from inside the container.
+`MOODLE_REVERSEPROXY=false` is used for this plain HTTP local stack. Nginx listens on container port `8080` so the production image can run as a non-root user while Moodle CLI health checks reach the same `MOODLE_WWWROOT` URL from inside the container.
+
+The production image defaults to `www-data` (`33:33`). For local bind mounts, `scripts/install-site.sh` exports the current host UID/GID as `MOODLE_RUNTIME_UID` and `MOODLE_RUNTIME_GID` before starting Compose so generated files remain writable on the host.
 
 ## Moodle Overrides
 
@@ -61,7 +63,7 @@ The root repository does not commit the local `moodle/` checkout. Project-specif
 
 | Service | Host URL or Address | Container Address |
 | --- | --- | --- |
-| Moodle web | `http://localhost:8080` | `moodle:80`, `moodle:8080` |
+| Moodle web | `http://localhost:8080` | `moodle:8080` |
 | PostgreSQL | `127.0.0.1:5440` | `db:5432` |
 | Redis | `127.0.0.1:6379` | `redis:6379` |
 | MailPit UI | `http://localhost:8025` | `mailpit:8025` |

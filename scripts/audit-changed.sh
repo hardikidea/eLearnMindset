@@ -82,7 +82,7 @@ for changed_file in "${changed_files[@]}"; do
         *.tf)
             scan_path="$(dirname "${changed_file}")"
             ;;
-        *Dockerfile|Dockerfile|*.Dockerfile|docker-compose.yml|compose.yml|compose.yaml|*.lock|package.json|*/package.json|composer.json|*/composer.json|.github/workflows/*.yml|.github/workflows/*.yaml)
+        Dockerfile|*/Dockerfile|*.Dockerfile|docker-compose.yml|compose.yml|compose.yaml|*.lock|package.json|*/package.json|composer.json|*/composer.json|.github/workflows/*.yml|.github/workflows/*.yaml)
             scan_path="${changed_file}"
             ;;
         *)
@@ -122,6 +122,8 @@ if [ "${#npm_audit_dirs[@]}" -gt 0 ]; then
         docker_bin="$(find_docker_bin)"
         if [ -n "${docker_bin}" ]; then
             for audit_dir in "${npm_audit_dirs[@]}"; do
+                # AUDIT_DIR must expand inside the container shell.
+                # shellcheck disable=SC2016
                 "${docker_bin}" run --rm \
                     -v "${ROOT_DIR}:/repo" \
                     -w /repo \
