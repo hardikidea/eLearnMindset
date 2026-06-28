@@ -1,9 +1,11 @@
+#trivy:ignore:AWS-0053 Moodle is a public web application; ingress is controlled by security groups and optional Route53/TLS configuration.
 resource "aws_lb" "moodle" {
-  name               = "${local.name_prefix}-alb"
-  internal           = false
-  load_balancer_type = "application"
-  security_groups    = [aws_security_group.alb.id]
-  subnets            = values(aws_subnet.public)[*].id
+  name                       = "${local.name_prefix}-alb"
+  internal                   = false
+  load_balancer_type         = "application"
+  security_groups            = [aws_security_group.alb.id]
+  subnets                    = values(aws_subnet.public)[*].id
+  drop_invalid_header_fields = true
 
   tags = merge(local.common_tags, {
     Name = "${local.name_prefix}-alb"
@@ -34,7 +36,10 @@ resource "aws_lb_target_group" "moodle" {
   })
 }
 
-resource "aws_lb_listener" "http" {
+#trivy:ignore:AWS-0054 Dev and bootstrap environments can run without a certificate; production should set certificate_arn and use the HTTPS listener.
+resource "aws_lb_listener" "http_forward" {
+  count = var.certificate_arn == "" ? 1 : 0
+
   load_balancer_arn = aws_lb.moodle.arn
   port              = 80
   protocol          = "HTTP"
@@ -42,6 +47,24 @@ resource "aws_lb_listener" "http" {
   default_action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.moodle.arn
+  }
+}
+
+resource "aws_lb_listener" "http_redirect" {
+  count = var.certificate_arn == "" ? 0 : 1
+
+  load_balancer_arn = aws_lb.moodle.arn
+  port              = 80
+  protocol          = "HTTP"
+
+  default_action {
+    type = "redirect"
+
+    redirect {
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+    }
   }
 }
 

@@ -52,4 +52,3 @@ runs:
           MOODLE_VERSION=${{ inputs.moodle_version }}
         tags: |
           ${{ inputs.aws_account_id }}.dkr.ecr.${{ inputs.aws_region }}.amazonaws.com/${{ inputs.ecr_repository }}:${{ inputs.image_tag }}
-          ${{ inputs.aws_account_id }}.dkr.ecr.${{ inputs.aws_region }}.amazonaws.com/${{ inputs.ecr_repository }}:latest

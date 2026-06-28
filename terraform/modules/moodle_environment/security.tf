@@ -20,11 +20,11 @@ resource "aws_security_group" "alb" {
   }
 
   egress {
-    description = "All outbound"
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+    description = "Moodle HTTP targets in private subnets"
+    from_port   = local.container_port
+    to_port     = local.container_port
+    protocol    = "tcp"
+    cidr_blocks = var.private_subnet_cidrs
   }
 
   tags = merge(local.common_tags, {
@@ -46,10 +46,35 @@ resource "aws_security_group" "ecs" {
   }
 
   egress {
-    description = "All outbound"
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
+    description = "PostgreSQL in private subnets"
+    from_port   = 5432
+    to_port     = 5432
+    protocol    = "tcp"
+    cidr_blocks = var.private_subnet_cidrs
+  }
+
+  egress {
+    description = "Redis in private subnets"
+    from_port   = 6379
+    to_port     = 6379
+    protocol    = "tcp"
+    cidr_blocks = var.private_subnet_cidrs
+  }
+
+  egress {
+    description = "NFS in private subnets"
+    from_port   = 2049
+    to_port     = 2049
+    protocol    = "tcp"
+    cidr_blocks = var.private_subnet_cidrs
+  }
+
+  #trivy:ignore:AWS-0104 ECS tasks require outbound HTTPS through NAT for AWS APIs, ECR, package repositories, and Moodle integrations.
+  egress {
+    description = "HTTPS to AWS APIs and package endpoints"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 

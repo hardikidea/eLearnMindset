@@ -187,7 +187,9 @@ resource "aws_ecs_service" "moodle" {
   }
 
   depends_on = [
-    aws_lb_listener.http
+    aws_lb_listener.http_forward,
+    aws_lb_listener.http_redirect,
+    aws_lb_listener.https
   ]
 
   tags = local.common_tags
