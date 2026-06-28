@@ -1,0 +1,55 @@
+name: ECR Build And Push
+description: Build the production Moodle image and push it to ECR.
+
+inputs:
+  environment:
+    description: Environment used to select the OIDC role.
+    required: true
+  aws_account_id:
+    description: AWS account ID.
+    required: true
+  aws_region:
+    description: AWS region.
+    required: true
+  project_name:
+    description: Project name and OIDC role prefix.
+    required: true
+  ecr_repository:
+    description: ECR repository name.
+    required: true
+  moodle_version:
+    description: Moodle Git tag to bake into the image.
+    required: true
+  image_tag:
+    description: Image tag to publish.
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Configure AWS OIDC
+      uses: ./.github/actions/aws-oidc
+      with:
+        environment: ${{ inputs.environment }}
+        aws_account_id: ${{ inputs.aws_account_id }}
+        aws_region: ${{ inputs.aws_region }}
+        project_name: ${{ inputs.project_name }}
+
+    - name: Login to Amazon ECR
+      uses: aws-actions/amazon-ecr-login@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Build and push production image
+      uses: docker/build-push-action@v6
+      with:
+        context: .
+        file: docker/moodle/Dockerfile
+        push: true
+        build-args: |
+          INCLUDE_MOODLE_SOURCE=true
+          MOODLE_VERSION=${{ inputs.moodle_version }}
+        tags: |
+          ${{ inputs.aws_account_id }}.dkr.ecr.${{ inputs.aws_region }}.amazonaws.com/${{ inputs.ecr_repository }}:${{ inputs.image_tag }}
+          ${{ inputs.aws_account_id }}.dkr.ecr.${{ inputs.aws_region }}.amazonaws.com/${{ inputs.ecr_repository }}:latest

@@ -1,0 +1,8 @@
+aws_region        = "us-west-2"
+project_name      = "elearn-mindset"
+github_repository = "your-github-org/your-repository"
+
+# Optional overrides.
+# state_bucket_name  = "elearn-mindset-123456789012-us-west-2-tfstate"
+# lock_table_name    = "elearn-mindset-terraform-locks"
+# ecr_repository_name = "elearn-mindset"

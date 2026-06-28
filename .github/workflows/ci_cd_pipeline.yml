@@ -1,0 +1,342 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - "**"
+  pull_request:
+    types: [opened, reopened, synchronize, ready_for_review]
+  workflow_dispatch:
+    inputs:
+      publish_image:
+        description: "Build and publish the production image to ECR"
+        required: true
+        default: "true"
+        type: choice
+        options:
+          - "true"
+          - "false"
+      apply_infrastructure:
+        description: "Apply Terraform after planning"
+        required: true
+        default: "false"
+        type: choice
+        options:
+          - "false"
+          - "true"
+      target_environment:
+        description: "Environment to apply when apply_infrastructure is true"
+        required: true
+        default: "dev"
+        type: choice
+        options:
+          - dev
+          - stage
+          - prod
+          - all
+
+permissions:
+  id-token: write
+  contents: read
+  packages: write
+  checks: write
+
+env:
+  AWS_ACCOUNT_ID: ${{ vars.AWS_ACCOUNT_ID }}
+  AWS_REGION: ${{ vars.AWS_REGION || 'us-west-2' }}
+  PROJECT_NAME: elearn-mindset
+  ECR_REPOSITORY: elearn-mindset
+  MOODLE_VERSION: v5.2.1
+  IMAGE_TAG: ${{ github.sha }}
+  TRIVY_VERSION: v0.71.2
+  RENOVATE_CLI_VERSION: 43.243.0
+
+jobs:
+  validate:
+    name: Validate Project
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Create ENV file
+        run: cp .env.example .env
+
+      - name: Check shell scripts
+        run: |
+          bash -n scripts/*.sh
+          bash -n docker/moodle/*.sh
+
+      - name: Validate Docker Compose
+        run: docker compose config --quiet
+
+      - name: Bootstrap Moodle source
+        run: ./scripts/bootstrap-moodle.sh
+
+      - name: Confirm Moodle tag
+        run: |
+          test "$(git -C moodle describe --tags --exact-match)" = "${MOODLE_VERSION}"
+          git -C moodle log --oneline -1 public/version.php
+
+  lint:
+    name: Lint And Static Analysis
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_wrapper: false
+
+      - name: Install lint tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends shellcheck yamllint
+
+      - name: Validate Renovate config
+        run: npx --yes --package "renovate@${RENOVATE_CLI_VERSION}" -- renovate-config-validator --strict
+
+      - name: ShellCheck scripts
+        run: shellcheck scripts/*.sh docker/moodle/*.sh
+
+      - name: YAML lint
+        run: yamllint .github/workflows docker-compose.yml
+
+      - name: Dockerfile lint
+        uses: hadolint/hadolint-action@v3.3.0
+        with:
+          dockerfile: docker/moodle/Dockerfile
+          config: .hadolint.yaml
+
+      - name: Terraform format
+        run: terraform fmt -check -recursive terraform
+
+      - name: Terraform validate without backend
+        run: |
+          set -euo pipefail
+          for dir in terraform/bootstrap terraform/envs/dev terraform/envs/stage terraform/envs/prod; do
+            terraform -chdir="${dir}" init -backend=false -input=false
+            terraform -chdir="${dir}" validate
+          done
+
+  security-audit:
+    name: Dependency And Vulnerability Audit
+    runs-on: ubuntu-latest
+    needs: [validate, lint]
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Bootstrap Moodle source
+        run: ./scripts/bootstrap-moodle.sh
+
+      - name: Composer vulnerability audit
+        run: |
+          docker run --rm \
+            -v "${PWD}/moodle:/app" \
+            -w /app \
+            composer:2 \
+            composer audit --locked --no-dev --format=plain
+
+      - name: Trivy filesystem and IaC audit
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          version: ${{ env.TRIVY_VERSION }}
+          scan-type: fs
+          scan-ref: .
+          scanners: vuln,misconfig
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          exit-code: "1"
+          skip-dirs: moodledata,backups,moodle/.git
+
+  local-image-build:
+    name: Build Local And Production Images
+    runs-on: ubuntu-latest
+    needs: [validate, lint, security-audit]
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Create ENV file
+        run: cp .env.example .env
+
+      - name: Bootstrap Moodle source
+        run: ./scripts/bootstrap-moodle.sh
+
+      - name: Build local Docker image
+        run: docker compose build
+
+      - name: Build production Docker image
+        run: |
+          docker build \
+            --build-arg INCLUDE_MOODLE_SOURCE=true \
+            --build-arg MOODLE_VERSION="${MOODLE_VERSION}" \
+            -f docker/moodle/Dockerfile \
+            -t elearn-mindset-production:${IMAGE_TAG} \
+            .
+
+      - name: Scan production Docker image
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          version: ${{ env.TRIVY_VERSION }}
+          image-ref: elearn-mindset-production:${{ env.IMAGE_TAG }}
+          format: table
+          vuln-type: os,library
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          exit-code: "1"
+
+  integration-smoke:
+    name: Integration Smoke Test
+    runs-on: ubuntu-latest
+    needs: local-image-build
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Create ENV file
+        run: cp .env.example .env
+
+      - name: Bootstrap Moodle source
+        run: ./scripts/bootstrap-moodle.sh
+
+      - name: Build local Docker images
+        run: docker compose build
+
+      - name: Install Moodle and start services
+        run: ./scripts/install-site.sh
+
+      - name: Check service status
+        run: docker compose ps
+
+      - name: Check Moodle home page
+        run: |
+          curl -fsS --max-time 30 "http://localhost:${MOODLE_HTTP_PORT}/" >/tmp/moodle-home.html
+          grep -q "eLearn Mindset Local" /tmp/moodle-home.html
+
+      - name: Check Moodle login page
+        run: curl -fsS --max-time 30 "http://localhost:${MOODLE_HTTP_PORT}/login/index.php" >/tmp/moodle-login.html
+
+      - name: Confirm installed Moodle release
+        run: docker compose exec -T moodle php admin/cli/cfg.php --name=release
+
+      - name: Dump logs on failure
+        if: failure()
+        run: docker compose logs --no-color
+
+      - name: Stop services
+        if: always()
+        run: docker compose down -v
+
+  terraform-plan:
+    name: Terraform Plan ${{ matrix.environment }}
+    runs-on: ubuntu-latest
+    needs: [validate, lint]
+    if: vars.AWS_ACCOUNT_ID != ''
+    strategy:
+      fail-fast: false
+      matrix:
+        environment: [dev, stage, prod]
+    environment: ${{ matrix.environment }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Terraform plan
+        uses: ./.github/actions/terraform-run
+        with:
+          environment: ${{ matrix.environment }}
+          command: plan
+          aws_account_id: ${{ env.AWS_ACCOUNT_ID }}
+          aws_region: ${{ env.AWS_REGION }}
+          project_name: ${{ env.PROJECT_NAME }}
+          image_tag: ${{ env.IMAGE_TAG }}
+
+  publish-image:
+    name: Publish Image To ECR
+    runs-on: ubuntu-latest
+    needs: integration-smoke
+    if: vars.AWS_ACCOUNT_ID != '' && (github.ref == 'refs/heads/main' || (github.event_name == 'workflow_dispatch' && inputs.publish_image == 'true'))
+    environment: dev
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Build and push image
+        uses: ./.github/actions/ecr-build-push
+        with:
+          environment: dev
+          aws_account_id: ${{ env.AWS_ACCOUNT_ID }}
+          aws_region: ${{ env.AWS_REGION }}
+          project_name: ${{ env.PROJECT_NAME }}
+          ecr_repository: ${{ env.ECR_REPOSITORY }}
+          moodle_version: ${{ env.MOODLE_VERSION }}
+          image_tag: ${{ env.IMAGE_TAG }}
+
+  terraform-apply-dev:
+    name: Terraform Apply Dev
+    runs-on: ubuntu-latest
+    needs: [terraform-plan, publish-image]
+    if: vars.AWS_ACCOUNT_ID != '' && (github.ref == 'refs/heads/main' || (github.event_name == 'workflow_dispatch' && inputs.apply_infrastructure == 'true' && (inputs.target_environment == 'dev' || inputs.target_environment == 'all')))
+    environment: dev
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Terraform apply dev
+        uses: ./.github/actions/terraform-run
+        with:
+          environment: dev
+          command: apply
+          aws_account_id: ${{ env.AWS_ACCOUNT_ID }}
+          aws_region: ${{ env.AWS_REGION }}
+          project_name: ${{ env.PROJECT_NAME }}
+          image_tag: ${{ env.IMAGE_TAG }}
+
+  terraform-apply-stage:
+    name: Terraform Apply Stage
+    runs-on: ubuntu-latest
+    needs: [terraform-plan, publish-image]
+    if: vars.AWS_ACCOUNT_ID != '' && (github.ref == 'refs/heads/main' || (github.event_name == 'workflow_dispatch' && inputs.apply_infrastructure == 'true' && (inputs.target_environment == 'stage' || inputs.target_environment == 'all')))
+    environment: stage
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Terraform apply stage
+        uses: ./.github/actions/terraform-run
+        with:
+          environment: stage
+          command: apply
+          aws_account_id: ${{ env.AWS_ACCOUNT_ID }}
+          aws_region: ${{ env.AWS_REGION }}
+          project_name: ${{ env.PROJECT_NAME }}
+          image_tag: ${{ env.IMAGE_TAG }}
+
+  terraform-apply-prod:
+    name: Terraform Apply Prod
+    runs-on: ubuntu-latest
+    needs: [terraform-plan, publish-image]
+    if: vars.AWS_ACCOUNT_ID != '' && (github.ref == 'refs/heads/main' || (github.event_name == 'workflow_dispatch' && inputs.apply_infrastructure == 'true' && (inputs.target_environment == 'prod' || inputs.target_environment == 'all')))
+    environment: prod
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Terraform apply prod
+        uses: ./.github/actions/terraform-run
+        with:
+          environment: prod
+          command: apply
+          aws_account_id: ${{ env.AWS_ACCOUNT_ID }}
+          aws_region: ${{ env.AWS_REGION }}
+          project_name: ${{ env.PROJECT_NAME }}
+          image_tag: ${{ env.IMAGE_TAG }}

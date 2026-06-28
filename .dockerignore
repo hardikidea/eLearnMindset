@@ -1,0 +1,12 @@
+.env
+.git
+.gitignore
+backups
+moodle
+moodledata
+postgres-data
+README.md
+docs
+terraform/**/.terraform
+terraform/**/*.tfstate
+terraform/**/*.tfplan

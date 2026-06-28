@@ -1,0 +1,6 @@
+image_tag = "latest"
+
+# Set these when DNS and ACM are ready.
+# route53_zone_id     = "Z1234567890ABC"
+# route53_record_name = "moodle-dev.example.com"
+# certificate_arn     = "arn:aws:acm:us-west-2:123456789012:certificate/..."

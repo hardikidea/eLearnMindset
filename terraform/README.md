@@ -1,0 +1,172 @@
+# Terraform Infrastructure
+
+This folder contains AWS Terraform for Moodle dev, stage, and prod deployments. It follows the CourseCloud reference structure at a high level: a bootstrap layer, environment roots, reusable modules, and GitHub Actions plan/apply jobs.
+
+No SSH keys are used. GitHub Actions authenticates to AWS through OIDC and short-lived STS credentials.
+
+## Layout
+
+| Path | Purpose |
+| --- | --- |
+| `bootstrap/` | Creates shared CI/CD resources: Terraform state bucket, DynamoDB lock table, shared ECR repository, GitHub OIDC provider, and dev/stage/prod GitHub Actions IAM roles. |
+| `envs/dev/` | Dev Moodle environment. |
+| `envs/stage/` | Stage Moodle environment. |
+| `envs/prod/` | Prod Moodle environment. |
+| `modules/moodle_environment/` | Reusable Moodle AWS stack module. |
+| `modules/route53/` | Reusable Route53 ALB alias record module. |
+
+## Resources Per Environment
+
+Each environment creates:
+
+- VPC, public subnets, private subnets, route tables, internet gateway, and NAT gateway.
+- Public Application Load Balancer.
+- ECS Fargate cluster.
+- Moodle web ECS service.
+- Moodle cron ECS service.
+- RDS PostgreSQL 16.
+- EFS file system and access point for `moodledata`.
+- ElastiCache Redis.
+- Secrets Manager secret for generated database and Moodle admin passwords.
+- CloudWatch log group.
+- IAM task execution and task roles.
+- Optional Route53 A and AAAA alias records for the environment ALB.
+- Security groups scoped between ALB, ECS, RDS, Redis, and EFS.
+
+## Bootstrap Once
+
+Run bootstrap from a workstation or admin automation that already has AWS permissions to create IAM, S3, DynamoDB, and ECR resources.
+
+```bash
+cd terraform/bootstrap
+cp terraform.tfvars.example terraform.tfvars
+```
+
+Edit `terraform.tfvars`:
+
+```hcl
+aws_region        = "us-west-2"
+project_name      = "elearn-mindset"
+github_repository = "your-github-org/your-repository"
+```
+
+Apply:
+
+```bash
+terraform init
+terraform plan
+terraform apply
+```
+
+Bootstrap creates predictable OIDC role names:
+
+```text
+elearn-mindset-dev-github-actions
+elearn-mindset-stage-github-actions
+elearn-mindset-prod-github-actions
+```
+
+## GitHub Repository Setup
+
+Create GitHub repository variables:
+
+```text
+AWS_ACCOUNT_ID=<your AWS account id>
+AWS_REGION=us-west-2
+```
+
+Create GitHub Environments:
+
+```text
+dev
+stage
+prod
+```
+
+Use GitHub environment protection rules for `stage` and `prod` approvals.
+
+## Local Terraform Commands
+
+The CI pipeline supplies backend config dynamically. For local commands, use the same backend config pattern:
+
+```bash
+export AWS_ACCOUNT_ID=123456789012
+export AWS_REGION=us-west-2
+export PROJECT_NAME=elearn-mindset
+
+terraform -chdir=terraform/envs/dev init \
+  -backend-config="bucket=${PROJECT_NAME}-${AWS_ACCOUNT_ID}-${AWS_REGION}-tfstate" \
+  -backend-config="dynamodb_table=${PROJECT_NAME}-terraform-locks" \
+  -backend-config="key=${PROJECT_NAME}/dev.tfstate" \
+  -backend-config="region=${AWS_REGION}" \
+  -backend-config="encrypt=true"
+
+terraform -chdir=terraform/envs/dev plan -var "image_tag=latest"
+```
+
+Replace `dev` with `stage` or `prod` for other environments.
+
+## Route53 DNS
+
+Each environment can create a Route53 alias record for its ALB. DNS is disabled by default so plans work before a hosted zone or certificate exists.
+
+Set these variables in the target environment tfvars file:
+
+```hcl
+route53_zone_id     = "Z1234567890ABC"
+route53_record_name = "moodle-dev.example.com"
+certificate_arn     = "arn:aws:acm:us-west-2:123456789012:certificate/..."
+```
+
+Recommended names:
+
+```text
+dev:   moodle-dev.example.com
+stage: moodle-stage.example.com
+prod:  moodle.example.com
+```
+
+When `moodle_wwwroot` is not set manually, the environment root derives it from `route53_record_name`. If `certificate_arn` is set, Moodle uses `https://<record-name>`; otherwise it uses `http://<record-name>`.
+
+To also create an IPv6 AAAA alias record:
+
+```hcl
+route53_create_ipv6_record = true
+```
+
+## First Moodle Database Install On ECS
+
+Terraform creates infrastructure and deploys the image. The first Moodle database installation should be run once after the first ECS deployment. This uses ECS Exec through AWS APIs, not SSH.
+
+Example flow:
+
+```bash
+aws ecs list-tasks \
+  --cluster elearn-mindset-dev-cluster \
+  --service-name elearn-mindset-dev-service
+
+aws ecs execute-command \
+  --cluster elearn-mindset-dev-cluster \
+  --task <task-arn> \
+  --container moodle \
+  --interactive \
+  --command "sh -lc 'php admin/cli/install_database.php --agree-license --adminuser=\"\$MOODLE_ADMIN_USER\" --adminpass=\"\$MOODLE_ADMIN_PASSWORD\" --adminemail=\"\$MOODLE_ADMIN_EMAIL\" --fullname=\"\$MOODLE_SITE_FULLNAME\" --shortname=\"\$MOODLE_SITE_SHORTNAME\"'"
+```
+
+After installation, purge caches:
+
+```bash
+aws ecs execute-command \
+  --cluster elearn-mindset-dev-cluster \
+  --task <task-arn> \
+  --container moodle \
+  --interactive \
+  --command 'php admin/cli/purge_caches.php'
+```
+
+## Notes
+
+- The production Docker image is built with `INCLUDE_MOODLE_SOURCE=true`, so it bakes the official Moodle Git tag into the image.
+- Local Docker still bind-mounts `./moodle`; this keeps local development fast.
+- Prod enables deletion protection on RDS by default.
+- State files and local `*.tfvars` are ignored by Git.

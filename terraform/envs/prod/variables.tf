@@ -1,0 +1,133 @@
+variable "aws_region" {
+  type    = string
+  default = "us-west-2"
+}
+
+variable "project_name" {
+  type    = string
+  default = "elearn-mindset"
+}
+
+variable "vpc_cidr" {
+  type    = string
+  default = "10.42.0.0/16"
+}
+
+variable "public_subnet_cidrs" {
+  type    = list(string)
+  default = ["10.42.0.0/24", "10.42.1.0/24"]
+}
+
+variable "private_subnet_cidrs" {
+  type    = list(string)
+  default = ["10.42.10.0/24", "10.42.11.0/24"]
+}
+
+variable "allowed_cidr_blocks" {
+  type    = list(string)
+  default = ["0.0.0.0/0"]
+}
+
+variable "certificate_arn" {
+  type    = string
+  default = ""
+}
+
+variable "moodle_wwwroot" {
+  type    = string
+  default = ""
+}
+
+variable "image_tag" {
+  type    = string
+  default = "latest"
+}
+
+variable "ecr_repository_url" {
+  type    = string
+  default = null
+}
+
+variable "desired_count" {
+  type    = number
+  default = 2
+}
+
+variable "task_cpu" {
+  type    = number
+  default = 2048
+}
+
+variable "task_memory" {
+  type    = number
+  default = 4096
+}
+
+variable "database_instance_class" {
+  type    = string
+  default = "db.t4g.medium"
+}
+
+variable "database_allocated_storage" {
+  type    = number
+  default = 200
+}
+
+variable "database_max_allocated_storage" {
+  type    = number
+  default = 500
+}
+
+variable "database_backup_retention_days" {
+  type    = number
+  default = 30
+}
+
+variable "database_deletion_protection" {
+  type    = bool
+  default = true
+}
+
+variable "redis_node_type" {
+  type    = string
+  default = "cache.t4g.small"
+}
+
+variable "redis_node_count" {
+  type    = number
+  default = 2
+}
+
+variable "enable_container_insights" {
+  type    = bool
+  default = true
+}
+
+variable "log_retention_days" {
+  type    = number
+  default = 90
+}
+
+variable "route53_zone_id" {
+  description = "Route53 hosted zone ID for the Moodle DNS record. Leave empty to skip DNS."
+  type        = string
+  default     = ""
+}
+
+variable "route53_record_name" {
+  description = "Fully qualified DNS record name for Moodle. Leave empty to skip DNS."
+  type        = string
+  default     = ""
+}
+
+variable "route53_evaluate_target_health" {
+  description = "Whether Route53 alias records should evaluate ALB target health."
+  type        = bool
+  default     = true
+}
+
+variable "route53_create_ipv6_record" {
+  description = "Create an AAAA alias record in addition to the A alias record."
+  type        = bool
+  default     = false
+}

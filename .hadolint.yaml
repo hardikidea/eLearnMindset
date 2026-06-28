@@ -1,0 +1,5 @@
+failure-threshold: warning
+ignored:
+  # Debian package versions are intentionally not pinned so rebuilds receive
+  # current security patches from the selected php:8.3-fpm-bookworm base image.
+  - DL3008
