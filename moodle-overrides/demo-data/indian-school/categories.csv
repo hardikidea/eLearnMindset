@@ -1,0 +1,7 @@
+name,idnumber,parent_idnumber
+Primary School,primary,
+Class 1,class1,primary
+Class 3,class3,primary
+Higher Secondary School,higher_sec,
+Class 11 Science,c11_sci,higher_sec
+Class 11 Commerce,c11_com,higher_sec

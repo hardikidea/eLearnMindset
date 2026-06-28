@@ -7,6 +7,7 @@ This project follows the Moodle Git for Administrators approach: track official 
 - Use official tags such as `v5.2.1`.
 - Do not use `main`, alpha, beta, or release-candidate tags for production-style installs.
 - Back up Moodle code, `moodledata`, and PostgreSQL before updating.
+- Keep project customizations in `moodle-overrides/`; do not edit the ignored `moodle/` checkout as the source of truth.
 - Check plugin compatibility before major upgrades.
 - For Moodle 5.1 and later, keep the web server root pointed at `public/`.
 
@@ -48,10 +49,11 @@ The script:
 3. Enables Moodle maintenance mode when possible.
 4. Fetches tags from the official Moodle repository.
 5. Checks out the requested tag in `moodle/`.
-6. Runs Composer inside the Moodle container.
-7. Runs Moodle CLI upgrade.
-8. Purges caches.
-9. Disables maintenance mode.
+6. Syncs `moodle-overrides/` into the Moodle checkout.
+7. Runs Composer inside the Moodle container.
+8. Runs Moodle CLI upgrade.
+9. Purges caches.
+10. Disables maintenance mode.
 
 ## Major Upgrade Notes
 
@@ -64,4 +66,3 @@ Before moving from Moodle 5.2 to a future major release:
 5. Keep the backup until the upgraded site has been tested.
 
 The current Docker setup is built for Moodle 5.2 requirements: PHP 8.3 and PostgreSQL 16.
-

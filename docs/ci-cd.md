@@ -14,7 +14,7 @@ The structure follows the CourseCloud reference at a high level: separate valida
 | `local-image-build` | Builds the local Docker image and the production image shape. |
 | `integration-smoke` | Builds the local stack, installs Moodle with PostgreSQL, checks the home/login pages, and confirms the installed release. |
 | `terraform-plan` | Plans dev, stage, and prod through environment-specific AWS OIDC roles. |
-| `publish-image` | Builds the production image with Moodle source baked in and pushes it to ECR. |
+| `publish-image` | Builds the production image with Moodle source and `moodle-overrides/` baked in, then pushes it to ECR. |
 | `terraform-apply-dev` | Applies dev infrastructure. |
 | `terraform-apply-stage` | Applies stage infrastructure. |
 | `terraform-apply-prod` | Applies prod infrastructure. |
@@ -38,7 +38,7 @@ The deployment path is gated by linting and vulnerability checks:
 - Composer audit checks Moodle production PHP dependencies from `moodle/composer.lock`.
 - Trivy scans the repository filesystem, Terraform/IaC, and the production Docker image for high and critical vulnerabilities.
 
-The `local-image-build` job requires `validate`, `lint`, and `security-audit` to pass before Docker images are built. The publish and apply jobs depend on the downstream smoke-tested image path.
+The `local-image-build` job requires `validate`, `lint`, and `security-audit` to pass before Docker images are built. The publish and apply jobs depend on the downstream smoke-tested image path. `bootstrap-moodle.sh` syncs `moodle-overrides/` for local CI checks, and the production Dockerfile copies the same overrides after cloning the configured Moodle tag.
 
 ## Renovate
 

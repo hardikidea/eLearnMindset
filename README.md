@@ -1,10 +1,11 @@
 # eLearn Mindset Docker Setup
 
-Fresh local Moodle setup using Docker, PostgreSQL 16, and an official Moodle Git tag. The project keeps Moodle source in `moodle/` as a normal Git checkout so future upgrades follow the Moodle administrator workflow.
+Fresh local Moodle setup using Docker, PostgreSQL 16, and an official Moodle Git tag. The project keeps Moodle source in `moodle/` as a local Git checkout, while project-specific themes, plugins, scripts, and demo data are versioned in `moodle-overrides/`.
 
 ## What This Creates
 
 - `moodle/`: official Moodle source checked out from `https://github.com/moodle/moodle.git`.
+- `moodle-overrides/`: tracked project-specific Moodle files that are synced into `moodle/` after bootstrap and during production image builds.
 - `moodledata/`: persistent Moodle uploaded files and cache data.
 - `postgres_data`: Docker volume for PostgreSQL data.
 - `moodle`: PHP 8.3 + PHP-FPM + Nginx application container.
@@ -29,6 +30,12 @@ Open Moodle at `http://localhost:8080`.
 PostgreSQL is available from the host at `127.0.0.1:5440` and from containers at `db:5432`.
 
 The install script enables the `almondb` theme with the eLearn Mindset logo palette and the My courses route at `http://localhost:8080/my/courses.php`.
+
+`./scripts/bootstrap-moodle.sh` automatically syncs `moodle-overrides/` into the local Moodle checkout. Re-apply the same sync manually with:
+
+```bash
+make sync-overrides
+```
 
 MailPit is configured as Moodle's local SMTP server:
 
@@ -55,9 +62,9 @@ This creates the requested category hierarchy, Class 1/Class 3/Class 11 courses,
 
 Demo package files:
 
-- [Bulk users CSV](moodle/demo-data/indian-school/users.csv)
-- [Bulk categories CSV](moodle/demo-data/indian-school/categories.csv)
-- [Course and activity blueprint](moodle/demo-data/indian-school/course-activity-blueprint.md)
+- [Bulk users CSV](moodle-overrides/demo-data/indian-school/users.csv)
+- [Bulk categories CSV](moodle-overrides/demo-data/indian-school/categories.csv)
+- [Course and activity blueprint](moodle-overrides/demo-data/indian-school/course-activity-blueprint.md)
 
 All seeded users use this demo password:
 
@@ -78,6 +85,7 @@ make stop                      # same as docker compose down
 make restart                   # restart Moodle web + cron
 make status                    # show container status
 make configure-mailpit         # apply Moodle SMTP settings for MailPit
+make sync-overrides            # copy tracked Moodle customizations into moodle/
 ```
 
 ## Daily Commands
@@ -105,7 +113,7 @@ For a future patch release, replace `v5.2.1` with the new official tag, for exam
 ./scripts/update-moodle.sh v5.2.2
 ```
 
-The update script takes a backup first, fetches tags, checks out the requested Moodle tag, runs Composer, runs Moodle's CLI upgrade, and purges caches.
+The update script takes a backup first, fetches tags, checks out the requested Moodle tag, syncs `moodle-overrides/`, runs Composer, runs Moodle's CLI upgrade, and purges caches.
 
 Read the detailed update process in [docs/update.md](docs/update.md).
 

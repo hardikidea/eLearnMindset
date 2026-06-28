@@ -1,0 +1,66 @@
+.path-mod-interactivevideo .skipsegment .ui-resizable-e {
+    right: -7px;
+    background-color: var(--ivlight);
+    border-bottom-right-radius: 0.15rem;
+    border-top-right-radius: 0.15rem;
+}
+
+:dir(rtl) .path-mod-interactivevideo .skipsegment .ui-resizable-e {
+    right: auto;
+    left: -7px;
+}
+
+.path-mod-interactivevideo .skipsegment .ui-resizable-w {
+    left: -7px;
+    background-color: var(--ivlight);
+    border-bottom-left-radius: 0.15rem;
+    border-top-left-radius: 0.15rem;
+}
+
+.path-mod-interactivevideo .skipsegment .ui-resizable-w::before,
+.path-mod-interactivevideo .skipsegment .ui-resizable-e::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 2px;
+    height: 10px;
+    background-color: #000;
+    border-radius: 1px;
+}
+
+.path-mod-interactivevideo #video-nav li.skipped .item {
+    background-color: var(--ivgray);
+}
+
+.path-mod-interactivevideo #video-nav li.skipped i {
+    color: var(--ivgray);
+}
+
+.path-mod-interactivevideo .delete-skipsegment {
+    top: -100%;
+    cursor: pointer;
+    display: none;
+}
+
+.path-mod-interactivevideo .skipsegment:hover .delete-skipsegment {
+    display: block;
+}
+
+.path-mod-interactivevideo #skipsegment {
+    bottom: 0;
+    right: 0;
+    text-shadow: 1px 2px 3px gray;
+    line-height: 1rem;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.75);
+}
+
+.path-mod-interactivevideo #skipsegment i {
+    font-size: xxx-large;
+}
+
+.path-mod-interactivevideo #annotation-list .timestamp.skipend {
+    width: auto;
+}

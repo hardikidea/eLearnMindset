@@ -29,7 +29,13 @@ MOODLE_ADMIN_PASSWORD=Admin123!ChangeMe
 ./scripts/bootstrap-moodle.sh
 ```
 
-This clones the official Moodle repository into `moodle/` and checks out the configured release tag.
+This clones the official Moodle repository into `moodle/`, checks out the configured release tag, and syncs tracked project customizations from `moodle-overrides/`.
+
+To re-apply project Moodle customizations after editing files under `moodle-overrides/`:
+
+```bash
+make sync-overrides
+```
 
 ## 3. Build and Start Docker
 

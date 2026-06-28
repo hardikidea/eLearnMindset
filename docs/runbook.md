@@ -17,6 +17,7 @@ Use this with the focused docs:
 | --- | --- |
 | Project root | Repository root |
 | Moodle source | `moodle/`, cloned from `https://github.com/moodle/moodle.git` |
+| Moodle customizations | `moodle-overrides/`, synced into `moodle/` |
 | Moodle version | `v5.2.1` by default |
 | Moodle local URL | `http://localhost:8080` |
 | PostgreSQL host port | `127.0.0.1:5440` |
@@ -61,6 +62,8 @@ docker compose up -d
 make demo-data
 ```
 
+`bootstrap-moodle.sh` automatically copies `moodle-overrides/` into `moodle/`. Re-sync custom Moodle files manually with `make sync-overrides`.
+
 Open Moodle:
 
 ```text
@@ -103,9 +106,9 @@ The seed command is idempotent. Rerunning it updates existing users, courses, se
 Demo package files:
 
 ```text
-moodle/demo-data/indian-school/users.csv
-moodle/demo-data/indian-school/categories.csv
-moodle/demo-data/indian-school/course-activity-blueprint.md
+moodle-overrides/demo-data/indian-school/users.csv
+moodle-overrides/demo-data/indian-school/categories.csv
+moodle-overrides/demo-data/indian-school/course-activity-blueprint.md
 ```
 
 Seeded demo user password:

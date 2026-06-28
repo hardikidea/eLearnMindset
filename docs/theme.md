@@ -22,13 +22,13 @@ The theme palette is based on the eLearn Mindset logo:
 
 ## Files
 
-- `moodle/public/theme/almondb/scss/almondb/_default_variables.scss`
-- `moodle/public/theme/almondb/scss/almondb/_elearn-mindset.scss`
-- `moodle/public/theme/almondb/scss/almondb-main.scss`
+- `moodle-overrides/public/theme/almondb/scss/almondb/_default_variables.scss`
+- `moodle-overrides/public/theme/almondb/scss/almondb/_elearn-mindset.scss`
+- `moodle-overrides/public/theme/almondb/scss/almondb-main.scss`
 
 ## Modern UI Patterns
 
-- Use `theme/almondb/scss/almondb/_elearn-mindset.scss` as the single project design layer.
+- Use `moodle-overrides/public/theme/almondb/scss/almondb/_elearn-mindset.scss` as the single project design layer.
 - Keep `main-inner` full-width, but align page header, secondary navigation, content, and footer content on one centered `1280px` rail.
 - Use white cards on the light school surface with navy text, red structural accents, and gold/orange active states.
 - Use standard Bootstrap 5 components as the base: nav tabs, dropdowns, cards, list groups, accordions, input groups, tables, alerts, badges, progress bars, and pagination.
@@ -42,6 +42,7 @@ The theme palette is based on the eLearn Mindset logo:
 ## Apply Theme
 
 ```bash
+make sync-overrides
 docker compose exec moodle php admin/cli/upgrade.php --non-interactive
 docker compose exec moodle php admin/cli/cfg.php --name=theme --set=almondb
 docker compose exec moodle php admin/cli/cfg.php --component=theme_almondb --name=brandcolor --set="#0d3f5c"

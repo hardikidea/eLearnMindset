@@ -1,0 +1,51 @@
+.path-mod-interactivevideo #video-wrapper #message.chapter {
+    background: linear-gradient(180deg, black, transparent);
+    z-index: 5;
+    color: #fff;
+    top: 0;
+}
+
+.path-mod-interactivevideo #video-wrapper.fb #message.chapter {
+    color: unset;
+}
+
+.path-mod-interactivevideo #video-wrapper #message.chapter span {
+    border-left: 5px solid var(--ivdanger);
+    padding-left: 0.45em;
+    left: 0.75em;
+    top: -40px;
+    position: absolute;
+    transition: all ease-in-out 300ms;
+}
+
+.path-mod-interactivevideo #message.chapter #chapterprogress {
+    height: 5px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--ivdark);
+}
+
+.path-mod-interactivevideo #message.chapter #chapterprogress .progress-bar {
+    width: 0;
+    height: 100%;
+    position: absolute;
+    background-color: #fff;
+}
+
+.path-mod-interactivevideo .chapter.locked {
+    pointer-events: none;
+}
+
+.path-mod-interactivevideo #video-nav ul li.chapter .item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.path-mod-interactivevideo #video-nav ul li.chapter .item i {
+    font-size: xx-small;
+}
+
+.path-mod-interactivevideo li.anno.active {
+    background: var(--ivprimary);
+}

@@ -1,0 +1,61 @@
+{{!
+This file is part of Moodle - http://moodle.org/
+Moodle is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+Moodle is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+You should have received a copy of the GNU General Public License
+along with Moodle.  If not, see <http://www.gnu.org/licenses />.
+}}
+{{!
+@template mod_interactivevideo/activitycard
+TODO describe template activitycard
+Example context (json):
+{
+}
+}}
+
+<div class="{{#formativ}}formativ{{/formativ}}">
+    <div id="interactivevideo-{{cm.instance}}"
+         class="interactivevideo-card{{^columnlayout}} columnlayout{{/columnlayout}}{{#showposterimageright}} poster-right{{/showposterimageright}}{{#showdescription}}{{#formattedintro}} hasdescription{{/formattedintro}}{{/showdescription}} card-{{size}}{{^cm.uservisible}} iv-invisible no-pointer{{/cm.uservisible}} {{#posterimagesize}}full-width-poster{{/posterimagesize}} {{#aligncenter}}iv-aligncenter{{/aligncenter}} {{#hastracks}}hastracks{{/hastracks}}{{#hasalternative}}hasalternative{{/hasalternative}}"
+         data-id="{{cm.id}}"
+         data-title="{{formattedname}}"
+         data-contextid="{{cm.context.id}}"
+         data-instance="{{cm.instance}}"
+         data-courseid="{{cm.course}}"
+         role="region"
+         aria-labelledby="iv-title-{{cm.instance}}">
+
+        {{^cardonly}}
+            <div id="iv-title-{{cm.instance}}" class="visually-hidden sr-only">
+                {{formattedname}}
+            </div>
+            {{#showdescription}}{{#formattedintro}}
+                <div id="iv-desc-{{cm.instance}}" class="visually-hidden sr-only">
+                    {{{formattedintro}}}
+                </div>
+            {{/formattedintro}}{{/showdescription}}
+            {{> mod_interactivevideo/card}}
+        {{/cardonly}}
+
+        {{#cardonly}}
+            <div id="iv-title-{{cm.instance}}" class="visually-hidden sr-only">
+                {{formattedname}}
+            </div>
+            {{> mod_interactivevideo/cardonly}}
+        {{/cardonly}}
+    </div>
+
+    {{^displayoptions.sectionname}}
+        {{#afterlink}}
+            <div class="afterlink" role="note">
+                {{{afterlink}}}
+            </div>
+        {{/afterlink}}
+    {{/displayoptions.sectionname}}
+</div>
+

@@ -18,7 +18,8 @@ It does not reuse CourseCloud application code or database assumptions.
 
 | Path or Volume | Purpose |
 | --- | --- |
-| `./moodle` | Moodle Git checkout and `config.php`. |
+| `./moodle` | Local Moodle Git checkout and `config.php`. It is ignored by the root repository. |
+| `./moodle-overrides` | Tracked Moodle themes, plugins, scripts, and demo data copied into `./moodle`. |
 | `./moodledata` | Moodle data directory. Back this up before upgrades. |
 | `postgres_data` | PostgreSQL Docker volume. Back this up before upgrades. |
 
@@ -45,6 +46,16 @@ On first container start, [docker/moodle/entrypoint.sh](docker/moodle/entrypoint
 The generated config reads database and URL values from environment variables, so `.env` remains the main local configuration file.
 
 `MOODLE_REVERSEPROXY=false` is used for this plain HTTP local stack. Nginx listens on container ports `80` and `8080` so Moodle CLI health checks can reach the same `MOODLE_WWWROOT` URL from inside the container.
+
+## Moodle Overrides
+
+The root repository does not commit the local `moodle/` checkout. Project-specific Moodle code lives in `moodle-overrides/` and is copied into `moodle/` by:
+
+```bash
+./scripts/sync-moodle-overrides.sh
+```
+
+`./scripts/bootstrap-moodle.sh` and `./scripts/update-moodle.sh` run this sync automatically. Production Docker builds also copy `moodle-overrides/` into the image after cloning the official Moodle tag.
 
 ## Local Ports
 

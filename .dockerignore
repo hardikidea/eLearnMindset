@@ -1,9 +1,12 @@
 .env
 .git
 .gitignore
+.idea
+.vscode
 backups
 moodle
 moodledata
+plugins
 postgres-data
 README.md
 docs

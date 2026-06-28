@@ -1,0 +1,641 @@
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * DailyMotion Player class
+ * Documented at https://developers.dailymotion.com/sdk/player-sdk/web/
+ * @module     mod_interactivevideo/player/dailymotion
+ * @copyright  2024 Sokunthearith Makara <sokunthearithmakara@gmail.com>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+import {dispatchEvent} from 'core/event_dispatcher';
+import $ from 'jquery';
+import allowAutoplay from 'mod_interactivevideo/player/checkautoplay';
+let player = {};
+class DailyMotion {
+    /**
+     * Construct a new DailyMotion player instance.
+     */
+    constructor() {
+        this.type = 'dailymotion';
+        this.frequency = 0.27;
+        this.support = {
+            playbackrate: true,
+            quality: true,
+            password: true,
+        };
+        this.useAnimationFrame = false;
+    }
+    async getInfo(url, node) {
+        this.node = node;
+
+        return new Promise((resolve) => {
+            let dailymotion = window.dailymotion;
+            const reg = /(?:https?:\/\/)?(?:www\.)?(?:dai\.ly|dailymotion\.com)\/(?:embed\/video\/|video\/|)([^/]+)/g;
+            const match = reg.exec(url);
+            const videoId = match[1];
+
+            const dailymotionEvents = async(player) => {
+                const state = await player.getState();
+                resolve({
+                    duration: state.videoDuration,
+                    title: state.videoTitle,
+                    posterImage: state.videoThumbnails["480"],
+                });
+            };
+
+            const dmOptions = {
+                video: videoId,
+                params: {
+                    startTime: 0,
+                    mute: true,
+                },
+            };
+
+            if (!window.dailymotion) {
+                // Add dailymotion script.
+                // At the time of writing this, the dailymotion player script is not generally available.
+                // Developers must set up the players and get the script from the dailymotion website.
+                var tag = document.createElement('script');
+                tag.src = "https://geo.dailymotion.com/libs/player/xsyje.js";
+                var firstScriptTag = document.getElementsByTagName('script')[0];
+                firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+                window.dailymotion = {
+                    onScriptLoaded: async() => {
+                        dailymotion = window.dailymotion;
+                        player[node] = await dailymotion.createPlayer(node, dmOptions);
+                        dailymotionEvents(player[node]);
+                    }
+                };
+            } else {
+                player[node] = window.dailymotion.createPlayer(node, dmOptions);
+                dailymotionEvents(player[node]);
+                dailymotion = window.dailymotion;
+            }
+        });
+    }
+    /**
+     * Loads a new Dailymotion player instance.
+     *
+     * @param {string} url - The URL of the Dailymotion video.
+     * @param {number} start - The start time of the video in seconds.
+     * @param {number} end - The end time of the video in seconds.
+     * @param {object} opts - The options for the player.
+     * @param {boolean} reloaded
+     */
+    async load(url, start, end, opts = {}, reloaded = false) {
+        const showControls = opts.showControls || false;
+        const customStart = opts.customStart || false;
+        const node = opts.node || 'player';
+        this.node = node;
+        const _this = this;
+        this.start = start;
+
+        this.allowAutoplay = await allowAutoplay(document.getElementById(node));
+        if (!this.allowAutoplay) {
+            _this.sendEvent('iv:autoplayBlocked', null, _this.node);
+        }
+        const reg = /(?:https?:\/\/)?(?:www\.)?(?:dai\.ly|dailymotion\.com)\/(?:embed\/video\/|video\/|)([^/]+)/g;
+        const match = reg.exec(url);
+        const videoId = match[1];
+        this.videoId = videoId;
+        var self = this;
+        self.aspectratio = 16 / 9; //
+        self.posterImage = '';
+        if (opts.editform) {
+            fetch(`https://api.dailymotion.com/video/${videoId}?fields=thumbnail_720_url`)
+                .then(response => response.json())
+                .then(data => {
+                    self.posterImage = data.thumbnail_720_url;
+                    return;
+                })
+                .catch(() => {
+                    return;
+                });
+        }
+        var ready = false;
+        var dmOptions = {
+            video: videoId, params: {
+                startTime: start,
+                mute: true,
+            },
+        };
+        let dailymotion;
+        const dailymotionEvents = async(player) => {
+            const state = await player.getState();
+            if (state.playerIsViewable === false && state.videoDuration == 0) {
+                this.sendEvent('iv:playerError', {error: 'Video is not viewable.'}, this.node);
+                return;
+            }
+
+            player.off(dailymotion.events.VIDEO_DURATIONCHANGE);
+            if ((state.videoIsPasswordRequired && state.videoDuration == 0) || state.videoDuration == 0) {
+                player.on(dailymotion.events.VIDEO_DURATIONCHANGE, function() {
+                    dailymotionEvents(player);
+                });
+                return;
+            }
+            self.aspectratio = await self.ratio();
+            const totaltime = Number(state.videoDuration.toFixed(2)) - self.frequency;
+            end = !end ? totaltime : Math.min(end, totaltime);
+            end = Number(end.toFixed(2));
+            self.end = end;
+            self.totaltime = totaltime;
+            self.duration = self.end - self.start;
+            self.title = state.videoTitle;
+
+            // Get the available captions.
+            // Unset the captions.
+            player.setSubtitles(null);
+            let tracks = state.videoSubtitlesList;
+            if (tracks && tracks.length > 0) {
+                tracks = tracks.map(track => {
+                    const locale = track.split('-')[0];
+                    const country = track.split('-')[1];
+                    let displayNames;
+                    try {
+                        displayNames = new Intl.DisplayNames([`${M.cfg.language}`], {type: 'language'});
+                    } catch (e) {
+                        displayNames = new Intl.DisplayNames(['en'], {type: 'language'});
+                    }
+                    let label;
+                    if (country == 'auto') {
+                        label = displayNames.of(locale) + ' (Auto)';
+                    } else {
+                        label = displayNames.of(track) ?? track.toUpperCase();
+                    }
+                    return {
+                        label,
+                        code: track,
+                    };
+                });
+                self.captions = tracks;
+            }
+
+            // Fire iv:playerLoaded event
+            self.sendEvent('iv:playerLoaded', {
+                tracks: tracks, qualities: self.getQualities(),
+                reloaded: reloaded,
+            }, self.node);
+
+            // If the browser blocks autoplay, we need to show the play button.
+            if (!state.playerIsPlaybackAllowed && !ready) {
+                self.paused = false;
+                self.sendEvent('iv:playerReady', null, self.node);
+                $('#start-screen #play').removeClass('d-none');
+                $('#start-screen #spinner').remove();
+                $('.video-block, #video-block').addClass('no-pointer bg-transparent');
+                $('#annotation-canvas').removeClass('d-none w-0');
+            }
+
+            // Handle Dailymotion behavior. Video always start from the start time,
+            // So if you seek before starting the video, it will just start from the beginning.
+            // So, to deal with this, we have to start the video as soon as the player is ready.
+            // Let it play on mute which sometimes include ads. When the ad is done, the VIDEO_START event will fire.
+            // That's when we let user know, player is ready.
+            const playerEvents = () => {
+                player.on(dailymotion.events.VIDEO_END, function() {
+                    self.ended = true;
+                    self.sendEvent('iv:playerEnded', null, self.node);
+                });
+
+                player.off(dailymotion.events.VIDEO_TIMECHANGE);
+                player.on(dailymotion.events.VIDEO_TIMECHANGE, async function(e) {
+                    if (!ready) {
+                        return;
+                    }
+                    if (e.videoTime < start) {
+                        player.seek(start);
+                    }
+                    if (e.videoTime > end + self.frequency) {
+                        player.seek(end - 1);
+                    }
+                    if (self.ended) {
+                        self.sendEvent('iv:playerEnded', null, self.node);
+                        self.ended = false;
+                    } else {
+                        if (e.playerIsPlaying === true) {
+                            self.sendEvent('iv:playerPlaying', null, self.node);
+                            self.ended = false;
+                            self.paused = false;
+                        }
+                        if (e.videoTime >= end) {
+                            self.sendEvent('iv:playerEnded', null, self.node);
+                            self.ended = true;
+                        }
+                    }
+                });
+
+                player.off(dailymotion.events.VIDEO_PLAY);
+                player.on(dailymotion.events.VIDEO_PLAY, async function(e) {
+                    // If (!ready) {
+                    //     return;
+                    // }
+                    if (self.ended || e.videoTime >= end) {
+                        self.ended = false;
+                        player.seek(start);
+                    }
+                    self.paused = false;
+                    self.sendEvent('iv:playerPlay', null, self.node);
+                });
+
+                player.on(dailymotion.events.VIDEO_PAUSE, async function() {
+                    if (!ready) {
+                        return;
+                    }
+                    self.paused = true;
+                    if (player.getState().videoTime >= end) {
+                        self.ended = true;
+                        self.sendEvent('iv:playerEnded', null, self.node);
+                    } else {
+                        self.sendEvent('iv:playerPaused', null, self.node);
+                    }
+                });
+
+                player.on(dailymotion.events.PLAYER_ERROR, function(e) {
+                    self.sendEvent('iv:playerError', {error: e}, self.node);
+                });
+
+                player.on(dailymotion.events.PLAYER_PLAYBACKSPEEDCHANGE, function(e) {
+                    self.sendEvent('iv:playerRateChange', {rate: e.playerPlaybackSpeed}, self.node);
+                });
+
+                player.on(dailymotion.events.VIDEO_QUALITYCHANGE, function(e) {
+                    self.sendEvent('iv:playerQualityChange', {quality: e.videoQuality}, self.node);
+                });
+            };
+
+            if (customStart) {
+                player.setMute(true);
+                player.play(); // Start the video to get the ad out of the way.
+                self.paused = false;
+                player.on(dailymotion.events.VIDEO_PLAY, function() {
+                    self.sendEvent('iv:playerPlay', null, self.node);
+                });
+                player.on(dailymotion.events.VIDEO_TIMECHANGE, function() {
+                    $("#start-screen").removeClass('bg-transparent');
+                    if (ready == true) { // When the video is replayed, it will fire VIDEO_START event again.
+                        player.setMute(true);
+                    }
+                    setTimeout(async() => {
+                        if (state.playerIsPlaybackAllowed) {
+                            player.pause();
+                        }
+                        player.seek(start);
+                        player.setMute(false);
+                        if (!ready) {
+                            playerEvents();
+                            ready = true;
+                            if (state.playerIsPlaybackAllowed) {
+                                this.sendEvent('iv:playerReady', null, this.node);
+                            }
+                        }
+                    }, state.playerIsPlaybackAllowed ? 1000 : 0);
+                });
+            } else {
+                playerEvents();
+                ready = true;
+                if (state.playerIsPlaybackAllowed) {
+                    this.sendEvent('iv:playerReady', null, this.node);
+                }
+            }
+
+            // Show ads to user so they know ad is playing, not because something is wrong.
+            player.on(dailymotion.events.AD_START, function() {
+                $(".video-block, #video-block").addClass('d-none');
+                $("#start-screen").addClass('d-none');
+                $('#annotation-canvas').removeClass('d-none w-0');
+            });
+
+            player.on(dailymotion.events.AD_END, function() {
+                $(".video-block, #video-block").removeClass('d-none');
+                $("#start-screen").removeClass('d-none');
+            });
+        };
+
+        if (!window.dailymotion || !window.dailymotion.createPlayer) {
+            // Add dailymotion script.
+            // At the time of writing this, the dailymotion player script is not generally available.
+            // Developers must set up the players and get the script from the dailymotion website.
+            var tag = document.createElement('script');
+            if (showControls || opts.passwordprotected) {
+                // If password protected, show controls; otherwise, users can't enter the password.
+                // (Possible bug on Dailymotion side)
+                // If you fork this, change this to your own dailymotion player.
+                tag.src = "https://geo.dailymotion.com/libs/player/xsyje.js";
+            } else {
+                // If you fork this, change this to your own dailymotion player.
+                tag.src = "https://geo.dailymotion.com/libs/player/xsyj8.js";
+            }
+            var firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+            window.dailymotion = {
+                onScriptLoaded: async() => {
+                    dailymotion = window.dailymotion;
+                    player[node] = await dailymotion.createPlayer(node, dmOptions);
+                    dailymotionEvents(player[node]);
+                }
+            };
+        } else {
+            player[node] = await window.dailymotion.createPlayer(node, dmOptions);
+            dailymotionEvents(player[node]);
+            dailymotion = window.dailymotion;
+        }
+    }
+    /**
+     * Plays the Dailymotion video using the player instance.
+     */
+    play() {
+        if (!player[this.node]) {
+            return;
+        }
+        player[this.node].play();
+        this.paused = false;
+    }
+    /**
+     * Pauses the Dailymotion player.
+     *
+     * This method calls the `pause` function on the `player` object to halt video playback.
+     */
+    async pause() {
+        if (!player[this.node]) {
+            return false;
+        }
+        if (this.paused) {
+            return false;
+        }
+        await player[this.node].pause();
+        this.paused = true;
+        return true;
+    }
+    /**
+     * Stops the video playback and seeks to the specified start time.
+     *
+     * @param {number} starttime - The time (in seconds) to seek to before pausing the video.
+     */
+    stop(starttime) {
+        if (!player[this.node]) {
+            return;
+        }
+        player[this.node].seek(starttime);
+        player[this.node].pause();
+    }
+    /**
+     * Seeks the video player to a specified time.
+     *
+     * @param {number} time - The time in seconds to seek to.
+     * @returns {Promise<void>} A promise that resolves when the seek operation is complete.
+     */
+    async seek(time) {
+        if (!player[this.node]) {
+            return;
+        }
+        let currentTime = await this.getCurrentTime();
+        this.sendEvent('iv:playerSeekStart', {time: currentTime}, this.node);
+        await player[this.node].seek(time);
+        this.ended = false;
+        this.sendEvent('iv:playerSeek', {time: time}, this.node);
+    }
+    /**
+     * Retrieves the current playback time of the video.
+     *
+     * @returns {Promise<number>} A promise that resolves to the current video time in seconds.
+     */
+    async getCurrentTime() {
+        if (!player[this.node]) {
+            return 0;
+        }
+        const state = await player[this.node].getState();
+        return state.videoTime;
+    }
+    /**
+     * Asynchronously retrieves the duration of the video.
+     *
+     * @returns {Promise<number>} A promise that resolves to the duration of the video in seconds.
+     */
+    async getDuration() {
+        if (!player[this.node]) {
+            return 0;
+        }
+        const totaltime = Number(this.totaltime);
+        if (Number.isFinite(totaltime)) {
+            return totaltime;
+        }
+        const state = await player[this.node].getState();
+        return state.videoDuration;
+    }
+    /**
+     * Checks if the Dailymotion player is paused.
+     *
+     * @async
+     * @function isPaused
+     * @returns {Promise<boolean>} A promise that resolves to a boolean indicating whether the player is paused.
+     */
+    async isPaused() {
+        if (!player[this.node]) {
+            return true;
+        }
+        if (this.paused) {
+            return true;
+        }
+        const state = await player[this.node].getState();
+        return !state.playerIsPlaying;
+    }
+    /**
+     * Checks if the Dailymotion player is currently playing.
+     *
+     * @returns {Promise<boolean>} A promise that resolves to a boolean indicating if the player is playing.
+     */
+    async isPlaying() {
+        if (!player[this.node]) {
+            return false;
+        }
+        if (this.paused) {
+            return false;
+        }
+        const state = await player[this.node].getState();
+        return state.playerIsPlaying;
+    }
+
+    /**
+     * Checks if the Dailymotion player has ended and is on the replay screen.
+     *
+     * @returns {Promise<boolean>} A promise that resolves to a boolean indicating if the player is on the replay screen.
+     */
+    async isEnded() {
+        if (!player[this.node]) {
+            return true;
+        }
+        if (this.ended) {
+            return true;
+        }
+        const state = await player[this.node].getState();
+        return state.playerIsReplayScreen;
+    }
+    /**
+     * Calculates the aspect ratio of the player and compares it to 16:9.
+     * If the player's aspect ratio is greater than 16:9, it returns the player's aspect ratio.
+     * Otherwise, it returns 16:9.
+     *
+     * @returns {Promise<number>} The aspect ratio of the player or 16:9.
+     */
+    async ratio() {
+        if (!player[this.node]) {
+            return 16 / 9;
+        }
+        const state = await player[this.node].getState();
+        const ratio = state.playerAspectRatio.split(':');
+        return ratio[0] / ratio[1];
+    }
+    /**
+     * Destroys the Dailymotion player instance.
+     *
+     * This method calls the `destroy` method on the `player` object to clean up
+     * and release any resources held by the player.
+     */
+    destroy() {
+        if (!player[this.node]) {
+            return;
+        }
+        player[this.node].off();
+        player[this.node].destroy();
+        player[this.node] = null;
+        this.sendEvent('iv:playerDestroyed', null, this.node);
+    }
+    /**
+     * Asynchronously retrieves the current state of the player.
+     *
+     * @returns {Promise<Object>} A promise that resolves to the current state of the player.
+     */
+    async getState() {
+        if (!player[this.node]) {
+            return 'paused';
+        }
+        const state = await player[this.node].getState();
+        return state;
+    }
+    /**
+     * Sets the playback speed of the Dailymotion player.
+     *
+     * @param {number} rate - The playback rate to set.
+     */
+    setRate(rate) {
+        if (!player[this.node]) {
+            return;
+        }
+        player[this.node].setPlaybackSpeed(rate);
+    }
+    /**
+     * Mutes the Dailymotion player.
+     *
+     * This method sets the player's mute state to true, effectively silencing any audio.
+     */
+    mute() {
+        if (!player[this.node]) {
+            return;
+        }
+        player[this.node].setMute(true);
+        this.sendEvent('iv:playerVolumeChange', {volume: 0}, this.node);
+    }
+    /**
+     * Unmutes the Dailymotion player.
+     */
+    unMute() {
+        if (!player[this.node]) {
+            return;
+        }
+        player[this.node].setMute(false);
+        player[this.node].setVolume(1);
+        this.sendEvent('iv:playerVolumeChange', {volume: 1}, this.node);
+    }
+
+    async isMuted() {
+        if (!player[this.node]) {
+            return false;
+        }
+        let state = await player[this.node].getState();
+        return state.playerIsMuted;
+    }
+    /**
+     * Returns the original Dailymotion player instance.
+     *
+     * @returns {Object} The Dailymotion player instance.
+     */
+    originalPlayer() {
+        return player[this.node];
+    }
+    /**
+     * Sets the quality of the video player.
+     *
+     * @param {string} quality - The desired quality level for the video player.
+     */
+    setQuality(quality) {
+        if (!player[this.node]) {
+            return;
+        }
+        player[this.node].setQuality(quality);
+    }
+    /**
+     * Retrieves the available video qualities and the current quality setting.
+     *
+     * @returns {Promise<Object>} An object containing:
+     * - `qualities` {Array<string>}: A list of available video qualities including 'default'.
+     * - `qualitiesLabel` {Array<string>}: A list of video quality labels including 'Auto'.
+     * - `currentQuality` {string}: The current video quality setting, 'default' if set to 'Auto'.
+     */
+    async getQualities() {
+        if (!player[this.node]) {
+            return null;
+        }
+        let states = await this.getState();
+        return {
+            qualities: ['default', ...states.videoQualitiesList],
+            qualitiesLabel: ['Auto', ...states.videoQualitiesList],
+            currentQuality: states.videoQuality == 'Auto' ? 'default' : states.videoQuality,
+        };
+    }
+
+    /**
+     * Sets the caption track for the video player.
+     * @param {string} track - The caption track to set.
+     */
+    setCaption(track) {
+        if (!player[this.node]) {
+            return;
+        }
+        player[this.node].setSubtitles(track);
+    }
+
+    /**
+     * Helper to dispatch events safely.
+     * @param {string} name
+     * @param {object} details
+     * @param {string} elementid
+     */
+    sendEvent(name, details = null, elementid = null) {
+        // eslint-disable-next-line no-nested-ternary
+        let el = elementid ? document.getElementById(elementid) : (this.node ? document.getElementById(this.node) : null);
+        if (el) {
+            dispatchEvent(name, details, el);
+        } else {
+            dispatchEvent(name, details);
+        }
+    }
+
+}
+
+export default DailyMotion;

@@ -1,0 +1,406 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+## [1.9.1] - 2026-06-25
+
+### Fixed
+
+- **Report — completion cell clicks:** Restored the pre-1.9 click handler on `.completion-detail` cells (removed the `.cursor-pointer` requirement that blocked Form and other interaction types from opening submission/detail modals).
+- **Report — completion detail nav:** The modal opens immediately; the Previous/Next user list is built afterward from row data instead of re-rendering every table cell, so large reports feel much faster.
+- **Report — completion detail modal layout:** Max-height spacing for the nav bar applies only when the modal is not fullscreen.
+
+## [1.9] - 2026-06-24
+
+### Added
+
+- **Report — completion detail modal:** When you open a learner’s completion cell, the modal now includes a navigation bar with the participant’s photo/name (opens their Moodle profile in a new tab), **Previous / Next** buttons, and a position counter (e.g. 3/12). Previous/Next follows the learners currently shown in the report (respects filters and sorting).
+- **Report — XP override:** Teachers with report edit permission can change earned XP for a completed interaction from that navigation bar. Overridden scores are **highlighted in the report table**, the learner’s **row total XP** updates, and the **gradebook grade** for the activity is recalculated.
+- **Course manage — Interaction defaults:** New tab on the course Interactive Video manage page lists saved per-interaction-type defaults for the course and lets you delete individual defaults.
+- **Flexbook video segments:** On the segment replay screen, learners get a **Next** button (as well as Replay) to continue to the next interaction according to jump settings.
+- **Flexbook drag-and-drop:** Rich text and Content bank interactions created by drag-and-drop now use **course-saved interaction defaults** (XP, completion, display options, etc.) when available.
+
+### Fixed
+
+- The **main video** no longer reacts to play, pause, seek, or end events fired by **embedded interaction players** inside the page.
+- **Chapters (Flexbook):** Global interactions are excluded when gathering interactions inside a chapter, so chapter boundaries and gradable counts stay correct.
+- **Backup & restore:** Placeholder text in interaction items is decoded after restore (e.g. model viewer “go to interaction” links), so internal navigation works again.
+- **Content bank (Flexbook):** New items from drag-and-drop respect course defaults for completion settings instead of always forcing completion on.
+
+## [1.8.3] - 2026-06-16
+
+### Added
+
+- Shared `player/oembed` AMD module for server-side oEmbed fetches through `ajax.php`.
+- Exported `getVideoType` from `fb_util` for Flexbook video URL detection.
+
+### Fixed
+
+- Require `mod/interactivevideo:view` capability on the `get_from_url` ajax action.
+- Flexbook segment replay now seeks to the segment start and pauses correctly after replay.
+- Flexbook `interactionclose` replay handler now targets the correct annotation and guards missing event detail.
+- Improved video URL regex coverage (YouTube Shorts/Live, Wistia embed domains, Vimeo player URLs, and more).
+- HTML5 video type detection no longer leaves stray `<video>` elements and times out after 3 seconds.
+- Video info preview creates a temporary wrapper when `#video-info-wrapper` is absent.
+- DynTube, SproutVideo, Vimeo, and Wistia players use the shared oEmbed helper.
+- Flexbook interaction iframe width in the editor preview.
+
+## [1.8.2] - 2026-06-10
+
+### Fixed
+
+- Interaction item files were saved to `text1`/`text2`/`text3` file areas instead of `itext1`/`itext2`/`itext3`. Item embedded files belong in `itext*` (backup, copy, and delete already used those areas); `text*` file areas are reserved for learner log payloads. Updated compatible interaction plugins: `local_ivggb`, `local_ivh5pupload`, `local_ivquiz`, `local_ivvrtour`, and `ivplugin_richtext` annotation import copy. Re-upload item files that were saved under the old areas if needed.
+
+## [1.8.1+] - 2026-06-08
+- Fixed: duplicate `@param` in `quick_edit_field` phpdoc (CI phpdoc check).
+
+## [1.8.1] - 2026-06-08
+- Added a fullscreen toggle for popup interactions.
+- Improved Flexbook replay screen behaviour and styling.
+- Added Ctrl/Cmd + click shortcuts on custom segment fields to reset start (0) and end (full duration) times.
+- Improved report modal titles with interaction type icons.
+- Fixed Bootstrap 5 modal detection when `window.M` is unavailable.
+- Fixed SCORM teardown when deleting completion data.
+- Fixed quick-edit content field draft file handling.
+- Updated `plugins.json` subplugin versions.
+
+## [1.8] - 2026-05-26
+- Improvement to the report page.
+- Fixed: player classes returned `totaltime` inconsistently.
+- Refactored content types for flexbook compatibility with shared utilities.
+
+## [1.7.6] - 2026-05-20
+- Improve report page performance.
+- Fix issue with content bank item where saved state was not restored correctly (on 1.7.5).
+
+## [1.7.5] - 2026-05-15
+
+- Standardize event dispatcher for player classes and set node as target element.
+- Add iframe and richtext plugins with utility functions and form elements
+- Introduced iframe plugin with utility functions for handling iframe URLs and embedding.
+- Added helper class for iframe plugin to manage form elements and preview functionality.
+- Created SVG icons for iframe and richtext plugins.
+- Implemented richtext plugin with editor support and helper functions for form integration.
+- Added Mustache template for flexbook add form to handle video URL input and preview.
+
+## [1.7.4] - 2026-04-26
+
+- Fixed an issue with the "content" text editor where images/media with the same name were not saved correctly.
+- Integrated with Flexbook.
+
+## [1.7.3] - 2026-04-22
+
+- Fixed an issue where runInteraction is fired twice when preventskipping is enabled.
+- Updated ivplugin_chapter, ivplugin_contentbank, and ivplugin_iframe for Flexbook compatibility.
+
+## [1.7.2] - 2026-04-03
+
+https://buymeacoffee.com/tsmakara/interactive-video-1-7-2
+
+## [1.7.1] - 2026-03-18
+
+- Fixed an issue on BunnyStream player where the getDuration method returned 0 (caused by recent changes to their API).
+- Added an option to display the video controls on the editor page.
+
+## [1.7] - 2026-03-13
+
+https://buymeacoffee.com/tsmakara/interactive-video-release-1-7-2026031300
+
+## [1.6.2] - 2026-02-22
+
+https://mod-interactive-video.canny.io/changelog/interactive-video-v162
+
+## [1.6.1] - 2026-02-11
+
+https://mod-interactive-video.canny.io/changelog/interactive-video-16-1
+
+## [1.6.0] - 2026-01-18
+
+https://mod-interactive-video.canny.io/changelog/interactive-video-16-1
+
+## [1.5.4] - 2026-01-06
+
+https://mod-interactive-video.canny.io/changelog/interactive-video-154
+
+## [1.5.3] - 2025-12-15
+
+https://mod-interactive-video.canny.io/changelog/interactive-video-153
+
+## [1.5.2] - 2025-11-27
+
+### Updated
+
+- Improved support for SproutVideo, VioStream, and BunnyStream.
+
+## [1.5.1] - 2025-11-02
+
+https://mod-interactive-video.canny.io/changelog/interactive-video-16
+
+## [1.5.0+] - 2025-10-13
+
+### Fixed
+
+- In Moodle 4.3 and lower, the section parameter takes the section number instead of the section id.
+
+## [1.5.0] - 2025-10-12
+
+https://mod-interactive-video.canny.io/changelog/interactive-video-150
+
+## [1.4.5] - 2025-09-29
+
+https://mod-interactive-video.canny.io/changelog/interactive-video-145
+
+## [1.4.4] - 2025-09-18
+
+https://mod-interactive-video.canny.io/changelog/interactive-video-144
+
+## [1.4.3] - 2025-07-16
+
+https://mod-interactive-video.canny.io/changelog/interactive-video-143
+
+## [1.4.2] - 2025-07-12
+
+https://mod-interactive-video.canny.io/changelog/interactive-video-142
+
+## [1.4.1] - 2025-06-29
+
+https://mod-interactive-video.canny.io/changelog/interactive-video-141
+
+## [1.4.0+] - 2025-06-18
+
+## Fixed
+
+- Minor UI fixes
+- Issue when duplicate an interactive video activity
+
+## [1.4.0] - 2025-06-15
+
+https://mod-interactive-video.canny.io/changelog/interactive-video-140
+
+## [1.3.2] - 2025-05-28
+
+## Fixed
+
+- Active interaction on the drawer did not show.
+- Content bank item popup was not correctly dismissed.
+- Minor UI fixes
+
+## Updated
+
+- Add `setCaption` method to all player types.
+- UI and performance/memory improvement.
+
+## [1.3.0] - 2025-05-10
+
+https://mod-interactive-video.canny.io/changelog/interactive-video-130
+
+## [1.2.4] - 2025-04-28
+
+- Minor UI improvements
+- Installed interaction types can be downloaded directly from GitHub repos.
+- New interaction types: Poll and Form
+
+## [1.2.3] - 2025-04-27
+
+https://mod-interactive-video.canny.io/changelog/interactive-video-123
+
+## [1.2.2] - 2025-04-18
+
+https://mod-interactive-video.canny.io/changelog/interactive-video-v122
+
+## [1.2.1] - 2025-04-12
+
+## Added
+
+- Backward support for Moodle 4.0 for the main plugin and all interaction plugins.
+
+## [1.2.0] - 2025-04-11
+
+## Added
+
+- Support for Moodle 5.0 for main plugin and all interaction plugins.
+- Bulk-delete interactions from the editor page.
+- PDF Viewer: Ability to set specific pages to display in the viewer, and ability to resume from the last viewed page.
+- H5P Upload: Ability to set text direction for H5P content (LTR/RTL). It is still up to the H5P content type to support RTL. The H5P Upload interaction plugin supports custom CSS file in the site settings. Administrators can add custom CSS to target RTL mode. For example: [dir=rtl] .h5p-content {margin-right: 1rem;}.
+
+## Fixed
+
+- When Moodle is installed in subdirectory, the stylesheets are not loaded correctly.
+
+## [1.1.6] - 2025-04-03
+
+### Added
+
+- Implemented `State Saving` for H5P contents. The state will be saved in the database and restored when the user reopens the content.
+- Chapters can now be locked.
+  See more details in https://mod-interactive-video.canny.io/changelog/interactive-video-v116
+
+### Updated
+
+- Dropping usermodified column from interactivevideo_settings table. This column is not used anymore.
+
+## [1.1.5] - 2025-03-30
+
+https://mod-interactive-video.canny.io/changelog/interactive-video-v115
+
+## [1.1.4] - 2025-03-11
+
+### Updated
+
+- Initial support for RTL.
+- Generalize advanced field for interactivevideo_items, allowing plugins to add any field to the advanced object.
+
+## [1.1.3] - 2025-03-07
+
+### Fixed
+
+- Content bank item form missed fields for setting actions after passing grade.
+
+## [1.1.2] - 2025-03-01
+
+https://mod-interactive-video.canny.io/changelog/interactive-video-v112
+
+## [1.1.1] - 2025-02-15
+
+### Fixed
+
+- The action menu was hidden on the activity card in Moodle 4.1.
+- Update thirdpartylibs.xml
+
+## [1.1.0] - 2025-02-15
+
+https://mod-interactive-video.canny.io/changelog/interactive-video-v11
+
+## [1.0.3] - 2025-01-25
+
+### Fixed
+
+- Player didn't fire `ivplayerReady` event if the browser blocked autoplay.
+- Share-moment link included `embed=1` if the link was created from the modal.
+- `onPaused` method was not implemented on `beforeunload` event, resulting in the watched time not being saved.
+
+### Updated
+
+- Spotify player sometimes shows the preview version of the music tracks depending on the browser and user login. In this case, the interactions might be cut off. So, when the player is in preview mode, users will now get an error message before the player is destroyed.
+- Kill all client-side background processes and event listener if the video is invisible and paused for 30 minutes on view page and 10 minutes on interactions page. If the video already ends, the processes will be killed after 5 minutes of inactivity.
+- Get processed data from server only once for each interaction. Processed data will be saved to this.cache object with the annotation id. When the interaction is relaunched in the same session, the cached version will be used; therefore, releasing some burden from the server. This applies to view page only. One interaction page, a new data is fetched everytime the interaction is launched.
+- Notify user if the browser blocks autoplay and encourage them to allow it on the current site.
+- Kill the interactive video if on Brave browser with autoplay blocked. (We'll re-enable it in the future when Brave browser stops overly blocking the `play` method.)
+- Improve ability for other plugins to extend the mod_form and completion conditions/states, and more importantly, make sure removing or disabling the related plugins does not caused any completion issues.
+- Improve accuracy in calculting the time spent on interaction. For instance, resume counting when interaction is relaunched and pause counting when interaction is no longer active (e.g. activity closed or video playing).
+- Right-click on timestamp on the interaction list to quick-edit the interaction's timestamp. Right-click on the input to set value to the current time.
+- Minor accessiblity/UI/UX improvements
+
+### Added
+
+- Two url parameters to control the player appearance: `dm` for dark mode and `df` for distraction-free mode. Example: `https://yourmoodlesite.com/mod/interactivevideo/view.php?id=1&dm=1&df=1`;
+- Allow extension plugins to include js methods on the mod_form. To enable this, the plugin must add an element on the mod_form with the class '.requirejs' and the data attribute `data-plugin` value as the amd module name. Example: `<div class="requirejs" data-plugin="local_ivanalytics/main"></div>`. The plugin must implement the method `mform` to add the required js code.
+- `convertHMSToSeconds` in the base class to convert HH:MM:SS/MM:SS/SS to seconds.
+- Ability to lock the top navigation when watching the video on a modal on the course page.
+- `checkautoplay` to pre-check if the browser allows autoplay video on mute. Use `player.allowAutoplay` to check.
+- New events: `interactionrefresh` (after the refresh button is clicked), `iv:autoplayBlocked` (as soon as the player method `load` runs.)
+- `active` class to `#message` element of the current/visible interaction.
+
+## [1.0.2] - 2025-01-17
+
+### Fixed
+
+- Custom start time for Spotify episode
+- Timestamp column width is not respected on Safari.
+- `Totaltime` is undefined in some circumstances.
+- When the video restarts, the annotation that has `timestamp=starttime` is skipped.
+- Individual completion record is not deleted from the report page on Moodle 4.1.
+- Rumble's `isPlaying` method always returns true.
+
+### Updated
+
+- Improve error handling: remove/hide elements above the video to show the error screen (e.g. YouTube video no longer available)
+- Only get `posterImage` and title when on editing form (`opts.editform`)
+- If the video is already paused, do not pause again if not necessary.
+- Reset `viewAnno` when the video restarts.
+- Increase frequency for Spotify and PeerTube since their time update interval is longer than others.
+- PeerTube: use `playbackStatusChange` to check/dispatch the pause state.
+- PeerTube: ensure video resets to start time before dispatching `iv:playerReady`.
+- Wistia: get annotation data from the database only after the password is validated.
+
+## [1.0.1] - 2025-01-14
+
+### Fixed
+
+- Dailymotion video and SoundCloud audio played from the start after ended.
+- iv:playerReady fired twice for Wistia video when password-protected.
+- Destroy method didn't work correctly on SoundCloud/Spotify.
+
+### Updated
+
+- Resize player iframe for SoundCloud/Spotify.
+- Add player type to body class.
+- Add a key icon to the poster image on the card if video is password-protected
+- Only auto update the video end time if it is 0 or undefined.
+
+## [1.0] - 2025-01-13 - First Stable
+
+### Added
+
+- Support for Panopto, Spotify, PeerTube, Kinescope, SproutVideo, Rutube, and Rumble (Site admin must select them in the site settings to enable them.)
+- Support for different video visibility options including unlisted, private, and password protected (subject to video providers).
+- New appearance setting: Square poster image. If your poster image is a square, check this option to display it nicely on the activity card.
+- Tutorial video for each interaction type.
+- Quality change, fast-forward and rewind buttons on editor timeline.
+- Full Privacy API implementation.
+- New placeholder columns in interactivevideo_items table: intg1, intg2 and intg3.
+- New column in interactivevideo_completion: lastviewed for last watched timestamp.
+- New site settings: defaulttheme, disablecustomtime and videosharinginstructions
+
+### Fixed
+
+- Column names "start" and "end" are reserved keywords in mySQL, Oracle, and postgreSQL. Changed to "starttime" and "endtime" respectively.
+- Fixed SQL in backup API for postgreSQL support.
+- Skipped segment at the end of the video prevents displaying end screen and onEnded event.
+- "requiremintime" column not backed up.
+- When "enabled video types" setting is set to html5video and videolink, the URL input on the mod_form is hidden.
+- Endscreen is not shown on some occassion.
+- Interactions repeatedly open if they are put too close to one another (e.g. 0.1s).
+- Many minor fixes
+
+### Updated
+
+- Add title attribute to buttons for accessibility improvement
+- Use "gradebookroles" for report. Previously, it was set to roleid=5.
+- Update query for group report to include only users in "gradebookroles".
+- Prevent autoplaying if start screen has content.
+- Interaction drawer is removed when video is replayed.
+- Save lastviewed time in interactivevideo_completion rather than browser's cache.
+- On activity editing form, right-click on start time or end time to set the value to the current video time.
+- On activity editing form, when changing the start time or end time, the video will seek to the specified timestamp.
+- Update player scripts to ensure video state is updated (e.g. isEnded,isPaused,isPlaying) as quickly as possible.
+- Ensure video is paused before launching interaction. Player must return isPaused = true or isPlaying = false;
+- Performance/memory improvement on playback.
+- Set component=mod_interactivevideo on H5P player to enable H5PIntegration.reportingIsEnabled.
+- Change vimeo regex to allow more URL variations such as custom URL (e.g. vimeo.com/{username}/{customtext}).
+
+## [RC0.2] - 2024-11-12
+
+### Added
+
+- Closed caption/subtitle for Vimeo, Dailymotion, and YouTube.
+- Set video quality for Vimeo (only works with videos from PRO+).
+- Bulk create interactive video activities by drag-n-dropping a CSV file on course page. CSV file must contain at least the videourl column.
+- Support for left sidebar if plugin implements it. (hassidebar class to the body)
+- New language (PT_BR) contributed by @eduardokraus
+
+### Fixed
+
+- If grade set to 0, update_grade method will create an endless loop until memory runs out.
+- Dailymotion autoplay behavior.
+- Other bugs fix.
+
+### Update
+
+- When saving progress, only update grade if grademax isn't 0 and gradeinstance exists.
+- When video start and end time are incorrect for some reason (e.g. < 0, > duration, start >= end, end == 0), update start and end columns in the interactivevideo table on first access.
+- Styling improvements.
+
+## [RC0.1] - 2024-11-01
+
+### First release

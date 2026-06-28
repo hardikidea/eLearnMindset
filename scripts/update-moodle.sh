@@ -37,6 +37,7 @@ fi
 
 git -C moodle fetch origin --tags --prune
 git -C moodle checkout "${TARGET_VERSION}"
+./scripts/sync-moodle-overrides.sh
 
 tmpenv="$(mktemp)"
 awk -v target="${TARGET_VERSION}" '

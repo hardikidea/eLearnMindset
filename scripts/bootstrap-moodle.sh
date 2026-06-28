@@ -26,6 +26,7 @@ else
     git -C moodle checkout "${MOODLE_VERSION}"
 fi
 
+./scripts/sync-moodle-overrides.sh
+
 echo "Moodle source is ready at ${ROOT_DIR}/moodle"
 git -C moodle log --oneline -1 public/version.php
-

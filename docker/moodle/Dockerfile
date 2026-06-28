@@ -52,6 +52,7 @@ COPY docker/moodle/default.conf /etc/nginx/conf.d/default.conf
 COPY docker/moodle/config.php /usr/local/share/moodle/config.php
 COPY docker/moodle/entrypoint.sh /usr/local/bin/moodle-entrypoint
 COPY docker/moodle/cron-loop.sh /usr/local/bin/moodle-cron-loop
+COPY moodle-overrides/ /usr/local/share/moodle-overrides/
 
 RUN chmod +x /usr/local/bin/moodle-entrypoint /usr/local/bin/moodle-cron-loop \
     && mkdir -p /var/www/moodle /var/www/moodledata \
@@ -61,6 +62,7 @@ RUN chmod +x /usr/local/bin/moodle-entrypoint /usr/local/bin/moodle-cron-loop \
 RUN if [ "${INCLUDE_MOODLE_SOURCE}" = "true" ]; then \
         git clone --depth 1 --branch "${MOODLE_VERSION}" "${MOODLE_REPO}" /var/www/moodle; \
         git config --global --add safe.directory /var/www/moodle; \
+        cp -a /usr/local/share/moodle-overrides/. /var/www/moodle/; \
         composer --working-dir=/var/www/moodle install --no-interaction --prefer-dist --no-dev --optimize-autoloader; \
         chown -R www-data:www-data /var/www/moodle; \
     fi

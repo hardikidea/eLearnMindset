@@ -1,10 +1,13 @@
 -include .env
 export
 
-.PHONY: bootstrap build up start down stop restart logs shell install configure-mailpit demo-data theme-install cron backup update status
+.PHONY: bootstrap sync-overrides build up start down stop restart logs shell install configure-mailpit demo-data theme-install cron backup update status
 
 bootstrap:
 	./scripts/bootstrap-moodle.sh
+
+sync-overrides:
+	./scripts/sync-moodle-overrides.sh
 
 build:
 	docker compose build

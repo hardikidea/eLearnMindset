@@ -1,0 +1,17 @@
+username,password,firstname,lastname,email,course1,role1
+principal_sharma,SchoolDemo2026!,Rajesh,Sharma,principal.sharma@elearnmindset.edu.in,school_admin_hub,manager
+it_coord_nair,SchoolDemo2026!,Anita,Nair,it.nair@elearnmindset.edu.in,school_admin_hub,manager
+prt_meera_iyer,SchoolDemo2026!,Meera,Iyer,meera.iyer@elearnmindset.edu.in,c3_evs,editingteacher
+prt_sunita_verma,SchoolDemo2026!,Sunita,Verma,sunita.verma@elearnmindset.edu.in,c3_maths,editingteacher
+pgt_arvind_menon,SchoolDemo2026!,Arvind,Menon,arvind.menon@elearnmindset.edu.in,c11_phy,editingteacher
+pgt_neha_agarwal,SchoolDemo2026!,Neha,Agarwal,neha.agarwal@elearnmindset.edu.in,c11_acc,editingteacher
+stu_3a_001,SchoolDemo2026!,Aarav,Patel,aarav.patel3a001@elearnmindset.edu.in,c3_evs,student
+stu_3a_002,SchoolDemo2026!,Ananya,Rao,ananya.rao3a002@elearnmindset.edu.in,c3_evs,student
+stu_3a_003,SchoolDemo2026!,Vihaan,Gupta,vihaan.gupta3a003@elearnmindset.edu.in,c3_maths,student
+stu_3a_004,SchoolDemo2026!,Ishita,Singh,ishita.singh3a004@elearnmindset.edu.in,c3_maths,student
+stu_3a_005,SchoolDemo2026!,Kabir,Joshi,kabir.joshi3a005@elearnmindset.edu.in,c3_evs,student
+stu_11s_001,SchoolDemo2026!,Rohan,Mehta,rohan.mehta11s001@elearnmindset.edu.in,c11_phy,student
+stu_11s_002,SchoolDemo2026!,Aditi,Kulkarni,aditi.kulkarni11s002@elearnmindset.edu.in,c11_chem,student
+stu_11s_003,SchoolDemo2026!,Nikhil,Reddy,nikhil.reddy11s003@elearnmindset.edu.in,c11_maths,student
+stu_11c_001,SchoolDemo2026!,Kavya,Bansal,kavya.bansal11c001@elearnmindset.edu.in,c11_acc,student
+stu_11c_002,SchoolDemo2026!,Aditya,Malhotra,aditya.malhotra11c002@elearnmindset.edu.in,c11_bst,student

@@ -41,7 +41,7 @@ moodledata/
 postgres-data/
 redis-data/
 db-data/
-plugins/
+/plugins/
 
 # Terraform local state and generated working directories.
 **/.terraform/
@@ -60,10 +60,10 @@ override.tf.json
 *_override.tf.json
 
 # Dependency and build output directories.
-node_modules/
-vendor/
-dist/
-build/
+/node_modules/
+/vendor/
+/dist/
+/build/
 
 # Upstream Moodle source is bootstrapped from the official Moodle Git tag.
 # Keep the local checkout out of the root project repository.
