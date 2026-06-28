@@ -20,6 +20,12 @@ npm_audit_dirs=()
 composer_audit_dirs=()
 trivy_paths=()
 missing_required_tool=0
+trivy_db_repository="${TRIVY_DB_REPOSITORY:-ghcr.io/aquasecurity/trivy-db:2}"
+trivy_cache_volume="${TRIVY_CACHE_VOLUME:-elearnmindset-trivy-cache}"
+trivy_insecure_args=""
+if [ "${TRIVY_INSECURE:-true}" = "true" ]; then
+    trivy_insecure_args="--insecure"
+fi
 
 add_unique() {
     value="$1"
@@ -30,6 +36,17 @@ add_unique() {
     return 0
 }
 
+find_docker_bin() {
+    docker_bin="${DOCKER_BIN:-}"
+    if [ -z "${docker_bin}" ]; then
+        docker_bin="$(command -v docker || true)"
+    fi
+    if [ -z "${docker_bin}" ] && [ -x /usr/local/bin/docker ]; then
+        docker_bin="/usr/local/bin/docker"
+    fi
+    printf '%s\n' "${docker_bin}"
+}
+
 for changed_file in "${changed_files[@]}"; do
     case "${changed_file}" in
         package.json|pnpm-lock.yaml)
@@ -37,25 +54,25 @@ for changed_file in "${changed_files[@]}"; do
             ;;
         */package-lock.json)
             audit_dir="$(dirname "${changed_file}")"
-            if add_unique "${audit_dir}" "${npm_audit_dirs[@]}"; then
+            if add_unique "${audit_dir}" "${npm_audit_dirs[@]+"${npm_audit_dirs[@]}"}"; then
                 npm_audit_dirs+=("${audit_dir}")
             fi
             ;;
         */package.json)
             audit_dir="$(dirname "${changed_file}")"
-            if [ -f "${audit_dir}/package-lock.json" ] && add_unique "${audit_dir}" "${npm_audit_dirs[@]}"; then
+            if [ -f "${audit_dir}/package-lock.json" ] && add_unique "${audit_dir}" "${npm_audit_dirs[@]+"${npm_audit_dirs[@]}"}"; then
                 npm_audit_dirs+=("${audit_dir}")
             fi
             ;;
         */composer.lock)
             audit_dir="$(dirname "${changed_file}")"
-            if add_unique "${audit_dir}" "${composer_audit_dirs[@]}"; then
+            if add_unique "${audit_dir}" "${composer_audit_dirs[@]+"${composer_audit_dirs[@]}"}"; then
                 composer_audit_dirs+=("${audit_dir}")
             fi
             ;;
         */composer.json)
             audit_dir="$(dirname "${changed_file}")"
-            if [ -f "${audit_dir}/composer.lock" ] && add_unique "${audit_dir}" "${composer_audit_dirs[@]}"; then
+            if [ -f "${audit_dir}/composer.lock" ] && add_unique "${audit_dir}" "${composer_audit_dirs[@]+"${composer_audit_dirs[@]}"}"; then
                 composer_audit_dirs+=("${audit_dir}")
             fi
             ;;
@@ -73,7 +90,7 @@ for changed_file in "${changed_files[@]}"; do
             ;;
     esac
 
-    if [ -n "${scan_path}" ] && add_unique "${scan_path}" "${trivy_paths[@]}"; then
+    if [ -n "${scan_path}" ] && add_unique "${scan_path}" "${trivy_paths[@]+"${trivy_paths[@]}"}"; then
         trivy_paths+=("${scan_path}")
     fi
 done
@@ -82,8 +99,17 @@ if [ "${root_node_audit_required}" -eq 1 ]; then
     if command -v node >/dev/null 2>&1 && command -v pnpm >/dev/null 2>&1; then
         pnpm audit --prod
     else
-        echo "Node.js and pnpm are required for root dependency audit because package.json or pnpm-lock.yaml changed." >&2
-        missing_required_tool=1
+        docker_bin="$(find_docker_bin)"
+        if [ -n "${docker_bin}" ]; then
+            "${docker_bin}" run --rm \
+                -v "${ROOT_DIR}:/repo" \
+                -w /repo \
+                node:24-bookworm \
+                sh -lc 'corepack enable && pnpm audit --prod'
+        else
+            echo "Node.js and pnpm, or Docker, are required for root dependency audit because package.json or pnpm-lock.yaml changed." >&2
+            missing_required_tool=1
+        fi
     fi
 fi
 
@@ -93,8 +119,20 @@ if [ "${#npm_audit_dirs[@]}" -gt 0 ]; then
             (cd "${audit_dir}" && npm audit --omit=dev)
         done
     else
-        echo "Node.js and npm are required for package-lock audit in changed package directories." >&2
-        missing_required_tool=1
+        docker_bin="$(find_docker_bin)"
+        if [ -n "${docker_bin}" ]; then
+            for audit_dir in "${npm_audit_dirs[@]}"; do
+                "${docker_bin}" run --rm \
+                    -v "${ROOT_DIR}:/repo" \
+                    -w /repo \
+                    -e AUDIT_DIR="${audit_dir}" \
+                    node:24-bookworm \
+                    sh -lc 'cd "${AUDIT_DIR}" && npm audit --omit=dev'
+            done
+        else
+            echo "Node.js and npm, or Docker, are required for package-lock audit in changed package directories." >&2
+            missing_required_tool=1
+        fi
     fi
 fi
 
@@ -113,6 +151,8 @@ if [ "${#trivy_paths[@]}" -gt 0 ]; then
     if command -v trivy >/dev/null 2>&1; then
         for scan_path in "${trivy_paths[@]}"; do
             trivy fs \
+                ${trivy_insecure_args} \
+                --db-repository "${trivy_db_repository}" \
                 --scanners vuln,misconfig \
                 --severity HIGH,CRITICAL \
                 --ignore-unfixed \
@@ -121,20 +161,17 @@ if [ "${#trivy_paths[@]}" -gt 0 ]; then
                 "${scan_path}"
         done
     else
-        docker_bin="${DOCKER_BIN:-}"
-        if [ -z "${docker_bin}" ]; then
-            docker_bin="$(command -v docker || true)"
-        fi
-        if [ -z "${docker_bin}" ] && [ -x /usr/local/bin/docker ]; then
-            docker_bin="/usr/local/bin/docker"
-        fi
+        docker_bin="$(find_docker_bin)"
 
         if [ -n "${docker_bin}" ]; then
             for scan_path in "${trivy_paths[@]}"; do
                 "${docker_bin}" run --rm \
                     -v "${ROOT_DIR}:/repo" \
+                    -v "${trivy_cache_volume}:/root/.cache/trivy" \
                     -w /repo \
                     aquasec/trivy:0.71.2 fs \
+                    ${trivy_insecure_args} \
+                    --db-repository "${trivy_db_repository}" \
                     --scanners vuln,misconfig \
                     --severity HIGH,CRITICAL \
                     --ignore-unfixed \
