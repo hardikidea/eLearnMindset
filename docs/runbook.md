@@ -5,6 +5,7 @@ This runbook is the operator entry point for the eLearn Mindset local Moodle sta
 Use this with the focused docs:
 
 - [Local setup](setup.md)
+- [Deployment preparation guide](deployment-preparation.md)
 - [AWS architecture blueprint](aws-architecture.md)
 - [Docker architecture](docker.md)
 - [CI/CD pipeline](ci-cd.md)
