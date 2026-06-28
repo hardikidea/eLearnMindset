@@ -20,6 +20,9 @@ inputs:
   image_tag:
     description: Container image tag to deploy.
     required: true
+  container_repository_url:
+    description: Container image repository URL without tag.
+    required: true
   cron_desired_count:
     description: Desired count for the Moodle cron ECS service.
     required: false
@@ -62,6 +65,7 @@ runs:
             -input=false \
             -no-color \
             -out=tfplan \
+            -var "container_repository_url=${{ inputs.container_repository_url }}" \
             -var "image_tag=${{ inputs.image_tag }}" \
             -var "cron_desired_count=${{ inputs.cron_desired_count }}"
 
@@ -80,6 +84,7 @@ runs:
             -input=false \
             -auto-approve \
             -no-color \
+            -var "container_repository_url=${{ inputs.container_repository_url }}" \
             -var "image_tag=${{ inputs.image_tag }}" \
             -var "cron_desired_count=${{ inputs.cron_desired_count }}"
         else

@@ -47,9 +47,9 @@ resource "aws_ecs_task_definition" "moodle" {
   }
 
   container_definitions = jsonencode([
-    {
+    merge({
       name      = local.container_name
-      image     = "${var.ecr_repository_url}:${var.image_tag}"
+      image     = "${var.container_repository_url}:${var.image_tag}"
       essential = true
 
       portMappings = [
@@ -83,7 +83,11 @@ resource "aws_ecs_task_definition" "moodle" {
           awslogs-stream-prefix = "moodle"
         }
       }
-    }
+      }, var.container_registry_credentials_secret_arn == "" ? {} : {
+      repositoryCredentials = {
+        credentialsParameter = var.container_registry_credentials_secret_arn
+      }
+    })
   ])
 
   depends_on = [
@@ -122,9 +126,9 @@ resource "aws_ecs_task_definition" "cron" {
   }
 
   container_definitions = jsonencode([
-    {
+    merge({
       name      = "cron"
-      image     = "${var.ecr_repository_url}:${var.image_tag}"
+      image     = "${var.container_repository_url}:${var.image_tag}"
       essential = true
       command   = ["moodle-cron-loop"]
 
@@ -151,7 +155,11 @@ resource "aws_ecs_task_definition" "cron" {
           awslogs-stream-prefix = "cron"
         }
       }
-    }
+      }, var.container_registry_credentials_secret_arn == "" ? {} : {
+      repositoryCredentials = {
+        credentialsParameter = var.container_registry_credentials_secret_arn
+      }
+    })
   ])
 
   depends_on = [

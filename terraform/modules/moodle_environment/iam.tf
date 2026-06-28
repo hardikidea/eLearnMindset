@@ -34,9 +34,10 @@ data "aws_iam_policy_document" "task_execution" {
     actions = [
       "secretsmanager:GetSecretValue"
     ]
-    resources = [
-      aws_secretsmanager_secret.moodle.arn
-    ]
+    resources = concat(
+      [aws_secretsmanager_secret.moodle.arn],
+      var.container_registry_credentials_secret_arn == "" ? [] : [var.container_registry_credentials_secret_arn]
+    )
   }
 }
 

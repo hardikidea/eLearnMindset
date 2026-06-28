@@ -570,7 +570,7 @@ Terraform layout:
 
 | Path | Purpose |
 | --- | --- |
-| `terraform/bootstrap` | State bucket, lock table, ECR, GitHub OIDC provider, GitHub Actions roles |
+| `terraform/bootstrap` | State bucket, lock table, GitHub OIDC provider, GitHub Actions roles |
 | `terraform/envs/dev` | Dev environment |
 | `terraform/envs/stage` | Stage environment |
 | `terraform/envs/prod` | Prod environment |
@@ -613,7 +613,9 @@ terraform -chdir=terraform/envs/dev init \
 Plan dev:
 
 ```bash
-terraform -chdir=terraform/envs/dev plan -var "image_tag=latest"
+terraform -chdir=terraform/envs/dev plan \
+  -var "container_repository_url=ghcr.io/hardikidea/elearnmindset" \
+  -var "image_tag=<published-image-tag>"
 ```
 
 Replace `dev` with `stage` or `prod` for other environments.
@@ -688,7 +690,7 @@ For AWS environments, use AWS-native backups:
 
 - RDS automated backups and snapshots for PostgreSQL.
 - EFS backup through AWS Backup or an equivalent EFS backup plan.
-- ECR image tags for application image rollback.
+- GHCR image tags for application image rollback.
 - Terraform remote state in S3 with versioning.
 
 Before production upgrades, confirm an RDS restore point and EFS backup exist.

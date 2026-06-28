@@ -69,7 +69,7 @@ resource "aws_security_group" "ecs" {
     cidr_blocks = var.private_subnet_cidrs
   }
 
-  #trivy:ignore:AWS-0104 ECS tasks require outbound HTTPS through NAT for AWS APIs, ECR, package repositories, and Moodle integrations.
+  #trivy:ignore:AWS-0104 ECS tasks require outbound HTTPS through NAT for AWS APIs, GHCR, package repositories, and Moodle integrations.
   egress {
     description = "HTTPS to AWS APIs and package endpoints"
     from_port   = 443

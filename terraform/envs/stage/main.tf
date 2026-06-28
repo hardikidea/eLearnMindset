@@ -27,14 +27,7 @@ provider "aws" {
   }
 }
 
-data "aws_caller_identity" "current" {}
-
 locals {
-  ecr_repository_url = coalesce(
-    var.ecr_repository_url,
-    "${data.aws_caller_identity.current.account_id}.dkr.ecr.${var.aws_region}.amazonaws.com/${var.project_name}"
-  )
-
   route53_enabled          = var.route53_zone_id != "" && var.route53_record_name != ""
   route53_moodle_wwwroot   = local.route53_enabled ? "${var.certificate_arn != "" ? "https" : "http"}://${var.route53_record_name}" : ""
   effective_moodle_wwwroot = var.moodle_wwwroot != "" ? var.moodle_wwwroot : local.route53_moodle_wwwroot
@@ -43,30 +36,31 @@ locals {
 module "moodle" {
   source = "../../modules/moodle_environment"
 
-  project_name                   = var.project_name
-  environment                    = "stage"
-  aws_region                     = var.aws_region
-  vpc_cidr                       = var.vpc_cidr
-  public_subnet_cidrs            = var.public_subnet_cidrs
-  private_subnet_cidrs           = var.private_subnet_cidrs
-  allowed_cidr_blocks            = var.allowed_cidr_blocks
-  certificate_arn                = var.certificate_arn
-  moodle_wwwroot                 = local.effective_moodle_wwwroot
-  image_tag                      = var.image_tag
-  ecr_repository_url             = local.ecr_repository_url
-  desired_count                  = var.desired_count
-  cron_desired_count             = var.cron_desired_count
-  task_cpu                       = var.task_cpu
-  task_memory                    = var.task_memory
-  database_instance_class        = var.database_instance_class
-  database_allocated_storage     = var.database_allocated_storage
-  database_max_allocated_storage = var.database_max_allocated_storage
-  database_backup_retention_days = var.database_backup_retention_days
-  database_deletion_protection   = var.database_deletion_protection
-  redis_node_type                = var.redis_node_type
-  redis_node_count               = var.redis_node_count
-  enable_container_insights      = var.enable_container_insights
-  log_retention_days             = var.log_retention_days
+  project_name                              = var.project_name
+  environment                               = "stage"
+  aws_region                                = var.aws_region
+  vpc_cidr                                  = var.vpc_cidr
+  public_subnet_cidrs                       = var.public_subnet_cidrs
+  private_subnet_cidrs                      = var.private_subnet_cidrs
+  allowed_cidr_blocks                       = var.allowed_cidr_blocks
+  certificate_arn                           = var.certificate_arn
+  moodle_wwwroot                            = local.effective_moodle_wwwroot
+  image_tag                                 = var.image_tag
+  container_repository_url                  = var.container_repository_url
+  container_registry_credentials_secret_arn = var.container_registry_credentials_secret_arn
+  desired_count                             = var.desired_count
+  cron_desired_count                        = var.cron_desired_count
+  task_cpu                                  = var.task_cpu
+  task_memory                               = var.task_memory
+  database_instance_class                   = var.database_instance_class
+  database_allocated_storage                = var.database_allocated_storage
+  database_max_allocated_storage            = var.database_max_allocated_storage
+  database_backup_retention_days            = var.database_backup_retention_days
+  database_deletion_protection              = var.database_deletion_protection
+  redis_node_type                           = var.redis_node_type
+  redis_node_count                          = var.redis_node_count
+  enable_container_insights                 = var.enable_container_insights
+  log_retention_days                        = var.log_retention_days
 }
 
 module "route53" {

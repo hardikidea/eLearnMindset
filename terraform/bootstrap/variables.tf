@@ -32,9 +32,3 @@ variable "lock_table_name" {
   type        = string
   default     = null
 }
-
-variable "ecr_repository_name" {
-  description = "Shared ECR repository used by the CI/CD pipeline."
-  type        = string
-  default     = "elearn-mindset"
-}

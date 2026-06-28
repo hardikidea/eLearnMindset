@@ -43,9 +43,14 @@ variable "image_tag" {
   default = "latest"
 }
 
-variable "ecr_repository_url" {
+variable "container_repository_url" {
   type    = string
-  default = null
+  default = "ghcr.io/hardikidea/elearnmindset"
+}
+
+variable "container_registry_credentials_secret_arn" {
+  type    = string
+  default = ""
 }
 
 variable "desired_count" {

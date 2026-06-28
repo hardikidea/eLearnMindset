@@ -174,6 +174,12 @@ For AWS environments, use the manual GitHub Actions workflows:
 
 The server restore workflow intentionally does not replace production RDS/EFS in place. Use the full [upgrade, backup, and restore runbook](docs/upgrade-backup-restore.md) for data restore cutover steps.
 
+Production images are published to GHCR by default:
+
+```text
+ghcr.io/hardikidea/elearnmindset
+```
+
 ## Documentation
 
 - [Operator runbook](docs/runbook.md)

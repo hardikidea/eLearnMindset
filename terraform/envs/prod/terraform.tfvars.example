@@ -1,4 +1,6 @@
-image_tag = "latest"
+image_tag = "replace-with-image-tag"
+# container_repository_url = "ghcr.io/hardikidea/elearnmindset"
+# container_registry_credentials_secret_arn = "arn:aws:secretsmanager:us-west-2:123456789012:secret:elearn-mindset/prod/ghcr-xxxxxx"
 
 # Set these when DNS and ACM are ready.
 # route53_zone_id     = "Z1234567890ABC"

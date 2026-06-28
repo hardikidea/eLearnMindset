@@ -74,36 +74,6 @@ resource "aws_dynamodb_table" "terraform_locks" {
   }
 }
 
-resource "aws_ecr_repository" "moodle" {
-  name                 = var.ecr_repository_name
-  image_tag_mutability = "IMMUTABLE"
-
-  image_scanning_configuration {
-    scan_on_push = true
-  }
-}
-
-resource "aws_ecr_lifecycle_policy" "moodle" {
-  repository = aws_ecr_repository.moodle.name
-
-  policy = jsonencode({
-    rules = [
-      {
-        rulePriority = 1
-        description  = "Keep the last 30 images"
-        selection = {
-          tagStatus   = "any"
-          countType   = "imageCountMoreThan"
-          countNumber = 30
-        }
-        action = {
-          type = "expire"
-        }
-      }
-    ]
-  })
-}
-
 resource "aws_iam_openid_connect_provider" "github" {
   url = "https://token.actions.githubusercontent.com"
 
@@ -171,35 +141,6 @@ data "aws_iam_policy_document" "github_actions_permissions" {
       aws_s3_bucket.terraform_state.arn,
       "${aws_s3_bucket.terraform_state.arn}/*",
       aws_dynamodb_table.terraform_locks.arn,
-    ]
-  }
-
-  statement {
-    sid    = "EcrAuthorization"
-    effect = "Allow"
-    actions = [
-      "ecr:GetAuthorizationToken"
-    ]
-    resources = ["*"]
-  }
-
-  statement {
-    sid    = "EcrBuildAndDeploy"
-    effect = "Allow"
-    actions = [
-      "ecr:BatchCheckLayerAvailability",
-      "ecr:BatchGetImage",
-      "ecr:CompleteLayerUpload",
-      "ecr:DescribeImages",
-      "ecr:DescribeRepositories",
-      "ecr:GetDownloadUrlForLayer",
-      "ecr:InitiateLayerUpload",
-      "ecr:ListImages",
-      "ecr:PutImage",
-      "ecr:UploadLayerPart"
-    ]
-    resources = [
-      aws_ecr_repository.moodle.arn
     ]
   }
 

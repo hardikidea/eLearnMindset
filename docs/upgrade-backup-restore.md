@@ -362,7 +362,7 @@ apply_infrastructure=true
 target_environment=dev|stage|prod
 ```
 
-The workflow builds the production image with `INCLUDE_MOODLE_SOURCE=true`, bakes the official Moodle tag into the image, pushes it to ECR, and applies Terraform with the new image tag.
+The workflow builds the production image with `INCLUDE_MOODLE_SOURCE=true`, bakes the official Moodle tag into the image, pushes it to GHCR, and applies Terraform with the new image tag.
 
 Wait for ECS deployment:
 

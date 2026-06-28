@@ -51,6 +51,7 @@ on:
 permissions:
   id-token: write
   contents: read
+  packages: write
 
 concurrency:
   group: moodle-version-upgrade-${{ inputs.target_environment }}
@@ -60,7 +61,7 @@ env:
   AWS_ACCOUNT_ID: ${{ vars.AWS_ACCOUNT_ID }}
   AWS_REGION: ${{ vars.AWS_REGION || 'us-west-2' }}
   PROJECT_NAME: elearn-mindset
-  ECR_REPOSITORY: elearn-mindset
+  GHCR_IMAGE_NAME: ${{ vars.GHCR_IMAGE_NAME || 'ghcr.io/hardikidea/elearnmindset' }}
   TARGET_ENVIRONMENT: ${{ inputs.target_environment }}
   MOODLE_VERSION: ${{ inputs.moodle_version }}
   IMAGE_TAG: moodle-upgrade-${{ github.run_id }}-${{ github.run_attempt }}
@@ -290,13 +291,9 @@ jobs:
             --command 'php admin/cli/maintenance.php --enable'
 
       - name: Build And Push Moodle Image
-        uses: ./.github/actions/ecr-build-push
+        uses: ./.github/actions/ghcr-build-push
         with:
-          environment: ${{ inputs.target_environment }}
-          aws_account_id: ${{ env.AWS_ACCOUNT_ID }}
-          aws_region: ${{ env.AWS_REGION }}
-          project_name: ${{ env.PROJECT_NAME }}
-          ecr_repository: ${{ env.ECR_REPOSITORY }}
+          image_repository: ${{ env.GHCR_IMAGE_NAME }}
           moodle_version: ${{ inputs.moodle_version }}
           image_tag: ${{ env.IMAGE_TAG }}
 
@@ -309,6 +306,7 @@ jobs:
           aws_account_id: ${{ env.AWS_ACCOUNT_ID }}
           aws_region: ${{ env.AWS_REGION }}
           project_name: ${{ env.PROJECT_NAME }}
+          container_repository_url: ${{ env.GHCR_IMAGE_NAME }}
           image_tag: ${{ env.IMAGE_TAG }}
           cron_desired_count: "0"
 
@@ -321,6 +319,7 @@ jobs:
           aws_account_id: ${{ env.AWS_ACCOUNT_ID }}
           aws_region: ${{ env.AWS_REGION }}
           project_name: ${{ env.PROJECT_NAME }}
+          container_repository_url: ${{ env.GHCR_IMAGE_NAME }}
           image_tag: ${{ env.IMAGE_TAG }}
           cron_desired_count: "1"
 
@@ -382,6 +381,7 @@ jobs:
           aws_account_id: ${{ env.AWS_ACCOUNT_ID }}
           aws_region: ${{ env.AWS_REGION }}
           project_name: ${{ env.PROJECT_NAME }}
+          container_repository_url: ${{ env.GHCR_IMAGE_NAME }}
           image_tag: ${{ env.IMAGE_TAG }}
           cron_desired_count: "1"
 
@@ -416,6 +416,7 @@ jobs:
             echo "| --- | --- |"
             echo "| Environment | ${TARGET_ENVIRONMENT} |"
             echo "| Moodle tag | ${MOODLE_VERSION} |"
+            echo "| Image repository | ${GHCR_IMAGE_NAME} |"
             echo "| Image tag | ${IMAGE_TAG} |"
             echo "| Moodle URL | ${MOODLE_WWWROOT:-unknown} |"
             echo "| Previous task definition | ${PREVIOUS_TASK_DEFINITION:-unknown} |"

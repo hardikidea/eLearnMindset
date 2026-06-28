@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
     inputs:
       publish_image:
-        description: "Build and publish the production image to ECR"
+        description: "Build and publish the production image to GHCR"
         required: true
         default: "true"
         type: choice
@@ -45,7 +45,7 @@ env:
   AWS_ACCOUNT_ID: ${{ vars.AWS_ACCOUNT_ID }}
   AWS_REGION: ${{ vars.AWS_REGION || 'us-west-2' }}
   PROJECT_NAME: elearn-mindset
-  ECR_REPOSITORY: elearn-mindset
+  GHCR_IMAGE_NAME: ${{ vars.GHCR_IMAGE_NAME || 'ghcr.io/hardikidea/elearnmindset' }}
   MOODLE_VERSION: v5.2.1
   IMAGE_TAG: ${{ github.sha }}
   TRIVY_VERSION: v0.71.2
@@ -180,7 +180,7 @@ jobs:
             --build-arg INCLUDE_MOODLE_SOURCE=true \
             --build-arg MOODLE_VERSION="${MOODLE_VERSION}" \
             -f docker/moodle/Dockerfile \
-            -t elearn-mindset-production:${IMAGE_TAG} \
+            -t "elearn-mindset-production:${IMAGE_TAG}" \
             .
 
       - name: Scan production Docker image
@@ -258,26 +258,23 @@ jobs:
           aws_account_id: ${{ env.AWS_ACCOUNT_ID }}
           aws_region: ${{ env.AWS_REGION }}
           project_name: ${{ env.PROJECT_NAME }}
+          container_repository_url: ${{ env.GHCR_IMAGE_NAME }}
           image_tag: ${{ env.IMAGE_TAG }}
 
   publish-image:
-    name: Publish Image To ECR
+    name: Publish Image To GHCR
     runs-on: ubuntu-latest
     needs: integration-smoke
-    if: vars.AWS_ACCOUNT_ID != '' && (github.ref == 'refs/heads/main' || (github.event_name == 'workflow_dispatch' && inputs.publish_image == 'true'))
+    if: github.ref == 'refs/heads/main' || (github.event_name == 'workflow_dispatch' && inputs.publish_image == 'true')
     environment: dev
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
       - name: Build and push image
-        uses: ./.github/actions/ecr-build-push
+        uses: ./.github/actions/ghcr-build-push
         with:
-          environment: dev
-          aws_account_id: ${{ env.AWS_ACCOUNT_ID }}
-          aws_region: ${{ env.AWS_REGION }}
-          project_name: ${{ env.PROJECT_NAME }}
-          ecr_repository: ${{ env.ECR_REPOSITORY }}
+          image_repository: ${{ env.GHCR_IMAGE_NAME }}
           moodle_version: ${{ env.MOODLE_VERSION }}
           image_tag: ${{ env.IMAGE_TAG }}
 
@@ -299,6 +296,7 @@ jobs:
           aws_account_id: ${{ env.AWS_ACCOUNT_ID }}
           aws_region: ${{ env.AWS_REGION }}
           project_name: ${{ env.PROJECT_NAME }}
+          container_repository_url: ${{ env.GHCR_IMAGE_NAME }}
           image_tag: ${{ env.IMAGE_TAG }}
 
   terraform-apply-stage:
@@ -319,6 +317,7 @@ jobs:
           aws_account_id: ${{ env.AWS_ACCOUNT_ID }}
           aws_region: ${{ env.AWS_REGION }}
           project_name: ${{ env.PROJECT_NAME }}
+          container_repository_url: ${{ env.GHCR_IMAGE_NAME }}
           image_tag: ${{ env.IMAGE_TAG }}
 
   terraform-apply-prod:
@@ -339,4 +338,5 @@ jobs:
           aws_account_id: ${{ env.AWS_ACCOUNT_ID }}
           aws_region: ${{ env.AWS_REGION }}
           project_name: ${{ env.PROJECT_NAME }}
+          container_repository_url: ${{ env.GHCR_IMAGE_NAME }}
           image_tag: ${{ env.IMAGE_TAG }}

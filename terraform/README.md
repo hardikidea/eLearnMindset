@@ -8,7 +8,7 @@ No SSH keys are used. GitHub Actions authenticates to AWS through OIDC and short
 
 | Path | Purpose |
 | --- | --- |
-| `bootstrap/` | Creates shared CI/CD resources: Terraform state bucket, DynamoDB lock table, shared ECR repository, GitHub OIDC provider, and dev/stage/prod GitHub Actions IAM roles. |
+| `bootstrap/` | Creates shared CI/CD resources: Terraform state bucket, DynamoDB lock table, GitHub OIDC provider, and dev/stage/prod GitHub Actions IAM roles. |
 | `envs/dev/` | Dev Moodle environment. |
 | `envs/stage/` | Stage Moodle environment. |
 | `envs/prod/` | Prod Moodle environment. |
@@ -35,7 +35,7 @@ Each environment creates:
 
 ## Bootstrap Once
 
-Run bootstrap from a workstation or admin automation that already has AWS permissions to create IAM, S3, DynamoDB, and ECR resources.
+Run bootstrap from a workstation or admin automation that already has AWS permissions to create IAM, S3, and DynamoDB resources.
 
 ```bash
 cd terraform/bootstrap
@@ -105,7 +105,9 @@ terraform -chdir=terraform/envs/dev init \
   -backend-config="region=${AWS_REGION}" \
   -backend-config="encrypt=true"
 
-terraform -chdir=terraform/envs/dev plan -var "image_tag=latest"
+terraform -chdir=terraform/envs/dev plan \
+  -var "container_repository_url=ghcr.io/hardikidea/elearnmindset" \
+  -var "image_tag=<published-image-tag>"
 ```
 
 Replace `dev` with `stage` or `prod` for other environments.

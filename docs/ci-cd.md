@@ -19,7 +19,7 @@ The structure follows the CourseCloud reference at a high level: separate valida
 | `local-image-build` | Builds the local Docker image and the production image shape. |
 | `integration-smoke` | Builds the local stack, installs Moodle with PostgreSQL, checks the home/login pages, and confirms the installed release. |
 | `terraform-plan` | Plans dev, stage, and prod through environment-specific AWS OIDC roles. |
-| `publish-image` | Builds the production image with Moodle source and `moodle-overrides/` baked in, then pushes it to ECR. |
+| `publish-image` | Builds the production image with Moodle source and `moodle-overrides/` baked in, then pushes it to GHCR. |
 | `terraform-apply-dev` | Applies dev infrastructure. |
 | `terraform-apply-stage` | Applies stage infrastructure. |
 | `terraform-apply-prod` | Applies prod infrastructure. |
@@ -114,13 +114,31 @@ No SSH key is required. The workflow needs GitHub `id-token: write` permission, 
 
 ## Image Publishing
 
-The image repository is ECR:
+The image repository is GitHub Container Registry:
 
 ```text
-<aws-account-id>.dkr.ecr.<region>.amazonaws.com/elearn-mindset
+ghcr.io/hardikidea/elearnmindset
 ```
 
-The workflow publishes automatically on `main`. Manual workflow runs can also publish by setting `publish_image` to `true`.
+The workflow publishes immutable deployment tags automatically on `main`. Manual workflow runs can also publish by setting `publish_image` to `true`.
+
+The default image repository can be overridden with this repository variable:
+
+```text
+GHCR_IMAGE_NAME=ghcr.io/hardikidea/elearnmindset
+```
+
+If the GHCR package is private, ECS needs a Secrets Manager secret for registry pull credentials. The secret value must be JSON:
+
+```json
+{"username":"hardikidea","password":"<github-token-with-read-packages>"}
+```
+
+Set the resulting secret ARN in the target Terraform environment:
+
+```hcl
+container_registry_credentials_secret_arn = "arn:aws:secretsmanager:us-west-2:123456789012:secret:elearn-mindset/prod/ghcr-xxxxxx"
+```
 
 ## Required GitHub Variables
 
@@ -129,6 +147,7 @@ Set these repository variables:
 ```text
 AWS_ACCOUNT_ID=<your AWS account id>
 AWS_REGION=us-west-2
+GHCR_IMAGE_NAME=ghcr.io/hardikidea/elearnmindset
 BACKUP_VAULT_NAME=<aws-backup-vault-name>
 BACKUP_ROLE_ARN=<aws-backup-service-role-arn>
 ```

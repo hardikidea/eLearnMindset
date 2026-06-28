@@ -51,9 +51,15 @@ variable "image_tag" {
   description = "Container image tag to deploy."
 }
 
-variable "ecr_repository_url" {
+variable "container_repository_url" {
   type        = string
-  description = "ECR repository URL that contains the Moodle runtime image."
+  description = "Container image repository URL without tag."
+}
+
+variable "container_registry_credentials_secret_arn" {
+  type        = string
+  description = "Optional Secrets Manager secret ARN with private registry credentials for ECS repositoryCredentials."
+  default     = ""
 }
 
 variable "desired_count" {
