@@ -29,7 +29,7 @@ Open Moodle at `http://localhost:8080`.
 
 PostgreSQL is available from the host at `127.0.0.1:5440` and from containers at `db:5432`.
 
-The install script enables the `almondb` theme with the eLearn Mindset logo palette and the My courses route at `http://localhost:8080/my/courses.php`.
+The install script enables the `elearnboost` Boost child theme by default. It keeps Moodle's original Boost visual baseline and removes the constrained `.main-inner` and `.footer-popover` max-width so pages can use the full responsive workspace.
 
 `./scripts/bootstrap-moodle.sh` automatically syncs `moodle-overrides/` into the local Moodle checkout. Re-apply the same sync manually with:
 

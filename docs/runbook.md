@@ -36,7 +36,7 @@ Use this with the focused docs:
 | Docker Compose project | `elearn_mindset` |
 | Terraform environments | `dev`, `stage`, `prod` |
 | AWS authentication | GitHub OIDC, no SSH keys |
-| Active theme | `almondb`, with eLearn Mindset palette overrides |
+| Active theme | `elearnboost`, a minimal Boost child theme with full-width `.main-inner` and `.footer-popover` behavior |
 | AWS alarms | ALB health/5xx, ECS CPU/memory, RDS CPU/storage, EFS I/O |
 
 ## Local Services

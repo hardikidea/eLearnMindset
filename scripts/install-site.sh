@@ -17,6 +17,7 @@ set +a
 POSTGRES_DB="${POSTGRES_DB:-moodle}"
 POSTGRES_USER="${POSTGRES_USER:-moodle}"
 MOODLE_DB_PREFIX="${MOODLE_DB_PREFIX:-mdl_}"
+MOODLE_THEME="${MOODLE_THEME:-elearnboost}"
 export MOODLE_RUNTIME_UID="${MOODLE_RUNTIME_UID:-$(id -u)}"
 export MOODLE_RUNTIME_GID="${MOODLE_RUNTIME_GID:-$(id -g)}"
 
@@ -47,12 +48,8 @@ docker compose exec -T moodle php admin/cli/cfg.php --name=defaulthomepage --set
 docker compose exec -T moodle php admin/cli/cfg.php --name=enablemyhome --set=1
 docker compose exec -T moodle php admin/cli/cfg.php --name=enablemycourses --set=1
 docker compose exec -T moodle php admin/cli/upgrade.php --non-interactive
-docker compose exec -T moodle php admin/cli/cfg.php --name=theme --set=almondb
-docker compose exec -T moodle php admin/cli/cfg.php --component=theme_almondb --name=brandcolor --set="#0d3f5c"
-docker compose exec -T moodle php admin/cli/cfg.php --component=theme_almondb --name=sitecolor --set="#0d3f5c"
-docker compose exec -T moodle php admin/cli/cfg.php --component=theme_almondb --name=navbarcolor --set="#ffffff"
-docker compose exec -T moodle php admin/cli/cfg.php --component=theme_almondb --name=backcolor --set="#ffffff"
-docker compose exec -T moodle php admin/cli/build_theme_css.php --themes=almondb --direction=ltr --verbose
+docker compose exec -T moodle php admin/cli/cfg.php --name=theme --set="${MOODLE_THEME}"
+docker compose exec -T moodle php admin/cli/build_theme_css.php --themes="${MOODLE_THEME}" --direction=ltr --verbose
 docker compose exec -T moodle php admin/cli/purge_caches.php
 ./scripts/configure-mailpit.sh
 

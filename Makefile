@@ -1,5 +1,6 @@
 -include .env
 export
+MOODLE_THEME ?= elearnboost
 
 .PHONY: bootstrap sync-overrides build up start down stop restart logs shell install configure-mailpit demo-data theme-install cron backup restore update update-restore-on-fail status
 
@@ -41,13 +42,10 @@ demo-data:
 	./scripts/seed-indian-school-demo.sh
 
 theme-install:
+	./scripts/sync-moodle-overrides.sh
 	docker compose exec moodle php admin/cli/upgrade.php --non-interactive
-	docker compose exec moodle php admin/cli/cfg.php --name=theme --set=almondb
-	docker compose exec moodle php admin/cli/cfg.php --component=theme_almondb --name=brandcolor --set="#0d3f5c"
-	docker compose exec moodle php admin/cli/cfg.php --component=theme_almondb --name=sitecolor --set="#0d3f5c"
-	docker compose exec moodle php admin/cli/cfg.php --component=theme_almondb --name=navbarcolor --set="#ffffff"
-	docker compose exec moodle php admin/cli/cfg.php --component=theme_almondb --name=backcolor --set="#ffffff"
-	docker compose exec moodle php admin/cli/build_theme_css.php --themes=almondb --direction=ltr --verbose
+	docker compose exec moodle php admin/cli/cfg.php --name=theme --set=$(MOODLE_THEME)
+	docker compose exec moodle php admin/cli/build_theme_css.php --themes=$(MOODLE_THEME) --direction=ltr --verbose
 	docker compose exec moodle php admin/cli/purge_caches.php
 
 cron:

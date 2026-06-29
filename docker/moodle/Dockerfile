@@ -75,6 +75,7 @@ RUN chmod +x /usr/local/bin/moodle-entrypoint /usr/local/bin/moodle-cron-loop \
         /var/log/nginx \
         /var/www/moodle \
         /var/www/moodledata \
+    && find /tmp/nginx -type d -exec chmod 1777 {} + \
     && rm -f /etc/nginx/sites-enabled/default
 
 RUN if [ "${INCLUDE_MOODLE_SOURCE}" = "true" ]; then \

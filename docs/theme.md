@@ -1,55 +1,57 @@
 # Theme Setup
 
-The project uses `theme_almondb` with project-level SCSS overrides for source-controlled layout and Bootstrap styling.
+The project uses `theme_elearnboost`, a minimal Boost child theme stored in `moodle-overrides/public/theme/elearnboost`.
 
-## Goals
+## Design Direction
 
-- Keep Almondb's Boost-based layout files and JavaScript.
-- Make `#page.drawers .main-inner` full width without breaking drawer or mobile layouts.
-- Preserve responsive behavior on mobile and drawer layouts.
-- Apply project colors through Bootstrap Sass variables and component rules.
-- Style Bootstrap 5 components, Moodle navigation, admin forms, and the site footer consistently.
+- Base: Moodle Boost, kept visually close to the original Boost experience.
+- Purpose: remove Boost's constrained `.main-inner` and `.footer-popover` rails so Moodle pages can use the available horizontal workspace.
+- Scope: CSS-only theme override. No Boost layout templates are copied or modified.
+- Upgrade safety: the theme remains a small child theme, so Moodle upgrades continue to come from the official `moodle/` checkout.
 
-## Logo Palette
+## Full-Width Rule
 
-The theme palette is based on the eLearn Mindset logo:
+The theme removes `max-width` from drawer page containers and gives `.main-inner` plus `.footer-popover` a responsive width:
 
-- Navy: `#0d3f5c`
-- Red: `#ed0017`
-- Gold: `#ffd30a`
-- Orange: `#f29900`
-- White: `#ffffff`
+- Desktop/tablet: `width: calc(100% - 2rem)` and `max-width: none`.
+- Mobile: `width: 100%`, 1rem left/right padding, and hidden horizontal overflow protection.
+- Inner page regions such as `#region-main`, `#page-content`, `.course-content`, `.secondary-navigation`, and `.dashboard-card-deck` also use `max-width: none`.
+
+## Rules
+
+- Do not edit `moodle/public/theme/*` as the source of truth.
+- Keep all project theme code under `moodle-overrides/public/theme/elearnboost`.
+- Do not override Boost layout templates unless a future requirement explicitly needs a structural change.
+- Keep drawer pages and the footer popover full width by overriding Boost's limited-width rail while preserving mobile padding and touch targets.
+- Keep touch targets at least `44px` high.
+- Keep focus rings visible.
 
 ## Files
 
-- `moodle-overrides/public/theme/almondb/scss/almondb/_default_variables.scss`
-- `moodle-overrides/public/theme/almondb/scss/almondb/_elearn-mindset.scss`
-- `moodle-overrides/public/theme/almondb/scss/almondb-main.scss`
+- `moodle-overrides/public/theme/elearnboost/config.php`
+- `moodle-overrides/public/theme/elearnboost/lib.php`
+- `moodle-overrides/public/theme/elearnboost/lang/en/theme_elearnboost.php`
+- `moodle-overrides/public/theme/elearnboost/version.php`
 
-## Modern UI Patterns
+The active theme is controlled by `MOODLE_THEME` in `.env`. The default is:
 
-- Use `moodle-overrides/public/theme/almondb/scss/almondb/_elearn-mindset.scss` as the single project design layer.
-- Keep `main-inner` full-width, but align page header, secondary navigation, content, and footer content on one centered `1280px` rail.
-- Use white cards on the light school surface with navy text, red structural accents, and gold/orange active states.
-- Use standard Bootstrap 5 components as the base: nav tabs, dropdowns, cards, list groups, accordions, input groups, tables, alerts, badges, progress bars, and pagination.
-- Use Font Awesome icons for primary navigation, page headers, and functional link affordances.
-- Prefer card grids, clear hover/focus states, rounded touch targets, and visible keyboard focus rings.
-- Keep admin pages dense and scannable: grouped settings should look like functional cards, not marketing blocks.
-- Keep course cards, dashboard blocks, forms, tables, drawers, secondary navigation, and footer styling consistent.
-- Add only subtle entrance and hover animation; the layout must remain usable without motion.
-- Respect reduced-motion preferences for users who disable animation.
+```bash
+MOODLE_THEME=elearnboost
+```
 
 ## Apply Theme
 
 ```bash
+make theme-install
+```
+
+Manual equivalent:
+
+```bash
 make sync-overrides
 docker compose exec moodle php admin/cli/upgrade.php --non-interactive
-docker compose exec moodle php admin/cli/cfg.php --name=theme --set=almondb
-docker compose exec moodle php admin/cli/cfg.php --component=theme_almondb --name=brandcolor --set="#0d3f5c"
-docker compose exec moodle php admin/cli/cfg.php --component=theme_almondb --name=sitecolor --set="#0d3f5c"
-docker compose exec moodle php admin/cli/cfg.php --component=theme_almondb --name=navbarcolor --set="#ffffff"
-docker compose exec moodle php admin/cli/cfg.php --component=theme_almondb --name=backcolor --set="#ffffff"
-docker compose exec moodle php admin/cli/build_theme_css.php --themes=almondb --direction=ltr --verbose
+docker compose exec moodle php admin/cli/cfg.php --name=theme --set=elearnboost
+docker compose exec moodle php admin/cli/build_theme_css.php --themes=elearnboost --direction=ltr --verbose
 docker compose exec moodle php admin/cli/purge_caches.php
 ```
 
@@ -57,11 +59,13 @@ docker compose exec moodle php admin/cli/purge_caches.php
 
 ```bash
 docker compose exec moodle php admin/cli/cfg.php --name=theme
-curl -fsS http://localhost:8080/login/index.php | grep -E "theme/styles.php/almondb"
+curl -fsS http://localhost:8080/login/index.php | grep -E "theme/styles.php/elearnboost"
 ```
 
 Recommended visual checks after theme changes:
 
+- `http://localhost:8080/admin/search.php`
 - `http://localhost:8080/admin/search.php#linkappearance`
 - `http://localhost:8080/my/courses.php`
 - `http://localhost:8080/course/index.php?categoryid=all`
+- `http://localhost:8080/course/view.php?id=1`
