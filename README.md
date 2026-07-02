@@ -29,7 +29,7 @@ Open Moodle at `http://localhost:8080`.
 
 PostgreSQL is available from the host at `127.0.0.1:5440` and from containers at `db:5432`.
 
-The install script enables the `elearnboost` Boost child theme by default. It keeps Moodle's original Boost visual baseline and removes the constrained `.main-inner` and `.footer-popover` max-width so pages can use the full responsive workspace.
+The install script uses Moodle's default core `boost` theme. No custom project theme is installed from `moodle-overrides/`.
 
 `./scripts/bootstrap-moodle.sh` automatically syncs `moodle-overrides/` into the local Moodle checkout. Re-apply the same sync manually with:
 
