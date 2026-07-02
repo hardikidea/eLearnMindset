@@ -1,6 +1,6 @@
 -include .env
 export
-MOODLE_THEME ?= boost
+MOODLE_THEME ?= eduboost
 
 .PHONY: bootstrap sync-overrides build up start down stop restart logs shell install configure-mailpit demo-data theme-install cron backup restore update update-restore-on-fail status
 
