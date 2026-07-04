@@ -24,4 +24,6 @@ fi
 # Remove retired project-owned theme overrides from existing checkouts.
 rm -rf "${MOODLE_DIR}/public/theme/eduboost"
 
+"${ROOT_DIR}/scripts/configure-moodle-git-excludes.sh"
+
 echo "Moodle overrides synced into ${MOODLE_DIR}"

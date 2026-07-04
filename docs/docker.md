@@ -59,6 +59,8 @@ The root repository does not commit the local `moodle/` checkout. Project-specif
 
 `./scripts/bootstrap-moodle.sh` and `./scripts/update-moodle.sh` run this sync automatically. Production Docker builds also copy `moodle-overrides/` into the image after cloning the official Moodle tag.
 
+For local development, `sync-moodle-overrides.sh` also updates `moodle/.git/info/exclude` inside the nested Moodle checkout. This keeps synced project plugins and demo files out of the nested Moodle Git status while still allowing real Moodle core edits to appear if they happen accidentally.
+
 ## Local Ports
 
 | Service | Host URL or Address | Container Address |
