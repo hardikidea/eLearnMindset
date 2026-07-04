@@ -21,4 +21,7 @@ else
     cp -a "${OVERRIDES_DIR}/." "${MOODLE_DIR}/"
 fi
 
+# Remove retired project-owned theme overrides from existing checkouts.
+rm -rf "${MOODLE_DIR}/public/theme/eduboost"
+
 echo "Moodle overrides synced into ${MOODLE_DIR}"

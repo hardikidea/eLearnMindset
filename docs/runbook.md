@@ -36,7 +36,7 @@ Use this with the focused docs:
 | Docker Compose project | `elearn_mindset` |
 | Terraform environments | `dev`, `stage`, `prod` |
 | AWS authentication | GitHub OIDC, no SSH keys |
-| Active theme | `eduboost`, a Boost-based school theme stored in `moodle-overrides/public/theme/eduboost` |
+| Active theme | `boost`, the stock Moodle theme bundled with Moodle |
 | AWS alarms | ALB health/5xx, ECS CPU/memory, RDS CPU/storage, EFS I/O |
 
 ## Local Services

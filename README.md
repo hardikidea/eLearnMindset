@@ -29,7 +29,7 @@ Open Moodle at `http://localhost:8080`.
 
 PostgreSQL is available from the host at `127.0.0.1:5440` and from containers at `db:5432`.
 
-The install script enables the `eduboost` theme by default. EduBoost inherits Moodle Boost and applies a modern school palette without changing Moodle core theme files.
+The install script enables Moodle's stock `boost` theme by default. Custom project themes have been removed so Moodle upgrades stay aligned with the bundled Moodle theme set.
 
 `./scripts/bootstrap-moodle.sh` automatically syncs `moodle-overrides/` into the local Moodle checkout. Re-apply the same sync manually with:
 
