@@ -18,12 +18,33 @@ Execute:
 php /path/to/moodle/admin/cli/cli_create_universal_master_course_template.php \
   --dir=/path/to/extracted/csv-pack \
   --dry-run=0 \
-  --activity-mode=page
+  --activity-mode=native
 ```
 
-`--activity-mode=page` is the safest default. It creates Moodle Page placeholders using the recommended activity type in the title. Teachers can replace the placeholders with Quiz, Assignment, Forum, H5P, SCORM, URL, Book, or other activities later.
+`--activity-mode=native` creates real Moodle activity modules where installed. Use this mode for the 10-chapter sequential template because Quiz gates can then use pass-grade completion and unlock the next chapter.
 
-Use `--activity-mode=native` only on a staging site after checking installed activity modules.
+`--activity-mode=page` is the safest fallback. It creates Moodle Page placeholders using the recommended activity type in the title. Teachers can replace the placeholders with Quiz, Assignment, Forum, H5P, SCORM, URL, Book, or other activities later. In this mode, chapter gates use view completion because a Page cannot require a quiz pass grade.
+
+If the hidden master template already exists from an older template version, use:
+
+```bash
+php /path/to/moodle/admin/cli/cli_create_universal_master_course_template.php \
+  --dir=/path/to/extracted/csv-pack \
+  --dry-run=0 \
+  --activity-mode=native \
+  --reset-template-activities=1
+```
+
+The reset flag only deletes activities in the hidden master template course before recreating them from CSV.
+
+Before execution, enable completion tracking and restricted access:
+
+```bash
+php /path/to/moodle/admin/cli/cfg.php --name=enablecompletion --set=1
+php /path/to/moodle/admin/cli/cfg.php --name=enableavailability --set=1
+```
+
+For the full chapter-gate workflow, see `README_CHAPTER_SEQUENTIAL_TEMPLATE.md`.
 
 ## 2. Apply template settings to already-created courses
 

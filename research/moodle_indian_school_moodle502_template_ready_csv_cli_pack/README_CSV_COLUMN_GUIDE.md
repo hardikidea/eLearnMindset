@@ -119,7 +119,7 @@ Boolean columns use `1` for yes/enabled/visible and `0` for no/disabled/hidden. 
 | `cli_validate_school_baseline.php` | Validates CSV structure and cross-file references before Moodle import. | Most baseline CSV files. |
 | `cli_moodle502_preflight.php` | Checks Moodle features/plugins/config expected by the pack. | No data import; checks Moodle runtime. |
 | `cli_import_indian_school_baseline.php` | Creates profile fields, roles, categories, courses, cohorts, groups, users, links, and enrolments. | `user_profile_fields.csv`, `custom_roles.csv`, `categories.csv`, `courses.csv`, `cohorts.csv`, `groups.csv`, `users_*.csv`, `cohort_members.csv`, `role_assignments.csv`, `parent_links.csv`, `enrolments.csv`. |
-| `cli_create_universal_master_course_template.php` | Creates hidden reusable course template and optional placeholder activities. | `master_course_template.csv`, `course_template_sections.csv`, `course_template_activities.csv`. |
+| `cli_create_universal_master_course_template.php` | Creates hidden reusable course template, chapter activities, and sequential chapter restricted-access rules. | `master_course_template.csv`, `course_template_sections.csv`, `course_template_activities.csv`. |
 | `cli_apply_course_template_settings.php` | Applies section names, summaries, visibility, completion, and course display settings to existing courses. | `course_template_application.csv`, `course_template_sections.csv`. |
 | `cli_apply_gradebook_template.php` | Applies gradebook category pattern to courses. | `course_template_gradebook.csv`, `grade_band_template_adjustments.csv`. |
 | `cli_prepare_next_academic_year.php` | Creates next-year courses, cohorts, groups, and enrolment mappings. | `next_year_courses_*.csv`, `next_year_cohorts_*.csv`, `next_year_groups_*.csv`, `next_year_enrolments_*.csv`. |
@@ -738,7 +738,7 @@ Dependencies: used by master template script and apply-template script.
 
 ### `course_template_activities.csv`
 
-Purpose: Defines placeholder activities/resources for the master template.
+Purpose: Defines placeholder or native activities/resources for the master template. The current standard template uses 10 chapter sections. Each chapter includes overview, study material, discussion, practice quiz, assignment, and a completion gate.
 
 Dependencies: `course_template_sections.csv`; recommended activity modules must exist if using native mode.
 
@@ -758,6 +758,19 @@ Dependencies: `course_template_sections.csv`; recommended activity modules must 
 | `default_points` | Default grade points. |
 | `visible` | Activity visibility. |
 | `pii_safe_note` | Privacy note. |
+| `completion_rule` | Logical completion rule used by the CLI. Supported values are `none`, `view`, `submit`, `grade`, `passgrade`, and `manual`. |
+| `unlock_next` | `1` marks the activity as the chapter gate used to unlock the next chapter section. |
+| `grade_to_pass` | Pass percentage used for pass-grade gates and final mock tests. For example `40` means 40 percent of the activity max grade. |
+
+Sequential chapter behavior:
+
+- Chapter 1 is open by default.
+- Chapter 2 requires the Chapter 1 gate.
+- Chapter 3 requires the Chapter 2 gate.
+- The same rule continues through Chapter 10.
+- Revision & Final Assessment requires the Chapter 10 gate.
+
+For the operational runbook, see `README_CHAPTER_SEQUENTIAL_TEMPLATE.md`.
 
 ### `course_template_application.csv`
 
@@ -810,10 +823,10 @@ Dependencies: `course_template_gradebook.csv`, grades/grade bands.
 |---|---|
 | `grade_band` | Band such as primary, secondary, higher secondary. |
 | `grade_codes` | Grade codes included in the band. |
-| `practice_weight` | Suggested practice weight. |
-| `quiz_weight` | Suggested quiz weight. |
+| `classwork_weight` | Suggested classwork and participation weight. |
+| `practice_quiz_weight` | Suggested practice quiz weight. |
 | `assignment_weight` | Suggested assignment weight. |
-| `checkpoint_weight` | Suggested checkpoint weight. |
+| `chapter_gate_weight` | Suggested chapter completion gate weight. |
 | `final_weight` | Suggested final assessment weight. |
 | `passing_grade_percent` | Suggested pass percentage. |
 | `template_adjustment` | Notes about adjustment. |

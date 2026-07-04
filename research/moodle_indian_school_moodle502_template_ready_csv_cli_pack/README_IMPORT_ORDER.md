@@ -6,6 +6,9 @@ For per-file column usage, dependencies, and selective-import guidance, read
 For academic-year change, student promotion, and the no re-registration workflow,
 read `README_ACADEMIC_YEAR_CHANGE_WORKFLOW.md`.
 
+For the 10-chapter sequential course template with chapter gates and restricted
+access, read `README_CHAPTER_SEQUENTIAL_TEMPLATE.md`.
+
 Before importing, run the new compatibility and CSV checks:
 
 ```bash

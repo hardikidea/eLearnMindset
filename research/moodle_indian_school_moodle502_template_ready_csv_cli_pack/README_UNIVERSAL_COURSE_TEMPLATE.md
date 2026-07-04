@@ -10,6 +10,17 @@ MASTER - All Grades - All Subjects - Standard Course Template
 
 Use one master structure for every grade and subject. Teachers then replace placeholders with grade-level and subject-specific lessons, resources, activities, and assessments.
 
+The current master structure is a 10-chapter sequential template:
+
+```text
+Course Home & Orientation
+Syllabus & Assessment Plan
+Chapter 1 to Chapter 10
+Revision & Final Assessment
+```
+
+Each chapter includes overview, study material, discussion, practice quiz, assignment, and a completion gate. Chapter 2 and later sections are restricted until the previous chapter gate is completed. See `README_CHAPTER_SEQUENTIAL_TEMPLATE.md`.
+
 ## Course name format
 
 ```text

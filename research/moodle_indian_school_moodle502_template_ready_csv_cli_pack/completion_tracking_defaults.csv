@@ -1,8 +1,10 @@
 activity_type,completion_mode,recommended_moodle_completion,grade_required,notes
-page,manual_or_view,Student must view activity,0,"Use for welcome, syllabus, learning material, review notes."
-url,view,Student must view activity,0,"Use for DIKSHA, NCERT, GSEB/CBSE resources when linking externally."
-forum,post_or_view,Require posts/replies for discussion forums; view only for announcements.,0,Use separate groups if division separation is required.
-assign,submit,Student must submit to complete,1,"Use rubrics for projects, lab reports, writing tasks."
-quiz,grade_or_attempt,Student must receive grade or make attempt,1,Use passing grade for checkpoints/final if needed.
-feedback,submit,Student must submit feedback,0,Use at end of course.
-customcert_or_badge,course_completion,Visible only after course completion,0,Core-safe default is Moodle course badge; Custom certificate requires plugin.
+page,view,Student must view activity,0,"Use for welcome, syllabus, overview, notes, revision plans, and completion summary pages."
+book,view,Student must view activity,0,"Use for chapter study material when the Book module is installed; Page fallback is safe."
+url,view,Student must view activity,0,"Use for DIKSHA, NCERT, CBSE, state board, or school-approved external resources."
+forum,view_or_post,Use view for simple discussion placeholders; require posts only when moderation rules are ready.,0,Use separate groups if class divisions should not see each other's posts.
+assign,submit,Student must submit to complete,1,"Use rubrics for worksheets, projects, lab records, practicals, writing tasks, and portfolios."
+quiz,grade,Student must receive a grade to complete,1,Use for practice quizzes and knowledge checks.
+quiz_passgate,passgrade,Student must receive a passing grade to complete,1,"Use for chapter completion gates that unlock the next chapter; default pass is 40 percent."
+feedback,submit,Student must submit feedback,0,Use at the end of the course.
+customcert_or_badge,course_completion,Visible only after course completion,0,Core-safe default is Moodle course badge; Custom certificate requires plugin approval and installation.

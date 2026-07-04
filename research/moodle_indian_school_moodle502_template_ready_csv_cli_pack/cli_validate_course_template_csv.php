@@ -56,6 +56,35 @@ foreach ($activities as $a) {
         $errors[] = "Activity {$a['activity_key']} references missing section {$a['section_number']}";
     }
 }
+$requiredActivityColumns = [
+    'completion_rule',
+    'unlock_next',
+    'grade_to_pass',
+];
+foreach ($requiredActivityColumns as $column) {
+    if ($activities && !array_key_exists($column, $activities[0])) {
+        $errors[] = "course_template_activities.csv is missing required column $column";
+    }
+}
+$gateSections = [];
+foreach ($activities as $a) {
+    if (($a['unlock_next'] ?? '') === '1') {
+        $section = (int)$a['section_number'];
+        $gateSections[$section] = true;
+        if (($a['completion_rule'] ?? '') !== 'passgrade') {
+            $errors[] = "Gate activity {$a['activity_key']} should use completion_rule=passgrade";
+        }
+        if (!is_numeric($a['grade_to_pass'] ?? '')) {
+            $errors[] = "Gate activity {$a['activity_key']} must define numeric grade_to_pass";
+        }
+    }
+}
+for ($i = 2; $i <= 11; $i++) {
+    if (empty($gateSections[$i])) {
+        $chapter = $i - 1;
+        $errors[] = "Missing unlock gate for Chapter $chapter in section $i";
+    }
+}
 foreach ($apps as $a) {
     if (!isset($courseShortnames[$a['course_shortname']])) {
         $errors[] = "Template application references missing course {$a['course_shortname']}";

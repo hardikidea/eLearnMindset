@@ -8,12 +8,14 @@ require(__DIR__ . '/../../config.php');
 require_once($CFG->libdir . '/clilib.php');
 require_once($CFG->dirroot . '/course/lib.php');
 require_once($CFG->dirroot . '/course/modlib.php');
+require_once($CFG->libdir . '/gradelib.php');
 
 list($options, $unrecognized) = cli_get_params([
     'help' => false,
     'dir' => null,
     'dry-run' => true,
     'activity-mode' => 'page',
+    'reset-template-activities' => false,
 ], [
     'h' => 'help',
 ]);
@@ -24,12 +26,14 @@ if ($options['help'] || empty($options['dir'])) {
     echo "  --dir=/absolute/path/to/csv-pack\n";
     echo "  --dry-run=1|0\n";
     echo "  --activity-mode=page|native\n";
+    echo "  --reset-template-activities=0|1  Delete existing activities from the hidden template course before recreating them\n";
     exit(0);
 }
 
 $csvdir = rtrim($options['dir'], DIRECTORY_SEPARATOR);
 $dryrun = !empty($options['dry-run']) && $options['dry-run'] !== '0';
 $activitymode = strtolower($options['activity-mode'] ?: 'page');
+$resetactivities = !empty($options['reset-template-activities']) && $options['reset-template-activities'] !== '0';
 
 function msg($text) { cli_writeln($text); }
 
@@ -66,6 +70,62 @@ function as_bool_int($value, $default = 0) {
     }
     $v = strtolower((string)$value);
     return in_array($v, ['1', 'true', 'yes', 'y'], true) ? 1 : 0;
+}
+
+function csv_value(array $row, $key, $default = '') {
+    return array_key_exists($key, $row) && $row[$key] !== '' ? $row[$key] : $default;
+}
+
+function supports_grade_completion($modname) {
+    return plugin_supports('mod', $modname, FEATURE_GRADE_HAS_GRADE, false);
+}
+
+function completion_state_for_rule($rule, $modname) {
+    if ($rule === 'passgrade' && supports_grade_completion($modname)) {
+        return COMPLETION_COMPLETE_PASS;
+    }
+    return COMPLETION_COMPLETE;
+}
+
+function apply_completion_settings(stdClass $info, array $row, $modname) {
+    $rule = strtolower(csv_value($row, 'completion_rule', 'view'));
+    $required = as_bool_int(csv_value($row, 'completion_required', '1'), 1);
+
+    $info->completion = COMPLETION_TRACKING_NONE;
+    $info->completionview = COMPLETION_VIEW_NOT_REQUIRED;
+    $info->completiongradeitemnumber = null;
+    $info->completionpassgrade = 0;
+    $info->completionexpected = 0;
+    $info->completionunlocked = 1;
+
+    if (!$required || $rule === 'none') {
+        return;
+    }
+
+    if ($rule === 'manual') {
+        $info->completion = COMPLETION_TRACKING_MANUAL;
+        return;
+    }
+
+    $info->completion = COMPLETION_TRACKING_AUTOMATIC;
+
+    if ($rule === 'submit') {
+        if (in_array($modname, ['assign', 'feedback', 'choice'], true)) {
+            $info->completionsubmit = 1;
+        } else {
+            $info->completionview = COMPLETION_VIEW_REQUIRED;
+        }
+        return;
+    }
+
+    if (in_array($rule, ['grade', 'passgrade'], true) && supports_grade_completion($modname)) {
+        $info->completionusegrade = 1;
+        $info->completiongradeitemnumber = 0;
+        $info->completionpassgrade = $rule === 'passgrade' ? 1 : 0;
+        return;
+    }
+
+    $info->completionview = COMPLETION_VIEW_REQUIRED;
 }
 
 function ensure_template_category($row, $dryrun) {
@@ -163,6 +223,20 @@ function ensure_sections($course, $sections, $dryrun) {
     msg('Updated template course sections.');
 }
 
+function reset_template_activities($course, $dryrun) {
+    global $DB;
+    if ($dryrun || empty($course->id)) {
+        msg('[dry-run] Delete existing activities from the hidden template course before recreating the current CSV template.');
+        return;
+    }
+    $cms = $DB->get_records('course_modules', ['course' => $course->id], 'id ASC', 'id');
+    foreach ($cms as $cm) {
+        course_delete_module($cm->id);
+    }
+    rebuild_course_cache($course->id, true);
+    msg('Deleted ' . count($cms) . ' existing template course activities.');
+}
+
 function module_table_exists($modname) {
     global $DB;
     return $DB->get_manager()->table_exists($modname);
@@ -174,19 +248,24 @@ function create_placeholder_activity($course, $row, $activitymode, $dryrun) {
     $modname = ($activitymode === 'native' && module_table_exists($recommended)) ? $recommended : 'page';
     if (!$DB->record_exists('modules', ['name' => $modname])) {
         msg("Skipping activity {$row['default_name']}; module not installed: $modname");
-        return;
+        return null;
     }
     $title = $row['default_name'];
     if ($modname === 'page' && $recommended !== 'page') {
         $title = '[' . strtoupper($recommended) . '] ' . $title;
     }
-    if ($DB->get_manager()->table_exists($modname) && $DB->record_exists($modname, ['course' => $course->id, 'name' => $title])) {
+    if ($DB->get_manager()->table_exists($modname) && $instance = $DB->get_record($modname, ['course' => $course->id, 'name' => $title])) {
         msg("Activity exists: $title");
-        return;
+        $cm = get_coursemodule_from_instance($modname, $instance->id, $course->id, false, IGNORE_MISSING);
+        return $cm ? [
+            'cmid' => (int)$cm->id,
+            'modname' => $modname,
+            'completionstate' => completion_state_for_rule(strtolower(csv_value($row, 'completion_rule', 'view')), $modname),
+        ] : null;
     }
     if ($dryrun || empty($course->id)) {
         msg("[dry-run] Create $modname activity in section {$row['section_number']}: $title");
-        return;
+        return null;
     }
     $module = $DB->get_record('modules', ['name' => $modname], '*', MUST_EXIST);
     $info = new stdClass();
@@ -195,11 +274,15 @@ function create_placeholder_activity($course, $row, $activitymode, $dryrun) {
     $info->course = $course->id;
     $info->section = (int)$row['section_number'];
     $info->visible = as_bool_int($row['visible'] ?? '1', 1);
+    $info->visibleoncoursepage = $info->visible;
     $info->name = $title;
     $info->intro = '<p>' . s($row['purpose']) . '</p><p><em>Replace this placeholder with grade-level and subject-specific content.</em></p>';
     $info->introformat = FORMAT_HTML;
-    $info->completion = (int)($row['completion_mode'] ?: 1);
-    $info->completionview = 1;
+    $info->cmidnumber = csv_value($row, 'activity_key', '');
+    $info->groupmode = 0;
+    $info->groupingid = 0;
+    $info->add = $modname;
+    apply_completion_settings($info, $row, $modname);
     if ($modname === 'page') {
         $info->content = '<h3>' . s($row['default_name']) . '</h3><p>' . s($row['purpose']) . '</p><p>Recommended activity type: <strong>' . s($recommended) . '</strong>.</p><p>PII-safe rule: do not place Aadhaar, personal address, medical details, or parent contact data inside course content.</p>';
         $info->contentformat = FORMAT_HTML;
@@ -211,11 +294,17 @@ function create_placeholder_activity($course, $row, $activitymode, $dryrun) {
         $info->type = 'general';
     } else if ($modname === 'assign') {
         $info->grade = is_numeric($row['default_points']) ? (float)$row['default_points'] : 100;
+        if (is_numeric(csv_value($row, 'grade_to_pass', ''))) {
+            $info->gradepass = $info->grade * ((float)$row['grade_to_pass'] / 100);
+        }
         $info->allowsubmissionsfromdate = 0;
         $info->duedate = 0;
         $info->cutoffdate = 0;
     } else if ($modname === 'quiz') {
         $info->grade = is_numeric($row['default_points']) ? (float)$row['default_points'] : 10;
+        if (is_numeric(csv_value($row, 'grade_to_pass', ''))) {
+            $info->gradepass = $info->grade * ((float)$row['grade_to_pass'] / 100);
+        }
         $info->sumgrades = $info->grade;
         $info->timeopen = 0;
         $info->timeclose = 0;
@@ -228,11 +317,57 @@ function create_placeholder_activity($course, $row, $activitymode, $dryrun) {
         $info->multiple_submit = 0;
     }
     try {
-        add_moduleinfo($info, $course);
+        $created = add_moduleinfo($info, $course);
         msg("Created $modname activity: $title");
+        return [
+            'cmid' => (int)$created->coursemodule,
+            'modname' => $modname,
+            'completionstate' => completion_state_for_rule(strtolower(csv_value($row, 'completion_rule', 'view')), $modname),
+        ];
     } catch (Throwable $e) {
         msg("Could not create native activity $title: " . $e->getMessage());
+        return null;
     }
+}
+
+function apply_sequential_chapter_availability($course, $sections, $gateactivities, $dryrun) {
+    global $CFG, $DB;
+    if ($dryrun || empty($course->id)) {
+        msg('[dry-run] Apply restricted access: Chapter 2..10 and final review unlock from the previous chapter gate.');
+        return;
+    }
+    if (empty($gateactivities)) {
+        msg('No chapter gate activities found; sequential chapter restrictions were not applied.');
+        return;
+    }
+    if (empty($CFG->enableavailability)) {
+        msg('WARNING: Moodle restricted access is disabled. Set enableavailability=1 before relying on chapter unlock rules.');
+    }
+
+    foreach ($sections as $row) {
+        $sectionnum = (int)$row['section_number'];
+        if ($sectionnum < 3 || $sectionnum > 12) {
+            continue;
+        }
+        $previoussection = $sectionnum - 1;
+        if (empty($gateactivities[$previoussection]['cmid'])) {
+            msg("Skipping restriction for section $sectionnum; missing gate for section $previoussection.");
+            continue;
+        }
+        $condition = [
+            'op' => '&',
+            'showc' => [true],
+            'c' => [[
+                'type' => 'completion',
+                'cm' => (int)$gateactivities[$previoussection]['cmid'],
+                'e' => (int)$gateactivities[$previoussection]['completionstate'],
+            ]],
+        ];
+        $section = $DB->get_record('course_sections', ['course' => $course->id, 'section' => $sectionnum], '*', MUST_EXIST);
+        course_update_section($course, $section, ['availability' => json_encode($condition)]);
+        msg("Applied restricted access to section $sectionnum using section $previoussection gate.");
+    }
+    rebuild_course_cache($course->id, true);
 }
 
 $template = read_csv_file($csvdir, 'master_course_template.csv')[0];
@@ -244,7 +379,15 @@ $categoryid = ensure_template_category($template, $dryrun);
 $course = ensure_template_course($template, $categoryid, $dryrun);
 update_course_settings($course, $template, $dryrun);
 ensure_sections($course, $sections, $dryrun);
-foreach ($activities as $row) {
-    create_placeholder_activity($course, $row, $activitymode, $dryrun);
+if ($resetactivities) {
+    reset_template_activities($course, $dryrun);
 }
+$gateactivities = [];
+foreach ($activities as $row) {
+    $created = create_placeholder_activity($course, $row, $activitymode, $dryrun);
+    if (as_bool_int(csv_value($row, 'unlock_next', '0'), 0) && $created) {
+        $gateactivities[(int)$row['section_number']] = $created;
+    }
+}
+apply_sequential_chapter_availability($course, $sections, $gateactivities, $dryrun);
 msg('Master course template process completed.');
