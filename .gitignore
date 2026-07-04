@@ -42,7 +42,6 @@ postgres-data/
 redis-data/
 db-data/
 /plugins/
-/research/
 
 # Terraform local state and generated working directories.
 **/.terraform/

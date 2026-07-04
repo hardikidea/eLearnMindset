@@ -1,0 +1,5 @@
+board_code,board_name,board_type,country,state,source_url
+GGOV,Gujarat Government,State Government,India,Gujarat,https://gsstb.gujarat.gov.in/
+GSEB,Gujarat Secondary and Higher Secondary Education Board,State Board,India,Gujarat,https://www.gseb.org/
+CBSE,Central Board of Secondary Education,Central Board,India,All India,https://cbseacademic.nic.in/curriculum_2027.html
+NCERT,National Council of Educational Research and Training,National Curriculum/Textbook Body,India,All India,https://ncert.nic.in/textbook.php
