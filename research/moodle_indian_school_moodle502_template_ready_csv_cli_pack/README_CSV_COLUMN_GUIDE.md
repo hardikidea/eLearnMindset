@@ -4,6 +4,10 @@ This chapter explains every CSV file in this pack, how each column is used by Mo
 
 Use this document when setting up a new school, trimming the pack for a smaller import, or troubleshooting missing courses, cohorts, users, sections, or reports.
 
+If the school team prefers maintaining all CSV files from one workbook, use
+`README_MASTER_EXCEL_WORKBOOK.md` and the generated workbook at
+`outputs/master-import-workbook/eLearnMindset_school_import_master.xlsx`.
+
 ## Safe Setup Order
 
 Run imports in this order:

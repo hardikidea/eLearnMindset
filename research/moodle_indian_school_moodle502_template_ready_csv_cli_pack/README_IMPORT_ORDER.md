@@ -9,6 +9,10 @@ read `README_ACADEMIC_YEAR_CHANGE_WORKFLOW.md`.
 For the 10-chapter sequential course template with chapter gates and restricted
 access, read `README_CHAPTER_SEQUENTIAL_TEMPLATE.md`.
 
+For Excel-first data maintenance across all CSV files, read
+`README_MASTER_EXCEL_WORKBOOK.md` and use
+`outputs/master-import-workbook/eLearnMindset_school_import_master.xlsx`.
+
 Before importing, run the new compatibility and CSV checks:
 
 ```bash
