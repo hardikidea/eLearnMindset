@@ -2,7 +2,7 @@
 // Moodle academic year promotion / student rollover CLI.
 // Copy this file to /path/to/moodle/admin/cli/ and run as the web-server user.
 // Example:
-// php admin/cli/cli_promote_academic_year.php --dir=/path/to/csv-pack --file=promotion_actions.csv --dry-run=1
+// php admin/cli/cli_promote_academic_year.php --dir=/path/to/csv-pack --file=53_promotion_actions.csv --dry-run=1
 
 define('CLI_SCRIPT', true);
 
@@ -10,11 +10,12 @@ require(__DIR__ . '/../../config.php');
 require_once($CFG->libdir . '/clilib.php');
 require_once($CFG->dirroot . '/cohort/lib.php');
 require_once($CFG->dirroot . '/user/profile/lib.php');
+require_once(__DIR__ . '/cli_csv_helpers.php');
 
 list($options, $unrecognized) = cli_get_params([
     'help' => false,
     'dir' => null,
-    'file' => 'promotion_actions.csv',
+    'file' => '53_promotion_actions.csv',
     'dry-run' => true,
     'remove-old-cohort' => false,
     'update-profile' => true,
@@ -27,7 +28,7 @@ if ($options['help'] || empty($options['dir'])) {
     echo "Academic year promotion / student rollover importer\n\n" .
         "Options:\n" .
         "  --dir=/absolute/path/to/csv-pack        Required CSV directory\n" .
-        "  --file=promotion_actions.csv           Promotion CSV file name\n" .
+        "  --file=53_promotion_actions.csv        Promotion CSV file name. The old logical name also resolves.\n" .
         "  --dry-run=1                            Preview only, no writes\n" .
         "  --dry-run=0                            Execute writes\n" .
         "  --remove-old-cohort=1                  Remove old cohort membership after adding next cohort\n" .
@@ -49,7 +50,7 @@ function msg($text) {
 }
 
 function read_csv_file($dir, $filename) {
-    $path = $dir . DIRECTORY_SEPARATOR . $filename;
+    $path = csv_pack_resolve_file($dir, $filename);
     if (!file_exists($path)) {
         cli_error("CSV file not found: $path");
     }

@@ -28,6 +28,8 @@ Use the workbook when a school administrator, data-entry team, or implementation
 - Import sequence guidance
 
 The workbook is an editing and review tool. The Moodle CLI scripts still import CSV files, so any edited workbook sheet must be exported back to the matching CSV filename before running the import.
+The matching CSV filename is the ordered repository filename, for example
+`12_courses.csv`, not the old unprefixed logical name.
 
 ## Workbook Structure
 
@@ -40,7 +42,7 @@ The workbook is an editing and review tool. The Moodle CLI scripts still import 
 | `04_REF_LISTS` | Dynamic reference list ranges used by dropdowns in CSV sheets. |
 | `05_*` onward | One worksheet per CSV file, ordered by the recommended import sequence. |
 
-CSV sheets keep the original CSV headers in row 1. Do not insert note rows above the header. Do not rename headers unless the CLI scripts and CSV documentation are updated.
+CSV sheets keep the original CSV headers in row 1. Do not insert note rows above the header. Do not rename headers unless the CLI scripts and CSV documentation are updated. The `01_IMPORT_SEQUENCE` sheet shows both the ordered CSV filename and the logical script filename.
 
 ## Dynamic Reference Rules
 
@@ -54,19 +56,19 @@ Examples:
 
 | Field pattern | Reference list |
 |---|---|
-| `board_code` | Board codes from `boards.csv` |
-| `medium_code` | Medium codes from `mediums.csv` |
-| `grade_code` | Grade codes from `grades.csv` |
-| `stream_code` | Stream codes from `streams.csv` |
-| `division_code` | Division codes from `divisions.csv` |
-| `subject_code` | Subject codes from `subjects.csv` |
-| `category_code`, `parent_category_code`, `context_category_code` | Category codes from `categories.csv` |
-| `course_code` | Course codes from `courses.csv` |
-| `course_shortname` | Course shortnames from `courses.csv` |
-| `cohort_code`, `cohort1` | Cohort codes from `cohorts.csv` |
-| `role_shortname` | Role shortnames from `custom_roles.csv` |
-| `template_code`, `course_template_code` | Template codes from `master_course_template.csv` |
-| `academic_year` | Academic years from `academic_years.csv` |
+| `board_code` | Board codes from `03_boards.csv` |
+| `medium_code` | Medium codes from `04_mediums.csv` |
+| `grade_code` | Grade codes from `05_grades.csv` |
+| `stream_code` | Stream codes from `06_streams.csv` |
+| `division_code` | Division codes from `07_divisions.csv` |
+| `subject_code` | Subject codes from `08_subjects.csv` |
+| `category_code`, `parent_category_code`, `context_category_code` | Category codes from `10_categories.csv` |
+| `course_code` | Course codes from `12_courses.csv` |
+| `course_shortname` | Course shortnames from `12_courses.csv` |
+| `cohort_code`, `cohort1` | Cohort codes from `14_cohorts.csv` |
+| `role_shortname` | Role shortnames from `17_custom_roles.csv` |
+| `template_code`, `course_template_code` | Template codes from `30_master_course_template.csv` |
+| `academic_year` | Academic years from `02_academic_years.csv` |
 
 The reference list cells point back to the source CSV sheets, so updating a source sheet updates the dropdown list range after workbook recalculation.
 
@@ -78,14 +80,14 @@ Examples:
 
 | Target | Must exist in |
 |---|---|
-| `courses.csv.category_code` | `categories.csv.category_code` |
-| `groups.csv.course_code` | `courses.csv.course_code` |
-| `users_students.csv.cohort1` | `cohorts.csv.cohort_code` |
-| `cohort_members.csv.username` | `users_students.csv.username` |
-| `parent_links.csv.parent_username` | `users_parents.csv.username` |
-| `enrolments.csv.cohort_code` | `cohorts.csv.cohort_code` |
-| `course_template_activities.csv.template_code` | `master_course_template.csv.template_code` |
-| `promotion_actions.csv.to_cohort_code` | `next_year_cohorts_2027_2028.csv.cohort_code` |
+| `12_courses.csv.category_code` | `10_categories.csv.category_code` |
+| `15_groups.csv.course_code` | `12_courses.csv.course_code` |
+| `20_users_students.csv.cohort1` | `14_cohorts.csv.cohort_code` |
+| `22_cohort_members.csv.username` | `20_users_students.csv.username` |
+| `24_parent_links.csv.parent_username` | `21_users_parents.csv.username` |
+| `25_enrolments.csv.cohort_code` | `14_cohorts.csv.cohort_code` |
+| `32_course_template_activities.csv.template_code` | `30_master_course_template.csv.template_code` |
+| `53_promotion_actions.csv.to_cohort_code` | `55_next_year_cohorts_2027_2028.csv.cohort_code` |
 
 `03_VALIDATION_SUMMARY` is generated from the current CSV data at workbook build time. After large edits, export CSVs and run the CLI validators for the authoritative check.
 
@@ -96,43 +98,43 @@ Examples:
 3. Update master data sheets first:
 
 ```text
-school_master
-academic_years
-boards
-mediums
-grades
-streams
-divisions
-subjects
-grade_subject_matrix
+01_school_master.csv
+02_academic_years.csv
+03_boards.csv
+04_mediums.csv
+05_grades.csv
+06_streams.csv
+07_divisions.csv
+08_subjects.csv
+09_grade_subject_matrix.csv
 ```
 
 4. Update structure sheets:
 
 ```text
-categories
-courses
-cohorts
-groups
+10_categories.csv
+12_courses.csv
+14_cohorts.csv
+15_groups.csv
 ```
 
 5. Update user/access sheets:
 
 ```text
-user_profile_fields
-custom_roles
-users_staff
-users_students
-users_parents
-cohort_members
-role_assignments
-parent_links
-enrolments
+16_user_profile_fields.csv
+17_custom_roles.csv
+19_users_staff.csv
+20_users_students.csv
+21_users_parents.csv
+22_cohort_members.csv
+23_role_assignments.csv
+24_parent_links.csv
+25_enrolments.csv
 ```
 
 6. Update course-template and rollover sheets only after the baseline is stable.
 7. Check `03_VALIDATION_SUMMARY`.
-8. Export the edited sheet back to CSV using the original filename.
+8. Export the edited sheet back to CSV using the ordered filename shown in `01_IMPORT_SEQUENCE`.
 9. Run CLI validation and dry-run before real import.
 
 ## Exporting Edited Sheets Back to CSV
@@ -143,12 +145,12 @@ When exporting from Excel:
 2. Select the sheet you edited.
 3. Use `Save As` or `Export`.
 4. Choose CSV.
-5. Save using the exact original CSV filename, for example:
+5. Save using the exact ordered CSV filename, for example:
 
 ```text
-courses.csv
-users_students.csv
-course_template_activities.csv
+12_courses.csv
+20_users_students.csv
+32_course_template_activities.csv
 ```
 
 6. Replace the matching CSV file in this pack.

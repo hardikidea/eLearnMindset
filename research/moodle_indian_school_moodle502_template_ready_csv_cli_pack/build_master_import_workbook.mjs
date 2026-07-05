@@ -68,6 +68,7 @@ const csvOrder = [
   ["Academic year rollover", "alumni_cohorts_2027.csv", "Alumni/exit cohorts.", "cohorts.csv, academic_years.csv"],
   ["Academic year rollover", "archive_policy.csv", "Archive policy.", "academic_years.csv"],
   ["Support", "improvement_backlog.csv", "Future improvements.", ""],
+  ["Support", "compatibility_matrix.csv", "Moodle/version compatibility reference.", ""],
 ];
 
 const referenceRules = [
@@ -167,6 +168,31 @@ function sheetSafeName(index, csvFile) {
   return (prefix + base).slice(0, 31);
 }
 
+function logicalCsvName(file) {
+  return file.replace(/^[0-9]{2,3}_/, "");
+}
+
+function displayCsvName(csvData, file) {
+  return csvData.get(file)?.actualFile || file;
+}
+
+async function resolveCsvFile(logicalFile) {
+  const exact = path.join(packDir, logicalFile);
+  try {
+    await fs.access(exact);
+    return logicalFile;
+  } catch {
+    const files = await fs.readdir(packDir);
+    const matches = files
+      .filter((file) => /^[0-9]{2,3}_/.test(file) && logicalCsvName(file) === logicalFile)
+      .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+    if (matches.length > 0) {
+      return matches[0];
+    }
+  }
+  return logicalFile;
+}
+
 function tableSafeName(sheetName) {
   return ("Tbl_" + sheetName).replace(/[^A-Za-z0-9_]/g, "_").slice(0, 254);
 }
@@ -208,17 +234,20 @@ async function readCsvData() {
   const allFiles = (await fs.readdir(packDir)).filter((f) => f.endsWith(".csv")).sort();
   const orderNames = new Set(csvOrder.map(([, f]) => f));
   for (const file of allFiles) {
-    if (!orderNames.has(file)) {
-      csvOrder.push(["Support", file, "Additional CSV discovered in the pack.", ""]);
+    const logical = logicalCsvName(file);
+    if (!orderNames.has(logical)) {
+      csvOrder.push(["Support", logical, "Additional CSV discovered in the pack.", ""]);
+      orderNames.add(logical);
     }
   }
 
   const data = new Map();
   for (const [, file] of csvOrder) {
-    const filePath = path.join(packDir, file);
+    const actualFile = await resolveCsvFile(file);
+    const filePath = path.join(packDir, actualFile);
     const text = await fs.readFile(filePath, "utf8");
     const rows = parseCSV(text);
-    data.set(file, { file, rows, rowCount: Math.max(0, rows.length - 1), colCount: rows[0]?.length || 0 });
+    data.set(file, { file, actualFile, rows, rowCount: Math.max(0, rows.length - 1), colCount: rows[0]?.length || 0 });
   }
   return data;
 }
@@ -252,12 +281,13 @@ function createReadme(workbook) {
     ["How to use", "Edit master data and CSV tabs, review Import Sequence and Validation Summary, export the required CSV sheet, then run the CLI dry-run before execute."],
     ["Do not change", "Do not rename CSV sheets or headers unless you also update the CLI scripts and CSV documentation."],
     ["Validation model", "Reference lists and validation formulas point from dependent sheets to their master sheets. Dropdowns are applied for common code columns where possible."],
+    ["Ordered filenames", "Export edited CSV sheets using the ordered repository filename shown in 01_IMPORT_SEQUENCE, such as 12_courses.csv or 20_users_students.csv."],
     ["Privacy rule", "Do not enter full Aadhaar numbers, sensitive medical details, or parent contact data in course content. Use protected profile fields only."],
     ["Generated file", outputFile],
   ];
-  writeMatrix(sheet, "A3:B8", rows);
-  sheet.getRange("A3:A8").format = { fill: "#E0F2FE", font: { bold: true, color: "#0B3D5C" } };
-  sheet.getRange("B3:B8").format.wrapText = true;
+  writeMatrix(sheet, "A3:B9", rows);
+  sheet.getRange("A3:A9").format = { fill: "#E0F2FE", font: { bold: true, color: "#0B3D5C" } };
+  sheet.getRange("B3:B9").format.wrapText = true;
   sheet.getRange("A10:H10").merge();
   sheet.getRange("A10").values = [["Recommended workflow"]];
   sheet.getRange("A10").format = { fill: "#FEF3C7", font: { bold: true, color: "#78350F" } };
@@ -267,7 +297,7 @@ function createReadme(workbook) {
     ["3", "Update users, cohort members, role assignments, parent links, and enrolments."],
     ["4", "Update template and academic-year rollover sheets only after the baseline structure is correct."],
     ["5", "Check 03_VALIDATION_SUMMARY for unresolved references."],
-    ["6", "Export the required sheet to CSV with the original filename."],
+    ["6", "Export the required sheet to CSV with the ordered filename from 01_IMPORT_SEQUENCE."],
     ["7", "Run CLI validation and dry-run before production import."],
   ]);
   sheet.getRange("A11:A17").format = { fill: "#F8FAFC", font: { bold: true } };
@@ -277,29 +307,31 @@ function createReadme(workbook) {
 
 function createImportSequence(workbook, csvData, sheetMap) {
   const sheet = workbook.worksheets.getOrAdd("01_IMPORT_SEQUENCE");
-  const rows = [["Order", "Phase", "CSV file", "Workbook sheet", "Purpose", "Depends on", "Data rows", "Status"]];
+  const rows = [["Order", "Phase", "Ordered CSV file", "Logical CSV name", "Workbook sheet", "Purpose", "Depends on", "Data rows", "Status"]];
   csvOrder.forEach(([phase, file, purpose, depends], i) => {
+    const data = csvData.get(file);
     const sheetName = sheetMap.get(file);
     rows.push([
       i + 1,
       phase,
+      data?.actualFile || file,
       file,
       sheetName,
       purpose,
       depends,
       `=MAX(0,COUNTA('${sheetName}'!$A$2:$A$${maxRows}))`,
-      `=IF(G${i + 2}>=0,"Loaded","Check")`,
+      `=IF(H${i + 2}>=0,"Loaded","Check")`,
     ]);
   });
-  writeMatrix(sheet, `A1:H${rows.length}`, rows);
-  styleControlSheet(sheet, `A1:H${rows.length}`);
+  writeMatrix(sheet, `A1:I${rows.length}`, rows);
+  styleControlSheet(sheet, `A1:I${rows.length}`);
   sheet.getRange(`A2:A${rows.length}`).format.numberFormat = "0";
-  sheet.getRange(`G2:G${rows.length}`).format.numberFormat = "#,##0";
-  sheet.getRange(`E2:F${rows.length}`).format.wrapText = true;
-  sheet.tables.add(`A1:H${rows.length}`, true, "Tbl_Import_Sequence");
-  sheet.getRange("A1:H1").format = { fill: "#0B3D5C", font: { bold: true, color: "#FFFFFF" } };
-  sheet.getRange("A1:H1").format.autofitColumns();
-  sheet.getRange(`E1:F${rows.length}`).format.columnWidth = 48;
+  sheet.getRange(`H2:H${rows.length}`).format.numberFormat = "#,##0";
+  sheet.getRange(`F2:G${rows.length}`).format.wrapText = true;
+  sheet.tables.add(`A1:I${rows.length}`, true, "Tbl_Import_Sequence");
+  sheet.getRange("A1:I1").format = { fill: "#0B3D5C", font: { bold: true, color: "#FFFFFF" } };
+  sheet.getRange("A1:I1").format.autofitColumns();
+  sheet.getRange(`F1:G${rows.length}`).format.columnWidth = 48;
 }
 
 function createReferenceRules(workbook, csvData, sheetMap) {
@@ -321,18 +353,18 @@ function createReferenceRules(workbook, csvData, sheetMap) {
 
     ruleRows.push([
       i + 1,
-      targetCsv,
+      displayCsvName(csvData, targetCsv),
       targetField,
-      refCsv,
+      displayCsvName(csvData, refCsv),
       refField,
       purpose,
       formula ? formula.replace(/^=/, "'=") : "Column or sheet not found",
     ]);
     summaryRows.push([
       i + 1,
-      targetCsv,
+      displayCsvName(csvData, targetCsv),
       targetField,
-      refCsv,
+      displayCsvName(csvData, refCsv),
       refField,
       invalid,
       invalid === 0 ? "OK" : "Check",
@@ -514,7 +546,7 @@ async function main() {
   console.log(errors.ndjson);
 
   await workbook.render({ sheetName: "00_README", range: "A1:H18", scale: 1, format: "png" });
-  await workbook.render({ sheetName: "01_IMPORT_SEQUENCE", range: "A1:H30", scale: 1, format: "png" });
+  await workbook.render({ sheetName: "01_IMPORT_SEQUENCE", range: "A1:I30", scale: 1, format: "png" });
   await workbook.render({ sheetName: "03_VALIDATION_SUMMARY", range: "A1:G30", scale: 1, format: "png" });
 
   const output = await SpreadsheetFile.exportXlsx(workbook);

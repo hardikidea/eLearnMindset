@@ -15,6 +15,7 @@ require_once($CFG->dirroot . '/group/lib.php');
 require_once($CFG->dirroot . '/user/lib.php');
 require_once($CFG->dirroot . '/user/profile/lib.php');
 require_once($CFG->libdir . '/enrollib.php');
+require_once(__DIR__ . '/cli_csv_helpers.php');
 
 list($options, $unrecognized) = cli_get_params([
     'help' => false,
@@ -48,7 +49,7 @@ function msg($text) {
 }
 
 function read_csv_file($dir, $filename) {
-    $path = $dir . DIRECTORY_SEPARATOR . $filename;
+    $path = csv_pack_resolve_file($dir, $filename);
     if (!file_exists($path)) {
         msg("Missing optional file: $filename");
         return [];

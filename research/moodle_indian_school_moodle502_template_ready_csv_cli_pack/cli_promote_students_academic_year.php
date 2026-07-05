@@ -12,6 +12,7 @@ require_once($CFG->dirroot . '/user/lib.php');
 require_once($CFG->dirroot . '/user/profile/lib.php');
 require_once($CFG->libdir . '/accesslib.php');
 require_once($CFG->libdir . '/enrollib.php');
+require_once(__DIR__ . '/cli_csv_helpers.php');
 
 list($options, $unrecognized) = cli_get_params([
     'help' => false,
@@ -50,7 +51,7 @@ raise_memory_limit(MEMORY_EXTRA);
 function pmsg($text) { cli_writeln($text); }
 function csv_rows($filename) {
     global $csvdir;
-    $path = $csvdir . DIRECTORY_SEPARATOR . $filename;
+    $path = csv_pack_resolve_file($csvdir, $filename);
     if (!file_exists($path)) { cli_error("Missing CSV: $filename"); }
     $fh = fopen($path, 'r');
     if (!$fh) { cli_error("Cannot open CSV: $path"); }

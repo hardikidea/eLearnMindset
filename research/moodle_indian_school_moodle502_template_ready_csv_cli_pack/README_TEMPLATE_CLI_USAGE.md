@@ -73,7 +73,7 @@ This applies course settings and section names/summaries. It does not duplicate 
 Use:
 
 ```text
-courses_with_templatecourse_for_moodle_upload.csv
+13_courses_with_templatecourse_for_moodle_upload.csv
 ```
 
 This file includes `templatecourse=MASTER-ALL-GRADES-ALL-SUBJECTS-STD-TEMPLATE`. Moodle course upload supports the `templatecourse` field when using an existing course as a template. Categories must exist before using this file.
@@ -83,8 +83,8 @@ This file includes `templatecourse=MASTER-ALL-GRADES-ALL-SUBJECTS-STD-TEMPLATE`.
 Use:
 
 ```text
-course_template_gradebook.csv
-grade_band_template_adjustments.csv
+33_course_template_gradebook.csv
+34_grade_band_template_adjustments.csv
 ```
 
 The CLI pack includes `cli_apply_gradebook_template.php` as a helper for creating gradebook categories, but gradebook weighting should be reviewed in staging before production.

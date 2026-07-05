@@ -52,7 +52,7 @@ GVS-2027-CBSE-ENG-STD10-GEN-A
 1. Finalize old-year marks, attendance, and completion data.
 2. Export gradebooks and back up important old-year courses.
 3. Create next academic year courses, cohorts, groups, and cohort-sync enrolments.
-4. Fill `promotion_actions.csv`.
+4. Fill `53_promotion_actions.csv`.
 5. Run promotion dry-run.
 6. Execute promotion.
 7. Validate student access, courses, groups, and parent links.
@@ -80,7 +80,7 @@ Do not create categories like `Division A` unless each division has completely d
 | Scenario | What to do |
 |---|---|
 | Std 1 to Std 2 | Add student to next-year Std 2 cohort; update profile fields |
-| Std 10 to Std 11 Science | Add selected stream/division in `promotion_actions.csv` |
+| Std 10 to Std 11 Science | Add selected stream/division in `53_promotion_actions.csv` |
 | Std 11 Science to Std 12 Science | Add to next-year Std 12 Science cohort |
 | Student repeats standard | Use `RETAIN`; add to next-year same-grade cohort |
 | Student changes division | Move to new division cohort/group; use `CHANGE_DIVISION` |
@@ -96,22 +96,22 @@ Keep `remove_from_old_cohort=0` during the first promotion run unless old-year r
 
 | File | Purpose |
 |---|---|
-| `promotion_actions.csv` | Main promotion input file |
-| `promotion_policy.csv` | Policy decisions for category/cohort/group/year handling |
-| `student_status_codes.csv` | Allowed student movement actions/statuses |
-| `student_academic_history_template.csv` | External audit/history template |
-| `academic_year_rollover_checklist.csv` | Operational checklist |
-| `archive_policy.csv` | What to archive and when |
+| `53_promotion_actions.csv` | Main promotion input file |
+| `47_promotion_policy.csv` | Policy decisions for category/cohort/group/year handling |
+| `50_student_status_codes.csv` | Allowed student movement actions/statuses |
+| `51_student_academic_history_template.csv` | External audit/history template |
+| `46_academic_year_rollover_checklist.csv` | Operational checklist |
+| `59_archive_policy.csv` | What to archive and when |
 | `cli_promote_academic_year.php` | Moodle CLI script for promotion |
 | `run_promotion_dry_run_example.sh` | Example dry-run command |
 | `run_promotion_execute_example.sh` | Example execute command |
 
 ## CLI usage
 
-Copy the script into Moodle:
+Copy all CLI scripts into Moodle so shared helpers are included:
 
 ```bash
-cp cli_promote_academic_year.php /path/to/moodle/admin/cli/
+cp cli_*.php /path/to/moodle/admin/cli/
 ```
 
 Dry run:
@@ -119,7 +119,7 @@ Dry run:
 ```bash
 php /path/to/moodle/admin/cli/cli_promote_academic_year.php \
   --dir=/path/to/csv-pack \
-  --file=promotion_actions.csv \
+  --file=53_promotion_actions.csv \
   --dry-run=1
 ```
 
@@ -128,7 +128,7 @@ Execute:
 ```bash
 php /path/to/moodle/admin/cli/cli_promote_academic_year.php \
   --dir=/path/to/csv-pack \
-  --file=promotion_actions.csv \
+  --file=53_promotion_actions.csv \
   --dry-run=0
 ```
 
@@ -137,7 +137,7 @@ Optional old cohort removal after archive:
 ```bash
 php /path/to/moodle/admin/cli/cli_promote_academic_year.php \
   --dir=/path/to/csv-pack \
-  --file=promotion_actions.csv \
+  --file=53_promotion_actions.csv \
   --dry-run=0 \
   --remove-old-cohort=1
 ```

@@ -67,11 +67,11 @@ After audit approval
 These files create the new academic-year structure:
 
 ```text
-next_year_courses_2027_2028.csv
-next_year_cohorts_2027_2028.csv
-next_year_groups_2027_2028.csv
-next_year_enrolments_2027_2028.csv
-alumni_cohorts_2027.csv
+54_next_year_courses_2027_2028.csv
+55_next_year_cohorts_2027_2028.csv
+56_next_year_groups_2027_2028.csv
+57_next_year_enrolments_2027_2028.csv
+58_alumni_cohorts_2027.csv
 ```
 
 ### Student movement
@@ -79,17 +79,17 @@ alumni_cohorts_2027.csv
 Use one of these promotion input models:
 
 ```text
-promotion_actions.csv
-student_promotion_plan_2027_2028.csv
+53_promotion_actions.csv
+52_student_promotion_plan_2027_2028.csv
 ```
 
 Recommended default for this pack:
 
 ```text
-promotion_actions.csv
+53_promotion_actions.csv
 ```
 
-It maps directly to `cli_promote_academic_year.php` and uses the actual profile fields in `user_profile_fields.csv`, such as:
+It maps directly to `cli_promote_academic_year.php` and uses the actual profile fields in `16_user_profile_fields.csv`, such as:
 
 ```text
 current_academic_year
@@ -144,12 +144,12 @@ On production, also take:
 Review these files:
 
 ```text
-next_year_courses_2027_2028.csv
-next_year_cohorts_2027_2028.csv
-next_year_groups_2027_2028.csv
-next_year_enrolments_2027_2028.csv
-alumni_cohorts_2027.csv
-promotion_actions.csv
+54_next_year_courses_2027_2028.csv
+55_next_year_cohorts_2027_2028.csv
+56_next_year_groups_2027_2028.csv
+57_next_year_enrolments_2027_2028.csv
+58_alumni_cohorts_2027.csv
+53_promotion_actions.csv
 ```
 
 For each promoted student, confirm:
@@ -175,8 +175,7 @@ PACK_HOST="$PWD/research/moodle_indian_school_moodle502_template_ready_csv_cli_p
 PACK_CONTAINER="/tmp/moodle_indian_school_moodle502_template_ready_csv_cli_pack"
 APP_CONTAINER="$(docker compose ps -q moodle)"
 
-cp "$PACK_HOST/cli_prepare_next_academic_year.php" moodle/admin/cli/
-cp "$PACK_HOST/cli_promote_academic_year.php" moodle/admin/cli/
+cp "$PACK_HOST"/cli_*.php moodle/admin/cli/
 
 docker compose exec -u root -T moodle rm -rf "$PACK_CONTAINER"
 docker cp "$PACK_HOST" "$APP_CONTAINER:$PACK_CONTAINER"
@@ -215,7 +214,7 @@ Dry run with the safe default:
 ```bash
 docker compose exec -T moodle php admin/cli/cli_promote_academic_year.php \
   --dir="$PACK_CONTAINER" \
-  --file=promotion_actions.csv \
+  --file=53_promotion_actions.csv \
   --dry-run=1 \
   --remove-old-cohort=0
 ```
@@ -236,7 +235,7 @@ Execute after approval:
 ```bash
 docker compose exec -T moodle php admin/cli/cli_promote_academic_year.php \
   --dir="$PACK_CONTAINER" \
-  --file=promotion_actions.csv \
+  --file=53_promotion_actions.csv \
   --dry-run=0 \
   --remove-old-cohort=0
 ```
@@ -317,7 +316,7 @@ For every next-year course, confirm the teacher has:
 
 Teacher assignment options:
 
-1. Add/update rows in `role_assignments.csv` for next-year courses.
+1. Add/update rows in `23_role_assignments.csv` for next-year courses.
 2. Run the baseline importer again after next-year course rows exist.
 3. Or assign teachers manually in Moodle UI.
 
@@ -393,7 +392,7 @@ to:   GVS-2027-GSEB-GUJ-STD02-GEN-A
 
 ### Std 10 to Std 11 Science
 
-This is a stream-selection workflow. Choose target stream and division in `promotion_actions.csv`.
+This is a stream-selection workflow. Choose target stream and division in `53_promotion_actions.csv`.
 
 ```text
 from_grade_code: STD10

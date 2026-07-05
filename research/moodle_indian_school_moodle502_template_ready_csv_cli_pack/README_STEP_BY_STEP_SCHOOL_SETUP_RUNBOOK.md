@@ -3,6 +3,7 @@
 Use this runbook when setting up a new Indian school Moodle structure or when importing only a specific division, student batch, teacher assignment, parent link, or enrolment mapping.
 
 This document is command-first. For complete column definitions, read `README_CSV_COLUMN_GUIDE.md`.
+For the full ordered CSV index, read `README_ORDERED_CSV_FILES.md`.
 
 ## 1. Paths and Common Variables
 
@@ -102,22 +103,41 @@ Full one-command setup:
 
 Use `full-baseline` only after reviewing CSV data. It imports baseline data, creates the master course template, applies template settings, applies gradebook settings, and purges caches.
 
-## 4. Recommended Full New School Setup Sequence
+## 4. Ordered CSV Naming Rule
+
+All editable CSV files use an ordered filename:
+
+```text
+NN_<logical_file_name>.csv
+```
+
+Examples:
+
+```text
+01_school_master.csv
+12_courses.csv
+20_users_students.csv
+53_promotion_actions.csv
+```
+
+The CLI scripts resolve the logical names automatically, so older command examples that pass `promotion_actions.csv` still work. For this repository, edit and commit the ordered filenames only.
+
+## 5. Recommended Full New School Setup Sequence
 
 ### Step 1: Edit master source CSV files
 
 Update these first:
 
 ```text
-school_master.csv
-academic_years.csv
-boards.csv
-mediums.csv
-grades.csv
-streams.csv
-divisions.csv
-subjects.csv
-grade_subject_matrix.csv
+01_school_master.csv
+02_academic_years.csv
+03_boards.csv
+04_mediums.csv
+05_grades.csv
+06_streams.csv
+07_divisions.csv
+08_subjects.csv
+09_grade_subject_matrix.csv
 ```
 
 Example: add a CBSE English medium school:
@@ -142,21 +162,21 @@ EDU_TRUST,EducateMe Education Trust,EMS,EducateMe School,24070000001,CBSE-SAMPLE
 These files build the Moodle category/course/cohort/group/enrolment structure:
 
 ```text
-categories.csv
-courses.csv
-cohorts.csv
-groups.csv
-enrolments.csv
+10_categories.csv
+12_courses.csv
+14_cohorts.csv
+15_groups.csv
+25_enrolments.csv
 ```
 
 Dependency order:
 
 ```text
-categories.csv
-  -> courses.csv
-  -> cohorts.csv
-  -> groups.csv
-  -> enrolments.csv
+10_categories.csv
+  -> 12_courses.csv
+  -> 14_cohorts.csv
+  -> 15_groups.csv
+  -> 25_enrolments.csv
 ```
 
 Example category path:
@@ -221,7 +241,7 @@ EMS-CBSE-ENG-STD05-GEN-MATH-2026,EMS-CBSE-ENG-STD05-GEN-MATH-26,EMS-2026-CBSE-EN
 "$RUNNER" purge-cache
 ```
 
-## 5. Selective Import Pattern
+## 6. Selective Import Pattern
 
 For selective imports, do not run the full pack. Create a small pack with only the rows you want.
 
@@ -240,7 +260,7 @@ Run with the selected pack:
 PACK_HOST="$SELECTIVE_PACK" "$RUNNER" prepare
 ```
 
-## 6. Import Only Students for One Division
+## 7. Import Only Students for One Division
 
 Use this when the course/cohort/group/enrolment structure already exists and you only need to register students into one division.
 
@@ -255,18 +275,18 @@ Required existing Moodle records:
 Required CSV files in selective pack:
 
 ```text
-users_students.csv
-cohort_members.csv
+20_users_students.csv
+22_cohort_members.csv
 ```
 
 Optional CSV files:
 
 ```text
-users_parents.csv
-parent_links.csv
+21_users_parents.csv
+24_parent_links.csv
 ```
 
-Example `users_students.csv`:
+Example `20_users_students.csv`:
 
 ```csv
 username,password,firstname,lastname,email,auth,city,country,timezone,lang,institution,department,idnumber,phone1,phone2,address,cohort1,board_code,school_code,medium_code,grade_code,stream_code,division_code,profile_field_admission_no,profile_field_roll_no,profile_field_current_academic_year,profile_field_current_board_code,profile_field_current_school_code,profile_field_current_medium_code,profile_field_current_grade_code,profile_field_current_stream_code,profile_field_current_division_code,profile_field_student_status
@@ -274,7 +294,7 @@ ems.cbse.eng.std05.a.001,ChangeMe@123,Aarav,Patel,ems.cbse.eng.std05.a.001@stude
 ems.cbse.eng.std05.a.002,ChangeMe@123,Kavya,Shah,ems.cbse.eng.std05.a.002@students.ems.example.org,manual,Ahmedabad,IN,Asia/Kolkata,en,EducateMe School,STD05-GEN-A,EMS.CBSE.ENG.STD05.A.002,9999900002,,Ahmedabad,EMS-2026-CBSE-ENG-STD05-GEN-A,CBSE,EMS,ENG,STD05,GEN,A,EMS-ADM-0002,2,2026-2027,CBSE,EMS,ENG,STD05,GEN,A,Active
 ```
 
-Example `cohort_members.csv`:
+Example `22_cohort_members.csv`:
 
 ```csv
 username,cohort_code,role
@@ -291,28 +311,28 @@ PACK_HOST="$SELECTIVE_PACK" "$RUNNER" users-import
 
 What this does:
 
-- Creates or updates only users from `users_staff.csv`, `users_students.csv`, and `users_parents.csv`.
+- Creates or updates only users from `19_users_staff.csv`, `20_users_students.csv`, and `21_users_parents.csv`.
 - Adds listed students to listed cohorts.
-- Creates parent links if `parent_links.csv` contains rows.
+- Creates parent links if `24_parent_links.csv` contains rows.
 - Skips category, course, cohort, group, and enrolment creation.
 
-## 7. Import Students With Parents
+## 8. Import Students With Parents
 
 Use the same student files as Section 6, plus:
 
 ```text
-users_parents.csv
-parent_links.csv
+21_users_parents.csv
+24_parent_links.csv
 ```
 
-Example `users_parents.csv`:
+Example `21_users_parents.csv`:
 
 ```csv
 username,password,firstname,lastname,email,auth,city,country,timezone,lang,institution,department,idnumber,phone1,phone2,address,profile_field_parent_type,profile_field_parent_occupation,profile_field_parent_qualification,profile_field_preferred_language,profile_field_consent_student_data
 parent.ems.cbse.eng.std05.a.001,ChangeMe@123,Patel,Parent,parent.ems.cbse.eng.std05.a.001@parents.ems.example.org,manual,Ahmedabad,IN,Asia/Kolkata,en,EducateMe School,Parent,EMS-PAR-0001,9876500001,,Ahmedabad,Father,Service,Graduate,English,1
 ```
 
-Example `parent_links.csv`:
+Example `24_parent_links.csv`:
 
 ```csv
 parent_username,student_username,relationship,role_shortname,allow_grade_view,allow_activity_report_view,notes
@@ -326,39 +346,39 @@ PACK_HOST="$SELECTIVE_PACK" "$RUNNER" users-dry-run
 PACK_HOST="$SELECTIVE_PACK" "$RUNNER" users-import
 ```
 
-## 8. Import Only a New Division
+## 9. Import Only a New Division
 
 Use this when a grade already exists but a new division, for example Division C, must be added.
 
 Update source-of-truth:
 
 ```text
-divisions.csv
+07_divisions.csv
 ```
 
 Required import CSV rows:
 
 ```text
-cohorts.csv
-groups.csv
-enrolments.csv
+14_cohorts.csv
+15_groups.csv
+25_enrolments.csv
 ```
 
-Example `cohorts.csv`:
+Example `14_cohorts.csv`:
 
 ```csv
 cohort_code,name,idnumber,context_category_code,board_code,school_code,medium_code,grade_code,stream_code,division_code,academic_year,visible,description
 EMS-2026-CBSE-ENG-STD05-GEN-C,EducateMe School 2026-2027 CBSE ENG STD05 GEN Division C,EMS-2026-CBSE-ENG-STD05-GEN-C,EDU_TRUST_CBSE_EMS_ENG_STD05_GEN,CBSE,EMS,ENG,STD05,GEN,C,2026-2027,1,Student cohort for Std 5 Division C
 ```
 
-Example `groups.csv` for one course:
+Example `15_groups.csv` for one course:
 
 ```csv
 course_code,course_shortname,group_name,group_idnumber,board_code,school_code,medium_code,grade_code,stream_code,division_code,description
 EMS-CBSE-ENG-STD05-GEN-MATH-2026,EMS-CBSE-ENG-STD05-GEN-MATH-26,Division C,EMS-CBSE-ENG-STD05-GEN-MATH-2026-C,CBSE,EMS,ENG,STD05,GEN,C,Division C group
 ```
 
-Example `enrolments.csv`:
+Example `25_enrolments.csv`:
 
 ```csv
 course_code,course_shortname,cohort_code,role_shortname,group_name,group_idnumber,enrolment_method,status
@@ -371,20 +391,20 @@ Run:
 SELECTIVE_PACK="/tmp/ems-std05-division-c"
 "$RUNNER" new-selective-pack "$SELECTIVE_PACK"
 
-# Edit cohorts.csv, groups.csv, and enrolments.csv in $SELECTIVE_PACK.
+# Edit 14_cohorts.csv, 15_groups.csv, and 25_enrolments.csv in $SELECTIVE_PACK.
 
 PACK_HOST="$SELECTIVE_PACK" "$RUNNER" structure-dry-run
 PACK_HOST="$SELECTIVE_PACK" "$RUNNER" structure-import
 ```
 
-## 9. Import Only Enrolment Mappings
+## 10. Import Only Enrolment Mappings
 
 Use this when courses, cohorts, and groups already exist but the cohort sync mapping is missing.
 
 Required CSV:
 
 ```text
-enrolments.csv
+25_enrolments.csv
 ```
 
 Run:
@@ -394,7 +414,7 @@ PACK_HOST="$SELECTIVE_PACK" "$RUNNER" enrolments-dry-run
 PACK_HOST="$SELECTIVE_PACK" "$RUNNER" enrolments-import
 ```
 
-## 10. Assign One Teacher to One Course
+## 11. Assign One Teacher to One Course
 
 Required existing Moodle records:
 
@@ -406,18 +426,18 @@ Required existing Moodle records:
 Required CSV files:
 
 ```text
-users_staff.csv
-role_assignments.csv
+19_users_staff.csv
+23_role_assignments.csv
 ```
 
-Example `users_staff.csv`:
+Example `19_users_staff.csv`:
 
 ```csv
 username,password,firstname,lastname,email,auth,city,country,timezone,lang,institution,department,idnumber,phone1,phone2,address,profile_field_employee_code,profile_field_staff_designation,profile_field_staff_department,profile_field_staff_joining_date,profile_field_staff_qualification,profile_field_staff_type
 teacher.math05,ChangeMe@123,Meera,Joshi,teacher.math05@ems.example.org,manual,Ahmedabad,IN,Asia/Kolkata,en,EducateMe School,Mathematics,EMS-TCH-005,9999933333,,Ahmedabad,EMS-TCH-005,Teacher,Mathematics,2026-06-01,M.Sc B.Ed,Teacher
 ```
 
-Example `role_assignments.csv`:
+Example `23_role_assignments.csv`:
 
 ```csv
 username,role_shortname,context_type,context_identifier,notes
@@ -433,14 +453,14 @@ PACK_HOST="$SELECTIVE_PACK" "$RUNNER" users-import
 
 The importer assigns the role and also ensures manual course enrolment for course-context staff assignments.
 
-## 11. Create or Reset the Universal Course Template
+## 12. Create or Reset the Universal Course Template
 
 Dependencies:
 
 ```text
-master_course_template.csv
-course_template_sections.csv
-course_template_activities.csv
+30_master_course_template.csv
+31_course_template_sections.csv
+32_course_template_activities.csv
 ```
 
 Dry-run:
@@ -461,13 +481,13 @@ Reset and rebuild existing hidden template activities:
 "$RUNNER" template-reset-import
 ```
 
-## 12. Apply Template Sections to Existing Courses
+## 13. Apply Template Sections to Existing Courses
 
 Dependencies:
 
 ```text
-course_template_application.csv
-course_template_sections.csv
+37_course_template_application.csv
+31_course_template_sections.csv
 ```
 
 Run:
@@ -477,13 +497,13 @@ Run:
 "$RUNNER" apply-template-import
 ```
 
-## 13. Apply Gradebook Template
+## 14. Apply Gradebook Template
 
 Dependencies:
 
 ```text
-course_template_gradebook.csv
-grade_band_template_adjustments.csv
+33_course_template_gradebook.csv
+34_grade_band_template_adjustments.csv
 ```
 
 Run:
@@ -493,7 +513,7 @@ Run:
 "$RUNNER" gradebook-import
 ```
 
-## 14. Verification Commands
+## 15. Verification Commands
 
 Check users by username:
 
@@ -529,19 +549,19 @@ Purge caches after larger structure/template changes:
 "$RUNNER" purge-cache
 ```
 
-## 15. Common Mistakes and Fixes
+## 16. Common Mistakes and Fixes
 
 | Problem | Cause | Fix |
 |---|---|---|
-| Student created but courses do not appear | Student is not in the cohort, or cohort enrolment mapping is missing. | Check `cohort_members.csv` and `enrolments.csv`. |
-| Cohort member import fails | `cohort_code` does not exist in Moodle. | Import `cohorts.csv` first or correct the code. |
-| Group mapping is empty | `group_idnumber` does not match an existing course group. | Import/fix `groups.csv`. |
+| Student created but courses do not appear | Student is not in the cohort, or cohort enrolment mapping is missing. | Check `22_cohort_members.csv` and `25_enrolments.csv`. |
+| Cohort member import fails | `cohort_code` does not exist in Moodle. | Import `14_cohorts.csv` first or correct the code. |
+| Group mapping is empty | `group_idnumber` does not match an existing course group. | Import/fix `15_groups.csv`. |
 | Teacher role fails | `context_identifier` does not match course shortname/idnumber. | Use course shortname, for example `EMS-CBSE-ENG-STD05-GEN-MATH-26`. |
-| Parent link fails | Parent or student username does not exist, or `parent` role is missing. | Import parent/student users and `custom_roles.csv` first. |
+| Parent link fails | Parent or student username does not exist, or `parent` role is missing. | Import parent/student users and `17_custom_roles.csv` first. |
 | Duplicate user email warning | Moodle allows or blocks this depending on site config. | Use unique real emails for production. |
 | Full pack imports too much data | Running full pack instead of selective pack. | Use `new-selective-pack` and keep unrelated CSV files header-only. |
 
-## 16. Production Safety Rules
+## 17. Production Safety Rules
 
 - Always run dry-run before import.
 - Backup the database before large production imports.

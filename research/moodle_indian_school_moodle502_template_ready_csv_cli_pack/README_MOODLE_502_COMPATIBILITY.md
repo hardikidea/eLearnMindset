@@ -44,10 +44,10 @@ Moodle 5.1 introduced a code directory restructure with a public web folder. For
 
 ## Preflight command
 
-Copy the script into Moodle:
+Copy all CLI scripts into Moodle so shared helpers are included:
 
 ```bash
-cp cli_moodle502_preflight.php /path/to/moodle/admin/cli/
+cp cli_*.php /path/to/moodle/admin/cli/
 ```
 
 Run:
@@ -111,12 +111,12 @@ This compatibility pack also includes:
 ```text
 cli_prepare_next_academic_year.php
 cli_promote_students_academic_year.php
-next_year_courses_2027_2028.csv
-next_year_cohorts_2027_2028.csv
-next_year_groups_2027_2028.csv
-next_year_enrolments_2027_2028.csv
-alumni_cohorts_2027.csv
-student_promotion_plan_2027_2028.csv
+54_next_year_courses_2027_2028.csv
+55_next_year_cohorts_2027_2028.csv
+56_next_year_groups_2027_2028.csv
+57_next_year_enrolments_2027_2028.csv
+58_alumni_cohorts_2027.csv
+52_student_promotion_plan_2027_2028.csv
 ```
 
 Use these when you want to create the next academic-year baseline before moving students.

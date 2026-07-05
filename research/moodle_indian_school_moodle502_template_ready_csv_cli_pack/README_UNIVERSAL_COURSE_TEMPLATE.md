@@ -39,18 +39,18 @@ Grade 12 - Biology - Board Exam Prep 2026
 ## Template files
 
 ```text
-master_course_template.csv
-course_template_sections.csv
-course_template_activities.csv
-course_template_gradebook.csv
-grade_band_template_adjustments.csv
-subject_template_adjustments.csv
-completion_tracking_defaults.csv
-course_template_application.csv
-courses_with_templatecourse_for_moodle_upload.csv
-certificate_badge_policy.csv
-template_report_access_matrix.csv
-behat_course_template_coverage_mapping.csv
+30_master_course_template.csv
+31_course_template_sections.csv
+32_course_template_activities.csv
+33_course_template_gradebook.csv
+34_grade_band_template_adjustments.csv
+35_subject_template_adjustments.csv
+36_completion_tracking_defaults.csv
+37_course_template_application.csv
+13_courses_with_templatecourse_for_moodle_upload.csv
+40_certificate_badge_policy.csv
+41_template_report_access_matrix.csv
+42_behat_course_template_coverage_mapping.csv
 ```
 
 ## Why this model is Moodle-friendly

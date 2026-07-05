@@ -2,6 +2,7 @@
 // Standalone CSV validator for the Indian school Moodle baseline pack.
 // It does not require Moodle bootstrap.
 // Run: php cli_validate_school_baseline.php --dir=/path/to/csv-pack
+require_once(__DIR__ . '/cli_csv_helpers.php');
 
 $options = getopt('', ['help', 'dir:', 'limit:']);
 if (isset($options['help']) || empty($options['dir'])) {
@@ -29,7 +30,7 @@ function add_warning($message) {
 
 function read_csv_rows($dir, $file, $requiredheaders = []) {
     global $limit;
-    $path = $dir . DIRECTORY_SEPARATOR . $file;
+    $path = csv_pack_resolve_file($dir, $file);
     if (!is_file($path)) {
         add_error("Missing required file: $file");
         return [];
@@ -136,7 +137,7 @@ $cohortsByCode = index_unique($rows['cohorts.csv'], 'cohort_code', 'cohort code'
 // Include optional next-year and alumni cohorts for promotion reference checks.
 $optionalPromotionCohortFiles = ['next_year_cohorts_2027_2028.csv', 'alumni_cohorts_2027.csv'];
 foreach ($optionalPromotionCohortFiles as $optionalFile) {
-    $optionalPath = $dir . DIRECTORY_SEPARATOR . $optionalFile;
+    $optionalPath = csv_pack_resolve_file($dir, $optionalFile);
     if (is_file($optionalPath)) {
         $optionalRows = read_csv_rows($dir, $optionalFile, ['cohort_code','idnumber']);
         foreach ($optionalRows as $orow) {
@@ -270,7 +271,7 @@ foreach ($rows['parent_links.csv'] as $row) {
     }
 }
 
-$promotionFile = $dir . DIRECTORY_SEPARATOR . 'promotion_actions.csv';
+$promotionFile = csv_pack_resolve_file($dir, 'promotion_actions.csv');
 if (is_file($promotionFile)) {
     $promotionRows = read_csv_rows($dir, 'promotion_actions.csv', ['action','username','from_cohort_code','to_cohort_code']);
     foreach ($promotionRows as $row) {

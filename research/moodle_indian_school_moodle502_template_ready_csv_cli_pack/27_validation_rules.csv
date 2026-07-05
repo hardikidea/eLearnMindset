@@ -1,0 +1,8 @@
+file,field,rule,severity
+20_users_students.csv,profile_field_aadhaar_masked,Use xxxx-xxxx-1234 format only. Do not store full Aadhaar in Moodle baseline.,High
+20_users_students.csv,profile_field_birth_date,Use YYYY-MM-DD format.,Medium
+20_users_students.csv,cohort1,Must exist in 14_cohorts.csv before user cohort membership is imported.,High
+12_courses.csv,shortname,Must be unique in Moodle.,High
+10_categories.csv,idnumber,Must be unique in Moodle course_categories.,High
+24_parent_links.csv,parent_username/student_username,Both users must exist before assigning parent role.,High
+23_role_assignments.csv,context_type,"Allowed: system, category, course, user.",High

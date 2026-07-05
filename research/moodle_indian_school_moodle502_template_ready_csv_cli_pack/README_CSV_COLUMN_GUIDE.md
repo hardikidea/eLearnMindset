@@ -55,44 +55,44 @@ Use this dependency chain when editing or importing selected CSV files:
 
 ```text
 Master lookup CSVs
-  school_master.csv
-  academic_years.csv
-  boards.csv
-  mediums.csv
-  grades.csv
-  streams.csv
-  divisions.csv
-  subjects.csv
-  grade_subject_matrix.csv
+  01_school_master.csv
+  02_academic_years.csv
+  03_boards.csv
+  04_mediums.csv
+  05_grades.csv
+  06_streams.csv
+  07_divisions.csv
+  08_subjects.csv
+  09_grade_subject_matrix.csv
 
 Moodle structure CSVs
-  categories.csv depends on master lookup codes.
-  courses.csv depends on categories.csv and grade_subject_matrix.csv.
-  cohorts.csv depends on categories.csv and divisions.csv.
-  groups.csv depends on courses.csv and divisions.csv.
-  enrolments.csv depends on courses.csv, cohorts.csv, groups.csv, and Moodle roles.
+  10_categories.csv depends on master lookup codes.
+  12_courses.csv depends on 10_categories.csv and 09_grade_subject_matrix.csv.
+  14_cohorts.csv depends on 10_categories.csv and 07_divisions.csv.
+  15_groups.csv depends on 12_courses.csv and 07_divisions.csv.
+  25_enrolments.csv depends on 12_courses.csv, 14_cohorts.csv, 15_groups.csv, and Moodle roles.
 
 User and access CSVs
-  user_profile_fields.csv must run before users_*.csv.
-  custom_roles.csv must run before role_assignments.csv and parent_links.csv.
-  users_staff.csv, users_students.csv, users_parents.csv depend on user_profile_fields.csv.
-  cohort_members.csv depends on users_students.csv and cohorts.csv.
-  role_assignments.csv depends on users_staff.csv, custom_roles.csv, categories.csv, and courses.csv.
-  parent_links.csv depends on users_parents.csv, users_students.csv, and custom_roles.csv.
+  16_user_profile_fields.csv must run before users_*.csv.
+  17_custom_roles.csv must run before 23_role_assignments.csv and 24_parent_links.csv.
+  19_users_staff.csv, 20_users_students.csv, 21_users_parents.csv depend on 16_user_profile_fields.csv.
+  22_cohort_members.csv depends on 20_users_students.csv and 14_cohorts.csv.
+  23_role_assignments.csv depends on 19_users_staff.csv, 17_custom_roles.csv, 10_categories.csv, and 12_courses.csv.
+  24_parent_links.csv depends on 21_users_parents.csv, 20_users_students.csv, and 17_custom_roles.csv.
 
 Course template CSVs
-  master_course_template.csv depends on COURSE_TEMPLATES category settings.
-  course_template_sections.csv drives section names and summaries.
-  course_template_activities.csv depends on course_template_sections.csv.
-  course_template_application.csv depends on courses.csv and master_course_template.csv.
-  course_template_gradebook.csv depends on courses.csv or template application.
+  30_master_course_template.csv depends on COURSE_TEMPLATES category settings.
+  31_course_template_sections.csv drives section names and summaries.
+  32_course_template_activities.csv depends on 31_course_template_sections.csv.
+  37_course_template_application.csv depends on 12_courses.csv and 30_master_course_template.csv.
+  33_course_template_gradebook.csv depends on 12_courses.csv or template application.
 
 Academic-year rollover CSVs
   next_year_courses_*.csv depends on categories for the target academic year.
   next_year_cohorts_*.csv depends on target categories.
   next_year_groups_*.csv depends on target courses.
   next_year_enrolments_*.csv depends on target courses, target cohorts, and target groups.
-  promotion_actions.csv depends on current users/cohorts and target cohorts.
+  53_promotion_actions.csv depends on current users/cohorts and target cohorts.
 ```
 
 For the full yearly operating procedure, including the rule that existing
@@ -112,7 +112,7 @@ Keep these identifiers stable. Moodle and the helper scripts use them for matchi
 | `cohort_code` / `idnumber` | cohort, enrolment, cohort member files | Moodle cohort matching key. |
 | `group_idnumber` | group and enrolment files | Moodle group matching key inside a course. |
 | `role_shortname` | custom roles, role assignments, enrolments | Moodle role lookup key. |
-| `profile_field_*` | user CSVs | Moodle custom profile data mapped to `user_profile_fields.csv`. |
+| `profile_field_*` | user CSVs | Moodle custom profile data mapped to `16_user_profile_fields.csv`. |
 
 Boolean columns use `1` for yes/enabled/visible and `0` for no/disabled/hidden. Dates should use `YYYY-MM-DD`.
 
@@ -122,16 +122,16 @@ Boolean columns use `1` for yes/enabled/visible and `0` for no/disabled/hidden. 
 |---|---|---|
 | `cli_validate_school_baseline.php` | Validates CSV structure and cross-file references before Moodle import. | Most baseline CSV files. |
 | `cli_moodle502_preflight.php` | Checks Moodle features/plugins/config expected by the pack. | No data import; checks Moodle runtime. |
-| `cli_import_indian_school_baseline.php` | Creates profile fields, roles, categories, courses, cohorts, groups, users, links, and enrolments. | `user_profile_fields.csv`, `custom_roles.csv`, `categories.csv`, `courses.csv`, `cohorts.csv`, `groups.csv`, `users_*.csv`, `cohort_members.csv`, `role_assignments.csv`, `parent_links.csv`, `enrolments.csv`. |
-| `cli_create_universal_master_course_template.php` | Creates hidden reusable course template, chapter activities, and sequential chapter restricted-access rules. | `master_course_template.csv`, `course_template_sections.csv`, `course_template_activities.csv`. |
-| `cli_apply_course_template_settings.php` | Applies section names, summaries, visibility, completion, and course display settings to existing courses. | `course_template_application.csv`, `course_template_sections.csv`. |
-| `cli_apply_gradebook_template.php` | Applies gradebook category pattern to courses. | `course_template_gradebook.csv`, `grade_band_template_adjustments.csv`. |
+| `cli_import_indian_school_baseline.php` | Creates profile fields, roles, categories, courses, cohorts, groups, users, links, and enrolments. | `16_user_profile_fields.csv`, `17_custom_roles.csv`, `10_categories.csv`, `12_courses.csv`, `14_cohorts.csv`, `15_groups.csv`, `users_*.csv`, `22_cohort_members.csv`, `23_role_assignments.csv`, `24_parent_links.csv`, `25_enrolments.csv`. |
+| `cli_create_universal_master_course_template.php` | Creates hidden reusable course template, chapter activities, and sequential chapter restricted-access rules. | `30_master_course_template.csv`, `31_course_template_sections.csv`, `32_course_template_activities.csv`. |
+| `cli_apply_course_template_settings.php` | Applies section names, summaries, visibility, completion, and course display settings to existing courses. | `37_course_template_application.csv`, `31_course_template_sections.csv`. |
+| `cli_apply_gradebook_template.php` | Applies gradebook category pattern to courses. | `33_course_template_gradebook.csv`, `34_grade_band_template_adjustments.csv`. |
 | `cli_prepare_next_academic_year.php` | Creates next-year courses, cohorts, groups, and enrolment mappings. | `next_year_courses_*.csv`, `next_year_cohorts_*.csv`, `next_year_groups_*.csv`, `next_year_enrolments_*.csv`. |
-| `cli_promote_students_academic_year.php` / `cli_promote_academic_year.php` | Moves or records students into next academic year cohorts based on promotion decisions. | `promotion_actions.csv`, `student_promotion_plan_*.csv`, promotion policy/status CSVs. |
+| `cli_promote_students_academic_year.php` / `cli_promote_academic_year.php` | Moves or records students into next academic year cohorts based on promotion decisions. | `53_promotion_actions.csv`, `student_promotion_plan_*.csv`, promotion policy/status CSVs. |
 
 ## CSV Reference
 
-### `school_master.csv`
+### `01_school_master.csv`
 
 Purpose: Defines the school/trust identity used across categories, users, reporting, and school-specific metadata.
 
@@ -158,7 +158,7 @@ Dependencies: none. Other files should reuse `trust_code`, `school_code`, `princ
 | `principal_username` | Must match a staff user if used for principal assignments. |
 | `academic_year` | Current academic year label used by course/cohort/user profile data. |
 
-### `academic_years.csv`
+### `02_academic_years.csv`
 
 Purpose: Defines academic-year windows and the current year.
 
@@ -171,7 +171,7 @@ Dependencies: none. Used by course, cohort, promotion, and rollover files.
 | `end_date` | Year end date, useful for archive/rollover decisions. |
 | `is_current` | `1` marks the active school year. |
 
-### `boards.csv`
+### `03_boards.csv`
 
 Purpose: Defines boards such as GSEB, CBSE, NCERT, or school-specific government board models.
 
@@ -186,7 +186,7 @@ Dependencies: none. Referenced by category/course/cohort/user files.
 | `state` | State context where applicable. |
 | `source_url` | Reference URL for validation or curriculum source. |
 
-### `mediums.csv`
+### `04_mediums.csv`
 
 Purpose: Defines teaching mediums/languages.
 
@@ -198,7 +198,7 @@ Dependencies: none. Referenced by categories, courses, cohorts, and users.
 | `medium_name` | Display name. |
 | `language_code` | Moodle/language reference where applicable. |
 
-### `grades.csv`
+### `05_grades.csv`
 
 Purpose: Defines school grades/classes.
 
@@ -212,7 +212,7 @@ Dependencies: none. Referenced by grade-subject matrix, categories, courses, coh
 | `stage` | Academic stage such as primary, secondary, higher secondary. |
 | `moodle_label` | Friendly Moodle label used in category/course names. |
 
-### `streams.csv`
+### `06_streams.csv`
 
 Purpose: Defines streams such as General, Science, Commerce, Arts, and Vocational.
 
@@ -225,7 +225,7 @@ Dependencies: none. Referenced by categories, courses, cohorts, users, and promo
 | `applies_to` | Grade range or stage where the stream is valid. |
 | `notes` | Administrative guidance. |
 
-### `divisions.csv`
+### `07_divisions.csv`
 
 Purpose: Defines class divisions used as Moodle groups inside courses.
 
@@ -237,11 +237,11 @@ Dependencies: none. Referenced by cohorts, groups, enrolments, and student users
 | `division_name` | Display name such as `Division A`. |
 | `display_order` | Sorting order. |
 
-### `subjects.csv`
+### `08_subjects.csv`
 
 Purpose: Defines subject master data.
 
-Dependencies: none. Referenced by `grade_subject_matrix.csv` and course generation.
+Dependencies: none. Referenced by `09_grade_subject_matrix.csv` and course generation.
 
 | Column | Usage inside system |
 |---|---|
@@ -250,19 +250,19 @@ Dependencies: none. Referenced by `grade_subject_matrix.csv` and course generati
 | `subject_category` | Groups subjects as core, language, stream, elective, activity, etc. |
 | `notes` | Curriculum or implementation notes. |
 
-### `grade_subject_matrix.csv`
+### `09_grade_subject_matrix.csv`
 
 Purpose: Defines which subjects are offered for each board, medium, grade, and stream combination.
 
-Dependencies: `boards.csv`, `mediums.csv`, `grades.csv`, `streams.csv`, `subjects.csv`.
+Dependencies: `03_boards.csv`, `04_mediums.csv`, `05_grades.csv`, `06_streams.csv`, `08_subjects.csv`.
 
 | Column | Usage inside system |
 |---|---|
-| `board_code` | Must match `boards.csv`. |
-| `medium_code` | Must match `mediums.csv`. |
-| `grade_code` | Must match `grades.csv`. |
-| `stream_code` | Must match `streams.csv`. |
-| `subject_code` | Must match `subjects.csv`; drives generated course identifiers. |
+| `board_code` | Must match `03_boards.csv`. |
+| `medium_code` | Must match `04_mediums.csv`. |
+| `grade_code` | Must match `05_grades.csv`. |
+| `stream_code` | Must match `06_streams.csv`. |
+| `subject_code` | Must match `08_subjects.csv`; drives generated course identifiers. |
 | `subject_name` | Display subject name used in generated course names. |
 | `subject_category` | Subject classification for template/reporting logic. |
 | `is_compulsory` | `1` means required subject. |
@@ -270,7 +270,7 @@ Dependencies: `boards.csv`, `mediums.csv`, `grades.csv`, `streams.csv`, `subject
 | `display_order` | Sort order in course lists and generated CSV output. |
 | `source_note` | Curriculum/source note for audit. |
 
-### `categories.csv`
+### `10_categories.csv`
 
 Purpose: Creates Moodle course categories for trust, board, school, medium, grade, stream, and optional subject/template levels.
 
@@ -287,11 +287,11 @@ Dependencies: master lookup codes. Parent rows must appear before child rows.
 | `visible` | `1` visible, `0` hidden. |
 | `description` | Moodle category description. |
 
-### `optional_year_category_model_categories.csv`
+### `optional_year_category_model_10_categories.csv`
 
 Purpose: Optional alternative category tree that includes academic-year nodes.
 
-Dependencies: same as `categories.csv`.
+Dependencies: same as `10_categories.csv`.
 
 | Column | Usage inside system |
 |---|---|
@@ -304,11 +304,11 @@ Dependencies: same as `categories.csv`.
 | `visible` | Visibility flag. |
 | `description` | Category description. |
 
-### `courses.csv`
+### `12_courses.csv`
 
 Purpose: Creates Moodle subject courses.
 
-Dependencies: `categories.csv` must already contain `category_code`; subject/grade/stream codes should be valid in lookup files.
+Dependencies: `10_categories.csv` must already contain `category_code`; subject/grade/stream codes should be valid in lookup files.
 
 | Column | Usage inside system |
 |---|---|
@@ -339,7 +339,7 @@ Dependencies: `categories.csv` must already contain `category_code`; subject/gra
 | `course_template_code` | Template mapping key. |
 | `term` | Term/year label for reporting. |
 
-### `courses_with_templatecourse_for_moodle_upload.csv`
+### `13_courses_with_templatecourse_for_moodle_upload.csv`
 
 Purpose: Alternative CSV for Moodle native course upload using an existing `templatecourse`.
 
@@ -364,11 +364,11 @@ Dependencies: categories and the template course must already exist.
 | `summary` | Course summary. |
 | `tags` | Course tags. |
 
-### `cohorts.csv`
+### `14_cohorts.csv`
 
 Purpose: Creates Moodle cohorts used to enrol divisions/classes into subject courses.
 
-Dependencies: `categories.csv` for `context_category_code`; lookup codes should match school structure.
+Dependencies: `10_categories.csv` for `context_category_code`; lookup codes should match school structure.
 
 | Column | Usage inside system |
 |---|---|
@@ -386,11 +386,11 @@ Dependencies: `categories.csv` for `context_category_code`; lookup codes should 
 | `visible` | Cohort visibility. |
 | `description` | Cohort description. |
 
-### `groups.csv`
+### `15_groups.csv`
 
 Purpose: Creates Moodle groups inside each course, usually one group per division.
 
-Dependencies: `courses.csv` must exist before groups are created.
+Dependencies: `12_courses.csv` must exist before groups are created.
 
 | Column | Usage inside system |
 |---|---|
@@ -406,11 +406,11 @@ Dependencies: `courses.csv` must exist before groups are created.
 | `division_code` | Division metadata. |
 | `description` | Moodle group description. |
 
-### `enrolments.csv`
+### `25_enrolments.csv`
 
 Purpose: Creates Moodle cohort-sync enrolment mappings from cohorts into courses and optionally assigns students to groups.
 
-Dependencies: `courses.csv`, `cohorts.csv`, `groups.csv`, and Moodle role `role_shortname`.
+Dependencies: `12_courses.csv`, `14_cohorts.csv`, `15_groups.csv`, and Moodle role `role_shortname`.
 
 | Column | Usage inside system |
 |---|---|
@@ -423,11 +423,11 @@ Dependencies: `courses.csv`, `cohorts.csv`, `groups.csv`, and Moodle role `role_
 | `enrolment_method` | Expected enrolment method, usually `cohort`. |
 | `status` | Desired status such as active/enabled. |
 
-### `cohort_members.csv`
+### `22_cohort_members.csv`
 
 Purpose: Adds student users to cohorts.
 
-Dependencies: `users_students.csv` and `cohorts.csv`.
+Dependencies: `20_users_students.csv` and `14_cohorts.csv`.
 
 | Column | Usage inside system |
 |---|---|
@@ -435,11 +435,11 @@ Dependencies: `users_students.csv` and `cohorts.csv`.
 | `cohort_code` | Existing Moodle cohort idnumber. |
 | `role` | Informational role, usually `student`; cohort enrolment controls course role. |
 
-### `user_profile_fields.csv`
+### `16_user_profile_fields.csv`
 
 Purpose: Creates Moodle custom user profile fields for student, parent, staff, address, consent, health, and promotion metadata.
 
-Dependencies: must run before `users_staff.csv`, `users_students.csv`, and `users_parents.csv`.
+Dependencies: must run before `19_users_staff.csv`, `20_users_students.csv`, and `21_users_parents.csv`.
 
 | Column | Usage inside system |
 |---|---|
@@ -458,11 +458,11 @@ Dependencies: must run before `users_staff.csv`, `users_students.csv`, and `user
 | `recommended_visibility` | Human-readable visibility guidance such as admin-only. |
 | `notes` | Data-protection or admin notes. |
 
-### `users_staff.csv`
+### `19_users_staff.csv`
 
 Purpose: Creates staff users such as trustee, principal, and teachers.
 
-Dependencies: `user_profile_fields.csv` must exist. Teacher course access is completed by `role_assignments.csv`.
+Dependencies: `16_user_profile_fields.csv` must exist. Teacher course access is completed by `23_role_assignments.csv`.
 
 | Column | Usage inside system |
 |---|---|
@@ -492,11 +492,11 @@ Dependencies: `user_profile_fields.csv` must exist. Teacher course access is com
 | `profile_field_aadhaar_masked` | Stores masked Aadhaar only, never full Aadhaar. |
 | `profile_field_aadhaar_consent` | Consent status. |
 
-### `users_students.csv`
+### `20_users_students.csv`
 
 Purpose: Creates student users and stores Indian-school academic, address, parent, health, consent, and promotion metadata.
 
-Dependencies: `user_profile_fields.csv`; `cohort_members.csv` performs the actual cohort membership.
+Dependencies: `16_user_profile_fields.csv`; `22_cohort_members.csv` performs the actual cohort membership.
 
 | Column | Usage inside system |
 |---|---|
@@ -516,7 +516,7 @@ Dependencies: `user_profile_fields.csv`; `cohort_members.csv` performs the actua
 | `phone1` | Primary contact. |
 | `phone2` | Secondary contact. |
 | `address` | Student address. |
-| `cohort1` | Informational cohort reference; actual membership uses `cohort_members.csv`. |
+| `cohort1` | Informational cohort reference; actual membership uses `22_cohort_members.csv`. |
 | `board_code` | Current board metadata. |
 | `school_code` | Current school metadata. |
 | `medium_code` | Current medium metadata. |
@@ -603,11 +603,11 @@ Dependencies: `user_profile_fields.csv`; `cohort_members.csv` performs the actua
 | `profile_field_last_promotion_date` | Last promotion date. |
 | `profile_field_last_promotion_result` | Last promotion result. |
 
-### `users_parents.csv`
+### `21_users_parents.csv`
 
 Purpose: Creates parent/guardian users.
 
-Dependencies: `user_profile_fields.csv`; `parent_links.csv` links parent users to student users.
+Dependencies: `16_user_profile_fields.csv`; `24_parent_links.csv` links parent users to student users.
 
 | Column | Usage inside system |
 |---|---|
@@ -637,7 +637,7 @@ Dependencies: `user_profile_fields.csv`; `parent_links.csv` links parent users t
 | `profile_field_aadhaar_masked` | Masked Aadhaar only. |
 | `profile_field_aadhaar_consent` | Consent status. |
 
-### `custom_roles.csv`
+### `17_custom_roles.csv`
 
 Purpose: Creates custom Moodle roles such as principal, trustee manager, and parent.
 
@@ -652,7 +652,7 @@ Dependencies: Moodle base roles must exist, for example `manager` or `user`.
 | `capabilities_allow` | Pipe-separated capabilities to explicitly allow. |
 | `description` | Moodle role description. |
 
-### `role_assignments.csv`
+### `23_role_assignments.csv`
 
 Purpose: Assigns roles to staff/users in category, course, system, or user contexts.
 
@@ -666,11 +666,11 @@ Dependencies: users, roles, categories/courses must already exist.
 | `context_identifier` | Category idnumber, course idnumber/shortname, username, or system marker depending on context. |
 | `notes` | Review notes. |
 
-### `role_guidelines.csv`
+### `18_role_guidelines.csv`
 
 Purpose: Human-readable role governance guide.
 
-Dependencies: references `custom_roles.csv` and Moodle core roles.
+Dependencies: references `17_custom_roles.csv` and Moodle core roles.
 
 | Column | Usage inside system |
 |---|---|
@@ -681,7 +681,7 @@ Dependencies: references `custom_roles.csv` and Moodle core roles.
 | `can_do` | Expected permissions/use cases. |
 | `avoid` | Governance warning. |
 
-### `parent_links.csv`
+### `24_parent_links.csv`
 
 Purpose: Assigns the parent role in the student user context so parent users can view permitted child information.
 
@@ -697,7 +697,7 @@ Dependencies: parent users, student users, and `parent` role must already exist.
 | `allow_activity_report_view` | Policy flag for activity report access. |
 | `notes` | Review notes. |
 
-### `master_course_template.csv`
+### `30_master_course_template.csv`
 
 Purpose: Defines the hidden master course template used for consistent sections and placeholder activities.
 
@@ -723,7 +723,7 @@ Dependencies: template category can be created by the template CLI if missing.
 | `tags` | Template tags. |
 | `summary` | Template summary. |
 
-### `course_template_sections.csv`
+### `31_course_template_sections.csv`
 
 Purpose: Defines standard course section names, summaries, visibility, and teacher/student guidance.
 
@@ -740,11 +740,11 @@ Dependencies: used by master template script and apply-template script.
 | `teacher_notes` | Teacher-facing implementation notes. |
 | `student_instructions` | Student-facing guidance. |
 
-### `course_template_activities.csv`
+### `32_course_template_activities.csv`
 
 Purpose: Defines placeholder or native activities/resources for the master template. The current standard template uses 10 chapter sections. Each chapter includes overview, study material, discussion, practice quiz, assignment, and a completion gate.
 
-Dependencies: `course_template_sections.csv`; recommended activity modules must exist if using native mode.
+Dependencies: `31_course_template_sections.csv`; recommended activity modules must exist if using native mode.
 
 | Column | Usage inside system |
 |---|---|
@@ -776,11 +776,11 @@ Sequential chapter behavior:
 
 For the operational runbook, see `README_CHAPTER_SEQUENTIAL_TEMPLATE.md`.
 
-### `course_template_application.csv`
+### `37_course_template_application.csv`
 
 Purpose: Maps each generated course to the standard course template.
 
-Dependencies: `courses.csv`, `master_course_template.csv`, `course_template_sections.csv`.
+Dependencies: `12_courses.csv`, `30_master_course_template.csv`, `31_course_template_sections.csv`.
 
 | Column | Usage inside system |
 |---|---|
@@ -803,7 +803,7 @@ Dependencies: `courses.csv`, `master_course_template.csv`, `course_template_sect
 | `certificate_policy_code` | Completion/certificate policy reference. |
 | `notes` | Review notes. |
 
-### `course_template_gradebook.csv`
+### `33_course_template_gradebook.csv`
 
 Purpose: Defines gradebook category pattern and weights.
 
@@ -817,11 +817,11 @@ Dependencies: courses/template application; review weights before production.
 | `default_pass_percent` | Suggested passing threshold. |
 | `notes` | Review notes. |
 
-### `grade_band_template_adjustments.csv`
+### `34_grade_band_template_adjustments.csv`
 
 Purpose: Adjusts gradebook weights by grade band.
 
-Dependencies: `course_template_gradebook.csv`, grades/grade bands.
+Dependencies: `33_course_template_gradebook.csv`, grades/grade bands.
 
 | Column | Usage inside system |
 |---|---|
@@ -835,11 +835,11 @@ Dependencies: `course_template_gradebook.csv`, grades/grade bands.
 | `passing_grade_percent` | Suggested pass percentage. |
 | `template_adjustment` | Notes about adjustment. |
 
-### `subject_template_adjustments.csv`
+### `35_subject_template_adjustments.csv`
 
 Purpose: Defines subject-specific template additions.
 
-Dependencies: `subjects.csv`, `course_template_sections.csv`.
+Dependencies: `08_subjects.csv`, `31_course_template_sections.csv`.
 
 | Column | Usage inside system |
 |---|---|
@@ -848,7 +848,7 @@ Dependencies: `subjects.csv`, `course_template_sections.csv`.
 | `recommended_template_additions` | Suggested additional sections/activities. |
 | `default_extra_sections` | Suggested extra section count or names. |
 
-### `completion_tracking_defaults.csv`
+### `36_completion_tracking_defaults.csv`
 
 Purpose: Defines recommended Moodle completion settings by activity type.
 
@@ -862,7 +862,7 @@ Dependencies: referenced by template planning; not required for baseline import.
 | `grade_required` | Whether a grade is required. |
 | `notes` | Implementation notes. |
 
-### `certificate_badge_policy.csv`
+### `40_certificate_badge_policy.csv`
 
 Purpose: Documents certificate/badge behavior by policy code.
 
@@ -876,7 +876,7 @@ Dependencies: optional certificate/badge plugins if implemented.
 | `visibility_rule` | When the certificate/badge should show. |
 | `notes` | Review notes. |
 
-### `course_template_custom_fields.csv`
+### `38_course_template_custom_fields.csv`
 
 Purpose: Defines proposed custom course fields for reporting/templates.
 
@@ -890,7 +890,7 @@ Dependencies: Moodle custom course fields may need manual/admin setup.
 | `recommended_values` | Allowed or suggested values. |
 | `notes` | Implementation notes. |
 
-### `course_template_review_checklist.csv`
+### `39_course_template_review_checklist.csv`
 
 Purpose: Human review checklist for course templates.
 
@@ -904,7 +904,7 @@ Dependencies: none.
 | `owner` | Owner role/team. |
 | `required` | Whether the check is mandatory. |
 
-### `behat_course_template_coverage_mapping.csv`
+### `42_behat_course_template_coverage_mapping.csv`
 
 Purpose: Maps template areas to Behat/test coverage.
 
@@ -916,7 +916,7 @@ Dependencies: Behat/testing workflow.
 | `template_support` | Template behavior covered. |
 | `csv_file` | CSV file related to the test area. |
 
-### `template_report_access_matrix.csv`
+### `41_template_report_access_matrix.csv`
 
 Purpose: Defines reporting/PII access expectations by role.
 
@@ -931,7 +931,7 @@ Dependencies: roles and Moodle reporting permissions.
 | `pii_access` | PII access level. |
 | `notes` | Governance notes. |
 
-### `diksha_content_template.csv`
+### `43_diksha_content_template.csv`
 
 Purpose: Planning template for mapping DIKSHA or other external resources into Moodle courses.
 
@@ -960,7 +960,7 @@ Dependencies: courses and section structure.
 | `import_mode` | Link/upload/manual review mode. |
 | `status` | Workflow status. |
 
-### `next_year_courses_2027_2028.csv`
+### `54_next_year_courses_2027_2028.csv`
 
 Purpose: Creates next academic year courses during rollover preparation.
 
@@ -988,7 +988,7 @@ Dependencies: target-year categories.
 | `groupmodeforce` | Force group mode flag. |
 | `summary` | Course summary. |
 
-### `next_year_cohorts_2027_2028.csv`
+### `55_next_year_cohorts_2027_2028.csv`
 
 Purpose: Creates target-year cohorts.
 
@@ -1010,7 +1010,7 @@ Dependencies: target-year categories.
 | `visible` | Cohort visibility. |
 | `description` | Cohort description. |
 
-### `next_year_groups_2027_2028.csv`
+### `56_next_year_groups_2027_2028.csv`
 
 Purpose: Creates groups inside target-year courses.
 
@@ -1030,7 +1030,7 @@ Dependencies: target-year courses.
 | `division_code` | Division metadata. |
 | `description` | Group description. |
 
-### `next_year_enrolments_2027_2028.csv`
+### `57_next_year_enrolments_2027_2028.csv`
 
 Purpose: Creates target-year cohort enrolment mappings.
 
@@ -1047,7 +1047,7 @@ Dependencies: target-year courses, cohorts, and groups.
 | `enrolment_method` | Expected method, usually `cohort`. |
 | `status` | Desired enrolment status. |
 
-### `alumni_cohorts_2027.csv`
+### `58_alumni_cohorts_2027.csv`
 
 Purpose: Defines alumni/exit cohorts for students leaving the active school structure.
 
@@ -1069,7 +1069,7 @@ Dependencies: categories and promotion workflow.
 | `visible` | Cohort visibility. |
 | `description` | Cohort description. |
 
-### `promotion_actions.csv`
+### `53_promotion_actions.csv`
 
 Purpose: Action file for promoting, retaining, transferring, or marking students as alumni.
 
@@ -1103,7 +1103,7 @@ Dependencies: existing students/cohorts and target cohorts.
 | `approved_by` | Approver username/name. |
 | `remarks` | Notes. |
 
-### `student_promotion_plan_2027_2028.csv`
+### `52_student_promotion_plan_2027_2028.csv`
 
 Purpose: Detailed student-by-student promotion plan for the next academic year.
 
@@ -1140,7 +1140,7 @@ Dependencies: current students/cohorts, target cohorts, promotion policy.
 | `notify_parent` | Whether parent communication is expected. |
 | `remarks` | Notes. |
 
-### `student_academic_history_template.csv`
+### `51_student_academic_history_template.csv`
 
 Purpose: Template for exporting or maintaining student academic history outside core Moodle tables.
 
@@ -1166,7 +1166,7 @@ Dependencies: student users, academic year, cohort data.
 | `created_on` | Creation date. |
 | `notes` | Notes. |
 
-### `academic_year_promotion_rules.csv`
+### `45_academic_year_promotion_rules.csv`
 
 Purpose: Defines rule-based promotion decisions by grade/stream/result.
 
@@ -1184,7 +1184,7 @@ Dependencies: grades, streams, promotion status codes.
 | `requires_manual_review` | Manual review flag. |
 | `notes` | Rule notes. |
 
-### `academic_year_transition_models.csv`
+### `44_academic_year_transition_models.csv`
 
 Purpose: Documents possible academic-year rollover models.
 
@@ -1201,7 +1201,7 @@ Dependencies: none.
 | `risks_or_notes` | Risks or cautions. |
 | `recommended` | Whether this model is recommended. |
 
-### `academic_year_rollover_checklist.csv`
+### `46_academic_year_rollover_checklist.csv`
 
 Purpose: Operational checklist for rollover.
 
@@ -1216,7 +1216,7 @@ Dependencies: rollover process.
 | `required_before_next_step` | Whether task blocks the next step. |
 | `notes` | Notes. |
 
-### `promotion_policy.csv`
+### `47_promotion_policy.csv`
 
 Purpose: Human-readable promotion policy reference.
 
@@ -1230,7 +1230,7 @@ Dependencies: promotion workflow.
 | `why` | Reason. |
 | `example` | Example. |
 
-### `promotion_status_codes.csv`
+### `48_promotion_status_codes.csv`
 
 Purpose: Defines promotion status labels and default Moodle action.
 
@@ -1242,7 +1242,7 @@ Dependencies: promotion action files.
 | `name` | Display label. |
 | `moodle_action` | Recommended Moodle operation. |
 
-### `student_status_codes.csv`
+### `50_student_status_codes.csv`
 
 Purpose: Defines student lifecycle statuses.
 
@@ -1255,7 +1255,7 @@ Dependencies: student profile fields and promotion workflow.
 | `default_moodle_action` | Recommended Moodle action. |
 | `notes` | Notes. |
 
-### `promotion_validation_rules.csv`
+### `promotion_27_validation_rules.csv`
 
 Purpose: Defines validation checks before promotion execution.
 
@@ -1268,7 +1268,7 @@ Dependencies: promotion files.
 | `description` | What is checked. |
 | `example_fix` | How to fix. |
 
-### `archive_policy.csv`
+### `59_archive_policy.csv`
 
 Purpose: Defines what to archive after academic-year completion.
 
@@ -1281,7 +1281,7 @@ Dependencies: backup/rollover process.
 | `when_to_do` | Timing guidance. |
 | `risk_if_skipped` | Risk if not archived. |
 
-### `lookup_values.csv`
+### `26_lookup_values.csv`
 
 Purpose: Generic lookup table for values used by other CSVs or future UI/reporting.
 
@@ -1293,7 +1293,7 @@ Dependencies: none.
 | `code` | Lookup code. |
 | `label` | Display label. |
 
-### `validation_rules.csv`
+### `27_validation_rules.csv`
 
 Purpose: Documents CSV validation rules.
 
@@ -1306,7 +1306,7 @@ Dependencies: validation CLI and CSV quality process.
 | `rule` | Validation rule. |
 | `severity` | Error/warning severity. |
 
-### `compatibility_matrix.csv`
+### `61_compatibility_matrix.csv`
 
 Purpose: Documents Moodle version compatibility assumptions.
 
@@ -1321,7 +1321,7 @@ Dependencies: Moodle version and installed plugins.
 | `dependency` | Required plugin/config/dependency. |
 | `recommendation` | Recommendation before production. |
 
-### `source_references.csv`
+### `28_source_references.csv`
 
 Purpose: Stores source references used to design the pack.
 
@@ -1333,7 +1333,7 @@ Dependencies: none.
 | `url` | Source URL. |
 | `used_for` | What the source supports. |
 
-### `summary.csv`
+### `29_summary.csv`
 
 Purpose: High-level count summary for quick verification.
 
@@ -1344,7 +1344,7 @@ Dependencies: generated from/related to other CSVs.
 | `metric` | Count or feature label. |
 | `value` | Expected value/count. |
 
-### `improvement_backlog.csv`
+### `60_improvement_backlog.csv`
 
 Purpose: Product/implementation backlog for improving the pack.
 
@@ -1375,22 +1375,22 @@ Example: import one teacher into one course.
 Required rows/files:
 
 ```text
-user_profile_fields.csv        keep all required fields
-custom_roles.csv               keep roles used by role_assignments
-categories.csv                 keep course category path
-courses.csv                    keep target course row
-users_staff.csv                keep teacher row
-role_assignments.csv           keep teacher course assignment row
+16_user_profile_fields.csv        keep all required fields
+17_custom_roles.csv               keep roles used by role_assignments
+10_categories.csv                 keep course category path
+12_courses.csv                    keep target course row
+19_users_staff.csv                keep teacher row
+23_role_assignments.csv           keep teacher course assignment row
 ```
 
 If students must also be enrolled:
 
 ```text
-cohorts.csv                    keep target cohort row
-groups.csv                     keep group rows for the target course
-users_students.csv             keep student rows
-cohort_members.csv             keep student-to-cohort rows
-enrolments.csv                 keep cohort-to-course rows
+14_cohorts.csv                    keep target cohort row
+15_groups.csv                     keep group rows for the target course
+20_users_students.csv             keep student rows
+22_cohort_members.csv             keep student-to-cohort rows
+25_enrolments.csv                 keep cohort-to-course rows
 ```
 
 Always keep CSV headers even when only one data row is imported.

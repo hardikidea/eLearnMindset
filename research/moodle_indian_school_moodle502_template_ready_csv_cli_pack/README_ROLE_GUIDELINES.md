@@ -20,4 +20,4 @@ Use Moodle built-in student role through cohort sync enrolments. Do not create o
 
 ## Parent
 
-Use parent role in the student user context. Do not enrol parents as students in child courses. Parent-child mapping is in parent_links.csv.
+Use parent role in the student user context. Do not enrol parents as students in child courses. Parent-child mapping is in 24_parent_links.csv.

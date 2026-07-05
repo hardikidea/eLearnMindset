@@ -7,5 +7,5 @@ High,Backup,Back up DB and moodledata before import,Allows rollback,Database dum
 Medium,Performance,Import in phases,Large packs are easier to debug,categories -> courses -> cohorts -> users -> enrolments
 Medium,Reporting,Keep academic year in codes and fields,Clean year-end reporting,academic_year in courses/cohorts/profile fields
 Medium,Content,Use DIKSHA links first,Avoid storage and copyright issues,URL resources with attribution
-Medium,Roles,Review custom role capabilities manually after import,Manager archetype may be too broad,Use role_guidelines.csv as baseline only
+Medium,Roles,Review custom role capabilities manually after import,Manager archetype may be too broad,Use 18_role_guidelines.csv as baseline only
 Low,Integrations,Add attendance after baseline,Avoid mixing LMS setup with ERP scope,Choose plugin or SIS sync later

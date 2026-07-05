@@ -7,6 +7,7 @@ define('CLI_SCRIPT', true);
 require(__DIR__ . '/../../config.php');
 require_once($CFG->libdir . '/clilib.php');
 require_once($CFG->libdir . '/gradelib.php');
+require_once(__DIR__ . '/cli_csv_helpers.php');
 require_once($CFG->libdir . '/grade/grade_category.php');
 require_once($CFG->libdir . '/grade/grade_item.php');
 
@@ -35,7 +36,7 @@ $limit = (int)$options['limit'];
 function msg($text) { cli_writeln($text); }
 
 function read_csv_file($dir, $filename) {
-    $path = $dir . DIRECTORY_SEPARATOR . $filename;
+    $path = csv_pack_resolve_file($dir, $filename);
     if (!file_exists($path)) {
         cli_error("Missing CSV file: $filename");
     }

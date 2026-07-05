@@ -1,6 +1,6 @@
 field_shortname,field_name,datatype,recommended_values,notes
 grade_level,Grade Level,shorttext,Nursery|LKG|UKG|Balvatika|Std 1..Std 12,Course search/filter metadata
-subject_name,Subject Name,shorttext,From subjects.csv,Course search/filter metadata
+subject_name,Subject Name,shorttext,From 08_subjects.csv,Course search/filter metadata
 academic_year,Academic Year,shorttext,2026-2027,Course lifecycle and archival metadata
 term,Term / Semester,dropdown,Term 1|Term 2|Semester 1|Semester 2|Academic Year|Board Exam Prep,Use in course name and filters
 language,Language / Medium,dropdown,Gujarati|English|Hindi|Marathi|Urdu|Sanskrit|Other,Course search/filter metadata

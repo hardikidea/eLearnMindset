@@ -31,7 +31,8 @@ Commands:
 
   new-selective-pack <destination-dir>
       Create a small editable pack with headers for selective imports.
-      It copies user_profile_fields.csv and custom_roles.csv because they are safe and idempotent.
+      It copies 16_user_profile_fields.csv and 17_custom_roles.csv because they are safe and idempotent.
+      New selective packs use the ordered NN_<logical_name>.csv filenames.
 
   validate
       Run baseline and course-template CSV validators from the host.
@@ -56,7 +57,7 @@ Commands:
   enrolments-dry-run
   enrolments-import
       Import cohort enrolment mappings from PACK_HOST.
-      Use a selective pack with only enrolments.csv rows for the intended courses/cohorts.
+      Use a selective pack with only 25_enrolments.csv rows for the intended courses/cohorts.
 
   template-dry-run
   template-import
@@ -65,11 +66,11 @@ Commands:
 
   apply-template-dry-run
   apply-template-import
-      Apply course template section/settings rows from course_template_application.csv.
+      Apply course template section/settings rows from 37_course_template_application.csv.
 
   gradebook-dry-run
   gradebook-import
-      Apply gradebook template rows from course_template_gradebook.csv.
+      Apply gradebook template rows from 33_course_template_gradebook.csv.
 
   purge-cache
       Purge Moodle caches.
@@ -118,6 +119,46 @@ prepare() {
     copy_pack_to_container
 }
 
+resolve_pack_csv() {
+    local dir="$1"
+    local logical="$2"
+    if [ -f "$dir/$logical" ]; then
+        printf '%s\n' "$dir/$logical"
+        return 0
+    fi
+    local candidate
+    for candidate in "$dir"/[0-9][0-9]_"$logical" "$dir"/[0-9][0-9][0-9]_"$logical"; do
+        if [ -f "$candidate" ]; then
+            printf '%s\n' "$candidate"
+            return 0
+        fi
+    done
+    return 1
+}
+
+copy_csv_to_selective_pack() {
+    local logical="$1"
+    local dest="$2"
+    local mode="${3:-header}"
+    local source
+    source="$(resolve_pack_csv "$BASE_PACK" "$logical")"
+    local target="$dest/$(basename "$source")"
+    if [ "$mode" = "full" ]; then
+        cp "$source" "$target"
+    elif [ ! -f "$target" ]; then
+        head -n 1 "$source" > "$target"
+    fi
+}
+
+csv_has_data_rows() {
+    local dir="$1"
+    local logical="$2"
+    local source
+    source="$(resolve_pack_csv "$dir" "$logical")"
+    [ -f "$source" ] || return 1
+    awk 'NR > 1 && $0 !~ /^[[:space:]]*$/ { found = 1; exit } END { exit found ? 0 : 1 }' "$source"
+}
+
 new_selective_pack() {
     local dest="${1:-}"
     if [ -z "$dest" ]; then
@@ -126,8 +167,8 @@ new_selective_pack() {
     fi
 
     mkdir -p "$dest"
-    cp "$BASE_PACK/user_profile_fields.csv" "$dest/user_profile_fields.csv"
-    cp "$BASE_PACK/custom_roles.csv" "$dest/custom_roles.csv"
+    copy_csv_to_selective_pack user_profile_fields.csv "$dest" full
+    copy_csv_to_selective_pack custom_roles.csv "$dest" full
 
     local files=(
         categories.csv
@@ -151,9 +192,7 @@ new_selective_pack() {
 
     local file
     for file in "${files[@]}"; do
-        if [ -f "$BASE_PACK/$file" ] && [ ! -f "$dest/$file" ]; then
-            head -n 1 "$BASE_PACK/$file" > "$dest/$file"
-        fi
+        copy_csv_to_selective_pack "$file" "$dest" header
     done
 
     cat > "$dest/README_SELECTIVE_PACK.md" <<EOF
@@ -169,11 +208,13 @@ Fill only the CSV files needed for the operation.
 
 Common examples:
 
-- Students only: edit \`users_students.csv\` and \`cohort_members.csv\`.
-- Students with parents: also edit \`users_parents.csv\` and \`parent_links.csv\`.
-- Teacher assignment: edit \`users_staff.csv\` and \`role_assignments.csv\`.
-- New division: edit \`cohorts.csv\`, \`groups.csv\`, and \`enrolments.csv\`.
-- New course structure: edit \`categories.csv\`, \`courses.csv\`, \`cohorts.csv\`, \`groups.csv\`, and \`enrolments.csv\`.
+- Students only: edit the ordered student and cohort-member files, for example \`20_users_students.csv\` and \`22_cohort_members.csv\`.
+- Students with parents: also edit the ordered parent and parent-link files, for example \`21_users_parents.csv\` and \`24_parent_links.csv\`.
+- Teacher assignment: edit the ordered staff and role-assignment files, for example \`19_users_staff.csv\` and \`23_role_assignments.csv\`.
+- New division: edit the ordered cohort, group, and enrolment files, for example \`14_cohorts.csv\`, \`15_groups.csv\`, and \`25_enrolments.csv\`.
+- New course structure: edit the ordered category, course, cohort, group, and enrolment files.
+
+The PHP import scripts resolve logical names automatically, so \`20_users_students.csv\` is read as \`users_students.csv\`.
 
 Run from the repository root:
 
@@ -189,7 +230,14 @@ EOF
 
 validate() {
     php "$BASE_PACK/cli_validate_school_baseline.php" --dir="$PACK_HOST"
-    php "$BASE_PACK/cli_validate_course_template_csv.php" --dir="$PACK_HOST"
+    if csv_has_data_rows "$PACK_HOST" course_template_sections.csv \
+        || csv_has_data_rows "$PACK_HOST" course_template_activities.csv \
+        || csv_has_data_rows "$PACK_HOST" course_template_application.csv \
+        || csv_has_data_rows "$PACK_HOST" course_template_gradebook.csv; then
+        php "$BASE_PACK/cli_validate_course_template_csv.php" --dir="$PACK_HOST"
+    else
+        echo "Skipped template CSV validation because template files are header-only."
+    fi
 }
 
 moodle_php() {

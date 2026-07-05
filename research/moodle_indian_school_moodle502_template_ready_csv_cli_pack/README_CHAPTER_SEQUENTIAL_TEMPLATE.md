@@ -107,7 +107,7 @@ docker compose exec -T moodle php admin/cli/cli_create_universal_master_course_t
   --reset-template-activities=1
 ```
 
-The reset flag deletes activities only from the hidden master template course before recreating the activities from `course_template_activities.csv`. It does not delete real subject courses or enrolled student work.
+The reset flag deletes activities only from the hidden master template course before recreating the activities from `32_course_template_activities.csv`. It does not delete real subject courses or enrolled student work.
 
 Use `--activity-mode=native` when Quiz, Assignment, Forum, Feedback, Book, and Page modules are installed. This creates real Moodle activities and enables pass-grade chapter gates.
 
@@ -115,7 +115,7 @@ Use `--activity-mode=page` for a very safe placeholder-only setup. In page mode,
 
 ## How Unlocking Works
 
-The CLI reads `course_template_activities.csv`.
+The CLI reads `32_course_template_activities.csv`.
 
 Rows with `unlock_next=1` become chapter gate activities.
 
@@ -152,7 +152,7 @@ For each real course copied from the template:
 
 ## Grade-Level Adjustments
 
-Use `grade_band_template_adjustments.csv` for local policy decisions:
+Use `34_grade_band_template_adjustments.csv` for local policy decisions:
 
 | Grade band | Recommended gate approach |
 |---|---|
@@ -183,7 +183,7 @@ docker compose exec -T moodle php admin/cli/purge_caches.php
 Use Moodle's course upload with:
 
 ```text
-courses_with_templatecourse_for_moodle_upload.csv
+13_courses_with_templatecourse_for_moodle_upload.csv
 ```
 
 That file uses:

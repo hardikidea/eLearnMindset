@@ -3,6 +3,11 @@
 For per-file column usage, dependencies, and selective-import guidance, read
 `README_CSV_COLUMN_GUIDE.md` before editing CSV data.
 
+For the canonical ordered CSV filename list, read
+`README_ORDERED_CSV_FILES.md`. The repository standard is
+`NN_<logical_name>.csv`, for example `01_school_master.csv`,
+`12_courses.csv`, and `20_users_students.csv`.
+
 For command-first setup, selective division/user imports, and the master helper
 script, read `README_STEP_BY_STEP_SCHOOL_SETUP_RUNBOOK.md` and use
 `run_school_setup_master.sh`.
@@ -74,7 +79,7 @@ Moodle Site
                             └── Division = Moodle Group
 ```
 
-If you do not need a Trust level, remove the first `TRUST` row from `categories.csv` and make board categories top-level.
+If you do not need a Trust level, remove the first `TRUST` row from `10_categories.csv` and make board categories top-level.
 
 ## Important privacy rule for Aadhaar
 
@@ -85,49 +90,52 @@ This pack does **not** create a full Aadhaar-number field in Moodle. It uses:
 - `profile_field_aadhaar_consent`
 - `profile_field_aadhaar_vault_ref`
 
-Use full Aadhaar only in a legally approved and secure system outside Moodle if your institution has a lawful basis and consent/process. UIDAI describes masked Aadhaar as showing only the last four digits, with the first eight digits replaced. UIDAI also states Aadhaar is not mandatory for school admission. See `source_references.csv`.
+Use full Aadhaar only in a legally approved and secure system outside Moodle if your institution has a lawful basis and consent/process. UIDAI describes masked Aadhaar as showing only the last four digits, with the first eight digits replaced. UIDAI also states Aadhaar is not mandatory for school admission. See `28_source_references.csv`.
 
 ## Files
 
+The CSV files are ordered by setup sequence. Use the ordered filenames below
+when editing the pack.
+
 ### Master files
 
-- `school_master.csv`
-- `academic_years.csv`
-- `boards.csv`
-- `mediums.csv`
-- `grades.csv`
-- `streams.csv`
-- `divisions.csv`
-- `subjects.csv`
-- `grade_subject_matrix.csv`
+- `01_school_master.csv`
+- `02_academic_years.csv`
+- `03_boards.csv`
+- `04_mediums.csv`
+- `05_grades.csv`
+- `06_streams.csv`
+- `07_divisions.csv`
+- `08_subjects.csv`
+- `09_grade_subject_matrix.csv`
 
 ### Moodle structure files
 
-- `categories.csv`
-- `courses.csv`
-- `cohorts.csv`
-- `groups.csv`
-- `enrolments.csv`
-- `cohort_members.csv`
+- `10_categories.csv`
+- `12_courses.csv`
+- `14_cohorts.csv`
+- `15_groups.csv`
+- `25_enrolments.csv`
+- `22_cohort_members.csv`
 
 ### User and role files
 
-- `user_profile_fields.csv`
-- `users_staff.csv`
-- `users_students.csv`
-- `users_parents.csv`
-- `custom_roles.csv`
-- `role_guidelines.csv`
-- `role_assignments.csv`
-- `parent_links.csv`
+- `16_user_profile_fields.csv`
+- `19_users_staff.csv`
+- `20_users_students.csv`
+- `21_users_parents.csv`
+- `17_custom_roles.csv`
+- `18_role_guidelines.csv`
+- `23_role_assignments.csv`
+- `24_parent_links.csv`
 
 ### Support files
 
-- `lookup_values.csv`
-- `validation_rules.csv`
-- `source_references.csv`
-- `diksha_content_template.csv`
-- `summary.csv`
+- `26_lookup_values.csv`
+- `27_validation_rules.csv`
+- `28_source_references.csv`
+- `43_diksha_content_template.csv`
+- `29_summary.csv`
 - `cli_import_indian_school_baseline.php`
 - `run_import_example.sh`
 
@@ -151,11 +159,11 @@ The provided CLI script imports in this order:
 
 ## Usage
 
-Extract the ZIP file and copy the PHP importer into Moodle's CLI folder.
+Extract the ZIP file and copy all PHP CLI scripts into Moodle's CLI folder.
 
 ```bash
 unzip moodle_indian_school_full_baseline_csv_cli_pack.zip -d /tmp/moodle-school-pack
-cp /tmp/moodle-school-pack/cli_import_indian_school_baseline.php /path/to/moodle/admin/cli/
+cp /tmp/moodle-school-pack/cli_*.php /path/to/moodle/admin/cli/
 ```
 
 Run dry-run first:
@@ -204,13 +212,13 @@ Moodle user upload custom fields use CSV headers in the form:
 profile_field_shortname
 ```
 
-This pack uses that same convention in `users_students.csv`, `users_staff.csv` and `users_parents.csv`.
+This pack uses that same convention in `20_users_students.csv`, `19_users_staff.csv` and `21_users_parents.csv`.
 
 ## Production checklist
 
 1. Replace sample school/trust data.
 2. Replace sample users and emails.
-3. Confirm board-specific subject/elective mapping in `grade_subject_matrix.csv`.
+3. Confirm board-specific subject/elective mapping in `09_grade_subject_matrix.csv`.
 4. Confirm profile fields and visibility with school data-protection policy.
 5. Do not store full Aadhaar in Moodle baseline.
 6. Enable Moodle cohort enrolment plugin before importing enrolments.
@@ -231,12 +239,12 @@ Additional files:
 
 ```text
 README_ACADEMIC_YEAR_PROMOTION.md
-promotion_actions.csv
-promotion_policy.csv
-student_status_codes.csv
-student_academic_history_template.csv
-academic_year_rollover_checklist.csv
-archive_policy.csv
+53_promotion_actions.csv
+47_promotion_policy.csv
+50_student_status_codes.csv
+51_student_academic_history_template.csv
+46_academic_year_rollover_checklist.csv
+59_archive_policy.csv
 cli_promote_academic_year.php
 run_promotion_dry_run_example.sh
 run_promotion_execute_example.sh
@@ -246,7 +254,7 @@ Promotion sequence:
 
 ```text
 1. Create next academic year courses/cohorts/groups/enrolments.
-2. Fill promotion_actions.csv.
+2. Fill 53_promotion_actions.csv.
 3. Run cli_promote_academic_year.php with --dry-run=1.
 4. Fix missing cohorts/users.
 5. Run with --dry-run=0.
@@ -263,7 +271,7 @@ Additional recommended order when using the master course template:
 2. Run cli_create_universal_master_course_template.php to create MASTER-ALL-GRADES-ALL-SUBJECTS-STD-TEMPLATE.
 3. Create real subject courses using either:
    - cli_import_indian_school_baseline.php, then cli_apply_course_template_settings.php, or
-   - Moodle native upload-course using courses_with_templatecourse_for_moodle_upload.csv.
+   - Moodle native upload-course using 13_courses_with_templatecourse_for_moodle_upload.csv.
 4. Import cohorts, groups, users, role assignments, and cohort enrolments.
 5. Teachers replace placeholder content and principal approves courses before making them visible.
 ```

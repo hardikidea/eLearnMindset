@@ -1,5 +1,6 @@
 <?php
 // Validate course template CSV files outside Moodle.
+require_once(__DIR__ . '/cli_csv_helpers.php');
 
 $options = getopt('', ['dir:', 'help']);
 if (isset($options['help']) || empty($options['dir'])) {
@@ -10,7 +11,7 @@ if (isset($options['help']) || empty($options['dir'])) {
 $dir = rtrim($options['dir'], DIRECTORY_SEPARATOR);
 
 function read_csv_file_local($dir, $filename) {
-    $path = $dir . DIRECTORY_SEPARATOR . $filename;
+    $path = csv_pack_resolve_file($dir, $filename);
     if (!file_exists($path)) {
         throw new Exception("Missing CSV file: $filename");
     }

@@ -9,6 +9,7 @@ require_once($CFG->libdir . '/clilib.php');
 require_once($CFG->dirroot . '/course/lib.php');
 require_once($CFG->dirroot . '/course/modlib.php');
 require_once($CFG->libdir . '/gradelib.php');
+require_once(__DIR__ . '/cli_csv_helpers.php');
 
 list($options, $unrecognized) = cli_get_params([
     'help' => false,
@@ -38,7 +39,7 @@ $resetactivities = !empty($options['reset-template-activities']) && $options['re
 function msg($text) { cli_writeln($text); }
 
 function read_csv_file($dir, $filename) {
-    $path = $dir . DIRECTORY_SEPARATOR . $filename;
+    $path = csv_pack_resolve_file($dir, $filename);
     if (!file_exists($path)) {
         cli_error("Missing CSV file: $filename");
     }
