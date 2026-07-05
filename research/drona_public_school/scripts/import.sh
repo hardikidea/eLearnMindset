@@ -39,3 +39,4 @@ fi
 docker compose exec -T "$MOODLE_SERVICE" php -d memory_limit=512M admin/cli/cli_import_indian_school_baseline.php --dir="$CONTAINER_PACK" --dry-run="$DRY" $EXTRA_SKIP
 docker compose exec -T "$MOODLE_SERVICE" php -d memory_limit=512M admin/cli/cli_apply_course_template_settings.php --dir="$CONTAINER_PACK" --dry-run="$DRY"
 docker compose exec -T "$MOODLE_SERVICE" php -d memory_limit=512M admin/cli/cli_apply_gradebook_template.php --dir="$CONTAINER_PACK" --dry-run="$DRY"
+docker compose exec -T "$MOODLE_SERVICE" php -d memory_limit=512M admin/cli/cli_apply_course_certificates.php --dir="$CONTAINER_PACK" --dry-run="$DRY" --refresh-template=1

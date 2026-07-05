@@ -47,7 +47,7 @@ $sectionNumbers = [];
 foreach ($sections as $s) {
     $sectionNumbers[$s['section_number']] = true;
 }
-for ($i = 0; $i <= 12; $i++) {
+for ($i = 0; $i <= 15; $i++) {
     if (!isset($sectionNumbers[(string)$i])) {
         $errors[] = "Missing template section number $i";
     }
@@ -55,6 +55,24 @@ for ($i = 0; $i <= 12; $i++) {
 foreach ($activities as $a) {
     if (!isset($sectionNumbers[$a['section_number']])) {
         $errors[] = "Activity {$a['activity_key']} references missing section {$a['section_number']}";
+    }
+}
+$activityKeys = [];
+foreach ($activities as $a) {
+    $activityKeys[$a['activity_key']] = $a;
+}
+if (empty($activityKeys['course_completion_certificate'])) {
+    $errors[] = 'Missing final course_completion_certificate activity in section 15';
+} else {
+    $certactivity = $activityKeys['course_completion_certificate'];
+    if (($certactivity['section_number'] ?? '') !== '15') {
+        $errors[] = 'course_completion_certificate must be in section 15';
+    }
+    if (($certactivity['recommended_activity_type'] ?? '') !== 'customcert') {
+        $errors[] = 'course_completion_certificate must use recommended_activity_type=customcert';
+    }
+    if (($certactivity['completion_rule'] ?? '') !== 'view') {
+        $errors[] = 'course_completion_certificate must use completion_rule=view';
     }
 }
 $requiredActivityColumns = [

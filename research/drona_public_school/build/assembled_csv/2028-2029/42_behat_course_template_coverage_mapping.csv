@@ -3,7 +3,7 @@ Course setup,"Master course template, sections, hidden visibility, metadata fiel
 Activity completion,Completion defaults for page/url/assign/quiz/forum/feedback,36_completion_tracking_defaults.csv|32_course_template_activities.csv
 Progress tracking,Required completion tasks in each unit and course completion guidance,32_course_template_activities.csv
 Reports,Role-based report access matrix and gradebook structure,41_template_report_access_matrix.csv|33_course_template_gradebook.csv
-Certificates / badges,Core badge default and customcert optional policy,40_certificate_badge_policy.csv
+Certificates,Default verified PDF custom certificate policy and final certificate activity,40_certificate_badge_policy.csv|32_course_template_activities.csv
 Search,Course custom fields and tags for grade/subject/language/source,38_course_template_custom_fields.csv
 Roles,"Trustee Manager, Principal, Teacher, Student, Parent context guidance",18_role_guidelines.csv|41_template_report_access_matrix.csv
 PII-safe access,No Aadhaar/address/health details in courses; profile fields remain role-restricted,README_PRIVACY_AADHAAR.md|32_course_template_activities.csv

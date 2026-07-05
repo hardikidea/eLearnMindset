@@ -16,10 +16,13 @@ This pack prepares a full local-testing school setup for **Drona Public School**
 - Courses per academic year: 360
 - Cohorts per academic year: 288
 - Groups per academic year: 2160
+- Verified PDF course certificates per academic year: 360
 
 ## Important Model
 
 Users are registered once under `registration/`. Academic years do not recreate students, parents or teachers. Every year changes courses, cohorts, groups, enrolments, role assignments, academic history and promotion plans.
+
+Course certificates use the Moodle `mod_customcert` plugin. The importer creates one verified PDF certificate activity in the final `Certificate & Completion` section of every course.
 
 ## Quick Start
 
@@ -40,6 +43,8 @@ Live import after backup and dry-run pass:
 ```bash
 ./scripts/import.sh 2026-2027 live
 ```
+
+The live import applies core users/courses, section names, gradebook templates and course certificates. If the Custom Certificate plugin is missing, the certificate step fails before silently creating incomplete credentials.
 
 ## Master Excel
 

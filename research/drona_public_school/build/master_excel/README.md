@@ -8,5 +8,6 @@ The full local-testing dataset is intentionally kept in CSV form because it cont
 - 4,698 parents
 - 2,160 groups per academic year
 - 2,160 enrolment mappings per academic year
+- 360 certificate mappings per academic year
 
-Use the workbook to review structure, headers and examples. Use `build/assembled_csv/<academic-year>/` for real Moodle validation and import.
+Use the workbook to review structure, headers and examples, including the `course_certificates` sheet. Use `build/assembled_csv/<academic-year>/` for real Moodle validation and import.

@@ -246,7 +246,13 @@ function module_table_exists($modname) {
 function create_placeholder_activity($course, $row, $activitymode, $dryrun) {
     global $DB, $CFG;
     $recommended = strtolower($row['recommended_activity_type']);
-    $modname = ($activitymode === 'native' && module_table_exists($recommended)) ? $recommended : 'page';
+    $safeplaceholder = strtolower(csv_value($row, 'safe_placeholder_module', 'page'));
+    if (!$DB->record_exists('modules', ['name' => $safeplaceholder])) {
+        $safeplaceholder = 'page';
+    }
+    $modname = ($activitymode === 'native' && $recommended !== 'customcert' && module_table_exists($recommended))
+        ? $recommended
+        : $safeplaceholder;
     if (!$DB->record_exists('modules', ['name' => $modname])) {
         msg("Skipping activity {$row['default_name']}; module not installed: $modname");
         return null;

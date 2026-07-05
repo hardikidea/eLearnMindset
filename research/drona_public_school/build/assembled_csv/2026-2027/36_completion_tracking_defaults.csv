@@ -7,4 +7,4 @@ assign,submit,Student must submit to complete,1,"Use rubrics for worksheets, pro
 quiz,grade,Student must receive a grade to complete,1,Use for practice quizzes and knowledge checks.
 quiz_passgate,passgrade,Student must receive a passing grade to complete,1,Use for chapter completion gates that unlock the next chapter; default pass is 40 percent.
 feedback,submit,Student must submit feedback,0,Use at the end of the course.
-customcert_or_badge,course_completion,Visible only after course completion,0,Core-safe default is Moodle course badge; Custom certificate requires plugin approval and installation.
+customcert,view,Student must view/download the generated certificate activity,0,Default verified PDF course certificate created by mod_customcert in the final course section.

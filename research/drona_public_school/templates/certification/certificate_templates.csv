@@ -1,3 +1,2 @@
-certificate_template_code,name,credential_type,requires_plugin,notes
-DEFAULT_BADGE_TEMPLATE,Default Course Completion Badge,badge,0,Uses Moodle core badges.
-OPTIONAL_PDF_CERTIFICATE,Optional PDF Certificate,certificate,1,Enable only after installing a custom certificate plugin.
+certificate_template_code,name,credential_type,requires_plugin,page_size,orientation,primary_colour,accent_colour,highlight_colour,verification,notes
+DRONA_MODERN_COURSE_COMPLETION,Drona Modern Course Completion Certificate,certificate,1,A4,landscape,#0B4F71,#F2B705,#E51B23,"Certificate ID and QR code","Default verified PDF certificate for every course."
