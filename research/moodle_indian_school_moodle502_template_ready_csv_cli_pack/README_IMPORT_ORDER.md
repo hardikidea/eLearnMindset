@@ -3,6 +3,10 @@
 For per-file column usage, dependencies, and selective-import guidance, read
 `README_CSV_COLUMN_GUIDE.md` before editing CSV data.
 
+For command-first setup, selective division/user imports, and the master helper
+script, read `README_STEP_BY_STEP_SCHOOL_SETUP_RUNBOOK.md` and use
+`run_school_setup_master.sh`.
+
 For academic-year change, student promotion, and the no re-registration workflow,
 read `README_ACADEMIC_YEAR_CHANGE_WORKFLOW.md`.
 
