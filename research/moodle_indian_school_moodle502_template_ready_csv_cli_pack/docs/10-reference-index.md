@@ -1,5 +1,10 @@
 # Chapter 10: Reference Index
 
+| Previous | Documentation Home | Next |
+|---|---|---|
+| [Chapter 09: Validation and Troubleshooting](09-validation-and-troubleshooting.md) | [CLI Pack README](../README.md) | - |
+
+
 Use this chapter to locate deep reference material after reading the numbered chapters.
 
 ## Core Reference Docs
@@ -34,3 +39,9 @@ Use this chapter to locate deep reference material after reading the numbered ch
 | `cli_promote_academic_year.php` | Student promotion executor. |
 | `cli_promote_students_academic_year.php` | Student promotion helper. |
 | `build_master_import_workbook.mjs` | Excel workbook generator. |
+
+---
+
+| Previous | Documentation Home | Next |
+|---|---|---|
+| [Chapter 09: Validation and Troubleshooting](09-validation-and-troubleshooting.md) | [CLI Pack README](../README.md) | - |

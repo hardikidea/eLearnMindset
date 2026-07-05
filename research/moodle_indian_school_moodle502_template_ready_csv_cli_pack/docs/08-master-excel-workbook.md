@@ -1,5 +1,10 @@
 # Chapter 08: Master Excel Workbook
 
+| Previous | Documentation Home | Next |
+|---|---|---|
+| [Chapter 07: Academic Year Rollover](07-academic-year-rollover.md) | [CLI Pack README](../README.md) | [Chapter 09: Validation and Troubleshooting](09-validation-and-troubleshooting.md) |
+
+
 The master workbook is an Excel-first maintenance layer for the ordered CSV pack.
 
 Workbook:
@@ -82,3 +87,9 @@ Do not commit a `node_modules` directory or symlink.
 | `05_*` onward | One sheet per ordered CSV file. |
 
 The workbook is a data-entry aid. The CLI validators remain authoritative before import.
+
+---
+
+| Previous | Documentation Home | Next |
+|---|---|---|
+| [Chapter 07: Academic Year Rollover](07-academic-year-rollover.md) | [CLI Pack README](../README.md) | [Chapter 09: Validation and Troubleshooting](09-validation-and-troubleshooting.md) |

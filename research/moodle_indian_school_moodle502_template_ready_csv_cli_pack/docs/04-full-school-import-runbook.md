@@ -1,5 +1,10 @@
 # Chapter 04: Full School Import Runbook
 
+| Previous | Documentation Home | Next |
+|---|---|---|
+| [Chapter 03: Ordered CSV Data Model](03-ordered-csv-data-model.md) | [CLI Pack README](../README.md) | [Chapter 05: Selective Import Runbooks](05-selective-import-runbooks.md) |
+
+
 Use this chapter when setting up a complete school from the full CSV pack.
 
 ## Step 1: Start Moodle
@@ -114,3 +119,8 @@ docker compose exec -T db psql -U moodle -d moodle -c \
 "select e.enrol, e.name, c.shortname from mdl_enrol e join mdl_course c on c.id=e.courseid where e.enrol='cohort' order by c.shortname, e.name limit 20;"
 ```
 
+---
+
+| Previous | Documentation Home | Next |
+|---|---|---|
+| [Chapter 03: Ordered CSV Data Model](03-ordered-csv-data-model.md) | [CLI Pack README](../README.md) | [Chapter 05: Selective Import Runbooks](05-selective-import-runbooks.md) |

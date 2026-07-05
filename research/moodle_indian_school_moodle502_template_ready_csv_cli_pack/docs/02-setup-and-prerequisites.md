@@ -1,5 +1,9 @@
 # Chapter 02: Setup and Prerequisites
 
+| Previous | Documentation Home | Next |
+|---|---|---|
+| [Chapter 01: Overview and Architecture](01-overview-and-architecture.md) | [CLI Pack README](../README.md) | [Chapter 03: Ordered CSV Data Model](03-ordered-csv-data-model.md) |
+
 ## Required Local Services
 
 Start from the repository root:
@@ -82,3 +86,8 @@ The template commands enable completion and availability before template creatio
 "$RUNNER" template-reset-import
 ```
 
+---
+
+| Previous | Documentation Home | Next |
+|---|---|---|
+| [Chapter 01: Overview and Architecture](01-overview-and-architecture.md) | [CLI Pack README](../README.md) | [Chapter 03: Ordered CSV Data Model](03-ordered-csv-data-model.md) |

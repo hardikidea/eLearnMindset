@@ -1,5 +1,9 @@
 # Chapter 03: Ordered CSV Data Model
 
+| Previous | Documentation Home | Next |
+|---|---|---|
+| [Chapter 02: Setup and Prerequisites](02-setup-and-prerequisites.md) | [CLI Pack README](../README.md) | [Chapter 04: Full School Import Runbook](04-full-school-import-runbook.md) |
+
 ## Naming Rule
 
 Every editable CSV uses this format:
@@ -80,3 +84,8 @@ Preferred wrapper:
 "$PACK_HOST/run_school_setup_master.sh" validate
 ```
 
+---
+
+| Previous | Documentation Home | Next |
+|---|---|---|
+| [Chapter 02: Setup and Prerequisites](02-setup-and-prerequisites.md) | [CLI Pack README](../README.md) | [Chapter 04: Full School Import Runbook](04-full-school-import-runbook.md) |

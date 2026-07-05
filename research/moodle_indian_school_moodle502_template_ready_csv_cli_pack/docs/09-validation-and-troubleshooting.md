@@ -1,5 +1,9 @@
 # Chapter 09: Validation and Troubleshooting
 
+| Previous | Documentation Home | Next |
+|---|---|---|
+| [Chapter 08: Master Excel Workbook](08-master-excel-workbook.md) | [CLI Pack README](../README.md) | [Chapter 10: Reference Index](10-reference-index.md) |
+
 ## Standard Validation
 
 ```bash
@@ -75,3 +79,8 @@ docker compose exec -T db psql -U moodle -d moodle -c \
 
 For production, restore from a database backup if a real import changes too much data. Do not manually delete Moodle records until you understand dependent enrolments, grade records, submissions, logs, and parent links.
 
+---
+
+| Previous | Documentation Home | Next |
+|---|---|---|
+| [Chapter 08: Master Excel Workbook](08-master-excel-workbook.md) | [CLI Pack README](../README.md) | [Chapter 10: Reference Index](10-reference-index.md) |

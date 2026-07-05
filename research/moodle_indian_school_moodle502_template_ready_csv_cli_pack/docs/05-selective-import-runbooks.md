@@ -1,5 +1,10 @@
 # Chapter 05: Selective Import Runbooks
 
+| Previous | Documentation Home | Next |
+|---|---|---|
+| [Chapter 04: Full School Import Runbook](04-full-school-import-runbook.md) | [CLI Pack README](../README.md) | [Chapter 06: Course Template and Chapter Gates](06-course-template-and-chapter-gates.md) |
+
+
 Use selective imports when the school already exists in Moodle and you only need to add or update a limited dataset.
 
 ## Create a Selective Pack
@@ -129,3 +134,8 @@ PACK_HOST="$SELECTIVE_PACK" "$RUNNER" enrolments-import
 - Always dry-run first.
 - Use production backups before large user or enrolment updates.
 
+---
+
+| Previous | Documentation Home | Next |
+|---|---|---|
+| [Chapter 04: Full School Import Runbook](04-full-school-import-runbook.md) | [CLI Pack README](../README.md) | [Chapter 06: Course Template and Chapter Gates](06-course-template-and-chapter-gates.md) |

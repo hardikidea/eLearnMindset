@@ -1,5 +1,9 @@
 # Chapter 01: Overview and Architecture
 
+| Previous | Documentation Home | Next |
+|---|---|---|
+| - | [CLI Pack README](../README.md) | [Chapter 02: Setup and Prerequisites](02-setup-and-prerequisites.md) |
+
 ## Purpose
 
 The CLI pack creates a Moodle baseline for an Indian school. It models common CBSE, ICSE, state-board, and mixed-board operations with reusable CSV files and Moodle CLI scripts.
@@ -73,3 +77,8 @@ flowchart TD
 | `cli_promote_academic_year.php` | Promotes students into next-year cohorts. |
 | `cli_csv_helpers.php` | Resolves ordered CSV names such as `20_users_students.csv` from logical script names. |
 
+---
+
+| Previous | Documentation Home | Next |
+|---|---|---|
+| - | [CLI Pack README](../README.md) | [Chapter 02: Setup and Prerequisites](02-setup-and-prerequisites.md) |

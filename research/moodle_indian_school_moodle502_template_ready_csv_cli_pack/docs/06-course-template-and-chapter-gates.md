@@ -1,5 +1,10 @@
 # Chapter 06: Course Template and Chapter Gates
 
+| Previous | Documentation Home | Next |
+|---|---|---|
+| [Chapter 05: Selective Import Runbooks](05-selective-import-runbooks.md) | [CLI Pack README](../README.md) | [Chapter 07: Academic Year Rollover](07-academic-year-rollover.md) |
+
+
 The universal course template creates a consistent course structure for all grades and subjects.
 
 ## Standard Pattern
@@ -95,3 +100,9 @@ Default behavior:
 | Revision and final assessment | Requires Chapter 10 completion gate. |
 
 Teachers should replace placeholder activities with real learning content after the template is applied. Do not place Aadhaar, address, medical, parent phone, or emergency-contact data inside course activities.
+
+---
+
+| Previous | Documentation Home | Next |
+|---|---|---|
+| [Chapter 05: Selective Import Runbooks](05-selective-import-runbooks.md) | [CLI Pack README](../README.md) | [Chapter 07: Academic Year Rollover](07-academic-year-rollover.md) |

@@ -1,5 +1,10 @@
 # Chapter 07: Academic Year Rollover
 
+| Previous | Documentation Home | Next |
+|---|---|---|
+| [Chapter 06: Course Template and Chapter Gates](06-course-template-and-chapter-gates.md) | [CLI Pack README](../README.md) | [Chapter 08: Master Excel Workbook](08-master-excel-workbook.md) |
+
+
 Use this chapter when moving students to the next academic year without creating duplicate user accounts.
 
 ## Principle
@@ -94,3 +99,9 @@ After promotion, verify:
 - Target cohort is enrolled into next-year courses.
 - Parent links still exist.
 - Old-year reports are still accessible to administrators.
+
+---
+
+| Previous | Documentation Home | Next |
+|---|---|---|
+| [Chapter 06: Course Template and Chapter Gates](06-course-template-and-chapter-gates.md) | [CLI Pack README](../README.md) | [Chapter 08: Master Excel Workbook](08-master-excel-workbook.md) |
