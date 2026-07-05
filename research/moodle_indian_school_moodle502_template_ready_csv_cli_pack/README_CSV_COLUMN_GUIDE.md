@@ -1,11 +1,13 @@
 # CSV Column Guide and Dependency Reference
 
+The chaptered documentation entry point is [README.md](README.md). Use this file as the detailed per-column reference for Chapter 03.
+
 This chapter explains every CSV file in this pack, how each column is used by Moodle or by the helper CLI scripts, and which files must exist before another file can be imported.
 
 Use this document when setting up a new school, trimming the pack for a smaller import, or troubleshooting missing courses, cohorts, users, sections, or reports.
 
 If the school team prefers maintaining all CSV files from one workbook, use
-`README_MASTER_EXCEL_WORKBOOK.md` and the generated workbook at
+[docs/08-master-excel-workbook.md](docs/08-master-excel-workbook.md) and the generated workbook at
 `outputs/master-import-workbook/eLearnMindset_school_import_master.xlsx`.
 
 ## Safe Setup Order
@@ -97,7 +99,7 @@ Academic-year rollover CSVs
 
 For the full yearly operating procedure, including the rule that existing
 students should not be re-registered, see
-`README_ACADEMIC_YEAR_CHANGE_WORKFLOW.md`.
+[docs/07-academic-year-rollover.md](docs/07-academic-year-rollover.md).
 
 ## Identifier Rules
 
@@ -774,7 +776,7 @@ Sequential chapter behavior:
 - The same rule continues through Chapter 10.
 - Revision & Final Assessment requires the Chapter 10 gate.
 
-For the operational runbook, see `README_CHAPTER_SEQUENTIAL_TEMPLATE.md`.
+For the operational runbook, see [docs/06-course-template-and-chapter-gates.md](docs/06-course-template-and-chapter-gates.md).
 
 ### `37_course_template_application.csv`
 
