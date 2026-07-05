@@ -1,0 +1,19 @@
+component,moodle_feature,compatible_moodle_5_0_2,compatible_moodle_5_2_branch_502,dependency,recommendation
+Trust hierarchy,Course category,yes,yes,core_course_category,Use one trust/root category
+Board hierarchy,Course category,yes,yes,core_course_category,Use idnumber for stable imports
+School hierarchy,Course category,yes,yes,core_course_category,Principal role assigned here
+Medium,Course category,yes,yes,core_course_category,Use Gujarati/English/Hindi/etc.
+Class/Std,Course category,yes,yes,core_course_category,Std/Class categories under medium
+Stream,Course category,yes,yes,core_course_category,Use General/Science/Commerce/Arts/Vocational
+Subject,Course,yes,yes,create_course,Course format topics
+Division,Group,yes,yes,groups_create_group,Use Separate groups in course settings
+Student batch,Cohort,yes,yes,cohort_add_cohort,Cohorts per year/class/stream/division
+Bulk enrolment,Cohort sync,yes,yes,enrol_cohort,Enable enrol_cohort before import
+User fields,Custom profile fields,yes,yes,profile_save_data,Avoid full Aadhaar
+Trustee Manager,Custom role,yes,yes,create_role,"Category-level role, not site admin"
+Principal,Custom role,yes,yes,create_role,School-category role
+Teacher,Editing teacher role,yes,yes,editingteacher,Course context
+Student,Student role,yes,yes,student,Course enrolment via cohort sync
+Parent,Custom user-context role,yes,yes,role_assign,Assign to child user context
+Promotion,Cohort membership update,yes,yes,cohort_add_member,Create next-year cohorts first
+DIKSHA links,URL/Page/File resources,yes,yes,mod_url/mod_page/mod_resource,"Link first, download only if license allows"

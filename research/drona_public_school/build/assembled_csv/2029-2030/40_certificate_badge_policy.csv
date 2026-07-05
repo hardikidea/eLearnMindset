@@ -1,0 +1,5 @@
+policy_code,implementation,requires_plugin,visibility_rule,notes
+PRIMARY_COURSE_COMPLETION_BADGE,Moodle core badge,0,Available after course completion,Default for Std 1-5 courses; enabled for every course.
+UPPER_PRIMARY_COURSE_COMPLETION_BADGE,Moodle core badge,0,Available after course completion,Default for Std 6-8 courses; enabled for every course.
+SECONDARY_COURSE_COMPLETION_CERT,Moodle core badge; optional PDF certificate plugin,0,Available after course completion,Default for Std 9-10 courses.
+HIGHER_SECONDARY_COURSE_COMPLETION_CERT,Moodle core badge; optional PDF certificate plugin,0,Available after course completion,Default for Std 11-12 courses.

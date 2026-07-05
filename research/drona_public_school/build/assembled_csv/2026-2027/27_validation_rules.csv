@@ -1,0 +1,5 @@
+file,field,rule,severity
+registration/users/students/**/division-*.csv,username,Unique stable student username; do not include grade in username.,error
+years/<year>/course_certificates.csv,course_code,Every course must have one certificate policy row.,error
+years/<year>/course_term_exams.csv,course_code,Every course must have TERM1 and TERM2 rows.,error
+years/<year>/course_final_exams.csv,course_code,Every course must have one final exam row.,error

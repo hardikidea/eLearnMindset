@@ -1,0 +1,7 @@
+status_code,meaning,default_moodle_action,notes
+PROMOTE,Student moves to next standard/stream/division.,Add to next-year cohort; update current academic profile fields.,Use for normal yearly progression.
+RETAIN,Student repeats same standard in next academic year.,Add to next-year same-grade cohort; update profile status Retained.,Use to repeat standard without deleting old records.
+CHANGE_DIVISION,Student changes division within same grade/stream/year.,Move cohort/group from old division to new division.,May be done mid-year; group membership in existing courses must be updated.
+CHANGE_STREAM,"Student changes stream, usually Std 11/12.",Move to target stream cohort and courses.,Review subject/elective enrolments.
+TRANSFER_OUT,Student leaves the school.,Update status Transferred; optionally suspend account after report export.,Do not delete user by default.
+ALUMNI,Student completed final standard.,Update status Alumni; no next-year subject cohort.,Optional alumni cohort can be created.

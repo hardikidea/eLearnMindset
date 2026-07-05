@@ -1,0 +1,2 @@
+trust_code,trust_name,school_code,school_name,udise_code,affiliation_no,school_type,address_line1,address_line2,city,district,state,pincode,phone,email,website,principal_username,academic_year
+DRONA_TRUST,Drona Education Trust,DPS,Drona Public School,DPS-DEMO-0001,GSEB-DEMO-2026,Private unaided co-educational school,Drona Public School Campus,Near Knowledge Park,Ahmedabad,Ahmedabad,Gujarat,380015,+91-79-40000000,office@dronapublicschool.example,https://dronapublicschool.example,principal.sharma,2026-2027

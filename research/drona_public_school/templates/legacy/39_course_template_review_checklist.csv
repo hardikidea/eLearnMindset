@@ -1,0 +1,9 @@
+step,phase,check_item,owner,required
+1,Design,"Master template has 13 sections, section 0 to section 12",Moodle admin,1
+2,Design,"Each unit has intro, material, guided example, practice, discussion, knowledge check, completion task",Academic coordinator,1
+3,Compliance,"No full Aadhaar, address, medical, or parent phone data appears in course content",Data protection lead,1
+4,Import,Create the hidden master template course before creating subject courses from templatecourse,Moodle admin,1
+5,Import,Run CSV validation and dry-run scripts before production import,Moodle admin,1
+6,Review,Teacher replaces placeholder content with grade/subject resources,Teacher,1
+7,Review,Principal/academic head approves course before making visible,Principal,1
+8,Publish,"Course completion, gradebook, groups, cohorts, and role assignments verified",Moodle admin,1

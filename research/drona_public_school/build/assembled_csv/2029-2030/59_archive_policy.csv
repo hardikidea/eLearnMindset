@@ -1,0 +1,5 @@
+archive_item,recommended_action,when_to_do,risk_if_skipped
+Old-year courses,Hide courses or move to Archive category after reports/backups.,After promotion validation.,Students may see old courses mixed with new courses.
+Old-year cohorts,Keep old cohorts initially; hide from teachers if needed.,After old reports are exported.,Removing synced cohort too early may remove old course enrolments.
+Gradebook data,Export gradebook CSV/PDF and keep course backup.,Before promotion execution.,Difficult to reproduce official records later.
+Parent access,Keep parent link to student user; no change required unless child leaves.,During student status change.,Parents may lose continuity of record access.

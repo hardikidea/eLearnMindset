@@ -1,0 +1,201 @@
+parent_username,student_username,relationship,role_shortname,allow_grade_view,allow_activity_report_view,notes
+dps.par.00001,dps.stu.00001,Guardian,parent,1,1,Shared sibling parent for local testing.
+dps.par.00001,dps.stu.00002,Guardian,parent,1,1,Shared sibling parent for local testing.
+dps.par.00002,dps.stu.00003,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00003,dps.stu.00004,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00004,dps.stu.00005,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00005,dps.stu.00006,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00006,dps.stu.00007,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00007,dps.stu.00008,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00008,dps.stu.00009,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00009,dps.stu.00010,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00010,dps.stu.00011,Guardian,parent,1,1,Shared sibling parent for local testing.
+dps.par.00010,dps.stu.00012,Guardian,parent,1,1,Shared sibling parent for local testing.
+dps.par.00011,dps.stu.00013,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00012,dps.stu.00014,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00013,dps.stu.00015,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00014,dps.stu.00016,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00015,dps.stu.00017,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00016,dps.stu.00018,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00017,dps.stu.00019,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00018,dps.stu.00020,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00019,dps.stu.00021,Guardian,parent,1,1,Shared sibling parent for local testing.
+dps.par.00019,dps.stu.00022,Guardian,parent,1,1,Shared sibling parent for local testing.
+dps.par.00020,dps.stu.00023,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00021,dps.stu.00024,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00022,dps.stu.00025,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00023,dps.stu.00026,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00024,dps.stu.00027,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00025,dps.stu.00028,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00026,dps.stu.00029,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00027,dps.stu.00030,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00028,dps.stu.00031,Guardian,parent,1,1,Shared sibling parent for local testing.
+dps.par.00028,dps.stu.00032,Guardian,parent,1,1,Shared sibling parent for local testing.
+dps.par.00029,dps.stu.00033,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00030,dps.stu.00034,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00031,dps.stu.00035,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00032,dps.stu.00036,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00033,dps.stu.00037,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00034,dps.stu.00038,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00035,dps.stu.00039,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00036,dps.stu.00040,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00037,dps.stu.00041,Guardian,parent,1,1,Shared sibling parent for local testing.
+dps.par.00037,dps.stu.00042,Guardian,parent,1,1,Shared sibling parent for local testing.
+dps.par.00038,dps.stu.00043,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00039,dps.stu.00044,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00040,dps.stu.00045,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00041,dps.stu.00046,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00042,dps.stu.00047,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00043,dps.stu.00048,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00044,dps.stu.00049,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00045,dps.stu.00050,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00046,dps.stu.00051,Guardian,parent,1,1,Shared sibling parent for local testing.
+dps.par.00046,dps.stu.00052,Guardian,parent,1,1,Shared sibling parent for local testing.
+dps.par.00047,dps.stu.00053,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00048,dps.stu.00054,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00049,dps.stu.00055,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00050,dps.stu.00056,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00051,dps.stu.00057,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00052,dps.stu.00058,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00053,dps.stu.00059,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00054,dps.stu.00060,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00055,dps.stu.00061,Guardian,parent,1,1,Shared sibling parent for local testing.
+dps.par.00055,dps.stu.00062,Guardian,parent,1,1,Shared sibling parent for local testing.
+dps.par.00056,dps.stu.00063,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00057,dps.stu.00064,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00058,dps.stu.00065,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00059,dps.stu.00066,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00060,dps.stu.00067,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00061,dps.stu.00068,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00062,dps.stu.00069,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00063,dps.stu.00070,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00064,dps.stu.00071,Guardian,parent,1,1,Shared sibling parent for local testing.
+dps.par.00064,dps.stu.00072,Guardian,parent,1,1,Shared sibling parent for local testing.
+dps.par.00065,dps.stu.00073,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00066,dps.stu.00074,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00067,dps.stu.00075,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00068,dps.stu.00076,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00069,dps.stu.00077,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00070,dps.stu.00078,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00071,dps.stu.00079,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00072,dps.stu.00080,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00073,dps.stu.00081,Guardian,parent,1,1,Shared sibling parent for local testing.
+dps.par.00073,dps.stu.00082,Guardian,parent,1,1,Shared sibling parent for local testing.
+dps.par.00074,dps.stu.00083,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00075,dps.stu.00084,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00076,dps.stu.00085,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00077,dps.stu.00086,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00078,dps.stu.00087,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00079,dps.stu.00088,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00080,dps.stu.00089,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00081,dps.stu.00090,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00082,dps.stu.00091,Guardian,parent,1,1,Shared sibling parent for local testing.
+dps.par.00082,dps.stu.00092,Guardian,parent,1,1,Shared sibling parent for local testing.
+dps.par.00083,dps.stu.00093,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00084,dps.stu.00094,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00085,dps.stu.00095,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00086,dps.stu.00096,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00087,dps.stu.00097,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00088,dps.stu.00098,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00089,dps.stu.00099,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00090,dps.stu.00100,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00091,dps.stu.00101,Guardian,parent,1,1,Shared sibling parent for local testing.
+dps.par.00091,dps.stu.00102,Guardian,parent,1,1,Shared sibling parent for local testing.
+dps.par.00092,dps.stu.00103,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00093,dps.stu.00104,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00094,dps.stu.00105,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00095,dps.stu.00106,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00096,dps.stu.00107,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00097,dps.stu.00108,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00098,dps.stu.00109,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00099,dps.stu.00110,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00100,dps.stu.00111,Guardian,parent,1,1,Shared sibling parent for local testing.
+dps.par.00100,dps.stu.00112,Guardian,parent,1,1,Shared sibling parent for local testing.
+dps.par.00101,dps.stu.00113,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00102,dps.stu.00114,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00103,dps.stu.00115,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00104,dps.stu.00116,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00105,dps.stu.00117,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00106,dps.stu.00118,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00107,dps.stu.00119,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00108,dps.stu.00120,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00109,dps.stu.00121,Guardian,parent,1,1,Shared sibling parent for local testing.
+dps.par.00109,dps.stu.00122,Guardian,parent,1,1,Shared sibling parent for local testing.
+dps.par.00110,dps.stu.00123,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00111,dps.stu.00124,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00112,dps.stu.00125,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00113,dps.stu.00126,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00114,dps.stu.00127,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00115,dps.stu.00128,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00116,dps.stu.00129,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00117,dps.stu.00130,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00118,dps.stu.00131,Guardian,parent,1,1,Shared sibling parent for local testing.
+dps.par.00118,dps.stu.00132,Guardian,parent,1,1,Shared sibling parent for local testing.
+dps.par.00119,dps.stu.00133,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00120,dps.stu.00134,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00121,dps.stu.00135,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00122,dps.stu.00136,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00123,dps.stu.00137,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00124,dps.stu.00138,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00125,dps.stu.00139,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00126,dps.stu.00140,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00127,dps.stu.00141,Guardian,parent,1,1,Shared sibling parent for local testing.
+dps.par.00127,dps.stu.00142,Guardian,parent,1,1,Shared sibling parent for local testing.
+dps.par.00128,dps.stu.00143,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00129,dps.stu.00144,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00130,dps.stu.00145,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00131,dps.stu.00146,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00132,dps.stu.00147,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00133,dps.stu.00148,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00134,dps.stu.00149,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00135,dps.stu.00150,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00136,dps.stu.00151,Guardian,parent,1,1,Shared sibling parent for local testing.
+dps.par.00136,dps.stu.00152,Guardian,parent,1,1,Shared sibling parent for local testing.
+dps.par.00137,dps.stu.00153,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00138,dps.stu.00154,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00139,dps.stu.00155,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00140,dps.stu.00156,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00141,dps.stu.00157,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00142,dps.stu.00158,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00143,dps.stu.00159,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00144,dps.stu.00160,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00145,dps.stu.00161,Guardian,parent,1,1,Shared sibling parent for local testing.
+dps.par.00145,dps.stu.00162,Guardian,parent,1,1,Shared sibling parent for local testing.
+dps.par.00146,dps.stu.00163,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00147,dps.stu.00164,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00148,dps.stu.00165,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00149,dps.stu.00166,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00150,dps.stu.00167,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00151,dps.stu.00168,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00152,dps.stu.00169,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00153,dps.stu.00170,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00154,dps.stu.00171,Guardian,parent,1,1,Shared sibling parent for local testing.
+dps.par.00154,dps.stu.00172,Guardian,parent,1,1,Shared sibling parent for local testing.
+dps.par.00155,dps.stu.00173,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00156,dps.stu.00174,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00157,dps.stu.00175,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00158,dps.stu.00176,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00159,dps.stu.00177,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00160,dps.stu.00178,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00161,dps.stu.00179,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00162,dps.stu.00180,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00163,dps.stu.00181,Guardian,parent,1,1,Shared sibling parent for local testing.
+dps.par.00163,dps.stu.00182,Guardian,parent,1,1,Shared sibling parent for local testing.
+dps.par.00164,dps.stu.00183,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00165,dps.stu.00184,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00166,dps.stu.00185,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00167,dps.stu.00186,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00168,dps.stu.00187,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00169,dps.stu.00188,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00170,dps.stu.00189,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00171,dps.stu.00190,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00172,dps.stu.00191,Guardian,parent,1,1,Shared sibling parent for local testing.
+dps.par.00172,dps.stu.00192,Guardian,parent,1,1,Shared sibling parent for local testing.
+dps.par.00173,dps.stu.00193,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00174,dps.stu.00194,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00175,dps.stu.00195,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00176,dps.stu.00196,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00177,dps.stu.00197,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00178,dps.stu.00198,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00179,dps.stu.00199,Parent,parent,1,1,Single-student parent for local testing.
+dps.par.00180,dps.stu.00200,Parent,parent,1,1,Single-student parent for local testing.

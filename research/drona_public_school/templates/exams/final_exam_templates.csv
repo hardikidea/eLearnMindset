@@ -1,0 +1,13 @@
+final_exam_template_code,grade_code,name,total_marks,weight_percent,required_for_completion
+FINAL_EXAM_STD01,STD01,Standard 1 Final Exam,100,30,1
+FINAL_EXAM_STD02,STD02,Standard 2 Final Exam,100,30,1
+FINAL_EXAM_STD03,STD03,Standard 3 Final Exam,100,30,1
+FINAL_EXAM_STD04,STD04,Standard 4 Final Exam,100,30,1
+FINAL_EXAM_STD05,STD05,Standard 5 Final Exam,100,30,1
+FINAL_EXAM_STD06,STD06,Standard 6 Final Exam,100,30,1
+FINAL_EXAM_STD07,STD07,Standard 7 Final Exam,100,30,1
+FINAL_EXAM_STD08,STD08,Standard 8 Final Exam,100,30,1
+FINAL_EXAM_STD09,STD09,Standard 9 Final Exam,100,30,1
+FINAL_EXAM_STD10,STD10,Standard 10 Final Exam,100,30,1
+FINAL_EXAM_STD11,STD11,Standard 11 Final Exam,100,30,1
+FINAL_EXAM_STD12,STD12,Standard 12 Final Exam,100,30,1

@@ -1,0 +1,5 @@
+policy_code,credential_type,enabled_by_default,requires_plugin,issue_condition,min_completion_percent,min_grade_percent,notes
+PRIMARY_COURSE_COMPLETION_BADGE,badge,1,0,course_completion,100,40,Default for Std 1-5 courses; enabled for every course.
+UPPER_PRIMARY_COURSE_COMPLETION_BADGE,badge,1,0,course_completion,100,40,Default for Std 6-8 courses; enabled for every course.
+SECONDARY_COURSE_COMPLETION_CERT,badge,1,0,course_completion,100,40,Default for Std 9-10 courses.
+HIGHER_SECONDARY_COURSE_COMPLETION_CERT,badge,1,0,course_completion,100,40,Default for Std 11-12 courses.

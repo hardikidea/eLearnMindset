@@ -1,0 +1,17 @@
+school:
+  code: DPS
+  name: Drona Public School
+  trust_code: DRONA_TRUST
+  board_code: GSEB
+  board_name: Gujarat Board Education
+  current_academic_year: 2026-2027
+  generated_years:
+    - 2026-2027
+    - 2027-2028
+    - 2028-2029
+    - 2029-2030
+  mediums: [GUJ, ENG, HIN]
+  divisions: [A, B, C, D, E, F]
+local_test_volume:
+  grade_01_to_10_students_per_medium_division: 20
+  grade_11_to_12_students_per_medium_stream_division: 15

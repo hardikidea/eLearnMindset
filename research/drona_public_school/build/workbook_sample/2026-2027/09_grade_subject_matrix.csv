@@ -1,0 +1,201 @@
+board_code,medium_code,grade_code,stream_code,subject_code,subject_name,subject_category,is_compulsory,is_elective,display_order,source_note
+GSEB,GUJ,STD01,GEN,GUJ,Gujarati,Language,1,0,1,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD01,GEN,HIN,Hindi,Language,1,0,2,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD01,GEN,ENG,English,Language,1,0,3,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD01,GEN,MATH,Mathematics,Core,1,0,4,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD01,GEN,EVS,Environmental Studies,Core,1,0,5,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD01,GEN,ART,Art Education,Co-curricular,1,0,6,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD01,GEN,PE,Physical Education,Co-curricular,1,0,7,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD02,GEN,GUJ,Gujarati,Language,1,0,1,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD02,GEN,HIN,Hindi,Language,1,0,2,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD02,GEN,ENG,English,Language,1,0,3,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD02,GEN,MATH,Mathematics,Core,1,0,4,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD02,GEN,EVS,Environmental Studies,Core,1,0,5,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD02,GEN,ART,Art Education,Co-curricular,1,0,6,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD02,GEN,PE,Physical Education,Co-curricular,1,0,7,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD03,GEN,GUJ,Gujarati,Language,1,0,1,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD03,GEN,HIN,Hindi,Language,1,0,2,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD03,GEN,ENG,English,Language,1,0,3,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD03,GEN,MATH,Mathematics,Core,1,0,4,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD03,GEN,EVS,Environmental Studies,Core,1,0,5,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD03,GEN,ART,Art Education,Co-curricular,1,0,6,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD03,GEN,PE,Physical Education,Co-curricular,1,0,7,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD04,GEN,GUJ,Gujarati,Language,1,0,1,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD04,GEN,HIN,Hindi,Language,1,0,2,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD04,GEN,ENG,English,Language,1,0,3,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD04,GEN,MATH,Mathematics,Core,1,0,4,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD04,GEN,EVS,Environmental Studies,Core,1,0,5,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD04,GEN,ART,Art Education,Co-curricular,1,0,6,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD04,GEN,PE,Physical Education,Co-curricular,1,0,7,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD05,GEN,GUJ,Gujarati,Language,1,0,1,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD05,GEN,HIN,Hindi,Language,1,0,2,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD05,GEN,ENG,English,Language,1,0,3,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD05,GEN,MATH,Mathematics,Core,1,0,4,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD05,GEN,EVS,Environmental Studies,Core,1,0,5,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD05,GEN,ART,Art Education,Co-curricular,1,0,6,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD05,GEN,PE,Physical Education,Co-curricular,1,0,7,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD06,GEN,GUJ,Gujarati,Language,1,0,1,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD06,GEN,HIN,Hindi,Language,1,0,2,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD06,GEN,ENG,English,Language,1,0,3,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD06,GEN,MATH,Mathematics,Core,1,0,4,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD06,GEN,SCI,Science,Core,1,0,5,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD06,GEN,SS,Social Science,Core,1,0,6,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD06,GEN,CS,Computer Studies,Skill,1,0,7,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD06,GEN,ART,Art Education,Co-curricular,1,0,8,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD06,GEN,PE,Physical Education,Co-curricular,1,0,9,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD07,GEN,GUJ,Gujarati,Language,1,0,1,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD07,GEN,HIN,Hindi,Language,1,0,2,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD07,GEN,ENG,English,Language,1,0,3,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD07,GEN,MATH,Mathematics,Core,1,0,4,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD07,GEN,SCI,Science,Core,1,0,5,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD07,GEN,SS,Social Science,Core,1,0,6,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD07,GEN,CS,Computer Studies,Skill,1,0,7,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD07,GEN,ART,Art Education,Co-curricular,1,0,8,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD07,GEN,PE,Physical Education,Co-curricular,1,0,9,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD08,GEN,GUJ,Gujarati,Language,1,0,1,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD08,GEN,HIN,Hindi,Language,1,0,2,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD08,GEN,ENG,English,Language,1,0,3,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD08,GEN,MATH,Mathematics,Core,1,0,4,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD08,GEN,SCI,Science,Core,1,0,5,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD08,GEN,SS,Social Science,Core,1,0,6,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD08,GEN,CS,Computer Studies,Skill,1,0,7,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD08,GEN,ART,Art Education,Co-curricular,1,0,8,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD08,GEN,PE,Physical Education,Co-curricular,1,0,9,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD09,GEN,GUJ,Gujarati,Language,1,0,1,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD09,GEN,HIN,Hindi,Language,1,0,2,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD09,GEN,ENG,English,Language,1,0,3,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD09,GEN,MATH,Mathematics,Core,1,0,4,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD09,GEN,SCI,Science,Core,1,0,5,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD09,GEN,SS,Social Science,Core,1,0,6,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD09,GEN,CS,Computer Studies,Skill,1,0,7,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD09,GEN,PE,Physical Education,Co-curricular,1,0,8,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD10,GEN,GUJ,Gujarati,Language,1,0,1,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD10,GEN,HIN,Hindi,Language,1,0,2,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD10,GEN,ENG,English,Language,1,0,3,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD10,GEN,MATH,Mathematics,Core,1,0,4,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD10,GEN,SCI,Science,Core,1,0,5,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD10,GEN,SS,Social Science,Core,1,0,6,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD10,GEN,CS,Computer Studies,Skill,1,0,7,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD10,GEN,PE,Physical Education,Co-curricular,1,0,8,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD11,SCI,ENG,English,Language,1,0,1,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD11,SCI,PHY,Physics,Science,1,0,2,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD11,SCI,CHEM,Chemistry,Science,1,0,3,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD11,SCI,BIO,Biology,Science,1,0,4,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD11,SCI,MATH,Mathematics,Core,1,0,5,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD11,SCI,CS,Computer Studies,Skill,1,0,6,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD11,SCI,PE,Physical Education,Co-curricular,1,0,7,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD11,COM,ENG,English,Language,1,0,1,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD11,COM,ACC,Accountancy,Commerce,1,0,2,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD11,COM,BA,Business Studies,Commerce,1,0,3,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD11,COM,ECO,Economics,Commerce,1,0,4,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD11,COM,STAT,Statistics,Commerce,1,0,5,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD11,COM,CS,Computer Studies,Skill,1,0,6,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD11,COM,PE,Physical Education,Co-curricular,1,0,7,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD11,ARTS,ENG,English,Language,1,0,1,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD11,ARTS,HIST,History,Arts,1,0,2,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD11,ARTS,GEO,Geography,Arts,1,0,3,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD11,ARTS,POLSCI,Political Science,Arts,1,0,4,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD11,ARTS,PSY,Psychology,Arts,1,0,5,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD11,ARTS,SOC,Sociology,Arts,1,0,6,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD11,ARTS,PE,Physical Education,Co-curricular,1,0,7,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD12,SCI,ENG,English,Language,1,0,1,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD12,SCI,PHY,Physics,Science,1,0,2,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD12,SCI,CHEM,Chemistry,Science,1,0,3,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD12,SCI,BIO,Biology,Science,1,0,4,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD12,SCI,MATH,Mathematics,Core,1,0,5,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD12,SCI,CS,Computer Studies,Skill,1,0,6,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD12,SCI,PE,Physical Education,Co-curricular,1,0,7,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD12,COM,ENG,English,Language,1,0,1,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD12,COM,ACC,Accountancy,Commerce,1,0,2,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD12,COM,BA,Business Studies,Commerce,1,0,3,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD12,COM,ECO,Economics,Commerce,1,0,4,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD12,COM,STAT,Statistics,Commerce,1,0,5,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD12,COM,CS,Computer Studies,Skill,1,0,6,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD12,COM,PE,Physical Education,Co-curricular,1,0,7,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD12,ARTS,ENG,English,Language,1,0,1,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD12,ARTS,HIST,History,Arts,1,0,2,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD12,ARTS,GEO,Geography,Arts,1,0,3,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD12,ARTS,POLSCI,Political Science,Arts,1,0,4,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD12,ARTS,PSY,Psychology,Arts,1,0,5,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD12,ARTS,SOC,Sociology,Arts,1,0,6,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,GUJ,STD12,ARTS,PE,Physical Education,Co-curricular,1,0,7,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD01,GEN,GUJ,Gujarati,Language,1,0,1,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD01,GEN,HIN,Hindi,Language,1,0,2,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD01,GEN,ENG,English,Language,1,0,3,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD01,GEN,MATH,Mathematics,Core,1,0,4,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD01,GEN,EVS,Environmental Studies,Core,1,0,5,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD01,GEN,ART,Art Education,Co-curricular,1,0,6,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD01,GEN,PE,Physical Education,Co-curricular,1,0,7,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD02,GEN,GUJ,Gujarati,Language,1,0,1,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD02,GEN,HIN,Hindi,Language,1,0,2,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD02,GEN,ENG,English,Language,1,0,3,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD02,GEN,MATH,Mathematics,Core,1,0,4,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD02,GEN,EVS,Environmental Studies,Core,1,0,5,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD02,GEN,ART,Art Education,Co-curricular,1,0,6,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD02,GEN,PE,Physical Education,Co-curricular,1,0,7,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD03,GEN,GUJ,Gujarati,Language,1,0,1,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD03,GEN,HIN,Hindi,Language,1,0,2,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD03,GEN,ENG,English,Language,1,0,3,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD03,GEN,MATH,Mathematics,Core,1,0,4,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD03,GEN,EVS,Environmental Studies,Core,1,0,5,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD03,GEN,ART,Art Education,Co-curricular,1,0,6,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD03,GEN,PE,Physical Education,Co-curricular,1,0,7,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD04,GEN,GUJ,Gujarati,Language,1,0,1,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD04,GEN,HIN,Hindi,Language,1,0,2,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD04,GEN,ENG,English,Language,1,0,3,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD04,GEN,MATH,Mathematics,Core,1,0,4,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD04,GEN,EVS,Environmental Studies,Core,1,0,5,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD04,GEN,ART,Art Education,Co-curricular,1,0,6,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD04,GEN,PE,Physical Education,Co-curricular,1,0,7,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD05,GEN,GUJ,Gujarati,Language,1,0,1,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD05,GEN,HIN,Hindi,Language,1,0,2,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD05,GEN,ENG,English,Language,1,0,3,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD05,GEN,MATH,Mathematics,Core,1,0,4,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD05,GEN,EVS,Environmental Studies,Core,1,0,5,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD05,GEN,ART,Art Education,Co-curricular,1,0,6,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD05,GEN,PE,Physical Education,Co-curricular,1,0,7,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD06,GEN,GUJ,Gujarati,Language,1,0,1,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD06,GEN,HIN,Hindi,Language,1,0,2,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD06,GEN,ENG,English,Language,1,0,3,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD06,GEN,MATH,Mathematics,Core,1,0,4,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD06,GEN,SCI,Science,Core,1,0,5,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD06,GEN,SS,Social Science,Core,1,0,6,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD06,GEN,CS,Computer Studies,Skill,1,0,7,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD06,GEN,ART,Art Education,Co-curricular,1,0,8,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD06,GEN,PE,Physical Education,Co-curricular,1,0,9,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD07,GEN,GUJ,Gujarati,Language,1,0,1,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD07,GEN,HIN,Hindi,Language,1,0,2,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD07,GEN,ENG,English,Language,1,0,3,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD07,GEN,MATH,Mathematics,Core,1,0,4,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD07,GEN,SCI,Science,Core,1,0,5,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD07,GEN,SS,Social Science,Core,1,0,6,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD07,GEN,CS,Computer Studies,Skill,1,0,7,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD07,GEN,ART,Art Education,Co-curricular,1,0,8,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD07,GEN,PE,Physical Education,Co-curricular,1,0,9,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD08,GEN,GUJ,Gujarati,Language,1,0,1,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD08,GEN,HIN,Hindi,Language,1,0,2,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD08,GEN,ENG,English,Language,1,0,3,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD08,GEN,MATH,Mathematics,Core,1,0,4,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD08,GEN,SCI,Science,Core,1,0,5,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD08,GEN,SS,Social Science,Core,1,0,6,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD08,GEN,CS,Computer Studies,Skill,1,0,7,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD08,GEN,ART,Art Education,Co-curricular,1,0,8,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD08,GEN,PE,Physical Education,Co-curricular,1,0,9,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD09,GEN,GUJ,Gujarati,Language,1,0,1,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD09,GEN,HIN,Hindi,Language,1,0,2,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD09,GEN,ENG,English,Language,1,0,3,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD09,GEN,MATH,Mathematics,Core,1,0,4,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD09,GEN,SCI,Science,Core,1,0,5,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD09,GEN,SS,Social Science,Core,1,0,6,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD09,GEN,CS,Computer Studies,Skill,1,0,7,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD09,GEN,PE,Physical Education,Co-curricular,1,0,8,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD10,GEN,GUJ,Gujarati,Language,1,0,1,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD10,GEN,HIN,Hindi,Language,1,0,2,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD10,GEN,ENG,English,Language,1,0,3,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD10,GEN,MATH,Mathematics,Core,1,0,4,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD10,GEN,SCI,Science,Core,1,0,5,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD10,GEN,SS,Social Science,Core,1,0,6,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD10,GEN,CS,Computer Studies,Skill,1,0,7,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD10,GEN,PE,Physical Education,Co-curricular,1,0,8,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD11,SCI,ENG,English,Language,1,0,1,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.
+GSEB,ENG,STD11,SCI,PHY,Physics,Science,1,0,2,Generated Gujarat board school local testing subject matrix. Verify exact school subject combinations before production.

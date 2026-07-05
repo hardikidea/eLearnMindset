@@ -1,0 +1,8 @@
+template_code,grade_band,name,default_sections,notes
+TPL_STD01_02_ACTIVITY,STD01-STD02,Grade 1-2 Activity Course Template,"Course Home,Syllabus,Chapters,Term Exams,Final Exam,Certification",Simple activity and teacher-guided completion.
+TPL_STD03_05_PRIMARY,STD03-STD05,Grade 3-5 Primary Course Template,"Course Home,Syllabus,10 Chapters,Term Exams,Final Exam,Certification",Activity-based learning with chapter gates.
+TPL_STD06_08_UPPER_PRIMARY,STD06-STD08,Grade 6-8 Upper Primary Course Template,"Course Home,Syllabus,10 Chapters,Term Exams,Final Exam,Certification",Structured quizzes assignments and projects.
+TPL_STD09_10_BOARD_FOUNDATION,STD09-STD10,Grade 9-10 Board Foundation Template,"Course Home,Syllabus,10 Chapters,Term Exams,Final Exam,Certification",Board-preparation structure.
+TPL_STD11_12_SCIENCE,STD11-STD12 SCI,Higher Secondary Science Template,"Course Home,Syllabus,10 Chapters,Term Exams,Final Exam,Certification",Science theory practical and competitive practice.
+TPL_STD11_12_COMMERCE,STD11-STD12 COM,Higher Secondary Commerce Template,"Course Home,Syllabus,10 Chapters,Term Exams,Final Exam,Certification",Commerce practice case study and accounting work.
+TPL_STD11_12_ARTS,STD11-STD12 ARTS,Higher Secondary Arts Template,"Course Home,Syllabus,10 Chapters,Term Exams,Final Exam,Certification",Humanities writing projects and source analysis.

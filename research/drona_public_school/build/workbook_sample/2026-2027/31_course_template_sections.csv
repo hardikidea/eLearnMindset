@@ -1,0 +1,17 @@
+template_code,section_number,section_name,purpose,default_visibility,completion_relevant,teacher_notes,student_instructions
+MASTER_ALL_GRADES_ALL_SUBJECTS_STANDARD,0,Course Home & Orientation,"Welcome, announcements, navigation and teacher support.",1,0,Keep visible for all students.,Read before starting the course.
+MASTER_ALL_GRADES_ALL_SUBJECTS_STANDARD,1,Syllabus & Assessment Plan,"Board syllabus, textbook references, assessment plan and academic honesty.",1,0,Update with grade subject plan.,Review before chapter work.
+MASTER_ALL_GRADES_ALL_SUBJECTS_STANDARD,2,Chapter 1,"Chapter 1 overview, activity, quiz, assignment and completion gate.",1,1,Replace with official chapter 1 content.,Complete required activities to continue.
+MASTER_ALL_GRADES_ALL_SUBJECTS_STANDARD,3,Chapter 2,"Chapter 2 overview, activity, quiz, assignment and completion gate.",1,1,Replace with official chapter 2 content.,Complete required activities to continue.
+MASTER_ALL_GRADES_ALL_SUBJECTS_STANDARD,4,Chapter 3,"Chapter 3 overview, activity, quiz, assignment and completion gate.",1,1,Replace with official chapter 3 content.,Complete required activities to continue.
+MASTER_ALL_GRADES_ALL_SUBJECTS_STANDARD,5,Chapter 4,"Chapter 4 overview, activity, quiz, assignment and completion gate.",1,1,Replace with official chapter 4 content.,Complete required activities to continue.
+MASTER_ALL_GRADES_ALL_SUBJECTS_STANDARD,6,Chapter 5,"Chapter 5 overview, activity, quiz, assignment and completion gate.",1,1,Replace with official chapter 5 content.,Complete required activities to continue.
+MASTER_ALL_GRADES_ALL_SUBJECTS_STANDARD,7,Chapter 6,"Chapter 6 overview, activity, quiz, assignment and completion gate.",1,1,Replace with official chapter 6 content.,Complete required activities to continue.
+MASTER_ALL_GRADES_ALL_SUBJECTS_STANDARD,8,Chapter 7,"Chapter 7 overview, activity, quiz, assignment and completion gate.",1,1,Replace with official chapter 7 content.,Complete required activities to continue.
+MASTER_ALL_GRADES_ALL_SUBJECTS_STANDARD,9,Chapter 8,"Chapter 8 overview, activity, quiz, assignment and completion gate.",1,1,Replace with official chapter 8 content.,Complete required activities to continue.
+MASTER_ALL_GRADES_ALL_SUBJECTS_STANDARD,10,Chapter 9,"Chapter 9 overview, activity, quiz, assignment and completion gate.",1,1,Replace with official chapter 9 content.,Complete required activities to continue.
+MASTER_ALL_GRADES_ALL_SUBJECTS_STANDARD,11,Chapter 10,"Chapter 10 overview, activity, quiz, assignment and completion gate.",1,1,Replace with official chapter 10 content.,Complete required activities to continue.
+MASTER_ALL_GRADES_ALL_SUBJECTS_STANDARD,12,Term 1 Exam,Term 1 exam activities and submissions.,1,1,Use grade-wise term exam template.,Complete Term 1 exam activities.
+MASTER_ALL_GRADES_ALL_SUBJECTS_STANDARD,13,Term 2 Exam,Term 2 exam activities and submissions.,1,1,Use grade-wise term exam template.,Complete Term 2 exam activities.
+MASTER_ALL_GRADES_ALL_SUBJECTS_STANDARD,14,Final Examination,"Final exam quiz, written upload and project/portfolio.",1,1,Use grade-wise final exam template.,Complete final examination activities.
+MASTER_ALL_GRADES_ALL_SUBJECTS_STANDARD,15,Certificate & Completion,"Course completion status, badge/certificate details and closing reflection.",1,1,Certification is enabled by policy for every course.,Complete all required activities to earn the course credential.

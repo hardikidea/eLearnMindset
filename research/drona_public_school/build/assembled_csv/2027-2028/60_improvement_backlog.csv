@@ -1,0 +1,11 @@
+priority,area,improvement,why_it_helps,implementation_hint
+High,Validation,Run CSV validator before import,Prevents broken hierarchy and missing references,cli_validate_school_baseline.php
+High,Preflight,Run Moodle 502 preflight,"Confirms Moodle branch, PHP, and core dependencies",cli_moodle502_preflight.php
+High,Security,Avoid Site Administrator for school staff,Reduces risk of accidental site-wide changes,Use Trustee/Principal category roles
+High,Privacy,Do not store full Aadhaar,Protects sensitive identity data,Masked Aadhaar + vault reference only
+High,Backup,Back up DB and moodledata before import,Allows rollback,Database dump + moodledata snapshot
+Medium,Performance,Import in phases,Large packs are easier to debug,categories -> courses -> cohorts -> users -> enrolments
+Medium,Reporting,Keep academic year in codes and fields,Clean year-end reporting,academic_year in courses/cohorts/profile fields
+Medium,Content,Use DIKSHA links first,Avoid storage and copyright issues,URL resources with attribution
+Medium,Roles,Review custom role capabilities manually after import,Manager archetype may be too broad,Use 18_role_guidelines.csv as baseline only
+Low,Integrations,Add attendance after baseline,Avoid mixing LMS setup with ERP scope,Choose plugin or SIS sync later

@@ -1,0 +1,7 @@
+import:
+  dry_run_required: true
+  validate_before_import: true
+  backup_before_live_import: true
+  generated_build_dir: build/assembled_csv
+  import_users_once: true
+  future_year_import_should_use_skip_users: true

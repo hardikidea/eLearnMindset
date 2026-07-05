@@ -1,0 +1,37 @@
+final_exam_template_code,activity_order,activity_type,name,total_marks,completion_rule,grade_to_pass,required
+FINAL_EXAM_STD01,1,quiz,Final Objective Test,40,passgrade,16,1
+FINAL_EXAM_STD01,2,assign,Final Written Paper Upload,40,submit,16,1
+FINAL_EXAM_STD01,3,assign,Project / Portfolio,20,submit,8,1
+FINAL_EXAM_STD02,1,quiz,Final Objective Test,40,passgrade,16,1
+FINAL_EXAM_STD02,2,assign,Final Written Paper Upload,40,submit,16,1
+FINAL_EXAM_STD02,3,assign,Project / Portfolio,20,submit,8,1
+FINAL_EXAM_STD03,1,quiz,Final Objective Test,40,passgrade,16,1
+FINAL_EXAM_STD03,2,assign,Final Written Paper Upload,40,submit,16,1
+FINAL_EXAM_STD03,3,assign,Project / Portfolio,20,submit,8,1
+FINAL_EXAM_STD04,1,quiz,Final Objective Test,40,passgrade,16,1
+FINAL_EXAM_STD04,2,assign,Final Written Paper Upload,40,submit,16,1
+FINAL_EXAM_STD04,3,assign,Project / Portfolio,20,submit,8,1
+FINAL_EXAM_STD05,1,quiz,Final Objective Test,40,passgrade,16,1
+FINAL_EXAM_STD05,2,assign,Final Written Paper Upload,40,submit,16,1
+FINAL_EXAM_STD05,3,assign,Project / Portfolio,20,submit,8,1
+FINAL_EXAM_STD06,1,quiz,Final Objective Test,40,passgrade,16,1
+FINAL_EXAM_STD06,2,assign,Final Written Paper Upload,40,submit,16,1
+FINAL_EXAM_STD06,3,assign,Project / Portfolio,20,submit,8,1
+FINAL_EXAM_STD07,1,quiz,Final Objective Test,40,passgrade,16,1
+FINAL_EXAM_STD07,2,assign,Final Written Paper Upload,40,submit,16,1
+FINAL_EXAM_STD07,3,assign,Project / Portfolio,20,submit,8,1
+FINAL_EXAM_STD08,1,quiz,Final Objective Test,40,passgrade,16,1
+FINAL_EXAM_STD08,2,assign,Final Written Paper Upload,40,submit,16,1
+FINAL_EXAM_STD08,3,assign,Project / Portfolio,20,submit,8,1
+FINAL_EXAM_STD09,1,quiz,Final Objective Test,40,passgrade,16,1
+FINAL_EXAM_STD09,2,assign,Final Written Paper Upload,40,submit,16,1
+FINAL_EXAM_STD09,3,assign,Project / Portfolio,20,submit,8,1
+FINAL_EXAM_STD10,1,quiz,Final Objective Test,40,passgrade,16,1
+FINAL_EXAM_STD10,2,assign,Final Written Paper Upload,40,submit,16,1
+FINAL_EXAM_STD10,3,assign,Project / Portfolio,20,submit,8,1
+FINAL_EXAM_STD11,1,quiz,Final Objective Test,40,passgrade,16,1
+FINAL_EXAM_STD11,2,assign,Final Written Paper Upload,40,submit,16,1
+FINAL_EXAM_STD11,3,assign,Project / Portfolio,20,submit,8,1
+FINAL_EXAM_STD12,1,quiz,Final Objective Test,40,passgrade,16,1
+FINAL_EXAM_STD12,2,assign,Final Written Paper Upload,40,submit,16,1
+FINAL_EXAM_STD12,3,assign,Project / Portfolio,20,submit,8,1

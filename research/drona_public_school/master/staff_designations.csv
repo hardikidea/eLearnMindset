@@ -1,0 +1,5 @@
+designation_code,designation_name,department_code,notes
+TRUSTEE_MANAGER,Trustee Manager,ADMIN,Trust-level manager
+PRINCIPAL,Principal,ADMIN,School-level principal
+IT_COORDINATOR,IT Coordinator,IT,Moodle operations
+TEACHER,Teacher,ACADEMIC,Subject teacher

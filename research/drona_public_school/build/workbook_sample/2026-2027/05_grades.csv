@@ -1,0 +1,13 @@
+grade_code,grade_name,display_order,stage,moodle_label
+STD01,Standard 1,1,Primary,Grade 1
+STD02,Standard 2,2,Primary,Grade 2
+STD03,Standard 3,3,Primary,Grade 3
+STD04,Standard 4,4,Primary,Grade 4
+STD05,Standard 5,5,Primary,Grade 5
+STD06,Standard 6,6,Upper Primary,Grade 6
+STD07,Standard 7,7,Upper Primary,Grade 7
+STD08,Standard 8,8,Upper Primary,Grade 8
+STD09,Standard 9,9,Secondary,Grade 9
+STD10,Standard 10,10,Secondary,Grade 10
+STD11,Standard 11,11,Higher Secondary,Grade 11
+STD12,Standard 12,12,Higher Secondary,Grade 12

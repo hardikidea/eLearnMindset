@@ -1,0 +1,7 @@
+template_code,category_name,weight_percent,default_pass_percent,notes
+MASTER_ALL_GRADES_ALL_SUBJECTS_STANDARD,Classwork and Participation,15,40,"Chapter overview, participation and classwork"
+MASTER_ALL_GRADES_ALL_SUBJECTS_STANDARD,Practice Quizzes,15,40,Chapter practice quizzes
+MASTER_ALL_GRADES_ALL_SUBJECTS_STANDARD,Assignments and Projects,20,40,"Worksheets, projects and portfolios"
+MASTER_ALL_GRADES_ALL_SUBJECTS_STANDARD,Chapter Gates,10,40,Required chapter gates
+MASTER_ALL_GRADES_ALL_SUBJECTS_STANDARD,Term Exams,20,40,Term 1 and Term 2 exams
+MASTER_ALL_GRADES_ALL_SUBJECTS_STANDARD,Final Assessment,20,40,Final exam

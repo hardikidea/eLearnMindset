@@ -1,0 +1,4 @@
+source_name,url,used_for
+Gujarat Education Department,https://gujarat-education.gov.in/,Gujarat state education context and board reference.
+Gujarat State School Textbook Board,https://gsstb.gujarat.gov.in/,Textbook and subject verification reference; local testing data must be reviewed before production.
+Moodle Documentation,https://docs.moodle.org/,"CSV upload, cohort, role and course setup patterns."

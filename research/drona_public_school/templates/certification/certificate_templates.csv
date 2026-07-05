@@ -1,0 +1,3 @@
+certificate_template_code,name,credential_type,requires_plugin,notes
+DEFAULT_BADGE_TEMPLATE,Default Course Completion Badge,badge,0,Uses Moodle core badges.
+OPTIONAL_PDF_CERTIFICATE,Optional PDF Certificate,certificate,1,Enable only after installing a custom certificate plugin.

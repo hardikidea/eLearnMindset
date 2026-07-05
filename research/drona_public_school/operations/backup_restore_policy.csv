@@ -1,0 +1,3 @@
+event,required,command_or_reference,notes
+Before live import,yes,Run project backup script for DB and moodledata,Do not import high-volume school data without backup.
+Before academic rollover,yes,"Backup DB and moodledata, then dry-run promotion",Keep old-year reports untouched.

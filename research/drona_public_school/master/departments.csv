@@ -1,0 +1,7 @@
+department_code,department_name,notes
+PRIMARY,Primary School,Std 1-5
+UPPER_PRIMARY,Upper Primary,Std 6-8
+SECONDARY,Secondary,Std 9-10
+HIGHER_SECONDARY,Higher Secondary,Std 11-12
+ADMIN,Administration,Office and leadership
+IT,Information Technology,Moodle operations

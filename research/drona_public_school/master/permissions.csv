@@ -1,0 +1,5 @@
+role_shortname,permission_area,recommended_context,notes
+trustee_manager,Trust reports and categories,Trust category,Avoid site-admin for non-technical users.
+principal,School reports and courses,School category,Principal manages school category.
+editingteacher,Course editing and grading,Course,Assigned yearly to subject courses.
+parent,Linked student report view,Student user context,Assigned using parent_links.csv.

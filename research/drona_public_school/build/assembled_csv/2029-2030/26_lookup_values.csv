@@ -1,0 +1,52 @@
+lookup_type,code,label
+academic_year,2026-2027,2026-2027
+academic_year,2027-2028,2027-2028
+academic_year,2028-2029,2028-2029
+academic_year,2029-2030,2029-2030
+medium,GUJ,Gujarati Medium
+medium,ENG,English Medium
+medium,HIN,Hindi Medium
+grade,STD01,Standard 1
+grade,STD02,Standard 2
+grade,STD03,Standard 3
+grade,STD04,Standard 4
+grade,STD05,Standard 5
+grade,STD06,Standard 6
+grade,STD07,Standard 7
+grade,STD08,Standard 8
+grade,STD09,Standard 9
+grade,STD10,Standard 10
+grade,STD11,Standard 11
+grade,STD12,Standard 12
+stream,GEN,General
+stream,SCI,Science
+stream,COM,Commerce
+stream,ARTS,Arts / Humanities
+division,A,Division A
+division,B,Division B
+division,C,Division C
+division,D,Division D
+division,E,Division E
+division,F,Division F
+subject,ACC,Accountancy
+subject,ART,Art Education
+subject,BA,Business Studies
+subject,BIO,Biology
+subject,CHEM,Chemistry
+subject,CS,Computer Studies
+subject,ECO,Economics
+subject,ENG,English
+subject,EVS,Environmental Studies
+subject,GEO,Geography
+subject,GUJ,Gujarati
+subject,HIN,Hindi
+subject,HIST,History
+subject,MATH,Mathematics
+subject,PE,Physical Education
+subject,PHY,Physics
+subject,POLSCI,Political Science
+subject,PSY,Psychology
+subject,SCI,Science
+subject,SOC,Sociology
+subject,SS,Social Science
+subject,STAT,Statistics

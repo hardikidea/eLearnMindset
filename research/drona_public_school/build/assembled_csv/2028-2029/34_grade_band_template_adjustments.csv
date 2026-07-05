@@ -1,0 +1,6 @@
+grade_band,grade_codes,classwork_weight,practice_quiz_weight,assignment_weight,chapter_gate_weight,final_weight,passing_grade_percent,template_adjustment
+G1-G2,STD01|STD02,35,10,30,10,15,40,Activity-heavy and teacher-guided.
+G3-G5,STD03|STD04|STD05,30,15,30,10,15,40,Primary activity and chapter gate model.
+G6-G8,STD06|STD07|STD08,20,20,25,15,20,40,Structured quizzes and projects.
+G9-G10,STD09|STD10,15,20,25,20,20,40,Board foundation pattern.
+G11-G12,STD11|STD12,10,25,25,20,20,40,Higher secondary stream-specific pattern.

@@ -1,0 +1,7 @@
+names:
+  student_username: dps.stu.00001
+  parent_username: dps.par.00001
+  teacher_username: dps.tch.<medium>.<subject>
+  course_code: DPS-GSEB-<medium>-<grade>-<stream>-<subject>-<startYear>
+  cohort_code: DPS-<startYear>-GSEB-<medium>-<grade>-<stream>-<division>
+  group_idnumber: <course_code>-<division>

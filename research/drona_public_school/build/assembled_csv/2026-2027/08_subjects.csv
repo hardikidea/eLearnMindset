@@ -1,0 +1,23 @@
+subject_code,subject_name,subject_category,notes
+ACC,Accountancy,Commerce,Higher secondary accountancy.
+ART,Art Education,Co-curricular,"Drawing, craft and visual expression."
+BA,Business Studies,Commerce,Business organisation and management.
+BIO,Biology,Science,Higher secondary biology.
+CHEM,Chemistry,Science,Higher secondary chemistry.
+CS,Computer Studies,Skill,Computer awareness and digital literacy.
+ECO,Economics,Commerce,Economics.
+ENG,English,Language,English language and communication.
+EVS,Environmental Studies,Core,Environmental studies and local context learning.
+GEO,Geography,Arts,Geography.
+GUJ,Gujarati,Language,Gujarati language and literature.
+HIN,Hindi,Language,Hindi language and literature.
+HIST,History,Arts,History.
+MATH,Mathematics,Core,Mathematics and numeracy.
+PE,Physical Education,Co-curricular,Health and physical education.
+PHY,Physics,Science,Higher secondary physics.
+POLSCI,Political Science,Arts,Political science.
+PSY,Psychology,Arts,Psychology.
+SCI,Science,Core,General science.
+SOC,Sociology,Arts,Sociology.
+SS,Social Science,Core,"History, geography, civics and economics foundations."
+STAT,Statistics,Commerce,Statistics.

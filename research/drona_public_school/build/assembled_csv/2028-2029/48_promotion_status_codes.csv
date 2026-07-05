@@ -1,0 +1,6 @@
+code,name,moodle_action
+PASS,Passed / promoted eligible,Can move to next grade/stream cohort
+REPEAT,Repeater / detained,Move to next-year cohort for same grade/stream/division
+COMPLETED,Completed final standard,Add to alumni cohort or mark as completed; do not delete
+LEFT,Transferred out / left school,Do not enrol in next year; optionally suspend after data export
+PENDING,Pending result or documents,Do not execute promotion until reviewed
