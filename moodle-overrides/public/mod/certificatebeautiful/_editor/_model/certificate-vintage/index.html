@@ -1,0 +1,178 @@
+<div id="certificate-vintage-certtitle">{#s}certtitle{/s}</div>
+<div id="certificate-vintage-subtititle">{#s}subtititle{/s}</div>
+<div id="certificate-vintage-certpresented">
+    <img src="/mod/certificatebeautiful/_editor/_model/certificate-vintage/assets/line.png" height="10" width="61"/>
+    {#s}certpresented{/s}
+    <img src="/mod/certificatebeautiful/_editor/_model/certificate-vintage/assets/line.png" height="10" width="61"/>
+</div>
+<div id="certificate-vintage-fullname">
+    <img id="certificate-vintage-irddl"
+         src="/mod/certificatebeautiful/_editor/_model/certificate-vintage/assets/point.png" height="28" width="28"/>
+    {$USER-&gt;fullname}
+    <img id="certificate-vintage-i2v8l"
+         src="/mod/certificatebeautiful/_editor/_model/certificate-vintage/assets/point.png" height="28" width="28"/>
+</div>
+<div id="certificate-vintage-description">{$certificate-&gt;description}</div>
+<div id="certificate-vintage-signature">
+    <table draggable="false" id="certificate-vintage-i50gy">
+        <tbody>
+        <tr>
+            <td id="certificate-vintage-i12ag">
+                <span id="certificate-vintage-ipjgg">{{userdate(time(),strftimedate)}}</span>
+            </td>
+            <td id="certificate-vintage-il59t" rowspan="2">
+            </td>
+            <td id="certificate-vintage-it6eh">
+                <img id="certificate-vintage-i9fsk"
+                     src="/mod/certificatebeautiful/_editor/_model/certificate-vintage/assets/signature.png"
+                     height="90"/>
+            </td>
+        </tr>
+        <tr>
+            <td id="certificate-vintage-i12ag-3">
+                <span id="certificate-vintage-il3aj">{#s}certdate{/s}</span>
+            </td>
+            <td id="certificate-vintage-it6eh-3">
+                <span id="certificate-vintage-iprc6">{#s}certsignature{/s}</span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<style>
+    [data-gjs-type=wrapper] {
+        background-image: url(/mod/certificatebeautiful/_editor/_model/certificate-vintage/assets/background.png);
+        position: relative;
+        height: 673px;
+        width: 955px;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+    }
+    #certificate-vintage-certtitle {
+        text-align: center;
+        font-size: 27px;
+        letter-spacing: 3px;
+        color: #231f20;
+        font-family: montserrat-extrabold, 'Montserrat ExtraBold';
+        text-transform: uppercase;
+        width: 955px;
+        position: absolute;
+        top: 82px;
+        left: 0px;
+        font-weight: 800;
+    }
+    #certificate-vintage-subtititle {
+        text-align: center;
+        font-size: 17px;
+        color: #231f20;
+        font-family: montserrat-regular, 'Montserrat';
+        width: 955px;
+        position: absolute;
+        top: 115px;
+        left: 0px;
+        text-transform: uppercase;
+    }
+    #certificate-vintage-certpresented {
+        font-family: montserrat-medium, 'Montserrat Medium';
+        font-weight: 500;
+        text-align: center;
+        font-size: 14px;
+        width: 955px;
+        text-transform: uppercase;
+        position: absolute;
+        top: 215px;
+        left: 0px;
+        color: #231f20;
+    }
+    #certificate-vintage-i2v8l {
+        color: black;
+    }
+    #certificate-vintage-irddl {
+        color: black;
+    }
+    #certificate-vintage-description {
+        text-align: center;
+        font-family: montserrat-regular, 'Montserrat';
+        font-size: 15px;
+        color: #010101;
+        width: 632px;
+        position: absolute;
+        top: 351px;
+        left: 161px;
+    }
+    #certificate-vintage-signature {
+        width: 81%;
+        margin: 0 auto;
+        position: absolute;
+        top: 496px;
+        left: 73px;
+    }
+    #certificate-vintage-il59t {
+        width: 127px;
+        text-align: center;
+        top: 447px;
+        left: 344px;
+    }
+    #certificate-vintage-ipjgg {
+        color: #231f20;
+        font-family: raleway-regular, 'Raleway';
+        display: block;
+        text-align: center;
+        white-space: nowrap;
+    }
+    #certificate-vintage-il3aj {
+        color: #231f20;
+        font-family: raleway-bold, 'Raleway';
+        text-align: center;
+        display: block;
+        white-space: nowrap;
+        font-weight: 700;
+    }
+    #certificate-vintage-iprc6 {
+        color: #231f20;
+        font-family: raleway-bold, 'Raleway';
+        text-align: center;
+        display: block;
+        white-space: nowrap;
+        font-weight: 700;
+    }
+    #certificate-vintage-i12ag {
+        text-align: center;
+        vertical-align: bottom;
+        border-bottom: 1px solid #edba33;
+        width: 200px;
+    }
+    #certificate-vintage-it6eh {
+        text-align: center;
+        border-bottom: 1px solid #edba33;
+        width: 200px;
+    }
+    #certificate-vintage-i9fsk {
+        margin: 0 0 -30px;
+    }
+    #certificate-vintage-i50gy {
+        margin: 0 auto;
+    }
+    #certificate-vintage-i12ag-3 {
+        text-align: center;
+    }
+    #certificate-vintage-it6eh-3 {
+        text-align: center;
+    }
+    #certificate-vintage-fullname {
+        margin: 0 auto;
+        width: auto;
+        position: absolute;
+        top: 252px;
+        left: 90px;
+        right: 90px;
+        color: #231f20;
+        font-size: 49px;
+        text-align: center;
+        font-family: alex-brush-regular, 'Alex Brush';
+        font-weight: 800;
+        white-space: nowrap;
+        height: 73px;
+    }
+</style>

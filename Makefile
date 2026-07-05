@@ -2,13 +2,17 @@
 export
 MOODLE_THEME ?= boost
 
-.PHONY: bootstrap sync-overrides build up start down stop restart logs shell install configure-mailpit demo-data theme-install cron backup restore update update-restore-on-fail status
+.PHONY: bootstrap sync-overrides capture-override build up start down stop restart logs shell install configure-mailpit demo-data theme-install cron backup restore update update-restore-on-fail status
 
 bootstrap:
 	./scripts/bootstrap-moodle.sh
 
 sync-overrides:
 	./scripts/sync-moodle-overrides.sh
+
+capture-override:
+	@test -n "$(RELPATH)" || (echo "Usage: make capture-override RELPATH=public/mod/pluginname" && exit 1)
+	./scripts/capture-moodle-override.sh "$(RELPATH)"
 
 build:
 	docker compose build

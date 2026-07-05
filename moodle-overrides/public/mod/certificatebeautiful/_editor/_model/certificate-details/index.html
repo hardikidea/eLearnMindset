@@ -1,0 +1,165 @@
+<div id="certificate-details-certtitle">{#s}certtitle{/s}</div>
+<div id="certificate-details-subtititle">{#s}subtititle{/s}</div>
+<div id="certificate-details-certpresented">{#s}certpresented{/s}</div>
+<div id="certificate-details-fullname">{$USER-&gt;fullname}</div>
+<div id="certificate-details-description">{$certificate-&gt;description}</div>
+<div id="certificate-details-signature">
+    <table draggable="false" id="certificate-details-ix0wk">
+        <tbody>
+        <tr>
+            <td id="certificate-details-i12ag">
+                <span id="certificate-details-ipjgg">{{userdate(time(),strftimedate)}}</span>
+            </td>
+            <td id="certificate-details-il59t" rowspan="2">
+            </td>
+            <td id="certificate-details-it6eh">
+                <img id="certificate-details-ivdt9"
+                     src="/mod/certificatebeautiful/_editor/_model/certificate-details/assets/signature.png"
+                     height="90" />
+            </td>
+        </tr>
+        <tr>
+            <td id="certificate-details-i12ag-3">
+                <span id="certificate-details-il3aj">{#s}certdate{/s}</span>
+            </td>
+            <td id="certificate-details-it6eh-3">
+                <span id="certificate-details-iprc6">{#s}certsignature{/s}</span>
+            </td>
+        </tr>
+        </tbody>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+<style>
+    [data-gjs-type=wrapper] {
+        background-image: url(/mod/certificatebeautiful/_editor/_model/certificate-details/assets/background.png);
+        position: relative;
+        height: 673px;
+        width: 955px;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+    }
+    #certificate-details-certtitle {
+        text-align: center;
+        font-size: 44px;
+        font-family: poppins-bold, 'Poppins';
+        text-transform: uppercase;
+        width: 605px;
+        position: absolute;
+        top: 108px;
+        left: 265px;
+        color: #9a6633;
+        font-weight: 700;
+    }
+    #certificate-details-subtititle {
+        text-align: center;
+        font-size: 17px;
+        color: #485665;
+        font-family: poppins-bold, 'Poppins';
+        width: 605px;
+        position: absolute;
+        top: 179px;
+        left: 265px;
+        text-transform: uppercase;
+        font-weight: 700;
+    }
+    #certificate-details-fullname {
+        color: #9a6633;
+        font-size: 48px;
+        font-family: playfair-display-extrabold, 'Playfair Display ExtraBold';
+        white-space: nowrap;
+        text-align: center;
+        position: absolute;
+        top: 311px;
+        left: 218px;
+        width: 614px;
+        height: 66px;
+        font-weight: 800;
+    }
+    #certificate-details-description {
+        text-align: center;
+        line-height: 18px;
+        font-family: playfair-display-black, 'Playfair Display Black';
+        font-size: 16px;
+        color: #485665;
+        width: 583px;
+        letter-spacing: 1px;
+        position: absolute;
+        top: 395px;
+        left: 208px;
+    }
+    #certificate-details-signature {
+        position: absolute;
+        top: 507px;
+        left: 30px;
+        right: 30px;
+        text-align: center;
+    }
+    #certificate-details-il59t {
+        width: 52px;
+        top: 509px;
+        left: 445px;
+    }
+    #certificate-details-ipjgg {
+        color: #485665;
+        font-family: montserrat-regular, 'Montserrat';
+        display: block;
+        text-align: center;
+        white-space: nowrap;
+    }
+    #certificate-details-il3aj {
+        color: #485665;
+        font-family: montserrat-semibold, 'Montserrat SemiBold';
+        text-align: center;
+        display: block;
+        white-space: nowrap;
+        font-weight: 600;
+        height: 71px;
+        top: 547px;
+        left: 188px;
+    }
+    #certificate-details-iprc6 {
+        color: #485665;
+        font-family: montserrat-semibold, 'Montserrat SemiBold';
+        text-align: center;
+        display: block;
+        white-space: nowrap;
+        font-weight: 600;
+    }
+    #certificate-details-i12ag {
+        text-align: center;
+        vertical-align: bottom;
+        border-bottom: 1px solid #000;
+    }
+    #certificate-details-it6eh {
+        width: 200px;
+        text-align: center;
+        border-bottom: 1px solid #000;
+    }
+    #certificate-details-certpresented {
+        text-align: center;
+        font-family: montserrat-bold, 'Montserrat';
+        color: #485665;
+        font-size: 16px;
+        position: absolute;
+        top: 265px;
+        left: 257px;
+        width: 605px;
+        text-transform: uppercase;
+        font-weight: 700;
+    }
+    #certificate-details-ix0wk {
+        margin: 0 auto;
+    }
+    #certificate-details-i12ag-3 {
+        text-align: center;
+    }
+    #certificate-details-it6eh-3 {
+        text-align: center;
+    }
+    #certificate-details-ivdt9 {
+        margin: 0 0 -30px;
+    }
+</style>

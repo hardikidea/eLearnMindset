@@ -37,6 +37,13 @@ The install script enables Moodle's stock `boost` theme by default. Custom proje
 make sync-overrides
 ```
 
+If you install a Moodle plugin directly into the local `moodle/` checkout and want it deployed/versioned, capture it into `moodle-overrides/` first:
+
+```bash
+make capture-override RELPATH=public/mod/customcert
+make sync-overrides
+```
+
 The sync also updates `moodle/.git/info/exclude` for the nested Moodle checkout, so IDEs and `git -C moodle status` do not show synced project overrides as unversioned Moodle source files.
 
 Install the local Git hooks once after cloning:

@@ -1,0 +1,170 @@
+<div id="certificate-appreciation-sitefullname">{$SITE-&gt;fullname}</div>
+<div id="certificate-appreciation-certtitle">{#s}certtitle{/s}</div>
+<div id="certificate-appreciation-subtititle">{#s}subtititle{/s}</div>
+<div id="certificate-appreciation-certpresented">{#s}certpresented{/s}</div>
+<div id="certificate-appreciation-fullname">{$USER-&gt;fullname}</div>
+<div id="certificate-appreciation-description">{$certificate-&gt;description}</div>
+<div id="certificate-appreciation-signature">
+    <table draggable="false" id="certificate-appreciation-ix0wk">
+        <tbody>
+        <tr>
+            <td id="certificate-appreciation-i12ag">
+                <span id="certificate-appreciation-ipjgg">{{userdate(time(),strftimedate)}}</span>
+            </td>
+            <td id="certificate-appreciation-il59t" rowspan="2">
+            </td>
+            <td id="certificate-appreciation-it6eh">
+                <img src="/mod/certificatebeautiful/_editor/_model/certificate-appreciation/assets/signature.png"
+                     id="certificate-appreciation-i9fsk" height="90"/>
+            </td>
+        </tr>
+        <tr>
+            <td id="certificate-appreciation-i12ag-3">
+                <span id="certificate-appreciation-il3aj">{#s}certdate{/s}</span>
+            </td>
+            <td id="certificate-appreciation-it6eh-3">
+                <span id="certificate-appreciation-iprc6">{#s}certsignature{/s}</span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<style>
+    [data-gjs-type=wrapper] {
+        background-image: url(/mod/certificatebeautiful/_editor/_model/certificate-appreciation/assets/background.png);
+        position: relative;
+        height: 673px;
+        width: 955px;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+    }
+    #certificate-appreciation-sitefullname {
+        text-align: center;
+        font-family: cinzel-regular, 'Cinzel';
+        color: #424956;
+        font-size: 29px;
+        position: absolute;
+        top: 33px;
+        left: 30px;
+        right: 30px;
+    }
+    #certificate-appreciation-certtitle {
+        text-align: left;
+        font-size: 35px;
+        font-family: cinzel-black, 'Cinzel Black';
+        font-weight: 900;
+        text-transform: uppercase;
+        width: 590px;
+        position: absolute;
+        top: 127px;
+        left: 200px;
+    }
+    #certificate-appreciation-subtititle {
+        text-align: left;
+        font-size: 17px;
+        color: #bca380;
+        font-family: cinzel-bold, 'Cinzel';
+        font-weight: 700;
+        width: 520px;
+        letter-spacing: 3px;
+        position: absolute;
+        top: 168px;
+        left: 200px;
+    }
+    #certificate-appreciation-fullname {
+        color: #c8992e;
+        font-size: 43px;
+        font-family: parisienne, 'Parisienne';
+        width: 584px;
+        height: 76px;
+        position: absolute;
+        top: 267px;
+        left: 102px;
+        display: flex;
+        align-items: center;
+        line-height: 43px;
+    }
+    #certificate-appreciation-description {
+        text-align: left;
+        line-height: 18px;
+        font-family: raleway-regular, 'Raleway';
+        font-weight: 400;
+        font-size: 16px;
+        color: #727477;
+        width: 543px;
+        letter-spacing: 1px;
+        position: absolute;
+        top: 356px;
+        left: 102px;
+    }
+    #certificate-appreciation-signature {
+        position: absolute;
+        top: 518px;
+        left: 30px;
+        right: 30px;
+        text-align: center;
+        width: 733px;
+    }
+    #certificate-appreciation-il59t {
+        width: 120px;
+        top: 428px;
+        left: 337px;
+    }
+    #certificate-appreciation-ipjgg {
+        color: #000;
+        font-family: cinzel-regular, 'Cinzel';
+        display: block;
+        text-align: center;
+        white-space: nowrap;
+    }
+    #certificate-appreciation-il3aj {
+        color: #1d323f;
+        font-family: cinzel-bold, 'Cinzel';
+        text-align: center;
+        display: block;
+        white-space: nowrap;
+        font-weight: 700;
+    }
+    #certificate-appreciation-iprc6 {
+        color: #1d323f;
+        font-family: cinzel-bold, 'Cinzel';
+        text-align: center;
+        display: block;
+        white-space: nowrap;
+        font-weight: 700;
+    }
+    #certificate-appreciation-i12ag {
+        text-align: center;
+        border-bottom: 1px solid #000;
+        vertical-align: bottom;
+    }
+    #certificate-appreciation-it6eh {
+        width: 200px;
+        text-align: center;
+        border-bottom: 1px solid #000;
+    }
+    #certificate-appreciation-certpresented {
+        text-align: left;
+        font-family: cinzel-bold, 'Cinzel';
+        color: #424956;
+        font-size: 16px;
+        position: absolute;
+        top: 245px;
+        left: 101px;
+        right: 120px;
+        font-weight: 700;
+    }
+    #certificate-appreciation-ix0wk {
+        margin: 0 auto;
+    }
+    #certificate-appreciation-i9fsk {
+        margin: 0 0 -30px;
+    }
+    #certificate-appreciation-i12ag-3 {
+        text-align: center;
+    }
+    #certificate-appreciation-it6eh-3 {
+        text-align: center;
+    }
+</style>

@@ -1,0 +1,41 @@
+<h2 id="sumary-titulo">{#s}sumary{/s}</h2>
+<div id="sumary-text">{$COURSE-&gt;sections_modules}</div>
+<div class="qr-code-block" id="ijgw">
+    <img src="/mod/certificatebeautiful/_editor/img/qr-code.svg" width="100%"/>
+    <div class="qr-code" id="i0gb">{$CERTIFICATE-&gt;code}</div>
+</div>
+<style>
+    [data-gjs-type=wrapper] {
+        position: relative;
+        height: 673px;
+        width: 955px;
+    }
+    #sumary-titulo {
+        text-align: center;
+        font-family: lato-bold, 'Lato';
+        color: #4e4e4e;
+        position: absolute;
+        top: 34px;
+        left: 30px;
+        right: 30px;
+    }
+    #sumary-text {
+        font-family: lato-regular, 'Lato';
+        line-height: 24px;
+        color: #606060;
+        position: absolute;
+        top: 92px;
+        left: 40px;
+        right: 40px;
+    }
+    #ijgw {
+        position: absolute;
+        top: 549px;
+        left: 840px;
+        width: 100px;
+    }
+    #i0gb {
+        font-size: 12px;
+        text-align: center;
+    }
+</style>

@@ -1,0 +1,172 @@
+<div id="certificate-simple-certtitle">{#s}certtitle{/s}</div>
+<div id="certificate-simple-subtititle">{#s}subtititle{/s}</div>
+<div id="certificate-simple-certpresented">{#s}certpresented{/s}</div>
+<div id="certificate-simple-fullname">{$USER-&gt;fullname}</div>
+<div id="certificate-simple-description">{$certificate-&gt;description}</div>
+<div id="certificate-simple-signature">
+    <table draggable="false" id="certificate-simple-ijumf">
+        <tbody>
+        <tr>
+            <td id="certificate-simple-ipakn">
+                <span id="certificate-simple-ipjgg">{{userdate(time(),strftimedate)}}</span>
+            </td>
+            <td rowspan="2" id="certificate-simple-i24ph">
+            </td>
+            <td id="certificate-simple-i09dh">
+                <img src="/mod/certificatebeautiful/_editor/_model/certificate-simple/assets/signature.png"
+                     id="certificate-simple-i9fsk" height="90"/>
+            </td>
+        </tr>
+        <tr>
+            <td valign="botton" id="certificate-simple-irqzm">
+                <span id="certificate-simple-il3aj">{#s}certdate{/s}</span>
+            </td>
+            <td id="certificate-simple-i7vlm">
+                <span id="certificate-simple-iprc6">{#s}certsignature{/s}</span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<style>
+    [data-gjs-type=wrapper] {
+        background-image: url(/mod/certificatebeautiful/_editor/_model/certificate-simple/assets/background.png);
+        position: relative;
+        height: 673px;
+        width: 955px;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+    }
+    #certificate-simple-certtitle {
+        text-align: center;
+        font-size: 54px;
+        color: #383838;
+        font-family: poppins-black, 'Poppins Black';
+        text-transform: uppercase;
+        width: 955px;
+        letter-spacing: 3px;
+        top: 75px;
+        left: 0px;
+        position: absolute;
+        font-weight: 700;
+    }
+    #certificate-simple-subtititle {
+        text-align: center;
+        font-size: 20px;
+        color: #383838;
+        font-family: poppins-bold, 'Poppins';
+        width: 955px;
+        top: 144px;
+        left: 0px;
+        position: absolute;
+        text-transform: uppercase;
+    }
+    #certificate-simple-certpresented {
+        font-family: poppins-light, 'Poppins Light';
+        text-align: center;
+        color: #383838;
+        font-size: 14px;
+        width: 955px;
+        text-transform: uppercase;
+        top: 231px;
+        left: 0px;
+        position: absolute;
+        font-weight: 300;
+    }
+    #certificate-simple-fullname {
+        color: #a58b50;
+        font-size: 60px;
+        font-family: alex-brush-regular, 'Alex Brush';
+        text-align: center;
+        white-space: nowrap;
+        top: 266px;
+        left: 90px;
+        right: 90px;
+        position: absolute;
+        height: 83px;
+        font-weight: 700;
+    }
+    #certificate-simple-description {
+        text-align: center;
+        font-family: poppins-light, 'Poppins Light';
+        font-weight: 300;
+        font-size: 14px;
+        color: #232323;
+        line-height: 19px;
+        width:632px;
+        position:absolute;
+        top: 382px;
+        left:161px;
+    }
+    #certificate-simple-signature {
+        width: 955px;
+        margin: 0 auto;
+        top: 515px;
+        left: 0px;
+        position: absolute;
+    }
+    #certificate-simple-ipjgg {
+        color: #232323;
+        font-family: poppins-light, 'Poppins Light';
+        display: block;
+        text-align: center;
+        white-space: nowrap;
+        font-size: 17px;
+        margin: 0px 0px 4px 0px;
+    }
+    #certificate-simple-il3aj {
+        color: #383838;
+        font-family: poppins-regular, 'Poppins';
+        text-align: center;
+        display: block;
+        white-space: nowrap;
+        font-size: 20px;
+        font-weight: 700;
+    }
+    #certificate-simple-iprc6 {
+        color: #383838;
+        font-family: poppins-regular, 'Poppins';
+        text-align: center;
+        display: block;
+        white-space: nowrap;
+        font-size: 20px;
+        font-weight: 700;
+    }
+    #certificate-simple-i9fsk {
+        margin: 0 0 -30px;
+    }
+    #certificate-simple-ijumf {
+        margin: 0 auto;
+    }
+    #certificate-simple-ipakn {
+        text-align: center;
+        vertical-align: bottom;
+        width: 230px;
+        background: url(/mod/certificatebeautiful/_editor/_model/certificate-simple/assets/line.png);
+        background-position: bottom center;
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+    #certificate-simple-i09dh {
+        width: 230px;
+        text-align: center;
+        height: 61px;
+        background: url(/mod/certificatebeautiful/_editor/_model/certificate-simple/assets/line.png);
+        background-position: bottom center;
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+    #certificate-simple-irqzm {
+        text-align: center;
+    }
+    #certificate-simple-i7vlm {
+        width: 100px;
+        text-align: center;
+    }
+    #certificate-simple-i24ph {
+        width: 66px;
+        top: 517px;
+        left: 427px;
+    }
+</style>

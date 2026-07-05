@@ -1,0 +1,73 @@
+<?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * Class models
+ *
+ * @package   mod_certificatebeautiful
+ * @copyright 2025 Eduardo Kraus https://eduardokraus.com/
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+namespace mod_certificatebeautiful;
+
+use Exception;
+
+/**
+ * Class models
+ *
+ * @package mod_certificatebeautiful
+ */
+class models {
+    /**
+     * Function list_all
+     *
+     * @return array
+     * @throws Exception
+     */
+    public static function list_all() {
+        global $DB;
+        $models = [];
+        $sql = "SELECT id, name, model_key FROM {certificatebeautiful_model}";
+        $records = $DB->get_records_sql($sql, []);
+        self::order($records);
+        foreach ($records as $record) {
+            $models[$record->id] = format_string($record->name);
+        }
+        return $models;
+    }
+
+    /**
+     * Order models
+     *
+     * @param array $models
+     */
+    public static function order(&$models) {
+        usort($models, function($a, $b) {
+            // If one has an empty model_key and the other doesn't, send the empty one to the beginning.
+            $aempty = empty($a->model_key);
+            $bempty = empty($b->model_key);
+
+            if ($aempty && !$bempty) {
+                return -1; // The $a comes first.
+            } else if (!$aempty && $bempty) {
+                return 1;  // The $b comes first.
+            }
+
+            return strcmp($a->name, $b->name);
+        });
+    }
+}

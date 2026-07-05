@@ -57,6 +57,24 @@ add_plugin_dirs "public/course/format"
 add_plugin_dirs "public/mod"
 add_plugin_dirs "public/theme"
 
+for file in \
+    admin/cli/cli_apply_course_template_settings.php \
+    admin/cli/cli_apply_gradebook_template.php \
+    admin/cli/cli_create_universal_master_course_template.php \
+    admin/cli/cli_csv_helpers.php \
+    admin/cli/cli_import_indian_school_baseline.php \
+    admin/cli/cli_moodle502_preflight.php \
+    admin/cli/cli_prepare_next_academic_year.php \
+    admin/cli/cli_promote_academic_year.php \
+    admin/cli/cli_promote_students_academic_year.php \
+    admin/cli/cli_validate_course_template_csv.php \
+    admin/cli/cli_validate_school_baseline.php
+do
+    if [ -f "${MOODLE_DIR}/${file}" ]; then
+        printf '/%s\n' "${file}" >> "${entries}"
+    fi
+done
+
 if [ -d "${OVERRIDES_DIR}/scripts" ]; then
     while IFS= read -r file; do
         add_file_if_exists "${file#${OVERRIDES_DIR}/}"
