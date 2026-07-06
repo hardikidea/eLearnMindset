@@ -24,6 +24,12 @@ Users are registered once under `registration/`. Academic years do not recreate 
 
 Course certificates use the Moodle `mod_customcert` plugin. The importer creates one verified PDF certificate activity in the final `Certificate & Completion` section of every course.
 
+For the dataset matrix formulas, row-count formulas and ID number templates, read:
+
+```text
+docs/data-model-reference.md
+```
+
 ## Quick Start
 
 ```bash
