@@ -107,13 +107,20 @@ make status                    # show service status
 
 ## Reset Everything
 
-This deletes the local database volume and Moodle files. Use only for a fresh local reset.
+This deletes the local database volume and `moodledata/`. It keeps the Moodle source checkout, tracked overrides, `.env`, and backups. Use only for a fresh local reset.
 
 ```bash
-docker compose down -v
-rm -rf moodle moodledata backups
-./scripts/bootstrap-moodle.sh
-docker compose build
-docker compose up -d
-./scripts/install-site.sh
+./scripts/reset-local-moodle.sh
+```
+
+Non-interactive reset:
+
+```bash
+./scripts/reset-local-moodle.sh --yes
+```
+
+Create a backup first:
+
+```bash
+./scripts/reset-local-moodle.sh --backup
 ```

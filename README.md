@@ -116,6 +116,7 @@ docker compose exec db psql -U moodle -d moodle
 make cron                      # run cron once
 make backup                    # database + moodledata backup
 make configure-mailpit         # re-apply MailPit SMTP config
+make reset-local               # guarded fresh local reset
 ```
 
 ## Git Hooks

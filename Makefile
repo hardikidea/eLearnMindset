@@ -2,7 +2,7 @@
 export
 MOODLE_THEME ?= boost
 
-.PHONY: bootstrap sync-overrides capture-override build up start down stop restart logs shell install configure-mailpit demo-data theme-install cron backup restore update update-restore-on-fail status
+.PHONY: bootstrap sync-overrides capture-override build up start down stop restart logs shell install configure-mailpit demo-data theme-install cron backup restore reset-local update update-restore-on-fail status
 
 bootstrap:
 	./scripts/bootstrap-moodle.sh
@@ -61,6 +61,9 @@ backup:
 restore:
 	@test -n "$(BACKUP_DIR)" || (echo "Usage: make restore BACKUP_DIR=backups/YYYYMMDD-HHMMSS" && exit 1)
 	./scripts/restore-backup.sh "$(BACKUP_DIR)" --yes
+
+reset-local:
+	./scripts/reset-local-moodle.sh $(RESET_ARGS)
 
 update:
 	./scripts/update-moodle.sh $(MOODLE_VERSION)

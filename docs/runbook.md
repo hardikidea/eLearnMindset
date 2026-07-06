@@ -338,12 +338,19 @@ curl -fsS http://localhost:8080/ >/tmp/moodle-home.html
 Use this when the local install should be recreated from scratch:
 
 ```bash
-docker compose down -v
-rm -rf moodle moodledata backups
-./scripts/bootstrap-moodle.sh
-docker compose build
-docker compose up -d
-./scripts/install-site.sh
+./scripts/reset-local-moodle.sh
+```
+
+For a non-interactive reset:
+
+```bash
+./scripts/reset-local-moodle.sh --yes
+```
+
+To create a local backup before reset:
+
+```bash
+./scripts/reset-local-moodle.sh --backup
 ```
 
 ## Moodle Update Runbook
