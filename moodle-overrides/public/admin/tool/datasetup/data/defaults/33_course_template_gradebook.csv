@@ -1,6 +1,0 @@
-template_code,category_name,weight_percent,default_pass_percent,notes
-MASTER_ALL_GRADES_ALL_SUBJECTS_STANDARD,Classwork and Participation,15,40,"Chapter overview, study material participation, discussions, notebooks, and classroom evidence"
-MASTER_ALL_GRADES_ALL_SUBJECTS_STANDARD,Practice Quizzes,20,40,"Low-stakes auto-graded chapter practice quizzes"
-MASTER_ALL_GRADES_ALL_SUBJECTS_STANDARD,Assignments and Projects,25,40,"Worksheets, activity-based tasks, lab records, writing tasks, projects, and portfolios"
-MASTER_ALL_GRADES_ALL_SUBJECTS_STANDARD,Chapter Gates,20,40,"Required chapter completion gates used to unlock the next chapter"
-MASTER_ALL_GRADES_ALL_SUBJECTS_STANDARD,Final Assessment,20,40,"Final mock test, practical, project, oral exam, portfolio, or board exam preparation assessment"

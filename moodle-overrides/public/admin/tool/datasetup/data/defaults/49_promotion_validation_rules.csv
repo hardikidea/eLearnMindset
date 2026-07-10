@@ -1,6 +1,0 @@
-rule,severity,description,example_fix
-target_cohort_required_for_promoted,error,"PROMOTED, STREAM_SELECTED and REPEATED rows must have target_cohort_code.",Fill target_cohort_code such as GVS-2027-GSEB-GUJ-STD02-GEN-A.
-stream_required_for_std11_std12,error,"Std 11 and Std 12 rows must include SCI, COM, ARTS or VOC stream.","For Std 10 promotion, select target_stream_code before import."
-do_not_delete_old_users,warning,Transferred or alumni students should not be deleted; suspend or put in alumni/left cohort after export.,Use promotion_decision ALUMNI or TRANSFER_OUT.
-division_group_is_course_level,info,Division movement is handled by new cohort mapping to Division group in every target course.,Update target_division_code and target_cohort_code.
-backup_before_live,error,Take Moodle DB and moodledata backup before --dry-run=0.,Run dry-run and verify logs first.

@@ -1,6 +1,0 @@
-school_role,moodle_role_shortname,recommended_context,assign_to,can_do,avoid
-Trustee Manager,trustee_manager,Trust category or System only if needed,trustee.manager,"View/manage trust categories, school categories, courses and high-level reports.",Avoid full Site Administrator access for non-technical management users.
-Principal,principal,School category,principal.gvs,"Manage school courses, teachers, reports, cohorts and school-level users as allowed.",Do not assign at system level unless the principal manages all schools.
-Teacher,editingteacher,Subject course,teacher.math / teacher.phy / teacher.eng,"Manage course content, activities, grading and reports for enrolled course.",Do not assign Teacher at system level.
-Student,student,Subject course via cohort sync,student users through cohorts,"Access enrolled courses, submit assignments, attempt quizzes, view own grades.",Do not use roles to represent class/division.
-Parent,parent,Student user context,parent user linked to student,View only linked child details/reports according to permissions.,Do not enrol parents as students in child courses.

@@ -21,7 +21,6 @@ up:
 	docker compose up -d
 
 start: up
-	docker compose up
 
 down:
 	docker compose down
