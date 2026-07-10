@@ -1,0 +1,9 @@
+step_no,phase,task,owner_role,required_before_next_step,notes
+1,Close old year,"Confirm final grades, attendance/plugin data, and completion reports are ready.",Principal/Teacher,Yes,Freeze gradebook changes before promotion.
+2,Backup/export,Export gradebooks and back up important old-year courses.,Moodle Admin,Yes,Keep backups outside production Moodle.
+3,New year setup,"Create next academic year courses, cohorts, groups, and cohort sync mappings.",Moodle Admin,Yes,Use baseline importer with 2027 course/cohort CSVs or generate new-year CSVs from templates.
+4,Promotion planning,Prepare 53_promotion_actions.csv from school result/rollover decision.,Principal/Admin Office,Yes,Verify stream/division allocation.
+5,Dry run,Run cli_promote_academic_year.php with --dry-run=1.,Moodle Admin,Yes,Fix missing users/cohorts before execute.
+6,Execute,Run promotion script with --dry-run=0.,Moodle Admin,Yes,Keep old cohort removal disabled unless archival is complete.
+7,Validation,Spot-check 5 students from each standard/stream/division.,Principal/Teacher,Yes,"Confirm dashboard, courses, groups, and parent access."
+8,Archive,Hide or archive old-year courses after school approval.,Moodle Admin,No,Do not delete old courses until retention policy allows.

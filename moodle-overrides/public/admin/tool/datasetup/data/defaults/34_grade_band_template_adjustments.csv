@@ -1,0 +1,6 @@
+grade_band,grade_codes,classwork_weight,practice_quiz_weight,assignment_weight,chapter_gate_weight,final_weight,passing_grade_percent,template_adjustment
+KG-G2,NUR|LKG|UKG|BAL|STD01|STD02,35,10,30,10,15,40,"Use lighter gates, more teacher/parent-guided activities, images, audio, oral tasks, and simple view/submit completion."
+G3-G5,STD03|STD04|STD05,30,15,30,10,15,40,"Keep chapter gates short; focus on activity-based learning, worksheets, simple quizzes, reading, and reflection."
+G6-G8,STD06|STD07|STD08,20,20,25,15,20,40,"Use regular chapter quizzes, assignments, lab/activity evidence, discussions, and teacher checkpoints."
+G9-G10,STD09|STD10,15,20,25,20,20,40,"Use stricter pass-grade gates, formal rubrics, practical/lab evidence, periodic board-style practice, and remediation."
+G11-G12,STD11|STD12,10,25,25,20,20,40,"Use rigorous pass-grade gates, stream-specific assignments, practicals/projects, mock tests, and board/JEE/NEET/CA foundation style practice where relevant."

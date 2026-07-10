@@ -1,0 +1,11 @@
+rule_code,area,recommended_setup,why,example
+YR001,Academic year,"Keep academic year in course shortname/idnumber, cohort idnumber, and custom fields. Do not rename old year courses.","Preserves gradebook, completion, attendance/plugin history, and audit trail.",GVS-GSEB-GUJ-STD02-GEN-MATH-2027 and cohort GVS-2027-GSEB-GUJ-STD02-GEN-A
+YR002,Category,Keep Board > School > Medium > Class > Stream as stable categories; avoid division categories.,Categories organize courses. Divisions change frequently and are better handled inside courses.,GSEB > Green Valley School > Gujarati Medium > Std 11 > Science
+YR003,Division,Use Moodle groups for divisions inside each course.,Groups are course-level and can restrict activities/teacher views by division.,"Course Physics: Division A, Division B"
+YR004,Student batch,Use one cohort per academic year + board + medium + grade + stream + division.,Cohort sync handles bulk enrolment into all subject courses.,GVS-2027-GSEB-GUJ-STD11-SCI-A
+YR005,Promotion,Add student to next-year cohort first; remove old cohort only after old-year reports are backed up.,Removing a synced cohort may remove course access/enrolment from old-year courses.,Add GVS-2027...; keep GVS-2026... until closure.
+YR006,Retention/repeat,Move the student into next academic year but same grade/stream cohort.,Student repeats standard but belongs to new academic year batch.,STD08 GEN B 2026 -> STD08 GEN A 2027
+YR007,Stream allocation,"For Std 10 to Std 11, promotion file must specify selected stream.",Moodle cannot infer Science/Commerce/Arts automatically from grade.,STD10 GEN B -> STD11 SCI A
+YR008,Alumni,Do not create subject cohorts for pass-out students; update status to Alumni and optionally place in an Alumni cohort/category.,Keeps old records while avoiding unnecessary new course enrolments.,STD12 ARTS B -> Alumni
+YR009,Transferred/left,Update status to Transferred or Left; do not delete user.,Deletion can damage audit trail and reporting.,Action TRANSFER_OUT with result_status Transferred
+YR010,Course archive,Hide old courses or move to Archive category after backups; do not reset if records must be retained.,New academic year should have clean courses while old records remain intact.,Archive > 2026-2027 > GSEB > GVS

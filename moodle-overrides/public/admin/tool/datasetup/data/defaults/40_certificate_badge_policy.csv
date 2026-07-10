@@ -1,0 +1,4 @@
+policy_code,implementation,requires_plugin,visibility_rule,notes
+CORE_BADGE_DEFAULT,Moodle core badge,0,Available after course completion,Use Moodle course badge as the default completion credential.
+CUSTOMCERT_OPTIONAL,Custom certificate activity,1,Restrict access until course completion,Use only if mod_customcert is installed and approved.
+NO_CERT_FOR_DAILY_CLASSES,No certificate,0,Not applicable,"For normal school academic subjects, badges/certificates may be optional."

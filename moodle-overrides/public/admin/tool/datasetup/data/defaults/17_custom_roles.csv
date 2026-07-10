@@ -1,0 +1,4 @@
+role_shortname,role_name,based_on_role,context_levels,capabilities_allow,description
+trustee_manager,Trustee Manager,manager,system|category,,"Trust-level manager for categories, courses and reports. Do not make this user Site Administrator unless they manage Moodle technology."
+principal,Principal,manager,category,,School-category manager for principal-level oversight.
+parent,Parent / Guardian,,user,moodle/user:viewdetails|moodle/user:viewuseractivitiesreport|moodle/grade:viewall,"Parent role assigned in the student user context, not as a course enrolment."

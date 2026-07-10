@@ -210,7 +210,15 @@ function ensure_sections($course, $sections, $dryrun) {
         msg("[dry-run] Ensure course sections 0..$maxsection and update names/summaries");
         return;
     }
-    course_create_sections_if_missing($course->id, range(0, $maxsection));
+    $missingsections = [];
+    foreach (range(0, $maxsection) as $sectionnum) {
+        if (!$DB->record_exists('course_sections', ['course' => $course->id, 'section' => $sectionnum])) {
+            $missingsections[] = $sectionnum;
+        }
+    }
+    if ($missingsections) {
+        course_create_sections_if_missing($course->id, $missingsections);
+    }
     foreach ($sections as $row) {
         $sectionnum = (int)$row['section_number'];
         $section = $DB->get_record('course_sections', ['course' => $course->id, 'section' => $sectionnum], '*', MUST_EXIST);

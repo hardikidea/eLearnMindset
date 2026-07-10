@@ -1,0 +1,10 @@
+subject_area,subject_codes,recommended_template_additions,default_extra_sections
+Mathematics,MATH|AMATH|FNUM,"Practice sets, formula sheet, step-by-step examples, auto-graded quizzes",Use existing Chapter sections; add chapter-wise problem sets and keep the completion gate as a short mastery quiz.
+Science,SCI|PHY|CHEM|BIO|EVS,"Lab safety, experiments, diagrams, observations, practical reports",Use existing Chapter sections; add experiment/practical evidence in assignment activities and keep personal data out of tasks.
+English / Languages,ENG|GUJ|HIN|SAN|MAR|URD|TAM|FRE|GER|SPA|RHYM|FLIT,"Reading passages, grammar tasks, writing assignments, speaking/listening tasks",Use existing Chapter sections; use assignments for writing/speaking evidence and gates for comprehension checks.
+Social Studies,SS|HIST|POLSCI|GEO|SOC|PSY|CIV|ECO,"Maps, timelines, case studies, source analysis, essay assignments",Use existing Chapter sections; add maps/source activities and chapter gates for concept checks.
+Computer Science,CS|IT|ICT|AI|CODING,"Coding tasks, project files, quizzes, practical submissions",Use existing Chapter sections; use assignments for code/practical submissions and gates for theory or practical checks.
+Art / Music,ART|MUSIC|ARTC|DANCE|DRAMA,"Portfolio submissions, performance tasks, reflection journals",Use existing Chapter sections; use assignments for portfolio/performance evidence and lighter teacher-reviewed gates.
+Physical Education,PE|YOGA|SPORTS|HEALTH,"Activity logs, fitness records, practical assessment rubric",Use existing Chapter sections; avoid sensitive health data and use rubrics for practical assessment.
+Commerce,ACC|BST|BA|STAT|ENT|ECO,"Accounting practice sets, case studies, problem-solving worksheets, project work",Use existing Chapter sections; add commerce problem sets and case-study assignments with chapter gates for mastery.
+Vocational / Skill,VOC|SKILL|WORKEDU,"Practical tasks, workplace safety, skill demonstration, portfolio evidence",Use existing Chapter sections; use assignments for skill evidence and gates for safety/process checks.
