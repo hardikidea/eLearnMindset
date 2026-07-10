@@ -120,7 +120,7 @@ def assemble_year(year, source_root):
     return out
 
 def main():
-    parser = argparse.ArgumentParser(description='Assemble structured Drona Public School CSV sources into Moodle ordered CSV directories.')
+    parser = argparse.ArgumentParser(description='Assemble school master-pack CSV sources into Moodle ordered CSV directories.')
     parser.add_argument('--year', default='all', help='Academic year to assemble, or all')
     parser.add_argument('--source-root', default=str(PACK), help='Source CSV root. Defaults to this pack root.')
     args = parser.parse_args()

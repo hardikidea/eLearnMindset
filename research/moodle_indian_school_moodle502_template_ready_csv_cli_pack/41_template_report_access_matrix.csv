@@ -1,6 +1,0 @@
-role_shortname,course_reports,completion_reports,gradebook,pii_access,notes
-trustee_manager,view,view,summary_only,restricted,Trust/category-level monitoring; avoid student PII unless legally required.
-principal,view,view,view,school_limited,School category reporting; no site administration.
-editingteacher,view,view,manage,course_limited,Subject course teaching and grading.
-student,own_only,own_only,own_only,own_profile,Student sees own progress and grades only.
-parent,child_only,child_only,child_only,child_limited,Parent role assigned in child user context only.

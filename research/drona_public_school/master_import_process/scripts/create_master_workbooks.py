@@ -37,6 +37,9 @@ HELP_FILL = PatternFill("solid", fgColor="F3F6FA")
 ERROR_FILL = PatternFill("solid", fgColor="FFC7CE")
 WARNING_FILL = PatternFill("solid", fgColor="FFEB9C")
 HELPER_FILL = PatternFill("solid", fgColor="E8F3FF")
+PASS_FILL = PatternFill("solid", fgColor="C6EFCE")
+FAIL_FILL = PatternFill("solid", fgColor="FFC7CE")
+CONTROL_FILL = PatternFill("solid", fgColor="DDEBF7")
 SYSTEM_TAB = "9DC3E6"
 REQUIRED_TAB = "F4B183"
 OPTIONAL_TAB = "A6A6A6"
@@ -420,6 +423,63 @@ SHEET_IDNUMBER_PATTERNS = {
     "20_users_students": "<SCHOOL_CODE><YY>-<5_DIGIT_SEQUENCE>",
     "21_users_parents": "<SCHOOL_CODE>-PAR-<5_DIGIT_SEQUENCE>",
 }
+
+
+AUTOMATIC_SHEETS = {
+    "09_subject_matrix",
+    "10_categories",
+    "11_optional_categories",
+    "12_courses",
+    "13_courses_upload",
+    "14_cohorts",
+    "15_groups",
+    "22_cohort_members",
+    "25_enrolments",
+    "37_template_application",
+    "51_academic_history",
+    "52_promotion_plan",
+    "54_next_year_courses",
+    "55_next_year_cohorts",
+    "56_next_year_groups",
+    "57_next_year_enrolments",
+    "assessment_plan",
+    "attendance_policy",
+    "course_certificates",
+    "course_final_exams",
+    "course_term_exams",
+    "gradebook_weights",
+}
+
+
+AUTOMATIC_MACROS = {
+    "09_subject_matrix": "GenerateGradeSubjectMatrix",
+    "10_categories": "GenerateCategories",
+    "11_optional_categories": "GenerateOptionalYearCategoryModel",
+    "12_courses": "GenerateCourses",
+    "13_courses_upload": "GenerateCoursesWithTemplateUpload",
+    "14_cohorts": "GenerateCohorts",
+    "15_groups": "GenerateGroups",
+    "22_cohort_members": "GenerateCohortMembers",
+    "25_enrolments": "GenerateEnrolments",
+    "37_template_application": "GenerateCourseTemplateApplication",
+    "51_academic_history": "GenerateStudentAcademicHistory",
+    "52_promotion_plan": "GenerateStudentPromotionPlan",
+    "54_next_year_courses": "GenerateNextYearCourses",
+    "55_next_year_cohorts": "GenerateNextYearCohorts",
+    "56_next_year_groups": "GenerateNextYearGroups",
+    "57_next_year_enrolments": "GenerateNextYearEnrolments",
+    "assessment_plan": "GenerateAssessmentPlan",
+    "attendance_policy": "GenerateAttendancePolicy",
+    "course_certificates": "GenerateCourseCertificates",
+    "course_final_exams": "GenerateCourseFinalExams",
+    "course_term_exams": "GenerateCourseTermExams",
+    "gradebook_weights": "GenerateGradebookWeights",
+}
+
+
+def macro_hyperlink(macro_name: str, label: str) -> str:
+    target = f"vnd.sun.star.script:Standard.MatrixTools.{macro_name}?language=Basic&location=document"
+    return f'=HYPERLINK("{target}","{label}")'
 
 
 def fit_columns(ws, max_width=52):
@@ -860,6 +920,140 @@ def add_dashboard(wb, year):
     fit_columns(ws, max_width=72)
 
 
+def status_pattern(entry: dict) -> str:
+    sheet = entry["sheet"]
+    if sheet in SHEET_IDNUMBER_PATTERNS:
+        return SHEET_IDNUMBER_PATTERNS[sheet]
+    source = entry["source"]
+    if sheet in AUTOMATIC_SHEETS:
+        return f"Generated from {source}; rerun macro when dependency row counts change"
+    return f"Manual/source data from {source}"
+
+
+def status_expected_formula(sheet: str, row_by_sheet: dict[str, int]) -> str | None:
+    def c(name: str) -> str:
+        return f"C{row_by_sheet[name]}"
+
+    formulas = {
+        "09_subject_matrix": lambda: c("12_courses"),
+        "11_optional_categories": lambda: c("10_categories"),
+        "12_courses": lambda: c("09_subject_matrix"),
+        "13_courses_upload": lambda: c("12_courses"),
+        "15_groups": lambda: f'{c("12_courses")}*COUNTA(\'07_divisions\'!A7:A{MAX_INPUT_ROWS})',
+        "22_cohort_members": lambda: c("20_users_students"),
+        "25_enrolments": lambda: c("15_groups"),
+        "37_template_application": lambda: c("12_courses"),
+        "51_academic_history": lambda: c("20_users_students"),
+        "52_promotion_plan": lambda: c("20_users_students"),
+        "54_next_year_courses": lambda: c("12_courses"),
+        "55_next_year_cohorts": lambda: c("14_cohorts"),
+        "56_next_year_groups": lambda: c("15_groups"),
+        "57_next_year_enrolments": lambda: c("25_enrolments"),
+        "assessment_plan": lambda: c("12_courses"),
+        "attendance_policy": lambda: f"COUNTA('05_grades'!A7:A{MAX_INPUT_ROWS})",
+        "course_certificates": lambda: c("12_courses"),
+        "course_final_exams": lambda: c("12_courses"),
+        "course_term_exams": lambda: (
+            f'{c("12_courses")}*COUNTIFS(\'exam_terms\'!A7:A{MAX_INPUT_ROWS},"<>FINAL",'
+            f'\'exam_terms\'!A7:A{MAX_INPUT_ROWS},"<>")'
+        ),
+        "gradebook_weights": lambda: c("12_courses"),
+    }
+    factory = formulas.get(sheet)
+    return factory() if factory else None
+
+
+def add_status_sheet(wb, year: str) -> None:
+    if "status" in wb.sheetnames:
+        del wb["status"]
+    ws = wb.create_sheet("status", 2)
+    ws.sheet_properties.tabColor = SYSTEM_TAB
+    headers = ["type", "filename", "count", "status", "action"]
+    ws.append(headers)
+    control_rows = [
+        (
+            "automatic",
+            "ALL_AUTOMATIC_SHEETS\nid_number_formula: rebuild every macro-generated sheet from current master rows",
+            '=SUMIF(A7:A2000,"automatic",C7:C2000)',
+            "CONTROL",
+            macro_hyperlink("GenerateAllDerivedSheets", "Run all automatic macros"),
+        ),
+        (
+            "automatic",
+            "STATUS_ONLY\nid_number_formula: recalculate health formulas after manual review",
+            "",
+            "CONTROL",
+            macro_hyperlink("RefreshStatus", "Refresh status"),
+        ),
+        (
+            "automatic",
+            "CLEAR_AUTOMATIC_SHEETS\nid_number_formula: remove data rows from macro-generated sheets",
+            "",
+            "CONTROL",
+            macro_hyperlink("ClearAutomaticData", "Clear automatic data"),
+        ),
+        (
+            "automatic",
+            "RESET_AUTOMATIC_SHEETS\nid_number_formula: clear and regenerate all macro-generated sheets",
+            "",
+            "CONTROL",
+            macro_hyperlink("ResetAutomaticData", "Reset and regenerate"),
+        ),
+        ("", "", "", "", ""),
+    ]
+    for row in control_rows:
+        ws.append(row)
+
+    row_by_sheet = {entry["sheet"]: index for index, entry in enumerate(SOURCE_FILES, start=7)}
+    for entry in SOURCE_FILES:
+        sheet = entry["sheet"]
+        row_index = row_by_sheet[sheet]
+        row_type = "automatic" if sheet in AUTOMATIC_SHEETS else "manual"
+        source_csv = entry["source"].format(year=year, next_year=year_next(year))
+        filename = (
+            f"{entry['ordered']}\n"
+            f"id_number_formula: {status_pattern(entry)}\n"
+            f"source: {source_csv}"
+        )
+        count = f"=COUNTA({excel_quote(sheet)}!A7:A{MAX_INPUT_ROWS})"
+        if row_type == "automatic":
+            expected = status_expected_formula(sheet, row_by_sheet)
+            if expected:
+                status = f'=IF(C{row_index}=({expected}),"PASSED","FAILED")'
+            else:
+                status = f'=IF(C{row_index}>0,"PASSED","FAILED")'
+            macro = AUTOMATIC_MACROS.get(sheet)
+            action = macro_hyperlink(macro, "Run macro") if macro else "Automatic data"
+        else:
+            status = "MANUAL"
+            action = "Manual edit"
+        ws.append([row_type, filename, count, status, action])
+
+    ws.freeze_panes = "A7"
+    ws.auto_filter.ref = f"A1:E{ws.max_row}"
+    widths = {"A": 16, "B": 78, "C": 18, "D": 16, "E": 28}
+    for column, width in widths.items():
+        ws.column_dimensions[column].width = width
+    for cell in ws[1]:
+        cell.fill = MANIFEST_FILL
+        cell.font = Font(bold=True)
+        cell.border = THIN_BORDER
+        cell.alignment = Alignment(wrap_text=True, vertical="top")
+    for row in ws.iter_rows(min_row=2, max_row=5):
+        for cell in row:
+            cell.fill = CONTROL_FILL
+            cell.border = THIN_BORDER
+            cell.alignment = Alignment(wrap_text=True, vertical="top")
+    for row in ws.iter_rows(min_row=7, max_row=ws.max_row):
+        fill = REQUIRED_IF_USED_FILL if row[0].value == "automatic" else OPTIONAL_FILL
+        for cell in row:
+            cell.fill = fill
+            cell.border = THIN_BORDER
+            cell.alignment = Alignment(wrap_text=True, vertical="top")
+    ws.conditional_formatting.add(f"D7:D{ws.max_row}", FormulaRule(formula=['D7="PASSED"'], fill=PASS_FILL))
+    ws.conditional_formatting.add(f"D7:D{ws.max_row}", FormulaRule(formula=['D7="FAILED"'], fill=FAIL_FILL))
+
+
 def add_version_sheet(wb, year):
     ws = wb.create_sheet("_version")
     ws.sheet_properties.tabColor = SYSTEM_TAB
@@ -1056,6 +1250,7 @@ def build_workbook(
     lookup_names = add_lookup_sheet(wb, build_lookup_values(year, source_root))
     for entry in SOURCE_FILES:
         add_data_sheet(wb, entry, year, source_root, sample_limit, include_example_row, lookup_names, prefill_standard_rows)
+    add_status_sheet(wb, year)
     path.parent.mkdir(parents=True, exist_ok=True)
     wb.active = 0
     wb.save(path)

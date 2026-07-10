@@ -30,6 +30,8 @@ temp/
 .cache/
 coverage/
 reports/
+__pycache__/
+*.pyc
 .phpunit.result.cache
 .phpunit.cache/
 .eslintcache
@@ -64,6 +66,7 @@ override.tf.json
 /vendor/
 /dist/
 /build/
+research/drona_public_school/build/zip/*.zip
 
 # Upstream Moodle source is bootstrapped from the official Moodle Git tag.
 # Keep the local checkout out of the root project repository.

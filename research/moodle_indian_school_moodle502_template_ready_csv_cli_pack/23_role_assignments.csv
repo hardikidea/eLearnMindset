@@ -1,9 +1,0 @@
-username,role_shortname,context_type,context_identifier,notes
-trustee.manager,trustee_manager,category,GVS_TRUST,Trustee manager at trust category
-principal.gvs,principal,category,GVS_TRUST_GGOV_GVS,Principal for GGOV school category
-principal.gvs,principal,category,GVS_TRUST_GSEB_GVS,Principal for GSEB school category
-principal.gvs,principal,category,GVS_TRUST_CBSE_GVS,Principal for CBSE school category
-principal.gvs,principal,category,GVS_TRUST_NCERT_GVS,Principal for NCERT school category
-teacher.math,editingteacher,course,GVS-GSEB-GUJ-STD10-GEN-MATH-2026,Sample course teacher assignment
-teacher.phy,editingteacher,course,GVS-GSEB-GUJ-STD11-SCI-PHY-2026,Sample course teacher assignment
-teacher.eng,editingteacher,course,GVS-CBSE-ENG-STD09-GEN-ENG-2026,Sample course teacher assignment

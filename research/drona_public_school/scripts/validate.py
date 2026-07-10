@@ -95,7 +95,7 @@ def validate_year(year):
     return errors
 
 def main():
-    parser = argparse.ArgumentParser(description='Validate Drona Public School structured pack.')
+    parser = argparse.ArgumentParser(description='Validate school master-pack structured CSV data.')
     parser.add_argument('--year', default='2026-2027')
     args = parser.parse_args()
     errors = []

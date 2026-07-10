@@ -6,7 +6,7 @@ PACK_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 PROJECT_ROOT="${PROJECT_ROOT:-$(git -C "$PACK_ROOT" rev-parse --show-toplevel 2>/dev/null || pwd)}"
 MOODLE_SERVICE="${MOODLE_SERVICE:-moodle}"
 BUILD_DIR="$PACK_ROOT/build/assembled_csv/$YEAR"
-CONTAINER_PACK="/tmp/drona_public_school/$YEAR"
+CONTAINER_PACK="/tmp/school_master_pack/$YEAR"
 if [ ! -d "$BUILD_DIR" ]; then
   "$PACK_ROOT/scripts/assemble.py" --year "$YEAR"
 fi

@@ -1,2 +1,0 @@
-history_id,username,academic_year,board_code,school_code,medium_code,grade_code,stream_code,division_code,cohort_code,status,result,effective_from,effective_to,created_by,created_on,notes
-HIST-000001,gvs.gseb.guj.std01.a.001,2026-2027,GSEB,GVS,GUJ,STD01,GEN,A,GVS-2026-GSEB-GUJ-STD01-GEN-A,Active,Current baseline sample,2026-06-01,2027-04-30,system,2026-07-03,Template row. Moodle core has no student-history table; keep this outside Moodle or implement a local plugin if formal history is required.
