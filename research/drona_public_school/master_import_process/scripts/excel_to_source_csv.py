@@ -8,7 +8,7 @@ from pathlib import Path
 
 from openpyxl import load_workbook
 
-from common import SOURCE_FILES, normalise_cell, resolve_tokens, stream_applies_to_grade
+from common import SOURCE_FILES, next_academic_year, normalise_cell, resolve_tokens, stream_applies_to_grade
 
 
 def row_values(row, width: int) -> list[str]:
@@ -106,8 +106,58 @@ def auto_generate_subject_matrix(sheets: dict[str, tuple[list[str], list[list[st
     sheets["09_subject_matrix"] = (headers, generated)
 
 
-def apply_generated_matrices(sheets: dict[str, tuple[list[str], list[list[str]]]]) -> None:
+def workbook_next_year(sheets: dict[str, tuple[list[str], list[list[str]]]], year: str) -> str:
+    years = [row.get("academic_year", "") for row in rows_for(sheets, "02_academic_years")]
+    if year in years:
+        index = years.index(year)
+        if index + 1 < len(years):
+            return years[index + 1]
+    return next_academic_year(year)
+
+
+def auto_generate_alumni_cohorts(sheets: dict[str, tuple[list[str], list[list[str]]]], year: str) -> None:
+    headers, rows = sheets.get("58_alumni_cohorts", ([], []))
+    if rows or not headers:
+        return
+    cohorts = rows_for(sheets, "14_cohorts")
+    if not cohorts:
+        return
+
+    alumni_year = workbook_next_year(sheets, year)
+    start_year = alumni_year.split("-", 1)[0]
+    generated: list[list[str]] = []
+    for cohort in cohorts:
+        if cohort.get("grade_code") != "STD12":
+            continue
+        cohort_code = (
+            f"{cohort.get('school_code', '')}-ALUMNI-{start_year}-"
+            f"{cohort.get('board_code', '')}-{cohort.get('medium_code', '')}-"
+            f"{cohort.get('grade_code', '')}-{cohort.get('stream_code', '')}-"
+            f"{cohort.get('division_code', '')}"
+        )
+        row = {
+            **cohort,
+            "cohort_code": cohort_code,
+            "name": (
+                f"{cohort.get('school_code', '')} Alumni {alumni_year} "
+                f"{cohort.get('medium_code', '')} {cohort.get('grade_code', '')} "
+                f"{cohort.get('stream_code', '')} Division {cohort.get('division_code', '')}"
+            ),
+            "idnumber": cohort_code,
+            "academic_year": alumni_year,
+            "visible": "1",
+            "description": (
+                f"{alumni_year} alumni/archive cohort generated from final-grade cohort "
+                f"{cohort.get('cohort_code', '')}."
+            ),
+        }
+        generated.append([row.get(header, "") for header in headers])
+    sheets["58_alumni_cohorts"] = (headers, generated)
+
+
+def apply_generated_matrices(sheets: dict[str, tuple[list[str], list[list[str]]]], year: str) -> None:
     auto_generate_subject_matrix(sheets)
+    auto_generate_alumni_cohorts(sheets, year)
 
 
 def convert(workbook: Path, output: Path, year: str) -> int:
@@ -123,7 +173,7 @@ def convert(workbook: Path, output: Path, year: str) -> int:
             continue
         sheets[sheet_name] = sheet_to_rows(wb[sheet_name])
 
-    apply_generated_matrices(sheets)
+    apply_generated_matrices(sheets, year)
 
     targets: dict[Path, tuple[list[str], list[list[str]]]] = {}
     for entry in SOURCE_FILES:

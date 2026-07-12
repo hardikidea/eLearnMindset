@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from pathlib import Path
-import argparse, csv, json, shutil
+import argparse, csv, json, re, shutil
 
 PACK = Path(__file__).resolve().parents[1]
 HEADERS = json.loads((PACK / 'config' / 'ordered_csv_headers.json').read_text())
@@ -33,6 +33,45 @@ def next_year(year, years):
         return years[years.index(year) + 1]
     except Exception:
         return None
+
+def next_academic_year(year):
+    match = re.fullmatch(r'(\d{4})-(\d{4})', year)
+    if not match:
+        return year
+    start = int(match.group(1)) + 1
+    end = int(match.group(2)) + 1
+    return f'{start}-{end}'
+
+def build_alumni_cohorts(cohorts, year, years):
+    alumni_year = next_year(year, years) or next_academic_year(year)
+    start_year = alumni_year.split('-', 1)[0]
+    rows = []
+    for row in cohorts:
+        if row.get('grade_code') != 'STD12':
+            continue
+        cohort_code = (
+            f"{row.get('school_code', '')}-ALUMNI-{start_year}-"
+            f"{row.get('board_code', '')}-{row.get('medium_code', '')}-"
+            f"{row.get('grade_code', '')}-{row.get('stream_code', '')}-"
+            f"{row.get('division_code', '')}"
+        )
+        rows.append({
+            **row,
+            'cohort_code': cohort_code,
+            'name': (
+                f"{row.get('school_code', '')} Alumni {alumni_year} "
+                f"{row.get('medium_code', '')} {row.get('grade_code', '')} "
+                f"{row.get('stream_code', '')} Division {row.get('division_code', '')}"
+            ),
+            'idnumber': cohort_code,
+            'academic_year': alumni_year,
+            'visible': '1',
+            'description': (
+                f"{alumni_year} alumni/archive cohort generated from final-grade cohort "
+                f"{row.get('cohort_code', '')}."
+            ),
+        })
+    return rows
 
 def assemble_year(year, source_root):
     ydir = source_root / 'years' / year
@@ -109,8 +148,14 @@ def assemble_year(year, source_root):
         mapping['57_next_year_enrolments_2027_2028.csv'] = source_root / 'years' / ny / 'enrolments.csv'
     else:
         mapping['52_student_promotion_plan_2027_2028.csv'] = ydir / 'promotion_plan_to_next_year.csv'
+    source_cohorts = None
     for ordered in sorted(HEADERS):
-        rows = read_csv(mapping[ordered]) if ordered in mapping else []
+        if ordered == '58_alumni_cohorts_2027.csv':
+            if source_cohorts is None:
+                source_cohorts = read_csv(ydir / 'cohorts.csv')
+            rows = build_alumni_cohorts(source_cohorts, year, years)
+        else:
+            rows = read_csv(mapping[ordered]) if ordered in mapping else []
         copy_to(out, ordered, rows)
     # Extra structured files not consumed by Moodle core importer yet.
     for extra in ['course_certificates.csv','course_term_exams.csv','course_final_exams.csv','assessment_plan.csv','exam_terms.csv','gradebook_weights.csv','attendance_policy.csv']:

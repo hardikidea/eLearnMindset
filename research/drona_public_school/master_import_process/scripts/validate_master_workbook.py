@@ -52,6 +52,7 @@ REQUIRED_SHEETS = [
     "59_next_year_cohorts_2027_2028",
     "60_next_year_groups_2027_2028",
     "61_next_year_enrolments_2027_20",
+    "62_alumni_cohorts_2027",
     "66_assessment_plan",
     "67_attendance_policy",
     "68_course_certificates",
@@ -168,6 +169,19 @@ def check_row_counts(errors: list[str], workbook) -> None:
     else:
         print(f"OK term exams rows: {counts['70_course_term_exams']} for {active_terms}")
 
+    cohort_ws = workbook["18_cohorts"]
+    cohort_header = {cohort_ws.cell(1, col).value: col for col in range(1, cohort_ws.max_column + 1)}
+    grade_col = cohort_header.get("grade_code")
+    expected_alumni_rows = 0
+    if grade_col:
+        for row in range(2, cohort_ws.max_row + 1):
+            if str(cohort_ws.cell(row, grade_col).value or "") == "STD12":
+                expected_alumni_rows += 1
+    if counts["62_alumni_cohorts_2027"] != expected_alumni_rows:
+        fail(errors, f"alumni cohorts vs STD12 cohorts: {counts['62_alumni_cohorts_2027']} != {expected_alumni_rows}")
+    else:
+        print(f"OK alumni cohorts vs STD12 cohorts: {expected_alumni_rows}")
+
 
 def check_macro_alignment(errors: list[str], workbook) -> None:
     macro_source = MACRO_SOURCE.read_text(encoding="utf-8")
@@ -184,8 +198,8 @@ def check_macro_alignment(errors: list[str], workbook) -> None:
     targets = targets_match.group(1).split(", ")
     if len(macros) != len(targets):
         fail(errors, f"macro/target count mismatch: {len(macros)} != {len(targets)}")
-    if len(macros) != 22:
-        fail(errors, f"expected 22 individual macros, found {len(macros)}")
+    if len(macros) != 23:
+        fail(errors, f"expected 23 individual macros, found {len(macros)}")
 
     missing_subs = [macro for macro in macros if f"Sub {macro}" not in macro_source]
     missing_docs = [macro for macro in macros if f"`{macro}`" not in readme]
@@ -230,6 +244,7 @@ def check_ods_package(errors: list[str], ods_path: Path) -> None:
             "GenerateOptionalYearCategoryModel",
             "GenerateStudentAcademicHistory",
             "GenerateStudentPromotionPlan",
+            "GenerateAlumniCohorts",
             "GenerateAssessmentPlan",
             "GenerateAttendancePolicy",
         ]:

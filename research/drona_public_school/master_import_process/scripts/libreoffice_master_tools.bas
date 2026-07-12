@@ -122,6 +122,7 @@ Function BuildAllDerivedSheetsMessage(oDoc As Object) As String
         "59_next_year_cohorts_2027_2028: " & BuildNextYearCohorts(oDoc) & " rows" & Chr(10) & _
         "60_next_year_groups_2027_2028: " & BuildNextYearGroups(oDoc) & " rows" & Chr(10) & _
         "61_next_year_enrolments_2027_20: " & BuildNextYearEnrolments(oDoc) & " rows" & Chr(10) & _
+        "62_alumni_cohorts_2027: " & BuildAlumniCohorts(oDoc) & " rows" & Chr(10) & _
         "status: formulas refreshed"
     oDoc.calculateAll()
 End Function
@@ -192,6 +193,10 @@ End Sub
 
 Sub GenerateNextYearEnrolments
     RunBuilder "next_year_enrolments", "61_next_year_enrolments_2027_20"
+End Sub
+
+Sub GenerateAlumniCohorts
+    RunBuilder "alumni_cohorts", "62_alumni_cohorts_2027"
 End Sub
 
 Sub GenerateOptionalYearCategoryModel
@@ -276,6 +281,8 @@ Function BuildByName(oDoc As Object, builderName As String) As Long
             BuildByName = BuildNextYearGroups(oDoc)
         Case "next_year_enrolments"
             BuildByName = BuildNextYearEnrolments(oDoc)
+        Case "alumni_cohorts"
+            BuildByName = BuildAlumniCohorts(oDoc)
         Case "optional_year_category_model"
             BuildByName = BuildOptionalYearCategoryModel(oDoc)
         Case "student_academic_history"
@@ -1135,6 +1142,58 @@ Function BuildNextYearEnrolments(oDoc As Object) As Long
     BuildNextYearEnrolments = BuildEnrolmentsFromCourses(oDoc, "58_next_year_courses_2027_2028", "61_next_year_enrolments_2027_20")
 End Function
 
+Function BuildAlumniCohorts(oDoc As Object) As Long
+    Dim oSource As Object, oTarget As Object, oYears As Object
+    Dim hSource As Long, hTarget As Long, hYear As Long, sourceRow As Long, targetRow As Long, yearRow As Long
+    Dim schoolCode As String, mediumCode As String, gradeCode As String, streamCode As String, divisionCode As String
+    Dim schoolCodeRef As String, boardCodeRef As String, mediumCodeRef As String, gradeCodeRef As String
+    Dim streamCodeRef As String, divisionCodeRef As String, nextYearRef As String, sourceCohortRef As String
+    Dim alumniCodeFormula As String, generatedRows As Long
+    oSource = RequireSheet(oDoc, "18_cohorts")
+    oTarget = RequireSheet(oDoc, "62_alumni_cohorts_2027")
+    oYears = RequireSheet(oDoc, "06_academic_years")
+    hSource = FindHeaderRow(oSource, "cohort_code")
+    hTarget = FindHeaderRow(oTarget, "cohort_code")
+    hYear = FindHeaderRow(oYears, "academic_year")
+    yearRow = NextAcademicYearRow(oYears)
+    nextYearRef = FormulaCellByHeader(oYears, hYear, yearRow, "academic_year")
+    targetRow = hTarget + 1
+    ClearDataRows oTarget, targetRow
+    For sourceRow = hSource + 1 To LastUsedRow(oSource)
+        schoolCode = CellText(oSource, FindColumn(oSource, "school_code", hSource), sourceRow)
+        gradeCode = CellText(oSource, FindColumn(oSource, "grade_code", hSource), sourceRow)
+        If schoolCode <> "" And gradeCode = "STD12" Then
+            mediumCode = CellText(oSource, FindColumn(oSource, "medium_code", hSource), sourceRow)
+            streamCode = CellText(oSource, FindColumn(oSource, "stream_code", hSource), sourceRow)
+            divisionCode = CellText(oSource, FindColumn(oSource, "division_code", hSource), sourceRow)
+            schoolCodeRef = FormulaCellByHeader(oSource, hSource, sourceRow, "school_code")
+            boardCodeRef = FormulaCellByHeader(oSource, hSource, sourceRow, "board_code")
+            mediumCodeRef = FormulaCellByHeader(oSource, hSource, sourceRow, "medium_code")
+            gradeCodeRef = FormulaCellByHeader(oSource, hSource, sourceRow, "grade_code")
+            streamCodeRef = FormulaCellByHeader(oSource, hSource, sourceRow, "stream_code")
+            divisionCodeRef = FormulaCellByHeader(oSource, hSource, sourceRow, "division_code")
+            sourceCohortRef = FormulaCellByHeader(oSource, hSource, sourceRow, "cohort_code")
+            alumniCodeFormula = "=" & schoolCodeRef & "&" & FormulaText("-ALUMNI-") & "&LEFT(" & nextYearRef & ";4)&" & FormulaText("-") & "&" & boardCodeRef & "&" & FormulaText("-") & "&" & mediumCodeRef & "&" & FormulaText("-") & "&" & gradeCodeRef & "&" & FormulaText("-") & "&" & streamCodeRef & "&" & FormulaText("-") & "&" & divisionCodeRef
+            SetFormulaByHeader oTarget, hTarget, targetRow, "cohort_code", alumniCodeFormula
+            SetFormulaByHeader oTarget, hTarget, targetRow, "name", "=" & schoolCodeRef & "&" & FormulaText(" Alumni ") & "&" & nextYearRef & "&" & FormulaText(" ") & "&" & mediumCodeRef & "&" & FormulaText(" ") & "&" & gradeCodeRef & "&" & FormulaText(" ") & "&" & streamCodeRef & "&" & FormulaText(" Division ") & "&" & divisionCodeRef
+            SetFormulaByHeader oTarget, hTarget, targetRow, "idnumber", alumniCodeFormula
+            SetFormulaByHeader oTarget, hTarget, targetRow, "context_category_code", "=" & FormulaCellByHeader(oSource, hSource, sourceRow, "context_category_code")
+            SetFormulaByHeader oTarget, hTarget, targetRow, "board_code", "=" & boardCodeRef
+            SetFormulaByHeader oTarget, hTarget, targetRow, "school_code", "=" & schoolCodeRef
+            SetFormulaByHeader oTarget, hTarget, targetRow, "medium_code", "=" & mediumCodeRef
+            SetFormulaByHeader oTarget, hTarget, targetRow, "grade_code", "=" & gradeCodeRef
+            SetFormulaByHeader oTarget, hTarget, targetRow, "stream_code", "=" & streamCodeRef
+            SetFormulaByHeader oTarget, hTarget, targetRow, "division_code", "=" & divisionCodeRef
+            SetFormulaByHeader oTarget, hTarget, targetRow, "academic_year", "=" & nextYearRef
+            SetFormulaByHeader oTarget, hTarget, targetRow, "visible", FormulaStaticText("1")
+            SetFormulaByHeader oTarget, hTarget, targetRow, "description", "=" & nextYearRef & "&" & FormulaText(" alumni/archive cohort generated from final-grade cohort ") & "&" & sourceCohortRef & "&" & FormulaText(".")
+            targetRow = targetRow + 1
+            generatedRows = generatedRows + 1
+        End If
+    Next sourceRow
+    BuildAlumniCohorts = generatedRows
+End Function
+
 Function BuildOptionalYearCategoryModel(oDoc As Object) As Long
     Dim oSource As Object, oTarget As Object
     Dim hSource As Long, hTarget As Long, sourceRow As Long, targetRow As Long, generatedRows As Long
@@ -1604,6 +1663,7 @@ Sub ClearAutomaticSheets(oDoc As Object)
     ClearGeneratedSheet oDoc, "59_next_year_cohorts_2027_2028"
     ClearGeneratedSheet oDoc, "60_next_year_groups_2027_2028"
     ClearGeneratedSheet oDoc, "61_next_year_enrolments_2027_20"
+    ClearGeneratedSheet oDoc, "62_alumni_cohorts_2027"
     ClearGeneratedSheet oDoc, "66_assessment_plan"
     ClearGeneratedSheet oDoc, "67_attendance_policy"
     ClearGeneratedSheet oDoc, "68_course_certificates"

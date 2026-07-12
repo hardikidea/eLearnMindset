@@ -82,6 +82,7 @@ Available individual macros:
 - `GenerateNextYearCohorts` rebuilds `59_next_year_cohorts_2027_2028` from current generated cohorts and the next academic year.
 - `GenerateNextYearGroups` rebuilds `60_next_year_groups_2027_2028` from next-year courses and divisions.
 - `GenerateNextYearEnrolments` rebuilds `61_next_year_enrolments_2027_20` from next-year courses and divisions using cohort-sync enrolment.
+- `GenerateAlumniCohorts` rebuilds `62_alumni_cohorts_2027` from current-year `STD12` cohorts for alumni/archive handling.
 
 Primary ID formulas used by the macros:
 
@@ -89,12 +90,13 @@ Primary ID formulas used by the macros:
 - Course shortname: `<SCHOOL_CODE>-<BOARD_CODE>-<MEDIUM_CODE>-<GRADE_CODE>-<STREAM_CODE>-<SUBJECT_CODE>-<YY>`
 - Category code: `<TRUST_CODE>_<BOARD_CODE>_<SCHOOL_CODE>_<YYYY_YYYY>_<MEDIUM_CODE>_<GRADE_CODE>_<STREAM_CODE>`
 - Cohort code: `<SCHOOL_CODE>-<START_YEAR>-<BOARD_CODE>-<MEDIUM_CODE>-<GRADE_CODE>-<STREAM_CODE>-<DIVISION_CODE>`
+- Alumni cohort code: `<SCHOOL_CODE>-ALUMNI-<NEXT_START_YEAR>-<BOARD_CODE>-<MEDIUM_CODE>-<GRADE_CODE>-<STREAM_CODE>-<DIVISION_CODE>`
 - Group ID number: `<COURSE_CODE>-<DIVISION_CODE>`
 - Enrolment mapping: `course_code + cohort_code + group_idnumber + cohort_sync`
 
 Keep a backup copy before running macros against manually edited data.
 
-Static/reference sheets are intentionally not rebuilt by macros. This includes manual registration sheets, lookup sheets, template definition sheets, `47_diksha_content_template`, and `62_alumni_cohorts_2027`; those remain operator-managed until the school confirms the exact content or alumni policy.
+Static/reference sheets are intentionally not rebuilt by macros. This includes manual registration sheets, lookup sheets, template definition sheets, and `47_diksha_content_template`; those remain operator-managed until the school confirms exact content and policy. `62_alumni_cohorts_2027` is now automatic because it is deterministically generated from `18_cohorts` rows where `grade_code=STD12`.
 
 Macro source is maintained in `research/drona_public_school/master_import_process/scripts/libreoffice_master_tools.bas`. Regenerate the ODS with:
 

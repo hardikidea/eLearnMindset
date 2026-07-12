@@ -581,8 +581,9 @@ Individual macros include:
 - `GenerateNextYearCohorts`
 - `GenerateNextYearGroups`
 - `GenerateNextYearEnrolments`
+- `GenerateAlumniCohorts`
 
-Static/reference sheets are intentionally not rebuilt by macros. This includes registration sheets, lookup sheets, content placeholders, and alumni policy sheets that need school confirmation.
+Static/reference sheets are intentionally not rebuilt by macros. This includes registration sheets, lookup sheets, content placeholders, and alumni policy sheets that need school confirmation. Alumni cohort rows are the exception: `62_alumni_cohorts_2027` is generated automatically from `18_cohorts` rows where `grade_code=STD12`.
 
 ## Chapter 16: Development Rules
 

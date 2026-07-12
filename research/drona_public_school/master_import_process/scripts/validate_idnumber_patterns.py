@@ -49,6 +49,11 @@ def validate_year_format(errors, year):
     return start, start[-2:], year.replace("-", "_")
 
 
+def year_parts_for_value(errors, year, label):
+    start, short, token = validate_year_format(errors, year)
+    return start, short, token
+
+
 def validate(source: Path, year: str) -> list[str]:
     errors: list[str] = []
     start_year, short_year, year_token = validate_year_format(errors, year)
@@ -122,6 +127,13 @@ def validate(source: Path, year: str) -> list[str]:
     course_by_code = row_map(courses, "course_code")
     course_shortnames = {row.get("shortname", ""): row for row in courses}
     cohort_codes = code_set(cohorts, "cohort_code")
+    all_cohort_codes = set(cohort_codes)
+    years_root = source / "years"
+    if years_root.exists():
+        for year_dir in years_root.iterdir():
+            cohort_file = year_dir / "cohorts.csv"
+            if cohort_file.exists():
+                all_cohort_codes.update(code_set(read_rows(cohort_file), "cohort_code"))
     group_ids = code_set(groups, "group_idnumber")
     student_usernames = code_set(students, "username")
     parent_usernames = code_set(parents, "username")
@@ -204,12 +216,14 @@ def validate(source: Path, year: str) -> list[str]:
             add(errors, f"users_students.csv line {idx}: username must match {school_prefix}.stu.00001 pattern: {username}")
             continue
         seq = match.group(1)
-        expected_id = f"{school_code}{short_year}-{seq}"
+        registration_year = row.get("profile_field_current_academic_year") or year
+        registration_start, registration_short, _ = year_parts_for_value(errors, registration_year, f"users_students.csv line {idx}")
+        expected_id = f"{school_code}{registration_short}-{seq}"
         if row.get("idnumber") != expected_id or row.get("profile_field_admission_no") != expected_id:
             add(errors, f"users_students.csv line {idx}: student id/admission expected {expected_id}")
-        if row.get("profile_field_student_gr_no") != f"GR-{school_code}-{start_year}-{seq}":
+        if row.get("profile_field_student_gr_no") != f"GR-{school_code}-{registration_start}-{seq}":
             add(errors, f"users_students.csv line {idx}: invalid GR number")
-        if row.get("cohort1") and row.get("cohort1") not in cohort_codes:
+        if row.get("cohort1") and row.get("cohort1") not in all_cohort_codes:
             add(errors, f"users_students.csv line {idx}: cohort1 does not exist: {row.get('cohort1')}")
 
     for idx, row in enumerate(parents, 2):
