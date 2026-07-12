@@ -224,6 +224,8 @@ Every import sheet follows this row contract:
 
 Do not delete rows 1 to 5. Keep row 6 as a reference example unless you also remove `example_row=6` metadata.
 
+The macro-enabled `.ods` artifact is different from the `.xlsx` review workbook by design. The `.xlsx` keeps row 6 as a human example/reference row. The `.ods` is operational and is seeded from `build/assembled_csv/<academic-year>/`, so row 6 starts real import data. This keeps the `status` sheet counts and macro-generated rows aligned with the CSV files Moodle actually imports.
+
 Workbook helper sheets:
 
 | Sheet | Purpose |
@@ -593,7 +595,7 @@ Use [build/master_excel/README.md](../build/master_excel/README.md) as the canon
 Regenerate the LibreOffice macro ODS after changing workbook scripts, macro source, status-sheet rules, or the full predefined workbook:
 
 ```bash
-python3 master_import_process/scripts/create_libreoffice_macro_workbook.py
+python3 master_import_process/scripts/create_libreoffice_macro_workbook.py --year 2026-2027 --source-root research/drona_public_school
 ```
 
 Open the ODS in LibreOffice and run:
@@ -612,7 +614,7 @@ Recommended health workflow:
 6. Use `Clear automatic data` only when you want generated rows emptied but manual registration/reference sheets preserved.
 7. Use `Reset and regenerate` when automatic sheets look stale or row counts changed significantly.
 
-Manual sheets are source-of-truth data and must not be overwritten by workbook macros. Automatic sheets are derived from those source sheets. `62_alumni_cohorts_2027` is automatic because it is generated from `18_cohorts` rows where `grade_code=STD12`; promotion action rows remain manual because they are the approval gate before changing live student placement.
+Manual sheets are source-of-truth data and must not be overwritten by workbook macros. Automatic sheets are derived from those source sheets. `58_alumni_cohorts` is automatic because it is generated from `14_cohorts` rows where `grade_code=STD12`; promotion action rows remain manual because they are the approval gate before changing live student placement.
 
 ## Chapter 16: Development Rules
 

@@ -8,6 +8,8 @@
 
 The full predefined workbook and macro workbook include a `status` sheet for workbook health checks.
 
+The `.xlsx` review workbook keeps row 6 as an example/reference row. The `.ods` macro workbook is operational: during generation it is seeded from `build/assembled_csv/<academic-year>/` so row 6 starts real import data. This keeps macro-generated counts aligned with the exact CSV rows used by Moodle imports and prevents duplicate example rows during macro rebuilds.
+
 Do not run macro actions from the `.xlsx` review workbooks. Regular `.xlsx` files do not contain the document-level LibreOffice Basic library, so LibreOffice cannot resolve `Standard.MatrixTools`. Run macro actions only from `school_master_pack_2026_2027_full_predefined_master_macros.ods`.
 
 The full local-testing dataset is intentionally kept in CSV form because it contains thousands of rows:
@@ -104,7 +106,7 @@ Most static/reference sheets are intentionally not rebuilt by macros. Manual reg
 
 Macro source is maintained in `research/drona_public_school/master_import_process/scripts/libreoffice_master_tools.bas`. Regenerate the ODS with:
 
-`python3 research/drona_public_school/master_import_process/scripts/create_libreoffice_macro_workbook.py`
+`python3 research/drona_public_school/master_import_process/scripts/create_libreoffice_macro_workbook.py --year 2026-2027 --source-root research/drona_public_school`
 
 Run the workbook and macro smoke validation with:
 

@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import csv
 import shutil
 import subprocess
 import tempfile
@@ -13,6 +14,8 @@ from xml.etree import ElementTree as ET
 from openpyxl import load_workbook
 from openpyxl.formatting.rule import FormulaRule
 from openpyxl.styles import Alignment, Font, PatternFill
+
+from common import PACK_ROOT, SOURCE_FILES, source_path
 
 
 SOFFICE = Path("/Applications/LibreOffice.app/Contents/MacOS/soffice")
@@ -28,6 +31,10 @@ AUTOMATIC_FILL = PatternFill("solid", fgColor="FFF2CC")
 MANUAL_FILL = PatternFill("solid", fgColor="E7E6E6")
 PASS_FILL = PatternFill("solid", fgColor="C6EFCE")
 FAIL_FILL = PatternFill("solid", fgColor="FFC7CE")
+
+
+DATA_HEADER_ROW = 5
+DATA_START_ROW = 6
 
 
 AUTOMATIC_SHEETS = {
@@ -171,9 +178,9 @@ def excel_quote(sheet_name: str) -> str:
 def source_sheet_rows(wb) -> list[dict[str, str]]:
     if "04_SOURCE_FILES" not in wb.sheetnames:
         return [
-            {"source_csv": f"{sheet}.csv", "worksheet": sheet}
-            for sheet in wb.sheetnames
-            if sheet not in {"status", "00_MACRO_GUIDE"}
+            {"source_csv": entry["ordered"], "worksheet": entry["sheet"]}
+            for entry in SOURCE_FILES
+            if entry["sheet"] in wb.sheetnames
         ]
     ws = wb["04_SOURCE_FILES"]
     headers = {
@@ -187,6 +194,56 @@ def source_sheet_rows(wb) -> list[dict[str, str]]:
         if worksheet:
             rows.append({"source_csv": source_csv, "worksheet": worksheet})
     return rows
+
+
+def read_csv_rows(path: Path) -> list[dict[str, str]]:
+    with path.open(newline="", encoding="utf-8-sig") as handle:
+        return list(csv.DictReader(handle))
+
+
+def sheet_headers(ws) -> list[str]:
+    headers: list[str] = []
+    for column in range(1, ws.max_column + 1):
+        value = str(ws.cell(DATA_HEADER_ROW, column).value or "").strip()
+        if value:
+            headers.append(value)
+    return headers
+
+
+def seed_csv_path(entry: dict, year: str, source_root: Path) -> Path:
+    assembled = source_root / "build" / "assembled_csv" / year / entry["ordered"]
+    if assembled.exists():
+        return assembled
+    return source_path(entry, year, source_root)
+
+
+def seed_workbook_from_source_csv(xlsx_path: Path, year: str, source_root: Path) -> None:
+    """Make the macro workbook operational by loading real CSV rows.
+
+    The regular XLSX keeps row 6 as a human example row. The macro-enabled ODS is
+    used for running generators, so row 6 must be real data to avoid duplicate
+    example rows in generated courses, groups, exam rows and status counts.
+    """
+    wb = load_workbook(xlsx_path)
+    seeded = 0
+    for entry in SOURCE_FILES:
+        sheet = entry["sheet"]
+        if sheet not in wb.sheetnames:
+            continue
+        csv_path = seed_csv_path(entry, year, source_root)
+        if not csv_path.exists():
+            raise FileNotFoundError(f"Cannot seed {sheet}; missing source CSV: {csv_path}")
+        ws = wb[sheet]
+        headers = sheet_headers(ws)
+        if not headers:
+            continue
+        if ws.max_row >= DATA_START_ROW:
+            ws.delete_rows(DATA_START_ROW, ws.max_row - DATA_START_ROW + 1)
+        for row in read_csv_rows(csv_path):
+            ws.append([row.get(header, "") for header in headers])
+        seeded += 1
+    wb.save(xlsx_path)
+    print(f"Seeded {seeded} worksheets from canonical import CSV rows for {year}.")
 
 
 def status_expected_formula(sheet: str, row_by_sheet: dict[str, int]) -> str | None:
@@ -318,13 +375,14 @@ def macro_source_code() -> str:
     return MACRO_SOURCE.read_text(encoding="utf-8")
 
 
-def convert_xlsx_to_ods(source_xlsx: Path, output_ods: Path) -> Path:
+def convert_xlsx_to_ods(source_xlsx: Path, output_ods: Path, year: str, source_root: Path) -> Path:
     if not SOFFICE.exists():
         raise FileNotFoundError(f"LibreOffice soffice not found: {SOFFICE}")
     with tempfile.TemporaryDirectory(prefix="dps_macro_") as tmp:
         tmpdir = Path(tmp)
         temp_xlsx = tmpdir / source_xlsx.name
         shutil.copy2(source_xlsx, temp_xlsx)
+        seed_workbook_from_source_csv(temp_xlsx, year, source_root)
         add_macro_guide_sheet(temp_xlsx)
         add_status_sheet_to_workbook(temp_xlsx)
         profile = tmpdir / "lo-profile"
@@ -428,8 +486,15 @@ def main() -> None:
         "--output-ods",
         default="research/drona_public_school/build/master_excel/school_master_pack_2026_2027_full_predefined_master_macros.ods",
     )
+    parser.add_argument("--year", default="2026-2027")
+    parser.add_argument("--source-root", default=str(PACK_ROOT))
     args = parser.parse_args()
-    output = convert_xlsx_to_ods(Path(args.source_xlsx), Path(args.output_ods))
+    output = convert_xlsx_to_ods(
+        Path(args.source_xlsx),
+        Path(args.output_ods),
+        args.year,
+        Path(args.source_root).resolve(),
+    )
     embed_macros(output)
     print(f"Created LibreOffice macro workbook: {output}")
 

@@ -19,6 +19,7 @@ Common tasks:
 |---|---|
 | Install workbook dependencies | `python3 -m pip install -r master_import_process/requirements.txt` |
 | Refresh workbook templates | `python3 master_import_process/scripts/create_master_workbooks.py --year 2026-2027` |
+| Regenerate macro ODS workbook | `python3 master_import_process/scripts/create_libreoffice_macro_workbook.py --year 2026-2027 --source-root research/drona_public_school` |
 | Create editable input workbook | `cp master_import_process/templates/school_master_import_template.xlsx master_import_process/input/school_master_import.xlsx` |
 | Validate workbook artifacts | `python3 master_import_process/scripts/validate_master_workbook.py` |
 | Check local environment | `scripts/doctor.sh 2026-2027` |
@@ -31,6 +32,7 @@ Common tasks:
 Safety rules:
 
 - Start every workbook review from the `status` sheet.
+- Use the `.xlsx` workbook for example/reference review and the `.ods` workbook for macro execution; the `.ods` is seeded from assembled import CSVs so status counts match Moodle-ready data.
 - Do not commit filled workbooks containing real student or parent data.
 - Do not edit `output/source_csv/` or `../build/assembled_csv/<year>/` by hand.
 - Keep `build/reports/<year>/preflight_report.md` and `import_manifest.json` for operator review when validating a production import batch.

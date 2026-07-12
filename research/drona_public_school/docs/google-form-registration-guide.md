@@ -399,17 +399,26 @@ Important mappings:
 | Student first name | `student_firstname` |
 | Student last name | `student_lastname` |
 | Date of birth | `student_birth_date` |
+| Gender | `student_gender` |
 | Academic year | `academic_year` |
 | Board | `board_code` |
 | Medium | `medium_code` |
 | Grade | `grade_code` |
 | Stream | `stream_code` |
 | Division | `division_code` |
+| Admission date | `admission_date` |
+| Current address line 1 | `current_address_line1` |
+| Current city | `current_city` |
+| Current district | `current_district` |
+| Current state | `current_state` |
 | Current PIN code | `current_pincode` |
+| Parent account type | `parent_type` |
 | Parent first name | `parent_firstname` |
 | Parent last name | `parent_lastname` |
 | Parent mobile number | `parent_mobile` |
 | Parent email | `parent_email` |
+| Emergency contact name | `emergency_contact_name` |
+| Emergency contact relation | `emergency_contact_relation` |
 | Emergency mobile | `emergency_contact_mobile` |
 | I consent to school storing student and parent data for LMS and school operations | `consent_student_data` |
 | I confirm all details are correct | `declaration_correct` |
