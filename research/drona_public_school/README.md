@@ -6,18 +6,23 @@ The included sample data represents Drona Public School for local testing. Tooli
 
 ## Start Here
 
-Read the maintained developer guide:
+For day-to-day use, follow this order:
 
-```text
-docs/developer-guide.md
-```
+1. Edit source data in `master/`, `registration/`, `templates/`, `operations/`, or `years/<year>/`.
+2. Run `python3 scripts/assemble.py --year <year>`.
+3. Run `python3 scripts/validate.py --year <year>`.
+4. Run `scripts/import.sh <year> validate-only`.
+5. Run `scripts/import.sh <year> dry-run`.
+6. Run `scripts/import.sh <year> live` only after backup and dry-run pass.
+
+The full reference is maintained in [docs/developer-guide.md](docs/developer-guide.md).
 
 ## Quick Commands
 
-Run from this folder:
+Run from the repository root:
 
 ```bash
-cd /Users/hardik.chauhan/Documents/learning/eLearnMindset/research/drona_public_school
+cd research/drona_public_school
 ```
 
 Assemble and validate the current year:
@@ -47,6 +52,8 @@ scripts/import.sh 2026-2027 live
 
 ## Master Workbook
 
+The workbook is an optional operator-friendly entry point. Start from its `status` sheet; it tells you which sheets are manual, which sheets are generated, and what needs attention.
+
 Generate or refresh workbook templates:
 
 ```bash
@@ -67,6 +74,19 @@ python3 master_import_process/scripts/validate_master_workbook.py
 ```
 
 When reviewing a workbook, open the `status` sheet first. It is the health dashboard for source files, row counts, generated-sheet checks, and macro actions.
+
+## Edit The Right Source
+
+| Need | Edit here |
+|---|---|
+| School identity, board, medium, grades, streams, divisions, subjects | `master/*.csv` |
+| Students, parents, staff, parent links | `registration/` |
+| Course template, sections, activities, certificates, exams | `templates/` |
+| Year-specific courses, cohorts, groups, enrolments, promotion plans | `years/<academic-year>/` |
+| Workbook process or import reports | `master_import_process/` |
+| Moodle import behavior | `scripts/moodle_cli/` |
+
+Do not hand-edit `build/assembled_csv/<year>/`; regenerate it from source data.
 
 ## Maintained Workbook Artifacts
 

@@ -45,7 +45,9 @@ REQUIRED_SHEETS = [
     "25_users_parents",
     "26_cohort_members",
     "29_enrolments",
+    "33_summary",
     "41_course_template_application",
+    "50_academic_year_rollover_check",
     "55_student_academic_history_tem",
     "56_student_promotion_plan_2027_",
     "58_next_year_courses_2027_2028",
@@ -53,6 +55,8 @@ REQUIRED_SHEETS = [
     "60_next_year_groups_2027_2028",
     "61_next_year_enrolments_2027_20",
     "62_alumni_cohorts_2027",
+    "63_archive_policy",
+    "65_compatibility_matrix",
     "66_assessment_plan",
     "67_attendance_policy",
     "68_course_certificates",
@@ -131,10 +135,10 @@ def check_status_sheet(errors: list[str], workbook) -> None:
     types = [str(ws.cell(row, 1).value or "") for row in range(7, ws.max_row + 1)]
     automatic = types.count("automatic")
     manual = types.count("manual")
-    if automatic < 20:
-        fail(errors, f"status sheet automatic row count too low: {automatic}")
-    if manual < 20:
-        fail(errors, f"status sheet manual row count too low: {manual}")
+    if automatic != 27:
+        fail(errors, f"status sheet automatic row count mismatch: {automatic} != 27")
+    if manual != 41:
+        fail(errors, f"status sheet manual row count mismatch: {manual} != 41")
     actions = " ".join(str(ws.cell(row, 5).value or "") for row in range(2, min(ws.max_row, 12) + 1))
     if "vnd.sun.star.script" in actions or "Standard.MatrixTools" in actions:
         fail(errors, "xlsx status sheet must not contain document macro hyperlinks; use the .ods macro workbook")
@@ -150,6 +154,18 @@ def check_row_counts(errors: list[str], workbook) -> None:
             fail(errors, f"{label}: {counts[left]} != {counts[right]}")
         else:
             print(f"OK {label}: {counts[left]}")
+
+    fixed_counts = {
+        "33_summary": 8,
+        "50_academic_year_rollover_check": 8,
+        "63_archive_policy": 4,
+        "65_compatibility_matrix": 18,
+    }
+    for sheet_name, expected in fixed_counts.items():
+        if counts[sheet_name] != expected:
+            fail(errors, f"{sheet_name} rows: {counts[sheet_name]} != {expected}")
+        else:
+            print(f"OK {sheet_name} rows: {expected}")
 
     terms_ws = workbook["71_exam_terms"]
     header = {terms_ws.cell(1, col).value: col for col in range(1, terms_ws.max_column + 1)}
@@ -198,8 +214,8 @@ def check_macro_alignment(errors: list[str], workbook) -> None:
     targets = targets_match.group(1).split(", ")
     if len(macros) != len(targets):
         fail(errors, f"macro/target count mismatch: {len(macros)} != {len(targets)}")
-    if len(macros) != 23:
-        fail(errors, f"expected 23 individual macros, found {len(macros)}")
+    if len(macros) != 27:
+        fail(errors, f"expected 27 individual macros, found {len(macros)}")
 
     missing_subs = [macro for macro in macros if f"Sub {macro}" not in macro_source]
     missing_docs = [macro for macro in macros if f"`{macro}`" not in readme]
@@ -241,10 +257,14 @@ def check_ods_package(errors: list[str], ods_path: Path) -> None:
             "RefreshStatus",
             "ClearAutomaticData",
             "ResetAutomaticData",
+            "GenerateSummary",
+            "GenerateRolloverChecklist",
             "GenerateOptionalYearCategoryModel",
             "GenerateStudentAcademicHistory",
             "GenerateStudentPromotionPlan",
             "GenerateAlumniCohorts",
+            "GenerateArchivePolicy",
+            "GenerateCompatibilityMatrix",
             "GenerateAssessmentPlan",
             "GenerateAttendancePolicy",
         ]:

@@ -437,7 +437,9 @@ AUTOMATIC_SHEETS = {
     "15_groups",
     "22_cohort_members",
     "25_enrolments",
+    "29_summary",
     "37_template_application",
+    "46_rollover_checklist",
     "51_academic_history",
     "52_promotion_plan",
     "54_next_year_courses",
@@ -445,6 +447,8 @@ AUTOMATIC_SHEETS = {
     "56_next_year_groups",
     "57_next_year_enrolments",
     "58_alumni_cohorts",
+    "59_archive_policy",
+    "61_compatibility",
     "assessment_plan",
     "attendance_policy",
     "course_certificates",
@@ -464,7 +468,9 @@ AUTOMATIC_MACROS = {
     "15_groups": "GenerateGroups",
     "22_cohort_members": "GenerateCohortMembers",
     "25_enrolments": "GenerateEnrolments",
+    "29_summary": "GenerateSummary",
     "37_template_application": "GenerateCourseTemplateApplication",
+    "46_rollover_checklist": "GenerateRolloverChecklist",
     "51_academic_history": "GenerateStudentAcademicHistory",
     "52_promotion_plan": "GenerateStudentPromotionPlan",
     "54_next_year_courses": "GenerateNextYearCourses",
@@ -472,6 +478,8 @@ AUTOMATIC_MACROS = {
     "56_next_year_groups": "GenerateNextYearGroups",
     "57_next_year_enrolments": "GenerateNextYearEnrolments",
     "58_alumni_cohorts": "GenerateAlumniCohorts",
+    "59_archive_policy": "GenerateArchivePolicy",
+    "61_compatibility": "GenerateCompatibilityMatrix",
     "assessment_plan": "GenerateAssessmentPlan",
     "attendance_policy": "GenerateAttendancePolicy",
     "course_certificates": "GenerateCourseCertificates",
@@ -945,7 +953,9 @@ def status_expected_formula(sheet: str, row_by_sheet: dict[str, int]) -> str | N
         "15_groups": lambda: f'{c("12_courses")}*COUNTA(\'07_divisions\'!A7:A{MAX_INPUT_ROWS})',
         "22_cohort_members": lambda: c("20_users_students"),
         "25_enrolments": lambda: c("15_groups"),
+        "29_summary": lambda: "8",
         "37_template_application": lambda: c("12_courses"),
+        "46_rollover_checklist": lambda: "8",
         "51_academic_history": lambda: c("20_users_students"),
         "52_promotion_plan": lambda: c("20_users_students"),
         "54_next_year_courses": lambda: c("12_courses"),
@@ -953,6 +963,8 @@ def status_expected_formula(sheet: str, row_by_sheet: dict[str, int]) -> str | N
         "56_next_year_groups": lambda: c("15_groups"),
         "57_next_year_enrolments": lambda: c("25_enrolments"),
         "58_alumni_cohorts": lambda: f'COUNTIF(\'14_cohorts\'!H7:H{MAX_INPUT_ROWS},"STD12")',
+        "59_archive_policy": lambda: "4",
+        "61_compatibility": lambda: "18",
         "assessment_plan": lambda: c("12_courses"),
         "attendance_policy": lambda: f"COUNTA('05_grades'!A7:A{MAX_INPUT_ROWS})",
         "course_certificates": lambda: c("12_courses"),
@@ -1090,7 +1102,7 @@ def add_sheet_index(wb, year):
     headers = ["sheet", "required", "standard_prefilled", "tab_color", "source_csv", "ordered_csv", "purpose"]
     ws.append(headers)
     for entry in SOURCE_FILES:
-        tab = GENERATED_TAB if entry["sheet"] == "09_subject_matrix" else (REQUIRED_TAB if entry.get("required") else OPTIONAL_TAB)
+        tab = GENERATED_TAB if entry["sheet"] in AUTOMATIC_SHEETS else (REQUIRED_TAB if entry.get("required") else OPTIONAL_TAB)
         ws.append([
             entry["sheet"],
             "required" if entry.get("required") else "optional",
@@ -1106,7 +1118,7 @@ def add_sheet_index(wb, year):
         cell.border = THIN_BORDER
     for row in ws.iter_rows(min_row=2):
         fill = REQUIRED_IF_USED_FILL if row[1].value == "required" else OPTIONAL_FILL
-        if row[0].value == "09_subject_matrix":
+        if row[0].value in AUTOMATIC_SHEETS:
             fill = STAFF_FILL
         for cell in row:
             cell.fill = fill
@@ -1156,7 +1168,7 @@ def add_color_guide(wb):
 
 def add_data_sheet(wb, entry, year, source_root, sample_limit, include_example_row, lookup_names, prefill_standard_rows):
     ws = wb.create_sheet(entry["sheet"])
-    ws.sheet_properties.tabColor = GENERATED_TAB if entry["sheet"] == "09_subject_matrix" else (
+    ws.sheet_properties.tabColor = GENERATED_TAB if entry["sheet"] in AUTOMATIC_SHEETS else (
         REQUIRED_TAB if entry.get("required") else OPTIONAL_TAB
     )
     source_csv = entry["source"].format(year=year, next_year=year_next(year))

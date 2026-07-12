@@ -108,7 +108,9 @@ Function BuildAllDerivedSheetsMessage(oDoc As Object) As String
         "19_groups: " & BuildGroups(oDoc) & " rows" & Chr(10) & _
         "26_cohort_members: " & BuildCohortMembers(oDoc) & " rows" & Chr(10) & _
         "29_enrolments: " & BuildEnrolments(oDoc) & " rows" & Chr(10) & _
+        "33_summary: " & BuildSummary(oDoc) & " rows" & Chr(10) & _
         "41_course_template_application: " & BuildCourseTemplateApplication(oDoc) & " rows" & Chr(10) & _
+        "50_academic_year_rollover_check: " & BuildRolloverChecklist(oDoc) & " rows" & Chr(10) & _
         "68_course_certificates: " & BuildCourseCertificates(oDoc) & " rows" & Chr(10) & _
         "69_course_final_exams: " & BuildCourseFinalExams(oDoc) & " rows" & Chr(10) & _
         "70_course_term_exams: " & BuildCourseTermExams(oDoc) & " rows" & Chr(10) & _
@@ -123,6 +125,8 @@ Function BuildAllDerivedSheetsMessage(oDoc As Object) As String
         "60_next_year_groups_2027_2028: " & BuildNextYearGroups(oDoc) & " rows" & Chr(10) & _
         "61_next_year_enrolments_2027_20: " & BuildNextYearEnrolments(oDoc) & " rows" & Chr(10) & _
         "62_alumni_cohorts_2027: " & BuildAlumniCohorts(oDoc) & " rows" & Chr(10) & _
+        "63_archive_policy: " & BuildArchivePolicy(oDoc) & " rows" & Chr(10) & _
+        "65_compatibility_matrix: " & BuildCompatibilityMatrix(oDoc) & " rows" & Chr(10) & _
         "status: formulas refreshed"
     oDoc.calculateAll()
 End Function
@@ -159,8 +163,16 @@ Sub GenerateEnrolments
     RunBuilder "enrolments", "29_enrolments"
 End Sub
 
+Sub GenerateSummary
+    RunBuilder "summary", "33_summary"
+End Sub
+
 Sub GenerateCourseTemplateApplication
     RunBuilder "course_template_application", "41_course_template_application"
+End Sub
+
+Sub GenerateRolloverChecklist
+    RunBuilder "rollover_checklist", "50_academic_year_rollover_check"
 End Sub
 
 Sub GenerateCourseCertificates
@@ -197,6 +209,14 @@ End Sub
 
 Sub GenerateAlumniCohorts
     RunBuilder "alumni_cohorts", "62_alumni_cohorts_2027"
+End Sub
+
+Sub GenerateArchivePolicy
+    RunBuilder "archive_policy", "63_archive_policy"
+End Sub
+
+Sub GenerateCompatibilityMatrix
+    RunBuilder "compatibility_matrix", "65_compatibility_matrix"
 End Sub
 
 Sub GenerateOptionalYearCategoryModel
@@ -263,8 +283,12 @@ Function BuildByName(oDoc As Object, builderName As String) As Long
             BuildByName = BuildCohortMembers(oDoc)
         Case "enrolments"
             BuildByName = BuildEnrolments(oDoc)
+        Case "summary"
+            BuildByName = BuildSummary(oDoc)
         Case "course_template_application"
             BuildByName = BuildCourseTemplateApplication(oDoc)
+        Case "rollover_checklist"
+            BuildByName = BuildRolloverChecklist(oDoc)
         Case "course_certificates"
             BuildByName = BuildCourseCertificates(oDoc)
         Case "course_final_exams"
@@ -283,6 +307,10 @@ Function BuildByName(oDoc As Object, builderName As String) As Long
             BuildByName = BuildNextYearEnrolments(oDoc)
         Case "alumni_cohorts"
             BuildByName = BuildAlumniCohorts(oDoc)
+        Case "archive_policy"
+            BuildByName = BuildArchivePolicy(oDoc)
+        Case "compatibility_matrix"
+            BuildByName = BuildCompatibilityMatrix(oDoc)
         Case "optional_year_category_model"
             BuildByName = BuildOptionalYearCategoryModel(oDoc)
         Case "student_academic_history"
@@ -769,6 +797,110 @@ End Function
 
 Function BuildEnrolments(oDoc As Object) As Long
     BuildEnrolments = BuildEnrolmentsFromCourses(oDoc, "16_courses", "29_enrolments")
+End Function
+
+Function BuildSummary(oDoc As Object) As Long
+    Dim oTarget As Object, oSchool As Object, oYears As Object, oStudents As Object, oParents As Object
+    Dim oStaff As Object, oCourses As Object, oCohorts As Object, oGroups As Object
+    Dim hTarget As Long, hSchool As Long, hYears As Long, hStudents As Long, hParents As Long
+    Dim hStaff As Long, hCourses As Long, hCohorts As Long, hGroups As Long
+    Dim targetRow As Long, generatedRows As Long
+
+    oTarget = RequireSheet(oDoc, "33_summary")
+    oSchool = RequireSheet(oDoc, "05_school_master")
+    oYears = RequireSheet(oDoc, "06_academic_years")
+    oStudents = RequireSheet(oDoc, "24_users_students")
+    oParents = RequireSheet(oDoc, "25_users_parents")
+    oStaff = RequireSheet(oDoc, "23_users_staff")
+    oCourses = RequireSheet(oDoc, "16_courses")
+    oCohorts = RequireSheet(oDoc, "18_cohorts")
+    oGroups = RequireSheet(oDoc, "19_groups")
+
+    hTarget = FindHeaderRow(oTarget, "metric")
+    hSchool = FindHeaderRow(oSchool, "school_name")
+    hYears = FindHeaderRow(oYears, "academic_year")
+    hStudents = FindHeaderRow(oStudents, "username")
+    hParents = FindHeaderRow(oParents, "username")
+    hStaff = FindHeaderRow(oStaff, "username")
+    hCourses = FindHeaderRow(oCourses, "course_code")
+    hCohorts = FindHeaderRow(oCohorts, "cohort_code")
+    hGroups = FindHeaderRow(oGroups, "group_idnumber")
+
+    targetRow = hTarget + 1
+    ClearDataRows oTarget, targetRow
+    WriteSummaryRow oTarget, hTarget, targetRow, "school", "=" & FormulaCellByHeader(oSchool, hSchool, hSchool + 1, "school_name")
+    targetRow = targetRow + 1
+    WriteSummaryRow oTarget, hTarget, targetRow, "academic_years", "=" & CountFormulaByHeader(oYears, hYears, "academic_year")
+    targetRow = targetRow + 1
+    WriteSummaryRow oTarget, hTarget, targetRow, "students", "=" & CountFormulaByHeader(oStudents, hStudents, "username")
+    targetRow = targetRow + 1
+    WriteSummaryRow oTarget, hTarget, targetRow, "parents", "=" & CountFormulaByHeader(oParents, hParents, "username")
+    targetRow = targetRow + 1
+    WriteSummaryRow oTarget, hTarget, targetRow, "staff", "=" & CountFormulaByHeader(oStaff, hStaff, "username")
+    targetRow = targetRow + 1
+    WriteSummaryRow oTarget, hTarget, targetRow, "courses_per_year", "=" & CountFormulaByHeader(oCourses, hCourses, "course_code")
+    targetRow = targetRow + 1
+    WriteSummaryRow oTarget, hTarget, targetRow, "cohorts_per_year", "=" & CountFormulaByHeader(oCohorts, hCohorts, "cohort_code")
+    targetRow = targetRow + 1
+    WriteSummaryRow oTarget, hTarget, targetRow, "groups_per_year", "=" & CountFormulaByHeader(oGroups, hGroups, "group_idnumber")
+    BuildSummary = 8
+End Function
+
+Function BuildRolloverChecklist(oDoc As Object) As Long
+    Dim oTarget As Object, hTarget As Long, targetRow As Long
+    oTarget = RequireSheet(oDoc, "50_academic_year_rollover_check")
+    hTarget = FindHeaderRow(oTarget, "step_no")
+    targetRow = hTarget + 1
+    ClearDataRows oTarget, targetRow
+    WriteRolloverRow oTarget, hTarget, targetRow, "1", "Close old year", "Confirm final grades, attendance/plugin data, and completion reports are ready.", "Principal/Teacher", "Yes", "Freeze gradebook changes before promotion."
+    WriteRolloverRow oTarget, hTarget, targetRow + 1, "2", "Backup/export", "Export gradebooks and back up important old-year courses.", "Moodle Admin", "Yes", "Keep backups outside production Moodle."
+    WriteRolloverRow oTarget, hTarget, targetRow + 2, "3", "New year setup", "Create next academic year courses, cohorts, groups, and cohort sync mappings.", "Moodle Admin", "Yes", "Use baseline importer with next-year course/cohort CSVs or generate new-year CSVs from templates."
+    WriteRolloverRow oTarget, hTarget, targetRow + 3, "4", "Promotion planning", "Prepare promotion_actions.csv from school result/rollover decisions.", "Principal/Admin Office", "Yes", "Verify stream/division allocation."
+    WriteRolloverRow oTarget, hTarget, targetRow + 4, "5", "Dry run", "Run the academic-year promotion CLI with dry-run enabled.", "Moodle Admin", "Yes", "Fix missing users/cohorts before execute."
+    WriteRolloverRow oTarget, hTarget, targetRow + 5, "6", "Execute", "Run the academic-year promotion CLI with dry-run disabled.", "Moodle Admin", "Yes", "Keep old cohort removal disabled unless archival is complete."
+    WriteRolloverRow oTarget, hTarget, targetRow + 6, "7", "Validation", "Spot-check 5 students from each standard/stream/division.", "Principal/Teacher", "Yes", "Confirm dashboard, courses, groups, and parent access."
+    WriteRolloverRow oTarget, hTarget, targetRow + 7, "8", "Archive", "Hide or archive old-year courses after school approval.", "Moodle Admin", "No", "Do not delete old courses until retention policy allows."
+    BuildRolloverChecklist = 8
+End Function
+
+Function BuildArchivePolicy(oDoc As Object) As Long
+    Dim oTarget As Object, hTarget As Long, targetRow As Long
+    oTarget = RequireSheet(oDoc, "63_archive_policy")
+    hTarget = FindHeaderRow(oTarget, "archive_item")
+    targetRow = hTarget + 1
+    ClearDataRows oTarget, targetRow
+    WriteArchiveRow oTarget, hTarget, targetRow, "Old-year courses", "Hide courses or move to Archive category after reports/backups.", "After promotion validation.", "Students may see old courses mixed with new courses."
+    WriteArchiveRow oTarget, hTarget, targetRow + 1, "Old-year cohorts", "Keep old cohorts initially; hide from teachers if needed.", "After old reports are exported.", "Removing synced cohort too early may remove old course enrolments."
+    WriteArchiveRow oTarget, hTarget, targetRow + 2, "Gradebook data", "Export gradebook CSV/PDF and keep course backup.", "Before promotion execution.", "Difficult to reproduce official records later."
+    WriteArchiveRow oTarget, hTarget, targetRow + 3, "Parent access", "Keep parent link to student user; no change required unless child leaves.", "During student status change.", "Parents may lose continuity of record access."
+    BuildArchivePolicy = 4
+End Function
+
+Function BuildCompatibilityMatrix(oDoc As Object) As Long
+    Dim oTarget As Object, hTarget As Long, targetRow As Long
+    oTarget = RequireSheet(oDoc, "65_compatibility_matrix")
+    hTarget = FindHeaderRow(oTarget, "component")
+    targetRow = hTarget + 1
+    ClearDataRows oTarget, targetRow
+    WriteCompatibilityRow oTarget, hTarget, targetRow, "Trust hierarchy", "Course category", "yes", "yes", "core_course_category", "Use one trust/root category"
+    WriteCompatibilityRow oTarget, hTarget, targetRow + 1, "Board hierarchy", "Course category", "yes", "yes", "core_course_category", "Use idnumber for stable imports"
+    WriteCompatibilityRow oTarget, hTarget, targetRow + 2, "School hierarchy", "Course category", "yes", "yes", "core_course_category", "Principal role assigned here"
+    WriteCompatibilityRow oTarget, hTarget, targetRow + 3, "Medium", "Course category", "yes", "yes", "core_course_category", "Use Gujarati/English/Hindi/etc."
+    WriteCompatibilityRow oTarget, hTarget, targetRow + 4, "Class/Std", "Course category", "yes", "yes", "core_course_category", "Std/Class categories under medium"
+    WriteCompatibilityRow oTarget, hTarget, targetRow + 5, "Stream", "Course category", "yes", "yes", "core_course_category", "Use General/Science/Commerce/Arts/Vocational"
+    WriteCompatibilityRow oTarget, hTarget, targetRow + 6, "Subject", "Course", "yes", "yes", "create_course", "Course format topics"
+    WriteCompatibilityRow oTarget, hTarget, targetRow + 7, "Division", "Group", "yes", "yes", "groups_create_group", "Use Separate groups in course settings"
+    WriteCompatibilityRow oTarget, hTarget, targetRow + 8, "Student batch", "Cohort", "yes", "yes", "cohort_add_cohort", "Cohorts per year/class/stream/division"
+    WriteCompatibilityRow oTarget, hTarget, targetRow + 9, "Bulk enrolment", "Cohort sync", "yes", "yes", "enrol_cohort", "Enable enrol_cohort before import"
+    WriteCompatibilityRow oTarget, hTarget, targetRow + 10, "User fields", "Custom profile fields", "yes", "yes", "profile_save_data", "Avoid full Aadhaar"
+    WriteCompatibilityRow oTarget, hTarget, targetRow + 11, "Trustee Manager", "Custom role", "yes", "yes", "create_role", "Category-level role, not site admin"
+    WriteCompatibilityRow oTarget, hTarget, targetRow + 12, "Principal", "Custom role", "yes", "yes", "create_role", "School-category role"
+    WriteCompatibilityRow oTarget, hTarget, targetRow + 13, "Teacher", "Editing teacher role", "yes", "yes", "editingteacher", "Course context"
+    WriteCompatibilityRow oTarget, hTarget, targetRow + 14, "Student", "Student role", "yes", "yes", "student", "Course enrolment via cohort sync"
+    WriteCompatibilityRow oTarget, hTarget, targetRow + 15, "Parent", "Custom user-context role", "yes", "yes", "role_assign", "Assign to child user context"
+    WriteCompatibilityRow oTarget, hTarget, targetRow + 16, "Promotion", "Cohort membership update", "yes", "yes", "cohort_add_member", "Create next-year cohorts first"
+    WriteCompatibilityRow oTarget, hTarget, targetRow + 17, "DIKSHA links", "URL/Page/File resources", "yes", "yes", "mod_url/mod_page/mod_resource", "Link first, download only if license allows"
+    BuildCompatibilityMatrix = 18
 End Function
 
 Function BuildCourseTemplateApplication(oDoc As Object) As Long
@@ -1502,6 +1634,36 @@ Sub CopyCourseIdentityFormulas(oSource As Object, sourceHeader As Long, sourceRo
     SetFormulaByHeader oTarget, targetHeader, targetRow, "stream_code", "=" & FormulaCellByHeader(oSource, sourceHeader, sourceRow, "stream_code")
 End Sub
 
+Sub WriteSummaryRow(oTarget As Object, headerRow As Long, rowIndex As Long, metric As String, valueFormula As String)
+    SetCellByHeader oTarget, headerRow, rowIndex, "metric", metric
+    SetMaybeFormulaByHeader oTarget, headerRow, rowIndex, "value", valueFormula
+End Sub
+
+Sub WriteRolloverRow(oTarget As Object, headerRow As Long, rowIndex As Long, stepNo As String, phase As String, task As String, ownerRole As String, requiredBeforeNextStep As String, notes As String)
+    SetCellByHeader oTarget, headerRow, rowIndex, "step_no", stepNo
+    SetCellByHeader oTarget, headerRow, rowIndex, "phase", phase
+    SetCellByHeader oTarget, headerRow, rowIndex, "task", task
+    SetCellByHeader oTarget, headerRow, rowIndex, "owner_role", ownerRole
+    SetCellByHeader oTarget, headerRow, rowIndex, "required_before_next_step", requiredBeforeNextStep
+    SetCellByHeader oTarget, headerRow, rowIndex, "notes", notes
+End Sub
+
+Sub WriteArchiveRow(oTarget As Object, headerRow As Long, rowIndex As Long, archiveItem As String, recommendedAction As String, whenToDo As String, riskIfSkipped As String)
+    SetCellByHeader oTarget, headerRow, rowIndex, "archive_item", archiveItem
+    SetCellByHeader oTarget, headerRow, rowIndex, "recommended_action", recommendedAction
+    SetCellByHeader oTarget, headerRow, rowIndex, "when_to_do", whenToDo
+    SetCellByHeader oTarget, headerRow, rowIndex, "risk_if_skipped", riskIfSkipped
+End Sub
+
+Sub WriteCompatibilityRow(oTarget As Object, headerRow As Long, rowIndex As Long, component As String, moodleFeature As String, compatible502 As String, compatible52 As String, dependency As String, recommendation As String)
+    SetCellByHeader oTarget, headerRow, rowIndex, "component", component
+    SetCellByHeader oTarget, headerRow, rowIndex, "moodle_feature", moodleFeature
+    SetCellByHeader oTarget, headerRow, rowIndex, "compatible_moodle_5_0_2", compatible502
+    SetCellByHeader oTarget, headerRow, rowIndex, "compatible_moodle_5_2_branch_502", compatible52
+    SetCellByHeader oTarget, headerRow, rowIndex, "dependency", dependency
+    SetCellByHeader oTarget, headerRow, rowIndex, "recommendation", recommendation
+End Sub
+
 Sub SetCellByHeader(oSheet As Object, headerRow As Long, rowIndex As Long, headerName As String, value As String)
     Dim colIndex As Long
     colIndex = FindColumn(oSheet, headerName, headerRow)
@@ -1537,6 +1699,19 @@ End Function
 
 Function FormulaCell(oSheet As Object, colIndex As Long, rowIndex As Long) As String
     FormulaCell = "$'" & Replace(oSheet.Name, "'", "''") & "'.$" & ColumnLetters(colIndex) & "$" & CStr(rowIndex + 1)
+End Function
+
+Function FormulaRange(oSheet As Object, colIndex As Long, startRow As Long, endRow As Long) As String
+    FormulaRange = "$'" & Replace(oSheet.Name, "'", "''") & "'.$" & ColumnLetters(colIndex) & "$" & CStr(startRow + 1) & ":$" & ColumnLetters(colIndex) & "$" & CStr(endRow + 1)
+End Function
+
+Function CountFormulaByHeader(oSheet As Object, headerRow As Long, headerName As String) As String
+    Dim colIndex As Long
+    colIndex = FindColumn(oSheet, headerName, headerRow)
+    If colIndex < 0 Then
+        Err.Raise 1302, "MasterImportTools", "Formula header not found: " & headerName & " in " & oSheet.Name
+    End If
+    CountFormulaByHeader = "COUNTA(" & FormulaRange(oSheet, colIndex, headerRow + 1, 99999) & ")"
 End Function
 
 Function ColumnLetters(colIndex As Long) As String
@@ -1656,7 +1831,9 @@ Sub ClearAutomaticSheets(oDoc As Object)
     ClearGeneratedSheet oDoc, "19_groups"
     ClearGeneratedSheet oDoc, "26_cohort_members"
     ClearGeneratedSheet oDoc, "29_enrolments"
+    ClearGeneratedSheet oDoc, "33_summary"
     ClearGeneratedSheet oDoc, "41_course_template_application"
+    ClearGeneratedSheet oDoc, "50_academic_year_rollover_check"
     ClearGeneratedSheet oDoc, "55_student_academic_history_tem"
     ClearGeneratedSheet oDoc, "56_student_promotion_plan_2027_"
     ClearGeneratedSheet oDoc, "58_next_year_courses_2027_2028"
@@ -1664,6 +1841,8 @@ Sub ClearAutomaticSheets(oDoc As Object)
     ClearGeneratedSheet oDoc, "60_next_year_groups_2027_2028"
     ClearGeneratedSheet oDoc, "61_next_year_enrolments_2027_20"
     ClearGeneratedSheet oDoc, "62_alumni_cohorts_2027"
+    ClearGeneratedSheet oDoc, "63_archive_policy"
+    ClearGeneratedSheet oDoc, "65_compatibility_matrix"
     ClearGeneratedSheet oDoc, "66_assessment_plan"
     ClearGeneratedSheet oDoc, "67_attendance_policy"
     ClearGeneratedSheet oDoc, "68_course_certificates"

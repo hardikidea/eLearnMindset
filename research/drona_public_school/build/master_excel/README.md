@@ -69,7 +69,9 @@ Available individual macros:
 - `GenerateGroups` rebuilds `19_groups` from courses and divisions.
 - `GenerateCohortMembers` rebuilds `26_cohort_members` from `24_users_students.cohort1`.
 - `GenerateEnrolments` rebuilds `29_enrolments` from courses and divisions using cohort-sync enrolment.
+- `GenerateSummary` rebuilds `33_summary` from workbook counts and the school master row.
 - `GenerateCourseTemplateApplication` rebuilds `41_course_template_application`.
+- `GenerateRolloverChecklist` rebuilds `50_academic_year_rollover_check` from the standard academic-year rollover workflow.
 - `GenerateStudentAcademicHistory` rebuilds `55_student_academic_history_tem` from student registrations and current academic-year context.
 - `GenerateStudentPromotionPlan` rebuilds `56_student_promotion_plan_2027_` from student registrations and next-year grade progression rules.
 - `GenerateAssessmentPlan` rebuilds `66_assessment_plan` from generated courses and standard assessment weights.
@@ -83,6 +85,8 @@ Available individual macros:
 - `GenerateNextYearGroups` rebuilds `60_next_year_groups_2027_2028` from next-year courses and divisions.
 - `GenerateNextYearEnrolments` rebuilds `61_next_year_enrolments_2027_20` from next-year courses and divisions using cohort-sync enrolment.
 - `GenerateAlumniCohorts` rebuilds `62_alumni_cohorts_2027` from current-year `STD12` cohorts for alumni/archive handling.
+- `GenerateArchivePolicy` rebuilds `63_archive_policy` from the standard archive checklist.
+- `GenerateCompatibilityMatrix` rebuilds `65_compatibility_matrix` from the standard Moodle component compatibility map.
 
 Primary ID formulas used by the macros:
 
@@ -96,7 +100,7 @@ Primary ID formulas used by the macros:
 
 Keep a backup copy before running macros against manually edited data.
 
-Static/reference sheets are intentionally not rebuilt by macros. This includes manual registration sheets, lookup sheets, template definition sheets, and `47_diksha_content_template`; those remain operator-managed until the school confirms exact content and policy. `62_alumni_cohorts_2027` is now automatic because it is deterministically generated from `18_cohorts` rows where `grade_code=STD12`.
+Most static/reference sheets are intentionally not rebuilt by macros. Manual registration sheets, lookup sheets, template definition sheets, promotion actions, and `47_diksha_content_template` remain operator-managed until the school confirms exact content and policy. The safe generated operational-reference sheets are `33_summary`, `50_academic_year_rollover_check`, `62_alumni_cohorts_2027`, `63_archive_policy`, and `65_compatibility_matrix`.
 
 Macro source is maintained in `research/drona_public_school/master_import_process/scripts/libreoffice_master_tools.bas`. Regenerate the ODS with:
 

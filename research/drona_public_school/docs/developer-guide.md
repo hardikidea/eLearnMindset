@@ -34,10 +34,10 @@ Current generated sample scope:
 
 ## Chapter 2: Directory Map
 
-Run commands from:
+Run commands from the repository root:
 
 ```bash
-cd /Users/hardik.chauhan/Documents/learning/eLearnMindset/research/drona_public_school
+cd research/drona_public_school
 ```
 
 Important folders:
@@ -100,10 +100,12 @@ Install workbook dependencies:
 python3 -m pip install -r master_import_process/requirements.txt
 ```
 
-If system Python does not include `openpyxl`, use the project runtime:
+If system Python does not include `openpyxl`, use a local virtualenv:
 
 ```bash
-PYTHON_BIN=/Users/hardik.chauhan/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3
+python3 -m venv .venv
+. .venv/bin/activate
+python3 -m pip install -r master_import_process/requirements.txt
 ```
 
 ## Chapter 5: CSV Source Model
@@ -353,6 +355,8 @@ Validate the structured source pack:
 python3 scripts/validate.py --year 2026-2027
 ```
 
+This validates required relationships, course/certificate/exam coverage, and duplicate keys using the correct contract for each file. Examples: `lookup_type + code` for lookup values, `course_code + cohort_code + group_idnumber + role_shortname` for enrolments, and `username + role + context` for role assignments.
+
 Validate future years:
 
 ```bash
@@ -532,7 +536,9 @@ school_master_pack_2026_2027_full_predefined_master.xlsx
 school_master_pack_2026_2027_full_predefined_master_macros.ods
 ```
 
-Regenerate the LibreOffice macro ODS:
+Use [build/master_excel/README.md](../build/master_excel/README.md) as the canonical workbook/macro reference. This developer guide keeps only the operating sequence so macro names and workbook rules are not duplicated across multiple files.
+
+Regenerate the LibreOffice macro ODS after changing workbook scripts, macro source, status-sheet rules, or the full predefined workbook:
 
 ```bash
 python3 master_import_process/scripts/create_libreoffice_macro_workbook.py
@@ -554,36 +560,7 @@ Recommended health workflow:
 6. Use `Clear automatic data` only when you want generated rows emptied but manual registration/reference sheets preserved.
 7. Use `Reset and regenerate` when automatic sheets look stale or row counts changed significantly.
 
-Individual macros include:
-
-- `RefreshStatus`
-- `ClearAutomaticData`
-- `ResetAutomaticData`
-- `GenerateGradeSubjectMatrix`
-- `GenerateCategories`
-- `GenerateOptionalYearCategoryModel`
-- `GenerateCourses`
-- `GenerateCoursesWithTemplateUpload`
-- `GenerateCohorts`
-- `GenerateGroups`
-- `GenerateCohortMembers`
-- `GenerateEnrolments`
-- `GenerateCourseTemplateApplication`
-- `GenerateStudentAcademicHistory`
-- `GenerateStudentPromotionPlan`
-- `GenerateAssessmentPlan`
-- `GenerateAttendancePolicy`
-- `GenerateCourseCertificates`
-- `GenerateCourseFinalExams`
-- `GenerateCourseTermExams`
-- `GenerateGradebookWeights`
-- `GenerateNextYearCourses`
-- `GenerateNextYearCohorts`
-- `GenerateNextYearGroups`
-- `GenerateNextYearEnrolments`
-- `GenerateAlumniCohorts`
-
-Static/reference sheets are intentionally not rebuilt by macros. This includes registration sheets, lookup sheets, content placeholders, and alumni policy sheets that need school confirmation. Alumni cohort rows are the exception: `62_alumni_cohorts_2027` is generated automatically from `18_cohorts` rows where `grade_code=STD12`.
+Manual sheets are source-of-truth data and must not be overwritten by workbook macros. Automatic sheets are derived from those source sheets. `62_alumni_cohorts_2027` is automatic because it is generated from `18_cohorts` rows where `grade_code=STD12`; promotion action rows remain manual because they are the approval gate before changing live student placement.
 
 ## Chapter 16: Development Rules
 
