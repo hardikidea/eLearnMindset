@@ -1,5 +1,5 @@
 stream_code,stream_name,applies_to,notes
 GEN,General,STD01-STD10,"General stream for primary, upper primary and secondary grades."
-SCI,Science,STD11-STD12,Higher secondary Science stream.
-COM,Commerce,STD11-STD12,Higher secondary Commerce stream.
-ARTS,Arts / Humanities,STD11-STD12,Higher secondary Arts / Humanities stream.
+SCI,Science,STD11_SCI|STD12_SCI,Higher secondary Science stream.
+COM,Commerce,STD11_COM|STD12_COM,Higher secondary Commerce stream.
+ARTS,Arts / Humanities,STD11_ARTS|STD12_ARTS,Higher secondary Arts / Humanities stream.

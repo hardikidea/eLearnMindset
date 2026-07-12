@@ -8,6 +8,8 @@
 
 The full predefined workbook and macro workbook include a `status` sheet for workbook health checks.
 
+Do not run macro actions from the `.xlsx` review workbooks. Regular `.xlsx` files do not contain the document-level LibreOffice Basic library, so LibreOffice cannot resolve `Standard.MatrixTools`. Run macro actions only from `school_master_pack_2026_2027_full_predefined_master_macros.ods`.
+
 The full local-testing dataset is intentionally kept in CSV form because it contains thousands of rows:
 
 - 5,220 students
@@ -50,6 +52,8 @@ The macros use a hybrid model:
 - Existing derived rows recalculate automatically when referenced school, board, medium, grade, stream, subject, division, academic-year, course or student values change.
 - Rerun the relevant macro when row counts change, for example after adding a new subject, division, grade, stream, course, academic year or student.
 - CSV export must use calculated cell values, not raw formula text.
+
+For stream scope, use `|` in `applies_to`: `STD01-STD10`, `STD11_SCI|STD12_SCI`, or `ALL`. Do not use comma-separated values for new data.
 
 Available individual macros:
 

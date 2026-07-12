@@ -155,3 +155,71 @@ def normalise_cell(value) -> str:
     if value is None:
         return ""
     return str(value).strip()
+
+
+def split_applies_to(value: str) -> list[str]:
+    """Split a stream applies_to value.
+
+    Pipe is the canonical delimiter. Comma is accepted only for older workbooks.
+    """
+    return [
+        token.strip().upper()
+        for token in re.split(r"[|,]", value or "")
+        if token.strip()
+    ]
+
+
+def grade_scope_rank(grade_code: str) -> int | None:
+    """Return a sortable rank for supported grade scope tokens."""
+    match = re.fullmatch(r"(PRE|STD)(\d{2})", (grade_code or "").strip().upper())
+    if not match:
+        return None
+    prefix, number = match.groups()
+    offset = 0 if prefix == "PRE" else 100
+    return offset + int(number)
+
+
+def applies_token_matches(token: str, grade_code: str, stream_code: str) -> bool:
+    token = (token or "").strip().upper()
+    grade_code = (grade_code or "").strip().upper()
+    stream_code = (stream_code or "").strip().upper()
+    if not token:
+        return False
+    if token in {"ALL", "*"}:
+        return True
+
+    grade_token = token
+    if "_" in token:
+        grade_token, token_stream = token.split("_", 1)
+        if token_stream != stream_code:
+            return False
+
+    if "-" in grade_token:
+        start, end = [part.strip() for part in grade_token.split("-", 1)]
+        start_rank = grade_scope_rank(start)
+        end_rank = grade_scope_rank(end)
+        grade_rank = grade_scope_rank(grade_code)
+        if start_rank is None or end_rank is None or grade_rank is None:
+            return False
+        return start_rank <= grade_rank <= end_rank
+
+    return grade_token == grade_code
+
+
+def stream_applies_to_grade(grade_code: str, stream_code: str, applies_to: str) -> bool:
+    """Check whether a stream row applies to a grade.
+
+    Supported canonical examples:
+    - ALL
+    - STD01-STD10
+    - STD11|STD12
+    - STD11_SCI|STD12_SCI
+
+    Non-grade descriptive tokens such as SWAYAM or NPTEL are ignored by this
+    matcher and should normally live in the notes column.
+    """
+    applies_to = (applies_to or "").strip()
+    if not applies_to:
+        return True
+    tokens = split_applies_to(applies_to)
+    return any(applies_token_matches(token, grade_code, stream_code) for token in tokens)

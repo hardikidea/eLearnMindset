@@ -182,6 +182,15 @@ Extra Moodle/course automation files copied to the assembled folder:
 - `gradebook_weights.csv`
 - `attendance_policy.csv`
 
+Stream `applies_to` rule:
+
+- Use `|` as the delimiter for multiple scope tokens.
+- Use ranges for grade bands, for example `STD01-STD10`.
+- Use grade+stream tokens for higher-secondary stream specificity, for example `STD11_SCI|STD12_SCI`.
+- Use `ALL` only when the stream should apply to every configured grade.
+- Keep platform/program labels such as `SWAYAM`, `NPTEL`, `UG`, `PG` or `NEET Prep` in `notes` unless they are also modelled as grade codes.
+- Comma-separated values are rejected by validation for new data.
+
 ## Chapter 7: Master Workbook Rules
 
 The master workbook is optional but useful when a school operator wants one spreadsheet entry point.

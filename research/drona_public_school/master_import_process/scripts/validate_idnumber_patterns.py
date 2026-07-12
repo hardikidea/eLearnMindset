@@ -6,7 +6,7 @@ import re
 import sys
 from pathlib import Path
 
-from common import read_rows, source_path
+from common import applies_token_matches, read_rows, source_path, split_applies_to
 
 
 def one(rows, label):
@@ -83,6 +83,16 @@ def validate(source: Path, year: str) -> list[str]:
     for value in division_codes:
         if not re.fullmatch(r"[A-Z][A-Z0-9]*", value):
             add(errors, f"Invalid division_code: {value}")
+    for idx, row in enumerate(streams, 2):
+        applies_to = row.get("applies_to", "")
+        stream_code = row.get("stream_code", "")
+        tokens = split_applies_to(applies_to)
+        if not tokens:
+            continue
+        if "," in applies_to:
+            add(errors, f"streams.csv line {idx}: use pipe delimiter in applies_to, not comma: {applies_to}")
+        if not any(applies_token_matches(token, grade, stream_code) for token in tokens for grade in grade_codes):
+            add(errors, f"streams.csv line {idx}: applies_to does not match any configured grade: {applies_to}")
 
     ydir = source / "years" / year
     categories = read_rows(ydir / "categories.csv")

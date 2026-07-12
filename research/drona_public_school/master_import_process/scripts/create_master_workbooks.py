@@ -252,6 +252,7 @@ SUMMARY_OVERRIDES = {
     "address_line1": "First line of the school address.",
     "address_line2": "Second line of the school address, if required.",
     "affiliation_no": "Board affiliation or recognition number.",
+    "applies_to": "Pipe-delimited grade scope for the stream, used while generating categories, courses, cohorts and groups.",
     "auth": "Moodle authentication method for the user.",
     "board_code": "Short board code used across matrix, categories, courses and enrolments.",
     "board_name": "Display name of the education board.",
@@ -371,6 +372,7 @@ INTEGER_FIELDS = {
 
 BASE_PATTERNS = {
     "academic_year": "<START_YEAR>-<END_YEAR>, e.g. 2026-2027",
+    "applies_to": "ALL or pipe-delimited grade scopes, e.g. STD01-STD10 or STD11_SCI|STD12_SCI",
     "auth": "manual",
     "board_code": "<BOARD_CODE>, e.g. GSEB",
     "category_code": "<TRUST_CODE>_<BOARD_CODE>_<SCHOOL_CODE>_<YYYY_YYYY>_<MEDIUM_CODE>_<GRADE_CODE>_<STREAM_CODE>",
@@ -477,9 +479,8 @@ AUTOMATIC_MACROS = {
 }
 
 
-def macro_hyperlink(macro_name: str, label: str) -> str:
-    target = f"vnd.sun.star.script:Standard.MatrixTools.{macro_name}?language=Basic&location=document"
-    return f'=HYPERLINK("{target}","{label}")'
+def macro_workbook_notice(label: str) -> str:
+    return f"{label}: use the macro-enabled .ods workbook"
 
 
 def fit_columns(ws, max_width=52):
@@ -976,28 +977,28 @@ def add_status_sheet(wb, year: str) -> None:
             "ALL_AUTOMATIC_SHEETS\nid_number_formula: rebuild every macro-generated sheet from current master rows",
             '=SUMIF(A7:A2000,"automatic",C7:C2000)',
             "CONTROL",
-            macro_hyperlink("GenerateAllDerivedSheets", "Run all automatic macros"),
+            macro_workbook_notice("Run all automatic macros"),
         ),
         (
             "automatic",
             "STATUS_ONLY\nid_number_formula: recalculate health formulas after manual review",
             "",
             "CONTROL",
-            macro_hyperlink("RefreshStatus", "Refresh status"),
+            macro_workbook_notice("Refresh status"),
         ),
         (
             "automatic",
             "CLEAR_AUTOMATIC_SHEETS\nid_number_formula: remove data rows from macro-generated sheets",
             "",
             "CONTROL",
-            macro_hyperlink("ClearAutomaticData", "Clear automatic data"),
+            macro_workbook_notice("Clear automatic data"),
         ),
         (
             "automatic",
             "RESET_AUTOMATIC_SHEETS\nid_number_formula: clear and regenerate all macro-generated sheets",
             "",
             "CONTROL",
-            macro_hyperlink("ResetAutomaticData", "Reset and regenerate"),
+            macro_workbook_notice("Reset and regenerate"),
         ),
         ("", "", "", "", ""),
     ]
@@ -1023,7 +1024,7 @@ def add_status_sheet(wb, year: str) -> None:
             else:
                 status = f'=IF(C{row_index}>0,"PASSED","FAILED")'
             macro = AUTOMATIC_MACROS.get(sheet)
-            action = macro_hyperlink(macro, "Run macro") if macro else "Automatic data"
+            action = macro_workbook_notice("Run macro") if macro else "Automatic data"
         else:
             status = "MANUAL"
             action = "Manual edit"

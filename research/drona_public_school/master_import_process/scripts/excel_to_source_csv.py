@@ -8,7 +8,7 @@ from pathlib import Path
 
 from openpyxl import load_workbook
 
-from common import SOURCE_FILES, normalise_cell, resolve_tokens
+from common import SOURCE_FILES, normalise_cell, resolve_tokens, stream_applies_to_grade
 
 
 def row_values(row, width: int) -> list[str]:
@@ -83,15 +83,16 @@ def auto_generate_subject_matrix(sheets: dict[str, tuple[list[str], list[list[st
             for grade in grades:
                 grade_code = grade.get("grade_code", "")
                 for stream in streams:
+                    stream_code = stream.get("stream_code", "")
                     applies_to = stream.get("applies_to", "").strip()
-                    if applies_to and applies_to.lower() not in {"all", "*"} and grade_code not in applies_to:
+                    if not stream_applies_to_grade(grade_code, stream_code, applies_to):
                         continue
                     for subject in subjects:
                         row = {
                             "board_code": board.get("board_code", ""),
                             "medium_code": medium.get("medium_code", ""),
                             "grade_code": grade_code,
-                            "stream_code": stream.get("stream_code", ""),
+                            "stream_code": stream_code,
                             "subject_code": subject.get("subject_code", ""),
                             "subject_name": subject.get("subject_name", ""),
                             "subject_category": subject.get("subject_category", ""),

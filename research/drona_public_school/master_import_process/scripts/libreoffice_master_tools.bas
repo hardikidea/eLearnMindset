@@ -339,7 +339,7 @@ Function BuildGradeSubjectMatrix(oDoc As Object) As Long
                             For stRow = stHeader + 1 To stLast
                                 streamCode = CellText(oStreams, FindColumn(oStreams, "stream_code", stHeader), stRow)
                                 appliesTo = CellText(oStreams, FindColumn(oStreams, "applies_to", stHeader), stRow)
-                                If streamCode <> "" And StreamAppliesToGrade(gradeCode, appliesTo) Then
+                                If streamCode <> "" And StreamAppliesToGrade(gradeCode, streamCode, appliesTo) Then
                                     displayOrder = 1
                                     For suRow = suHeader + 1 To suLast
                                         subjectCode = CellText(oSubjects, FindColumn(oSubjects, "subject_code", suHeader), suRow)
@@ -486,7 +486,7 @@ Function BuildCategories(oDoc As Object) As Long
                                         streamCode = CellText(oStreams, FindColumn(oStreams, "stream_code", hStream), sRow)
                                         streamName = CellText(oStreams, FindColumn(oStreams, "stream_name", hStream), sRow)
                                         appliesTo = CellText(oStreams, FindColumn(oStreams, "applies_to", hStream), sRow)
-                                        If streamCode <> "" And StreamAppliesToGrade(gradeCode, appliesTo) Then
+                                        If streamCode <> "" And StreamAppliesToGrade(gradeCode, streamCode, appliesTo) Then
                                             streamCodeRef = FormulaCellByHeader(oStreams, hStream, sRow, "stream_code")
                                             streamNameRef = FormulaCellByHeader(oStreams, hStream, sRow, "stream_name")
                                             streamCategory = gradeCategory & "_" & streamCode
@@ -698,7 +698,7 @@ Function BuildCohorts(oDoc As Object) As Long
                         For sRow = hStream + 1 To LastUsedRow(oStreams)
                             streamCode = CellText(oStreams, FindColumn(oStreams, "stream_code", hStream), sRow)
                             appliesTo = CellText(oStreams, FindColumn(oStreams, "applies_to", hStream), sRow)
-                            If StreamAppliesToGrade(gradeCode, appliesTo) Then
+                            If StreamAppliesToGrade(gradeCode, streamCode, appliesTo) Then
                                 streamCodeRef = FormulaCellByHeader(oStreams, hStream, sRow, "stream_code")
                                 For dRow = hDiv + 1 To LastUsedRow(oDivisions)
                                     divisionCode = CellText(oDivisions, FindColumn(oDivisions, "division_code", hDiv), dRow)
@@ -1877,25 +1877,92 @@ Function CertificatePolicyFormula(gradeRef As String) As String
     CertificatePolicyFormula = "=IF(" & gradeNo & "<=5;" & FormulaText("PRIMARY_COURSE_COMPLETION_CERT") & ";IF(" & gradeNo & "<=8;" & FormulaText("UPPER_PRIMARY_COURSE_COMPLETION_CERT") & ";IF(" & gradeNo & "<=10;" & FormulaText("SECONDARY_COURSE_COMPLETION_CERT") & ";" & FormulaText("HIGHER_SECONDARY_COURSE_COMPLETION_CERT") & ")))"
 End Function
 
-Function StreamAppliesToGrade(gradeCode As String, appliesTo As String) As Boolean
-    Dim gradeNo As Integer, startNo As Integer, endNo As Integer
-    Dim parts() As String
+Function StreamAppliesToGrade(gradeCode As String, streamCode As String, appliesTo As String) As Boolean
+    Dim tokens() As String
+    Dim i As Integer
     appliesTo = UCase(Trim(appliesTo))
-    gradeNo = GradeNumber(gradeCode)
-    If appliesTo = "" Or appliesTo = "ALL" Then
+    If appliesTo = "" Then
         StreamAppliesToGrade = True
         Exit Function
     End If
-    If InStr(appliesTo, "-") > 0 Then
-        parts = Split(appliesTo, "-")
-        If UBound(parts) >= 1 Then
-            startNo = GradeNumber(parts(0))
-            endNo = GradeNumber(parts(1))
-            StreamAppliesToGrade = (gradeNo >= startNo And gradeNo <= endNo)
+
+    ' Pipe is the canonical delimiter. Comma remains accepted for old workbooks.
+    appliesTo = Replace(appliesTo, ",", "|")
+    tokens = Split(appliesTo, "|")
+    For i = LBound(tokens) To UBound(tokens)
+        If AppliesTokenMatchesGradeStream(tokens(i), gradeCode, streamCode) Then
+            StreamAppliesToGrade = True
+            Exit Function
+        End If
+    Next i
+
+    StreamAppliesToGrade = False
+End Function
+
+Function AppliesTokenMatchesGradeStream(token As String, gradeCode As String, streamCode As String) As Boolean
+    Dim gradeToken As String, tokenStream As String
+    Dim underscoreAt As Integer, dashAt As Integer
+    Dim parts() As String
+    Dim startRank As Integer, endRank As Integer, gradeRank As Integer
+
+    token = UCase(Trim(token))
+    gradeCode = UCase(Trim(gradeCode))
+    streamCode = UCase(Trim(streamCode))
+    If token = "" Then
+        AppliesTokenMatchesGradeStream = False
+        Exit Function
+    End If
+    If token = "ALL" Or token = "*" Then
+        AppliesTokenMatchesGradeStream = True
+        Exit Function
+    End If
+
+    gradeToken = token
+    underscoreAt = InStr(token, "_")
+    If underscoreAt > 0 Then
+        gradeToken = Left(token, underscoreAt - 1)
+        tokenStream = Mid(token, underscoreAt + 1)
+        If tokenStream <> streamCode Then
+            AppliesTokenMatchesGradeStream = False
             Exit Function
         End If
     End If
-    StreamAppliesToGrade = (InStr("," & appliesTo & ",", "," & UCase(gradeCode) & ",") > 0)
+
+    dashAt = InStr(gradeToken, "-")
+    If dashAt > 0 Then
+        parts = Split(gradeToken, "-")
+        If UBound(parts) < 1 Then
+            AppliesTokenMatchesGradeStream = False
+            Exit Function
+        End If
+        startRank = GradeScopeRank(parts(0))
+        endRank = GradeScopeRank(parts(1))
+        gradeRank = GradeScopeRank(gradeCode)
+        AppliesTokenMatchesGradeStream = (startRank >= 0 And endRank >= 0 And gradeRank >= 0 And gradeRank >= startRank And gradeRank <= endRank)
+        Exit Function
+    End If
+
+    AppliesTokenMatchesGradeStream = (gradeToken = gradeCode)
+End Function
+
+Function GradeScopeRank(gradeCode As String) As Integer
+    Dim code As String, digits As String
+    code = UCase(Trim(gradeCode))
+    If Left(code, 3) = "PRE" Then
+        digits = Mid(code, 4)
+        If IsNumeric(digits) Then
+            GradeScopeRank = CInt(digits)
+            Exit Function
+        End If
+    ElseIf Left(code, 3) = "STD" Then
+        digits = Mid(code, 4)
+        If IsNumeric(digits) Then
+            GradeScopeRank = 100 + CInt(digits)
+            Exit Function
+        End If
+    End If
+
+    GradeScopeRank = -1
 End Function
 
 Function SubjectAllowedForGradeStream(gradeCode As String, streamCode As String, subjectCode As String, subjectCategory As String) As Boolean

@@ -135,9 +135,10 @@ def check_status_sheet(errors: list[str], workbook) -> None:
     if manual < 20:
         fail(errors, f"status sheet manual row count too low: {manual}")
     actions = " ".join(str(ws.cell(row, 5).value or "") for row in range(2, min(ws.max_row, 12) + 1))
-    for token in ["GenerateAllDerivedSheets", "RefreshStatus", "ClearAutomaticData", "ResetAutomaticData"]:
-        if token not in actions:
-            fail(errors, f"status sheet missing action link for {token}")
+    if "vnd.sun.star.script" in actions or "Standard.MatrixTools" in actions:
+        fail(errors, "xlsx status sheet must not contain document macro hyperlinks; use the .ods macro workbook")
+    if "use the macro-enabled .ods workbook" not in actions:
+        fail(errors, "xlsx status sheet missing macro-enabled .ods workbook guidance")
     print(f"OK status sheet: {automatic} automatic rows, {manual} manual rows")
 
 
@@ -238,6 +239,15 @@ def check_ods_package(errors: list[str], ods_path: Path) -> None:
             fail(errors, "ODS content missing 00_MACRO_GUIDE sheet")
         if "status" not in content:
             fail(errors, "ODS content missing status sheet")
+        for token in [
+            "vnd.sun.star.script",
+            "GenerateAllDerivedSheets",
+            "RefreshStatus",
+            "ClearAutomaticData",
+            "ResetAutomaticData",
+        ]:
+            if token not in content:
+                fail(errors, f"ODS status sheet missing macro action token: {token}")
         if "00_MACRO_GUIDE" in content and "status" in content:
             print("OK ODS macro package")
 
