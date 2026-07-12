@@ -10,9 +10,9 @@ const CONFIG = {
   parentPassword: 'DronaParent2026!',
   studentEmailDomain: 'students.dronapublicschool.example',
   parentRole: 'parent',
-  studentSheet: '24_users_students',
-  parentSheet: '25_users_parents',
-  parentLinkSheet: '28_parent_links',
+  studentSheet: '20_users_students',
+  parentSheet: '21_users_parents',
+  parentLinkSheet: '24_parent_links',
   errorSheet: '_intake_errors',
   auditSheet: '_intake_audit',
   headerRow: 5,
@@ -98,7 +98,7 @@ function createStudentParentRegistration(ss, data) {
   const parentSheet = ss.getSheetByName(CONFIG.parentSheet);
   const parentLinkSheet = ss.getSheetByName(CONFIG.parentLinkSheet);
   if (!studentSheet || !parentSheet || !parentLinkSheet) {
-    throw new Error('One or more target sheets are missing: 24_users_students, 25_users_parents, 28_parent_links.');
+    throw new Error('One or more target sheets are missing: 20_users_students, 21_users_parents, 24_parent_links.');
   }
 
   const studentSeq = nextSequence(studentSheet, 'username', 'dps.stu.');

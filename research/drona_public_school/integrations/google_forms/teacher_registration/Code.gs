@@ -8,9 +8,9 @@ const CONFIG = {
   defaultLanguage: 'en',
   staffPassword: 'DronaTeacher2026!',
   staffEmailDomain: 'dronapublicschool.example',
-  staffSheet: '23_users_staff',
-  roleAssignmentSheet: '27_role_assignments',
-  coursesSheet: '16_courses',
+  staffSheet: '19_users_staff',
+  roleAssignmentSheet: '23_role_assignments',
+  coursesSheet: '12_courses',
   errorSheet: '_teacher_intake_errors',
   auditSheet: '_teacher_intake_audit',
   headerRow: 5,
@@ -96,7 +96,7 @@ function createTeacherRegistration(ss, data) {
   const roleSheet = ss.getSheetByName(CONFIG.roleAssignmentSheet);
   const coursesSheet = ss.getSheetByName(CONFIG.coursesSheet);
   if (!staffSheet || !roleSheet || !coursesSheet) {
-    throw new Error('Missing one or more target sheets: 23_users_staff, 27_role_assignments, 16_courses.');
+    throw new Error('Missing one or more target sheets: 19_users_staff, 23_role_assignments, 12_courses.');
   }
 
   const staffRows = getRowsByHeader(staffSheet);
