@@ -100,143 +100,143 @@ End Sub
 
 Function BuildAllDerivedSheetsMessage(oDoc As Object) As String
     BuildAllDerivedSheetsMessage = "Generated derived sheets:" & Chr(10) & _
-        "13_grade_subject_matrix: " & BuildGradeSubjectMatrix(oDoc) & " rows" & Chr(10) & _
-        "14_categories: " & BuildCategories(oDoc) & " rows" & Chr(10) & _
-        "16_courses: " & BuildCourses(oDoc) & " rows" & Chr(10) & _
-        "17_courses_with_templatecourse_: " & BuildCoursesWithTemplateUpload(oDoc) & " rows" & Chr(10) & _
-        "18_cohorts: " & BuildCohorts(oDoc) & " rows" & Chr(10) & _
-        "19_groups: " & BuildGroups(oDoc) & " rows" & Chr(10) & _
-        "26_cohort_members: " & BuildCohortMembers(oDoc) & " rows" & Chr(10) & _
-        "29_enrolments: " & BuildEnrolments(oDoc) & " rows" & Chr(10) & _
-        "33_summary: " & BuildSummary(oDoc) & " rows" & Chr(10) & _
-        "41_course_template_application: " & BuildCourseTemplateApplication(oDoc) & " rows" & Chr(10) & _
-        "50_academic_year_rollover_check: " & BuildRolloverChecklist(oDoc) & " rows" & Chr(10) & _
-        "68_course_certificates: " & BuildCourseCertificates(oDoc) & " rows" & Chr(10) & _
-        "69_course_final_exams: " & BuildCourseFinalExams(oDoc) & " rows" & Chr(10) & _
-        "70_course_term_exams: " & BuildCourseTermExams(oDoc) & " rows" & Chr(10) & _
-        "72_gradebook_weights: " & BuildGradebookWeights(oDoc) & " rows" & Chr(10) & _
-        "15_optional_year_category_model: " & BuildOptionalYearCategoryModel(oDoc) & " rows" & Chr(10) & _
-        "55_student_academic_history_tem: " & BuildStudentAcademicHistory(oDoc) & " rows" & Chr(10) & _
-        "56_student_promotion_plan_2027_: " & BuildStudentPromotionPlan(oDoc) & " rows" & Chr(10) & _
-        "66_assessment_plan: " & BuildAssessmentPlan(oDoc) & " rows" & Chr(10) & _
-        "67_attendance_policy: " & BuildAttendancePolicy(oDoc) & " rows" & Chr(10) & _
-        "58_next_year_courses_2027_2028: " & BuildNextYearCourses(oDoc) & " rows" & Chr(10) & _
-        "59_next_year_cohorts_2027_2028: " & BuildNextYearCohorts(oDoc) & " rows" & Chr(10) & _
-        "60_next_year_groups_2027_2028: " & BuildNextYearGroups(oDoc) & " rows" & Chr(10) & _
-        "61_next_year_enrolments_2027_20: " & BuildNextYearEnrolments(oDoc) & " rows" & Chr(10) & _
-        "62_alumni_cohorts_2027: " & BuildAlumniCohorts(oDoc) & " rows" & Chr(10) & _
-        "63_archive_policy: " & BuildArchivePolicy(oDoc) & " rows" & Chr(10) & _
-        "65_compatibility_matrix: " & BuildCompatibilityMatrix(oDoc) & " rows" & Chr(10) & _
+        "09_subject_matrix: " & BuildGradeSubjectMatrix(oDoc) & " rows" & Chr(10) & _
+        "10_categories: " & BuildCategories(oDoc) & " rows" & Chr(10) & _
+        "12_courses: " & BuildCourses(oDoc) & " rows" & Chr(10) & _
+        "13_courses_upload: " & BuildCoursesWithTemplateUpload(oDoc) & " rows" & Chr(10) & _
+        "14_cohorts: " & BuildCohorts(oDoc) & " rows" & Chr(10) & _
+        "15_groups: " & BuildGroups(oDoc) & " rows" & Chr(10) & _
+        "22_cohort_members: " & BuildCohortMembers(oDoc) & " rows" & Chr(10) & _
+        "25_enrolments: " & BuildEnrolments(oDoc) & " rows" & Chr(10) & _
+        "29_summary: " & BuildSummary(oDoc) & " rows" & Chr(10) & _
+        "37_template_application: " & BuildCourseTemplateApplication(oDoc) & " rows" & Chr(10) & _
+        "46_rollover_checklist: " & BuildRolloverChecklist(oDoc) & " rows" & Chr(10) & _
+        "course_certificates: " & BuildCourseCertificates(oDoc) & " rows" & Chr(10) & _
+        "course_final_exams: " & BuildCourseFinalExams(oDoc) & " rows" & Chr(10) & _
+        "course_term_exams: " & BuildCourseTermExams(oDoc) & " rows" & Chr(10) & _
+        "gradebook_weights: " & BuildGradebookWeights(oDoc) & " rows" & Chr(10) & _
+        "11_optional_categories: " & BuildOptionalYearCategoryModel(oDoc) & " rows" & Chr(10) & _
+        "51_academic_history: " & BuildStudentAcademicHistory(oDoc) & " rows" & Chr(10) & _
+        "52_promotion_plan: " & BuildStudentPromotionPlan(oDoc) & " rows" & Chr(10) & _
+        "assessment_plan: " & BuildAssessmentPlan(oDoc) & " rows" & Chr(10) & _
+        "attendance_policy: " & BuildAttendancePolicy(oDoc) & " rows" & Chr(10) & _
+        "54_next_year_courses: " & BuildNextYearCourses(oDoc) & " rows" & Chr(10) & _
+        "55_next_year_cohorts: " & BuildNextYearCohorts(oDoc) & " rows" & Chr(10) & _
+        "56_next_year_groups: " & BuildNextYearGroups(oDoc) & " rows" & Chr(10) & _
+        "57_next_year_enrolments: " & BuildNextYearEnrolments(oDoc) & " rows" & Chr(10) & _
+        "58_alumni_cohorts: " & BuildAlumniCohorts(oDoc) & " rows" & Chr(10) & _
+        "59_archive_policy: " & BuildArchivePolicy(oDoc) & " rows" & Chr(10) & _
+        "61_compatibility: " & BuildCompatibilityMatrix(oDoc) & " rows" & Chr(10) & _
         "status: formulas refreshed"
     oDoc.calculateAll()
 End Function
 
 Sub GenerateGradeSubjectMatrix
-    RunBuilder "grade_subject_matrix", "13_grade_subject_matrix"
+    RunBuilder "grade_subject_matrix", "09_subject_matrix"
 End Sub
 
 Sub GenerateCategories
-    RunBuilder "categories", "14_categories"
+    RunBuilder "categories", "10_categories"
 End Sub
 
 Sub GenerateCourses
-    RunBuilder "courses", "16_courses"
+    RunBuilder "courses", "12_courses"
 End Sub
 
 Sub GenerateCoursesWithTemplateUpload
-    RunBuilder "courses_with_template_upload", "17_courses_with_templatecourse_"
+    RunBuilder "courses_with_template_upload", "13_courses_upload"
 End Sub
 
 Sub GenerateCohorts
-    RunBuilder "cohorts", "18_cohorts"
+    RunBuilder "cohorts", "14_cohorts"
 End Sub
 
 Sub GenerateGroups
-    RunBuilder "groups", "19_groups"
+    RunBuilder "groups", "15_groups"
 End Sub
 
 Sub GenerateCohortMembers
-    RunBuilder "cohort_members", "26_cohort_members"
+    RunBuilder "cohort_members", "22_cohort_members"
 End Sub
 
 Sub GenerateEnrolments
-    RunBuilder "enrolments", "29_enrolments"
+    RunBuilder "enrolments", "25_enrolments"
 End Sub
 
 Sub GenerateSummary
-    RunBuilder "summary", "33_summary"
+    RunBuilder "summary", "29_summary"
 End Sub
 
 Sub GenerateCourseTemplateApplication
-    RunBuilder "course_template_application", "41_course_template_application"
+    RunBuilder "course_template_application", "37_template_application"
 End Sub
 
 Sub GenerateRolloverChecklist
-    RunBuilder "rollover_checklist", "50_academic_year_rollover_check"
+    RunBuilder "rollover_checklist", "46_rollover_checklist"
 End Sub
 
 Sub GenerateCourseCertificates
-    RunBuilder "course_certificates", "68_course_certificates"
+    RunBuilder "course_certificates", "course_certificates"
 End Sub
 
 Sub GenerateCourseFinalExams
-    RunBuilder "course_final_exams", "69_course_final_exams"
+    RunBuilder "course_final_exams", "course_final_exams"
 End Sub
 
 Sub GenerateCourseTermExams
-    RunBuilder "course_term_exams", "70_course_term_exams"
+    RunBuilder "course_term_exams", "course_term_exams"
 End Sub
 
 Sub GenerateGradebookWeights
-    RunBuilder "gradebook_weights", "72_gradebook_weights"
+    RunBuilder "gradebook_weights", "gradebook_weights"
 End Sub
 
 Sub GenerateNextYearCourses
-    RunBuilder "next_year_courses", "58_next_year_courses_2027_2028"
+    RunBuilder "next_year_courses", "54_next_year_courses"
 End Sub
 
 Sub GenerateNextYearCohorts
-    RunBuilder "next_year_cohorts", "59_next_year_cohorts_2027_2028"
+    RunBuilder "next_year_cohorts", "55_next_year_cohorts"
 End Sub
 
 Sub GenerateNextYearGroups
-    RunBuilder "next_year_groups", "60_next_year_groups_2027_2028"
+    RunBuilder "next_year_groups", "56_next_year_groups"
 End Sub
 
 Sub GenerateNextYearEnrolments
-    RunBuilder "next_year_enrolments", "61_next_year_enrolments_2027_20"
+    RunBuilder "next_year_enrolments", "57_next_year_enrolments"
 End Sub
 
 Sub GenerateAlumniCohorts
-    RunBuilder "alumni_cohorts", "62_alumni_cohorts_2027"
+    RunBuilder "alumni_cohorts", "58_alumni_cohorts"
 End Sub
 
 Sub GenerateArchivePolicy
-    RunBuilder "archive_policy", "63_archive_policy"
+    RunBuilder "archive_policy", "59_archive_policy"
 End Sub
 
 Sub GenerateCompatibilityMatrix
-    RunBuilder "compatibility_matrix", "65_compatibility_matrix"
+    RunBuilder "compatibility_matrix", "61_compatibility"
 End Sub
 
 Sub GenerateOptionalYearCategoryModel
-    RunBuilder "optional_year_category_model", "15_optional_year_category_model"
+    RunBuilder "optional_year_category_model", "11_optional_categories"
 End Sub
 
 Sub GenerateStudentAcademicHistory
-    RunBuilder "student_academic_history", "55_student_academic_history_tem"
+    RunBuilder "student_academic_history", "51_academic_history"
 End Sub
 
 Sub GenerateStudentPromotionPlan
-    RunBuilder "student_promotion_plan", "56_student_promotion_plan_2027_"
+    RunBuilder "student_promotion_plan", "52_promotion_plan"
 End Sub
 
 Sub GenerateAssessmentPlan
-    RunBuilder "assessment_plan", "66_assessment_plan"
+    RunBuilder "assessment_plan", "assessment_plan"
 End Sub
 
 Sub GenerateAttendancePolicy
-    RunBuilder "attendance_policy", "67_attendance_policy"
+    RunBuilder "attendance_policy", "attendance_policy"
 End Sub
 
 Sub RunBuilder(builderName As String, label As String)
@@ -337,12 +337,12 @@ Function BuildGradeSubjectMatrix(oDoc As Object) As Long
     Dim appliesTo As String, subjectCode As String, subjectName As String, subjectCategory As String
     Dim sourceNote As String
 
-    oTarget = RequireSheet(oDoc, "13_grade_subject_matrix")
-    oBoards = RequireSheet(oDoc, "07_boards")
-    oMediums = RequireSheet(oDoc, "08_mediums")
-    oGrades = RequireSheet(oDoc, "09_grades")
-    oStreams = RequireSheet(oDoc, "10_streams")
-    oSubjects = RequireSheet(oDoc, "12_subjects")
+    oTarget = RequireSheet(oDoc, "09_subject_matrix")
+    oBoards = RequireSheet(oDoc, "03_boards")
+    oMediums = RequireSheet(oDoc, "04_mediums")
+    oGrades = RequireSheet(oDoc, "05_grades")
+    oStreams = RequireSheet(oDoc, "06_streams")
+    oSubjects = RequireSheet(oDoc, "08_subjects")
 
     bHeader = FindHeaderRow(oBoards, "board_code")
     mHeader = FindHeaderRow(oMediums, "medium_code")
@@ -428,13 +428,13 @@ Function BuildCategories(oDoc As Object) As Long
     Dim mediumCategoryFormula As String, gradeCategoryFormula As String, streamCategoryFormula As String
     Dim basePathFormula As String, pathFormula As String
 
-    oTarget = RequireSheet(oDoc, "14_categories")
-    oSchool = RequireSheet(oDoc, "05_school_master")
-    oBoards = RequireSheet(oDoc, "07_boards")
-    oYears = RequireSheet(oDoc, "06_academic_years")
-    oMediums = RequireSheet(oDoc, "08_mediums")
-    oGrades = RequireSheet(oDoc, "09_grades")
-    oStreams = RequireSheet(oDoc, "10_streams")
+    oTarget = RequireSheet(oDoc, "10_categories")
+    oSchool = RequireSheet(oDoc, "01_school_master")
+    oBoards = RequireSheet(oDoc, "03_boards")
+    oYears = RequireSheet(oDoc, "02_academic_years")
+    oMediums = RequireSheet(oDoc, "04_mediums")
+    oGrades = RequireSheet(oDoc, "05_grades")
+    oStreams = RequireSheet(oDoc, "06_streams")
 
     hTarget = FindHeaderRow(oTarget, "category_code")
     hSchool = FindHeaderRow(oSchool, "trust_code")
@@ -456,7 +456,7 @@ Function BuildCategories(oDoc As Object) As Long
     trustNameRef = FormulaCellByHeader(oSchool, hSchool, hSchool + 1, "trust_name")
     schoolCodeRef = FormulaCellByHeader(oSchool, hSchool, hSchool + 1, "school_code")
     schoolNameRef = FormulaCellByHeader(oSchool, hSchool, hSchool + 1, "school_name")
-    If trustCode = "" Or schoolCode = "" Then Err.Raise 1201, "MasterImportTools", "05_school_master requires trust_code and school_code."
+    If trustCode = "" Or schoolCode = "" Then Err.Raise 1201, "MasterImportTools", "01_school_master requires trust_code and school_code."
 
     WriteCategory oTarget, hTarget, targetRow, "=" & trustCodeRef, FormulaBlank(), FormulaStaticText("trust"), "=" & trustNameRef, "=" & trustCodeRef, "=" & trustNameRef, FormulaStaticText("1"), FormulaStaticText("Root trust category.")
     targetRow = targetRow + 1
@@ -557,13 +557,13 @@ Function BuildCourses(oDoc As Object) As Long
     Dim gradeCodeRef As String, gradeNameRef As String, streamCodeRef As String, subjectCodeRef As String, subjectNameRef As String
     Dim courseCodeFormula As String, shortnameFormula As String, categoryCodeFormula As String
 
-    oTarget = RequireSheet(oDoc, "16_courses")
-    oMatrix = RequireSheet(oDoc, "13_grade_subject_matrix")
-    oSchool = RequireSheet(oDoc, "05_school_master")
-    oYears = RequireSheet(oDoc, "06_academic_years")
-    oBoards = RequireSheet(oDoc, "07_boards")
-    oMediums = RequireSheet(oDoc, "08_mediums")
-    oGrades = RequireSheet(oDoc, "09_grades")
+    oTarget = RequireSheet(oDoc, "12_courses")
+    oMatrix = RequireSheet(oDoc, "09_subject_matrix")
+    oSchool = RequireSheet(oDoc, "01_school_master")
+    oYears = RequireSheet(oDoc, "02_academic_years")
+    oBoards = RequireSheet(oDoc, "03_boards")
+    oMediums = RequireSheet(oDoc, "04_mediums")
+    oGrades = RequireSheet(oDoc, "05_grades")
     hTarget = FindHeaderRow(oTarget, "course_code")
     hMatrix = FindHeaderRow(oMatrix, "board_code")
     hSchool = FindHeaderRow(oSchool, "trust_code")
@@ -592,9 +592,9 @@ Function BuildCourses(oDoc As Object) As Long
         subjectCode = CellText(oMatrix, FindColumn(oMatrix, "subject_code", hMatrix), mRow)
         subjectName = CellText(oMatrix, FindColumn(oMatrix, "subject_name", hMatrix), mRow)
         If boardCode <> "" And subjectCode <> "" Then
-            boardName = LookupValue(oDoc, "07_boards", "board_code", boardCode, "board_name")
-            mediumName = LookupValue(oDoc, "08_mediums", "medium_code", mediumCode, "medium_name")
-            gradeName = LookupValue(oDoc, "09_grades", "grade_code", gradeCode, "grade_name")
+            boardName = LookupValue(oDoc, "03_boards", "board_code", boardCode, "board_name")
+            mediumName = LookupValue(oDoc, "04_mediums", "medium_code", mediumCode, "medium_name")
+            gradeName = LookupValue(oDoc, "05_grades", "grade_code", gradeCode, "grade_name")
             courseCode = MakeCourseCode(schoolCode, boardCode, mediumCode, gradeCode, streamCode, subjectCode, academicYear)
             shortname = MakeCourseShortname(schoolCode, boardCode, mediumCode, gradeCode, streamCode, subjectCode, academicYear)
             categoryCode = MakeStreamCategoryCode(trustCode, boardCode, schoolCode, academicYear, mediumCode, gradeCode, streamCode)
@@ -647,9 +647,9 @@ Function BuildCoursesWithTemplateUpload(oDoc As Object) As Long
     Dim oCourses As Object, oTarget As Object, oCategories As Object
     Dim hCourses As Long, hTarget As Long, cRow As Long, targetRow As Long, generatedRows As Long
     Dim categoryCode As String
-    oCourses = RequireSheet(oDoc, "16_courses")
-    oTarget = RequireSheet(oDoc, "17_courses_with_templatecourse_")
-    oCategories = RequireSheet(oDoc, "14_categories")
+    oCourses = RequireSheet(oDoc, "12_courses")
+    oTarget = RequireSheet(oDoc, "13_courses_upload")
+    oCategories = RequireSheet(oDoc, "10_categories")
     hCourses = FindHeaderRow(oCourses, "course_code")
     hTarget = FindHeaderRow(oTarget, "shortname")
     targetRow = hTarget + 1
@@ -691,14 +691,14 @@ Function BuildCohorts(oDoc As Object) As Long
     Dim mediumCodeRef As String, mediumNameRef As String, gradeCodeRef As String, gradeNameRef As String
     Dim streamCodeRef As String, divisionCodeRef As String, divisionNameRef As String
     Dim cohortCodeFormula As String, contextCategoryFormula As String
-    oTarget = RequireSheet(oDoc, "18_cohorts")
-    oSchool = RequireSheet(oDoc, "05_school_master")
-    oBoards = RequireSheet(oDoc, "07_boards")
-    oYears = RequireSheet(oDoc, "06_academic_years")
-    oMediums = RequireSheet(oDoc, "08_mediums")
-    oGrades = RequireSheet(oDoc, "09_grades")
-    oStreams = RequireSheet(oDoc, "10_streams")
-    oDivisions = RequireSheet(oDoc, "11_divisions")
+    oTarget = RequireSheet(oDoc, "14_cohorts")
+    oSchool = RequireSheet(oDoc, "01_school_master")
+    oBoards = RequireSheet(oDoc, "03_boards")
+    oYears = RequireSheet(oDoc, "02_academic_years")
+    oMediums = RequireSheet(oDoc, "04_mediums")
+    oGrades = RequireSheet(oDoc, "05_grades")
+    oStreams = RequireSheet(oDoc, "06_streams")
+    oDivisions = RequireSheet(oDoc, "07_divisions")
     hTarget = FindHeaderRow(oTarget, "cohort_code")
     hSchool = FindHeaderRow(oSchool, "trust_code")
     hBoard = FindHeaderRow(oBoards, "board_code")
@@ -769,14 +769,14 @@ Function BuildCohorts(oDoc As Object) As Long
 End Function
 
 Function BuildGroups(oDoc As Object) As Long
-    BuildGroups = BuildGroupsFromCourses(oDoc, "16_courses", "19_groups")
+    BuildGroups = BuildGroupsFromCourses(oDoc, "12_courses", "15_groups")
 End Function
 
 Function BuildCohortMembers(oDoc As Object) As Long
     Dim oStudents As Object, oTarget As Object
     Dim hStudents As Long, hTarget As Long, sRow As Long, targetRow As Long, username As String, cohortCode As String, generatedRows As Long
-    oStudents = RequireSheet(oDoc, "24_users_students")
-    oTarget = RequireSheet(oDoc, "26_cohort_members")
+    oStudents = RequireSheet(oDoc, "20_users_students")
+    oTarget = RequireSheet(oDoc, "22_cohort_members")
     hStudents = FindHeaderRow(oStudents, "username")
     hTarget = FindHeaderRow(oTarget, "username")
     targetRow = hTarget + 1
@@ -796,7 +796,7 @@ Function BuildCohortMembers(oDoc As Object) As Long
 End Function
 
 Function BuildEnrolments(oDoc As Object) As Long
-    BuildEnrolments = BuildEnrolmentsFromCourses(oDoc, "16_courses", "29_enrolments")
+    BuildEnrolments = BuildEnrolmentsFromCourses(oDoc, "12_courses", "25_enrolments")
 End Function
 
 Function BuildSummary(oDoc As Object) As Long
@@ -806,15 +806,15 @@ Function BuildSummary(oDoc As Object) As Long
     Dim hStaff As Long, hCourses As Long, hCohorts As Long, hGroups As Long
     Dim targetRow As Long, generatedRows As Long
 
-    oTarget = RequireSheet(oDoc, "33_summary")
-    oSchool = RequireSheet(oDoc, "05_school_master")
-    oYears = RequireSheet(oDoc, "06_academic_years")
-    oStudents = RequireSheet(oDoc, "24_users_students")
-    oParents = RequireSheet(oDoc, "25_users_parents")
-    oStaff = RequireSheet(oDoc, "23_users_staff")
-    oCourses = RequireSheet(oDoc, "16_courses")
-    oCohorts = RequireSheet(oDoc, "18_cohorts")
-    oGroups = RequireSheet(oDoc, "19_groups")
+    oTarget = RequireSheet(oDoc, "29_summary")
+    oSchool = RequireSheet(oDoc, "01_school_master")
+    oYears = RequireSheet(oDoc, "02_academic_years")
+    oStudents = RequireSheet(oDoc, "20_users_students")
+    oParents = RequireSheet(oDoc, "21_users_parents")
+    oStaff = RequireSheet(oDoc, "19_users_staff")
+    oCourses = RequireSheet(oDoc, "12_courses")
+    oCohorts = RequireSheet(oDoc, "14_cohorts")
+    oGroups = RequireSheet(oDoc, "15_groups")
 
     hTarget = FindHeaderRow(oTarget, "metric")
     hSchool = FindHeaderRow(oSchool, "school_name")
@@ -848,7 +848,7 @@ End Function
 
 Function BuildRolloverChecklist(oDoc As Object) As Long
     Dim oTarget As Object, hTarget As Long, targetRow As Long
-    oTarget = RequireSheet(oDoc, "50_academic_year_rollover_check")
+    oTarget = RequireSheet(oDoc, "46_rollover_checklist")
     hTarget = FindHeaderRow(oTarget, "step_no")
     targetRow = hTarget + 1
     ClearDataRows oTarget, targetRow
@@ -865,7 +865,7 @@ End Function
 
 Function BuildArchivePolicy(oDoc As Object) As Long
     Dim oTarget As Object, hTarget As Long, targetRow As Long
-    oTarget = RequireSheet(oDoc, "63_archive_policy")
+    oTarget = RequireSheet(oDoc, "59_archive_policy")
     hTarget = FindHeaderRow(oTarget, "archive_item")
     targetRow = hTarget + 1
     ClearDataRows oTarget, targetRow
@@ -878,7 +878,7 @@ End Function
 
 Function BuildCompatibilityMatrix(oDoc As Object) As Long
     Dim oTarget As Object, hTarget As Long, targetRow As Long
-    oTarget = RequireSheet(oDoc, "65_compatibility_matrix")
+    oTarget = RequireSheet(oDoc, "61_compatibility")
     hTarget = FindHeaderRow(oTarget, "component")
     targetRow = hTarget + 1
     ClearDataRows oTarget, targetRow
@@ -907,8 +907,8 @@ Function BuildCourseTemplateApplication(oDoc As Object) As Long
     Dim oCourses As Object, oTarget As Object
     Dim hCourses As Long, hTarget As Long, cRow As Long, targetRow As Long, gradeCode As String, streamCode As String, generatedRows As Long
     Dim gradeCodeRef As String, streamCodeRef As String
-    oCourses = RequireSheet(oDoc, "16_courses")
-    oTarget = RequireSheet(oDoc, "41_course_template_application")
+    oCourses = RequireSheet(oDoc, "12_courses")
+    oTarget = RequireSheet(oDoc, "37_template_application")
     hCourses = FindHeaderRow(oCourses, "course_code")
     hTarget = FindHeaderRow(oTarget, "course_shortname")
     targetRow = hTarget + 1
@@ -950,13 +950,13 @@ Function BuildCourseCertificates(oDoc As Object) As Long
     Dim cRow As Long, targetRow As Long, gradeCode As String
     Dim principalName As String, principalUsername As String, principalRow As Long, principalFormula As String, generatedRows As Long
     Dim gradeCodeRef As String, boardCode As String, mediumCode As String
-    oCourses = RequireSheet(oDoc, "16_courses")
-    oTarget = RequireSheet(oDoc, "68_course_certificates")
-    oSchool = RequireSheet(oDoc, "05_school_master")
-    oStaff = RequireSheet(oDoc, "23_users_staff")
-    oBoards = RequireSheet(oDoc, "07_boards")
-    oMediums = RequireSheet(oDoc, "08_mediums")
-    oGrades = RequireSheet(oDoc, "09_grades")
+    oCourses = RequireSheet(oDoc, "12_courses")
+    oTarget = RequireSheet(oDoc, "course_certificates")
+    oSchool = RequireSheet(oDoc, "01_school_master")
+    oStaff = RequireSheet(oDoc, "19_users_staff")
+    oBoards = RequireSheet(oDoc, "03_boards")
+    oMediums = RequireSheet(oDoc, "04_mediums")
+    oGrades = RequireSheet(oDoc, "05_grades")
     hCourses = FindHeaderRow(oCourses, "course_code")
     hTarget = FindHeaderRow(oTarget, "academic_year")
     hSchool = FindHeaderRow(oSchool, "trust_code")
@@ -1030,8 +1030,8 @@ End Function
 Function BuildCourseFinalExams(oDoc As Object) As Long
     Dim oCourses As Object, oTarget As Object
     Dim hCourses As Long, hTarget As Long, cRow As Long, targetRow As Long, generatedRows As Long
-    oCourses = RequireSheet(oDoc, "16_courses")
-    oTarget = RequireSheet(oDoc, "69_course_final_exams")
+    oCourses = RequireSheet(oDoc, "12_courses")
+    oTarget = RequireSheet(oDoc, "course_final_exams")
     hCourses = FindHeaderRow(oCourses, "course_code")
     hTarget = FindHeaderRow(oTarget, "academic_year")
     targetRow = hTarget + 1
@@ -1056,9 +1056,9 @@ Function BuildCourseTermExams(oDoc As Object) As Long
     Dim oCourses As Object, oTerms As Object, oTarget As Object
     Dim hCourses As Long, hTerms As Long, hTarget As Long, cRow As Long, tRow As Long, targetRow As Long
     Dim termCode As String, generatedRows As Long
-    oCourses = RequireSheet(oDoc, "16_courses")
-    oTerms = RequireSheet(oDoc, "71_exam_terms")
-    oTarget = RequireSheet(oDoc, "70_course_term_exams")
+    oCourses = RequireSheet(oDoc, "12_courses")
+    oTerms = RequireSheet(oDoc, "exam_terms")
+    oTarget = RequireSheet(oDoc, "course_term_exams")
     hCourses = FindHeaderRow(oCourses, "course_code")
     hTerms = FindHeaderRow(oTerms, "term_code")
     hTarget = FindHeaderRow(oTarget, "academic_year")
@@ -1089,8 +1089,8 @@ End Function
 Function BuildGradebookWeights(oDoc As Object) As Long
     Dim oCourses As Object, oTarget As Object
     Dim hCourses As Long, hTarget As Long, cRow As Long, targetRow As Long, generatedRows As Long
-    oCourses = RequireSheet(oDoc, "16_courses")
-    oTarget = RequireSheet(oDoc, "72_gradebook_weights")
+    oCourses = RequireSheet(oDoc, "12_courses")
+    oTarget = RequireSheet(oDoc, "gradebook_weights")
     hCourses = FindHeaderRow(oCourses, "course_code")
     hTarget = FindHeaderRow(oTarget, "academic_year")
     targetRow = hTarget + 1
@@ -1126,13 +1126,13 @@ Function BuildNextYearCourses(oDoc As Object) As Long
     Dim schoolCodeRef As String, boardCodeRef As String, boardNameRef As String, mediumCodeRef As String, mediumNameRef As String
     Dim gradeCodeRef As String, gradeNameRef As String, streamCodeRef As String, subjectCodeRef As String, subjectNameRef As String
     Dim courseCodeFormula As String, shortnameFormula As String, categoryCodeFormula As String
-    oSource = RequireSheet(oDoc, "16_courses")
-    oTarget = RequireSheet(oDoc, "58_next_year_courses_2027_2028")
-    oSchool = RequireSheet(oDoc, "05_school_master")
-    oYears = RequireSheet(oDoc, "06_academic_years")
-    oBoards = RequireSheet(oDoc, "07_boards")
-    oMediums = RequireSheet(oDoc, "08_mediums")
-    oGrades = RequireSheet(oDoc, "09_grades")
+    oSource = RequireSheet(oDoc, "12_courses")
+    oTarget = RequireSheet(oDoc, "54_next_year_courses")
+    oSchool = RequireSheet(oDoc, "01_school_master")
+    oYears = RequireSheet(oDoc, "02_academic_years")
+    oBoards = RequireSheet(oDoc, "03_boards")
+    oMediums = RequireSheet(oDoc, "04_mediums")
+    oGrades = RequireSheet(oDoc, "05_grades")
     hSource = FindHeaderRow(oSource, "course_code")
     hTarget = FindHeaderRow(oTarget, "course_code")
     hSchool = FindHeaderRow(oSchool, "trust_code")
@@ -1158,9 +1158,9 @@ Function BuildNextYearCourses(oDoc As Object) As Long
             gradeCode = CellText(oSource, FindColumn(oSource, "grade_code", hSource), sourceRow)
             streamCode = CellText(oSource, FindColumn(oSource, "stream_code", hSource), sourceRow)
             subjectName = CellText(oSource, FindColumn(oSource, "subject_name", hSource), sourceRow)
-            boardName = LookupValue(oDoc, "07_boards", "board_code", boardCode, "board_name")
-            mediumName = LookupValue(oDoc, "08_mediums", "medium_code", mediumCode, "medium_name")
-            gradeName = LookupValue(oDoc, "09_grades", "grade_code", gradeCode, "grade_name")
+            boardName = LookupValue(oDoc, "03_boards", "board_code", boardCode, "board_name")
+            mediumName = LookupValue(oDoc, "04_mediums", "medium_code", mediumCode, "medium_name")
+            gradeName = LookupValue(oDoc, "05_grades", "grade_code", gradeCode, "grade_name")
             courseCode = MakeCourseCode(schoolCode, boardCode, mediumCode, gradeCode, streamCode, subjectCode, nextYear)
             shortname = MakeCourseShortname(schoolCode, boardCode, mediumCode, gradeCode, streamCode, subjectCode, nextYear)
             schoolCodeRef = FormulaCellByHeader(oSource, hSource, sourceRow, "school_code")
@@ -1211,9 +1211,9 @@ Function BuildNextYearCohorts(oDoc As Object) As Long
     Dim schoolCodeRef As String, boardCodeRef As String, mediumCodeRef As String, mediumNameRef As String
     Dim gradeCodeRef As String, gradeNameRef As String, streamCodeRef As String, divisionCodeRef As String, divisionNameRef As String
     Dim nextYearRef As String, sourceAcademicYearRef As String, cohortCodeFormula As String
-    oSource = RequireSheet(oDoc, "18_cohorts")
-    oTarget = RequireSheet(oDoc, "59_next_year_cohorts_2027_2028")
-    oYears = RequireSheet(oDoc, "06_academic_years")
+    oSource = RequireSheet(oDoc, "14_cohorts")
+    oTarget = RequireSheet(oDoc, "55_next_year_cohorts")
+    oYears = RequireSheet(oDoc, "02_academic_years")
     hSource = FindHeaderRow(oSource, "cohort_code")
     hTarget = FindHeaderRow(oTarget, "cohort_code")
     hYear = FindHeaderRow(oYears, "academic_year")
@@ -1230,9 +1230,9 @@ Function BuildNextYearCohorts(oDoc As Object) As Long
             gradeCode = CellText(oSource, FindColumn(oSource, "grade_code", hSource), sourceRow)
             streamCode = CellText(oSource, FindColumn(oSource, "stream_code", hSource), sourceRow)
             divisionCode = CellText(oSource, FindColumn(oSource, "division_code", hSource), sourceRow)
-            mediumName = LookupValue(oDoc, "08_mediums", "medium_code", mediumCode, "medium_name")
-            gradeName = LookupValue(oDoc, "09_grades", "grade_code", gradeCode, "grade_name")
-            divisionName = LookupValue(oDoc, "11_divisions", "division_code", divisionCode, "division_name")
+            mediumName = LookupValue(oDoc, "04_mediums", "medium_code", mediumCode, "medium_name")
+            gradeName = LookupValue(oDoc, "05_grades", "grade_code", gradeCode, "grade_name")
+            divisionName = LookupValue(oDoc, "07_divisions", "division_code", divisionCode, "division_name")
             cohortCode = MakeCohortCode(schoolCode, nextYear, boardCode, mediumCode, gradeCode, streamCode, divisionCode)
             contextCode = Replace(CellText(oSource, FindColumn(oSource, "context_category_code", hSource), sourceRow), YearToken(CellText(oSource, FindColumn(oSource, "academic_year", hSource), sourceRow)), YearToken(nextYear))
             schoolCodeRef = FormulaCellByHeader(oSource, hSource, sourceRow, "school_code")
@@ -1241,9 +1241,9 @@ Function BuildNextYearCohorts(oDoc As Object) As Long
             gradeCodeRef = FormulaCellByHeader(oSource, hSource, sourceRow, "grade_code")
             streamCodeRef = FormulaCellByHeader(oSource, hSource, sourceRow, "stream_code")
             divisionCodeRef = FormulaCellByHeader(oSource, hSource, sourceRow, "division_code")
-            mediumNameRef = FormulaLookupCellByValue(RequireSheet(oDoc, "08_mediums"), FindHeaderRow(RequireSheet(oDoc, "08_mediums"), "medium_code"), "medium_code", mediumCode, "medium_name")
-            gradeNameRef = FormulaLookupCellByValue(RequireSheet(oDoc, "09_grades"), FindHeaderRow(RequireSheet(oDoc, "09_grades"), "grade_code"), "grade_code", gradeCode, "grade_name")
-            divisionNameRef = FormulaLookupCellByValue(RequireSheet(oDoc, "11_divisions"), FindHeaderRow(RequireSheet(oDoc, "11_divisions"), "division_code"), "division_code", divisionCode, "division_name")
+            mediumNameRef = FormulaLookupCellByValue(RequireSheet(oDoc, "04_mediums"), FindHeaderRow(RequireSheet(oDoc, "04_mediums"), "medium_code"), "medium_code", mediumCode, "medium_name")
+            gradeNameRef = FormulaLookupCellByValue(RequireSheet(oDoc, "05_grades"), FindHeaderRow(RequireSheet(oDoc, "05_grades"), "grade_code"), "grade_code", gradeCode, "grade_name")
+            divisionNameRef = FormulaLookupCellByValue(RequireSheet(oDoc, "07_divisions"), FindHeaderRow(RequireSheet(oDoc, "07_divisions"), "division_code"), "division_code", divisionCode, "division_name")
             sourceAcademicYearRef = FormulaCellByHeader(oSource, hSource, sourceRow, "academic_year")
             cohortCodeFormula = "=" & schoolCodeRef & "&" & FormulaText("-") & "&LEFT(" & nextYearRef & ";4)&" & FormulaText("-") & "&" & boardCodeRef & "&" & FormulaText("-") & "&" & mediumCodeRef & "&" & FormulaText("-") & "&" & gradeCodeRef & "&" & FormulaText("-") & "&" & streamCodeRef & "&" & FormulaText("-") & "&" & divisionCodeRef
             SetFormulaByHeader oTarget, hTarget, targetRow, "cohort_code", cohortCodeFormula
@@ -1267,11 +1267,11 @@ Function BuildNextYearCohorts(oDoc As Object) As Long
 End Function
 
 Function BuildNextYearGroups(oDoc As Object) As Long
-    BuildNextYearGroups = BuildGroupsFromCourses(oDoc, "58_next_year_courses_2027_2028", "60_next_year_groups_2027_2028")
+    BuildNextYearGroups = BuildGroupsFromCourses(oDoc, "54_next_year_courses", "56_next_year_groups")
 End Function
 
 Function BuildNextYearEnrolments(oDoc As Object) As Long
-    BuildNextYearEnrolments = BuildEnrolmentsFromCourses(oDoc, "58_next_year_courses_2027_2028", "61_next_year_enrolments_2027_20")
+    BuildNextYearEnrolments = BuildEnrolmentsFromCourses(oDoc, "54_next_year_courses", "57_next_year_enrolments")
 End Function
 
 Function BuildAlumniCohorts(oDoc As Object) As Long
@@ -1281,9 +1281,9 @@ Function BuildAlumniCohorts(oDoc As Object) As Long
     Dim schoolCodeRef As String, boardCodeRef As String, mediumCodeRef As String, gradeCodeRef As String
     Dim streamCodeRef As String, divisionCodeRef As String, nextYearRef As String, sourceCohortRef As String
     Dim alumniCodeFormula As String, generatedRows As Long
-    oSource = RequireSheet(oDoc, "18_cohorts")
-    oTarget = RequireSheet(oDoc, "62_alumni_cohorts_2027")
-    oYears = RequireSheet(oDoc, "06_academic_years")
+    oSource = RequireSheet(oDoc, "14_cohorts")
+    oTarget = RequireSheet(oDoc, "58_alumni_cohorts")
+    oYears = RequireSheet(oDoc, "02_academic_years")
     hSource = FindHeaderRow(oSource, "cohort_code")
     hTarget = FindHeaderRow(oTarget, "cohort_code")
     hYear = FindHeaderRow(oYears, "academic_year")
@@ -1329,8 +1329,8 @@ End Function
 Function BuildOptionalYearCategoryModel(oDoc As Object) As Long
     Dim oSource As Object, oTarget As Object
     Dim hSource As Long, hTarget As Long, sourceRow As Long, targetRow As Long, generatedRows As Long
-    oSource = RequireSheet(oDoc, "14_categories")
-    oTarget = RequireSheet(oDoc, "15_optional_year_category_model")
+    oSource = RequireSheet(oDoc, "10_categories")
+    oTarget = RequireSheet(oDoc, "11_optional_categories")
     hSource = FindHeaderRow(oSource, "category_code")
     hTarget = FindHeaderRow(oTarget, "category_code")
     targetRow = hTarget + 1
@@ -1357,10 +1357,10 @@ Function BuildStudentAcademicHistory(oDoc As Object) As Long
     Dim hStudents As Long, hTarget As Long, hYear As Long, hSchool As Long
     Dim sRow As Long, targetRow As Long, generatedRows As Long, yearRow As Long
     Dim rowNoText As String, yearRef As String
-    oStudents = RequireSheet(oDoc, "24_users_students")
-    oTarget = RequireSheet(oDoc, "55_student_academic_history_tem")
-    oYears = RequireSheet(oDoc, "06_academic_years")
-    oSchool = RequireSheet(oDoc, "05_school_master")
+    oStudents = RequireSheet(oDoc, "20_users_students")
+    oTarget = RequireSheet(oDoc, "51_academic_history")
+    oYears = RequireSheet(oDoc, "02_academic_years")
+    oSchool = RequireSheet(oDoc, "01_school_master")
     hStudents = FindHeaderRow(oStudents, "username")
     hTarget = FindHeaderRow(oTarget, "history_id")
     hYear = FindHeaderRow(oYears, "academic_year")
@@ -1402,9 +1402,9 @@ Function BuildStudentPromotionPlan(oDoc As Object) As Long
     Dim sRow As Long, targetRow As Long, generatedRows As Long, nextYearRow As Long
     Dim gradeRef As String, gradeNo As String, targetGradeFormula As String, nextYearRef As String, startDateRef As String
     Dim schoolRef As String, boardRef As String, mediumRef As String, streamRef As String, divisionRef As String
-    oStudents = RequireSheet(oDoc, "24_users_students")
-    oTarget = RequireSheet(oDoc, "56_student_promotion_plan_2027_")
-    oYears = RequireSheet(oDoc, "06_academic_years")
+    oStudents = RequireSheet(oDoc, "20_users_students")
+    oTarget = RequireSheet(oDoc, "52_promotion_plan")
+    oYears = RequireSheet(oDoc, "02_academic_years")
     hStudents = FindHeaderRow(oStudents, "username")
     hTarget = FindHeaderRow(oTarget, "student_username")
     hYear = FindHeaderRow(oYears, "academic_year")
@@ -1461,8 +1461,8 @@ End Function
 Function BuildAssessmentPlan(oDoc As Object) As Long
     Dim oCourses As Object, oTarget As Object
     Dim hCourses As Long, hTarget As Long, cRow As Long, targetRow As Long, generatedRows As Long
-    oCourses = RequireSheet(oDoc, "16_courses")
-    oTarget = RequireSheet(oDoc, "66_assessment_plan")
+    oCourses = RequireSheet(oDoc, "12_courses")
+    oTarget = RequireSheet(oDoc, "assessment_plan")
     hCourses = FindHeaderRow(oCourses, "course_code")
     hTarget = FindHeaderRow(oTarget, "academic_year")
     targetRow = hTarget + 1
@@ -1490,9 +1490,9 @@ End Function
 Function BuildAttendancePolicy(oDoc As Object) As Long
     Dim oGrades As Object, oTarget As Object, oYears As Object
     Dim hGrades As Long, hTarget As Long, hYear As Long, gRow As Long, targetRow As Long, yearRow As Long, generatedRows As Long
-    oGrades = RequireSheet(oDoc, "09_grades")
-    oTarget = RequireSheet(oDoc, "67_attendance_policy")
-    oYears = RequireSheet(oDoc, "06_academic_years")
+    oGrades = RequireSheet(oDoc, "05_grades")
+    oTarget = RequireSheet(oDoc, "attendance_policy")
+    oYears = RequireSheet(oDoc, "02_academic_years")
     hGrades = FindHeaderRow(oGrades, "grade_code")
     hTarget = FindHeaderRow(oTarget, "academic_year")
     hYear = FindHeaderRow(oYears, "academic_year")
@@ -1518,7 +1518,7 @@ Function BuildGroupsFromCourses(oDoc As Object, coursesSheet As String, targetSh
     Dim courseCode As String, courseShortname As String, divisionCode As String, divisionName As String, generatedRows As Long
     Dim courseCodeRef As String, courseShortnameRef As String, divisionCodeRef As String, divisionNameRef As String
     oCourses = RequireSheet(oDoc, coursesSheet)
-    oDivisions = RequireSheet(oDoc, "11_divisions")
+    oDivisions = RequireSheet(oDoc, "07_divisions")
     oTarget = RequireSheet(oDoc, targetSheet)
     hCourses = FindHeaderRow(oCourses, "course_code")
     hDiv = FindHeaderRow(oDivisions, "division_code")
@@ -1560,7 +1560,7 @@ Function BuildEnrolmentsFromCourses(oDoc As Object, coursesSheet As String, targ
     Dim mediumCodeRef As String, gradeCodeRef As String, streamCodeRef As String, divisionCodeRef As String, divisionNameRef As String
     Dim cohortCodeFormula As String
     oCourses = RequireSheet(oDoc, coursesSheet)
-    oDivisions = RequireSheet(oDoc, "11_divisions")
+    oDivisions = RequireSheet(oDoc, "07_divisions")
     oTarget = RequireSheet(oDoc, targetSheet)
     hCourses = FindHeaderRow(oCourses, "course_code")
     hDiv = FindHeaderRow(oDivisions, "division_code")
@@ -1822,33 +1822,33 @@ Sub ClearGeneratedSheet(oDoc As Object, sheetName As String)
 End Sub
 
 Sub ClearAutomaticSheets(oDoc As Object)
-    ClearGeneratedSheet oDoc, "13_grade_subject_matrix"
-    ClearGeneratedSheet oDoc, "14_categories"
-    ClearGeneratedSheet oDoc, "15_optional_year_category_model"
-    ClearGeneratedSheet oDoc, "16_courses"
-    ClearGeneratedSheet oDoc, "17_courses_with_templatecourse_"
-    ClearGeneratedSheet oDoc, "18_cohorts"
-    ClearGeneratedSheet oDoc, "19_groups"
-    ClearGeneratedSheet oDoc, "26_cohort_members"
-    ClearGeneratedSheet oDoc, "29_enrolments"
-    ClearGeneratedSheet oDoc, "33_summary"
-    ClearGeneratedSheet oDoc, "41_course_template_application"
-    ClearGeneratedSheet oDoc, "50_academic_year_rollover_check"
-    ClearGeneratedSheet oDoc, "55_student_academic_history_tem"
-    ClearGeneratedSheet oDoc, "56_student_promotion_plan_2027_"
-    ClearGeneratedSheet oDoc, "58_next_year_courses_2027_2028"
-    ClearGeneratedSheet oDoc, "59_next_year_cohorts_2027_2028"
-    ClearGeneratedSheet oDoc, "60_next_year_groups_2027_2028"
-    ClearGeneratedSheet oDoc, "61_next_year_enrolments_2027_20"
-    ClearGeneratedSheet oDoc, "62_alumni_cohorts_2027"
-    ClearGeneratedSheet oDoc, "63_archive_policy"
-    ClearGeneratedSheet oDoc, "65_compatibility_matrix"
-    ClearGeneratedSheet oDoc, "66_assessment_plan"
-    ClearGeneratedSheet oDoc, "67_attendance_policy"
-    ClearGeneratedSheet oDoc, "68_course_certificates"
-    ClearGeneratedSheet oDoc, "69_course_final_exams"
-    ClearGeneratedSheet oDoc, "70_course_term_exams"
-    ClearGeneratedSheet oDoc, "72_gradebook_weights"
+    ClearGeneratedSheet oDoc, "09_subject_matrix"
+    ClearGeneratedSheet oDoc, "10_categories"
+    ClearGeneratedSheet oDoc, "11_optional_categories"
+    ClearGeneratedSheet oDoc, "12_courses"
+    ClearGeneratedSheet oDoc, "13_courses_upload"
+    ClearGeneratedSheet oDoc, "14_cohorts"
+    ClearGeneratedSheet oDoc, "15_groups"
+    ClearGeneratedSheet oDoc, "22_cohort_members"
+    ClearGeneratedSheet oDoc, "25_enrolments"
+    ClearGeneratedSheet oDoc, "29_summary"
+    ClearGeneratedSheet oDoc, "37_template_application"
+    ClearGeneratedSheet oDoc, "46_rollover_checklist"
+    ClearGeneratedSheet oDoc, "51_academic_history"
+    ClearGeneratedSheet oDoc, "52_promotion_plan"
+    ClearGeneratedSheet oDoc, "54_next_year_courses"
+    ClearGeneratedSheet oDoc, "55_next_year_cohorts"
+    ClearGeneratedSheet oDoc, "56_next_year_groups"
+    ClearGeneratedSheet oDoc, "57_next_year_enrolments"
+    ClearGeneratedSheet oDoc, "58_alumni_cohorts"
+    ClearGeneratedSheet oDoc, "59_archive_policy"
+    ClearGeneratedSheet oDoc, "61_compatibility"
+    ClearGeneratedSheet oDoc, "assessment_plan"
+    ClearGeneratedSheet oDoc, "attendance_policy"
+    ClearGeneratedSheet oDoc, "course_certificates"
+    ClearGeneratedSheet oDoc, "course_final_exams"
+    ClearGeneratedSheet oDoc, "course_term_exams"
+    ClearGeneratedSheet oDoc, "gradebook_weights"
 End Sub
 
 Function FirstSheetValue(oSheet As Object, headerName As String) As String

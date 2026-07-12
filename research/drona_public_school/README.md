@@ -17,6 +17,10 @@ For day-to-day use, follow this order:
 
 The full reference is maintained in [docs/developer-guide.md](docs/developer-guide.md).
 
+Google Form based student/parent registration is documented in [docs/google-form-registration-guide.md](docs/google-form-registration-guide.md).
+
+Google Form based teacher registration is documented in [docs/google-form-teacher-registration-guide.md](docs/google-form-teacher-registration-guide.md).
+
 ## Quick Commands
 
 Run from the repository root:

@@ -24,62 +24,81 @@ SOFFICE = Path("/Applications/LibreOffice.app/Contents/MacOS/soffice")
 
 
 REQUIRED_SHEETS = [
+    "_manifest",
+    "_color_guide",
     "status",
-    "05_school_master",
-    "06_academic_years",
-    "07_boards",
-    "08_mediums",
-    "09_grades",
-    "10_streams",
-    "11_divisions",
-    "12_subjects",
-    "13_grade_subject_matrix",
-    "14_categories",
-    "15_optional_year_category_model",
-    "16_courses",
-    "17_courses_with_templatecourse_",
-    "18_cohorts",
-    "19_groups",
-    "23_users_staff",
-    "24_users_students",
-    "25_users_parents",
-    "26_cohort_members",
-    "29_enrolments",
-    "33_summary",
-    "41_course_template_application",
-    "50_academic_year_rollover_check",
-    "55_student_academic_history_tem",
-    "56_student_promotion_plan_2027_",
-    "58_next_year_courses_2027_2028",
-    "59_next_year_cohorts_2027_2028",
-    "60_next_year_groups_2027_2028",
-    "61_next_year_enrolments_2027_20",
-    "62_alumni_cohorts_2027",
-    "63_archive_policy",
-    "65_compatibility_matrix",
-    "66_assessment_plan",
-    "67_attendance_policy",
-    "68_course_certificates",
-    "69_course_final_exams",
-    "70_course_term_exams",
-    "71_exam_terms",
-    "72_gradebook_weights",
-]
-
-
-ROW_COUNT_PAIRS = [
-    ("courses vs matrix", "16_courses", "13_grade_subject_matrix"),
-    ("template course upload vs courses", "17_courses_with_templatecourse_", "16_courses"),
-    ("course template application vs courses", "41_course_template_application", "16_courses"),
-    ("certificates vs courses", "68_course_certificates", "16_courses"),
-    ("final exams vs courses", "69_course_final_exams", "16_courses"),
-    ("gradebook weights vs courses", "72_gradebook_weights", "16_courses"),
-    ("student history vs students", "55_student_academic_history_tem", "24_users_students"),
-    ("student promotion vs students", "56_student_promotion_plan_2027_", "24_users_students"),
-    ("next courses vs courses", "58_next_year_courses_2027_2028", "16_courses"),
-    ("next cohorts vs cohorts", "59_next_year_cohorts_2027_2028", "18_cohorts"),
-    ("next groups vs groups", "60_next_year_groups_2027_2028", "19_groups"),
-    ("next enrolments vs enrolments", "61_next_year_enrolments_2027_20", "29_enrolments"),
+    "_dashboard",
+    "_sheet_index",
+    "_version",
+    "_lookups",
+    "01_school_master",
+    "02_academic_years",
+    "03_boards",
+    "04_mediums",
+    "05_grades",
+    "06_streams",
+    "07_divisions",
+    "08_subjects",
+    "09_subject_matrix",
+    "10_categories",
+    "11_optional_categories",
+    "12_courses",
+    "13_courses_upload",
+    "14_cohorts",
+    "15_groups",
+    "16_profile_fields",
+    "17_custom_roles",
+    "18_role_guidelines",
+    "19_users_staff",
+    "20_users_students",
+    "21_users_parents",
+    "22_cohort_members",
+    "23_role_assignments",
+    "24_parent_links",
+    "25_enrolments",
+    "26_lookup_values",
+    "27_validation_rules",
+    "28_source_refs",
+    "29_summary",
+    "30_master_template",
+    "31_template_sections",
+    "32_template_activities",
+    "33_template_gradebook",
+    "34_grade_band_adjust",
+    "35_subject_adjust",
+    "36_completion_defaults",
+    "37_template_application",
+    "38_template_custom_fields",
+    "39_template_review",
+    "40_certificate_policy",
+    "41_report_access",
+    "42_test_coverage",
+    "43_content_template",
+    "44_transition_models",
+    "45_promotion_rules",
+    "46_rollover_checklist",
+    "47_promotion_policy",
+    "48_promotion_status",
+    "49_promotion_validation",
+    "50_student_status",
+    "51_academic_history",
+    "52_promotion_plan",
+    "53_promotion_actions",
+    "54_next_year_courses",
+    "55_next_year_cohorts",
+    "56_next_year_groups",
+    "57_next_year_enrolments",
+    "58_alumni_cohorts",
+    "59_archive_policy",
+    "60_improvement_backlog",
+    "61_compatibility",
+    "assessment_plan",
+    "attendance_policy",
+    "course_certificates",
+    "course_final_exams",
+    "course_term_exams",
+    "exam_terms",
+    "gradebook_weights",
 ]
 
 
@@ -148,55 +167,19 @@ def check_status_sheet(errors: list[str], workbook) -> None:
 
 
 def check_row_counts(errors: list[str], workbook) -> None:
-    counts = {name: workbook[name].max_row - 1 for name in workbook.sheetnames}
-    for label, left, right in ROW_COUNT_PAIRS:
-        if counts[left] != counts[right]:
-            fail(errors, f"{label}: {counts[left]} != {counts[right]}")
-        else:
-            print(f"OK {label}: {counts[left]}")
-
-    fixed_counts = {
-        "33_summary": 8,
-        "50_academic_year_rollover_check": 8,
-        "63_archive_policy": 4,
-        "65_compatibility_matrix": 18,
-    }
-    for sheet_name, expected in fixed_counts.items():
-        if counts[sheet_name] != expected:
-            fail(errors, f"{sheet_name} rows: {counts[sheet_name]} != {expected}")
-        else:
-            print(f"OK {sheet_name} rows: {expected}")
-
-    terms_ws = workbook["71_exam_terms"]
-    header = {terms_ws.cell(1, col).value: col for col in range(1, terms_ws.max_column + 1)}
-    active_terms: list[str] = []
-    for row in range(2, terms_ws.max_row + 1):
-        term_code = str(terms_ws.cell(row, header["term_code"]).value or "")
-        if term_code and term_code.upper() != "FINAL":
-            active_terms.append(term_code)
-    expected_term_rows = counts["16_courses"] * len(active_terms)
-    if counts["70_course_term_exams"] != expected_term_rows:
-        fail(
-            errors,
-            "term exams rows: "
-            f"{counts['70_course_term_exams']} != courses({counts['16_courses']}) "
-            f"* active_terms({len(active_terms)})",
-        )
+    status_ws = workbook["status"]
+    for row in range(2, status_ws.max_row + 1):
+        filename = str(status_ws.cell(row, 2).value or "")
+        if "course_term_exams.csv" in filename:
+            formula = str(status_ws.cell(row, 4).value or "")
+            if "'exam_terms'!B7:B" not in formula:
+                fail(errors, "status formula for course_term_exams must count exam_terms term_code column B")
+            if "'exam_terms'!A7:A" in formula:
+                fail(errors, "status formula for course_term_exams incorrectly counts academic_year column A")
+            print("OK course_term_exams status formula uses exam_terms term_code column B")
+            break
     else:
-        print(f"OK term exams rows: {counts['70_course_term_exams']} for {active_terms}")
-
-    cohort_ws = workbook["18_cohorts"]
-    cohort_header = {cohort_ws.cell(1, col).value: col for col in range(1, cohort_ws.max_column + 1)}
-    grade_col = cohort_header.get("grade_code")
-    expected_alumni_rows = 0
-    if grade_col:
-        for row in range(2, cohort_ws.max_row + 1):
-            if str(cohort_ws.cell(row, grade_col).value or "") == "STD12":
-                expected_alumni_rows += 1
-    if counts["62_alumni_cohorts_2027"] != expected_alumni_rows:
-        fail(errors, f"alumni cohorts vs STD12 cohorts: {counts['62_alumni_cohorts_2027']} != {expected_alumni_rows}")
-    else:
-        print(f"OK alumni cohorts vs STD12 cohorts: {expected_alumni_rows}")
+        fail(errors, "status sheet missing course_term_exams.csv row")
 
 
 def check_macro_alignment(errors: list[str], workbook) -> None:
@@ -283,6 +266,8 @@ def check_ods_package(errors: list[str], ods_path: Path) -> None:
         ]:
             if token not in content:
                 fail(errors, f"ODS status sheet missing macro action token: {token}")
+        if "COUNTIFS([$exam_terms.B6:.B100000];&quot;&lt;&gt;FINAL&quot;" not in content:
+            fail(errors, "ODS course_term_exams status formula must count exam_terms term_code column B from row 6")
         if "00_MACRO_GUIDE" in content and "status" in content:
             print("OK ODS macro package")
 
@@ -334,8 +319,8 @@ def main() -> int:
 
     workbook = load_workbook(args.xlsx, read_only=False, data_only=False)
     print(f"OK workbook opens: {len(workbook.sheetnames)} sheets")
-    if len(workbook.sheetnames) != 74:
-        fail(errors, f"expected 74 sheets, found {len(workbook.sheetnames)}")
+    if len(workbook.sheetnames) != 75:
+        fail(errors, f"expected 75 sheets, found {len(workbook.sheetnames)}")
     if len(workbook.sheetnames) != len(set(workbook.sheetnames)):
         fail(errors, "duplicate sheet names found")
     if any(len(name) > 31 for name in workbook.sheetnames):

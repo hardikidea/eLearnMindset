@@ -970,8 +970,8 @@ def status_expected_formula(sheet: str, row_by_sheet: dict[str, int]) -> str | N
         "course_certificates": lambda: c("12_courses"),
         "course_final_exams": lambda: c("12_courses"),
         "course_term_exams": lambda: (
-            f'{c("12_courses")}*COUNTIFS(\'exam_terms\'!A7:A{MAX_INPUT_ROWS},"<>FINAL",'
-            f'\'exam_terms\'!A7:A{MAX_INPUT_ROWS},"<>")'
+            f'{c("12_courses")}*COUNTIFS(\'exam_terms\'!B7:B{MAX_INPUT_ROWS},"<>FINAL",'
+            f'\'exam_terms\'!B7:B{MAX_INPUT_ROWS},"<>")'
         ),
         "gradebook_weights": lambda: c("12_courses"),
     }

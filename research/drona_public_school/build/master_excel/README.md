@@ -60,33 +60,33 @@ Available individual macros:
 - `RefreshStatus` recalculates formulas and updates the `status` sheet checks.
 - `ClearAutomaticData` clears only macro-generated data rows.
 - `ResetAutomaticData` clears macro-generated rows and then runs a full rebuild.
-- `GenerateGradeSubjectMatrix` rebuilds `13_grade_subject_matrix` from boards, mediums, grades, streams and subjects.
-- `GenerateCategories` rebuilds `14_categories` from school, board, current academic year, medium, grade and stream setup.
-- `GenerateOptionalYearCategoryModel` rebuilds `15_optional_year_category_model` as the optional category-model export from generated categories.
-- `GenerateCourses` rebuilds `16_courses` from the grade-subject matrix and current academic year.
-- `GenerateCoursesWithTemplateUpload` rebuilds `17_courses_with_templatecourse_` from generated courses and category paths.
-- `GenerateCohorts` rebuilds `18_cohorts` from current academic year, medium, grade, stream and division setup.
-- `GenerateGroups` rebuilds `19_groups` from courses and divisions.
-- `GenerateCohortMembers` rebuilds `26_cohort_members` from `24_users_students.cohort1`.
-- `GenerateEnrolments` rebuilds `29_enrolments` from courses and divisions using cohort-sync enrolment.
-- `GenerateSummary` rebuilds `33_summary` from workbook counts and the school master row.
-- `GenerateCourseTemplateApplication` rebuilds `41_course_template_application`.
-- `GenerateRolloverChecklist` rebuilds `50_academic_year_rollover_check` from the standard academic-year rollover workflow.
-- `GenerateStudentAcademicHistory` rebuilds `55_student_academic_history_tem` from student registrations and current academic-year context.
-- `GenerateStudentPromotionPlan` rebuilds `56_student_promotion_plan_2027_` from student registrations and next-year grade progression rules.
-- `GenerateAssessmentPlan` rebuilds `66_assessment_plan` from generated courses and standard assessment weights.
-- `GenerateAttendancePolicy` rebuilds `67_attendance_policy` from grade setup and the current academic year.
-- `GenerateCourseCertificates` rebuilds `68_course_certificates`.
-- `GenerateCourseFinalExams` rebuilds `69_course_final_exams`.
-- `GenerateCourseTermExams` rebuilds `70_course_term_exams`.
-- `GenerateGradebookWeights` rebuilds `72_gradebook_weights`.
-- `GenerateNextYearCourses` rebuilds `58_next_year_courses_2027_2028` from current generated courses and the next academic year.
-- `GenerateNextYearCohorts` rebuilds `59_next_year_cohorts_2027_2028` from current generated cohorts and the next academic year.
-- `GenerateNextYearGroups` rebuilds `60_next_year_groups_2027_2028` from next-year courses and divisions.
-- `GenerateNextYearEnrolments` rebuilds `61_next_year_enrolments_2027_20` from next-year courses and divisions using cohort-sync enrolment.
-- `GenerateAlumniCohorts` rebuilds `62_alumni_cohorts_2027` from current-year `STD12` cohorts for alumni/archive handling.
-- `GenerateArchivePolicy` rebuilds `63_archive_policy` from the standard archive checklist.
-- `GenerateCompatibilityMatrix` rebuilds `65_compatibility_matrix` from the standard Moodle component compatibility map.
+- `GenerateGradeSubjectMatrix` rebuilds `09_subject_matrix` from boards, mediums, grades, streams and subjects.
+- `GenerateCategories` rebuilds `10_categories` from school, board, current academic year, medium, grade and stream setup.
+- `GenerateOptionalYearCategoryModel` rebuilds `11_optional_categories` as the optional category-model export from generated categories.
+- `GenerateCourses` rebuilds `12_courses` from the grade-subject matrix and current academic year.
+- `GenerateCoursesWithTemplateUpload` rebuilds `13_courses_upload` from generated courses and category paths.
+- `GenerateCohorts` rebuilds `14_cohorts` from current academic year, medium, grade, stream and division setup.
+- `GenerateGroups` rebuilds `15_groups` from courses and divisions.
+- `GenerateCohortMembers` rebuilds `22_cohort_members` from `20_users_students.cohort1`.
+- `GenerateEnrolments` rebuilds `25_enrolments` from courses and divisions using cohort-sync enrolment.
+- `GenerateSummary` rebuilds `29_summary` from workbook counts and the school master row.
+- `GenerateCourseTemplateApplication` rebuilds `37_template_application`.
+- `GenerateRolloverChecklist` rebuilds `46_rollover_checklist` from the standard academic-year rollover workflow.
+- `GenerateStudentAcademicHistory` rebuilds `51_academic_history` from student registrations and current academic-year context.
+- `GenerateStudentPromotionPlan` rebuilds `52_promotion_plan` from student registrations and next-year grade progression rules.
+- `GenerateAssessmentPlan` rebuilds `assessment_plan` from generated courses and standard assessment weights.
+- `GenerateAttendancePolicy` rebuilds `attendance_policy` from grade setup and the current academic year.
+- `GenerateCourseCertificates` rebuilds `course_certificates`.
+- `GenerateCourseFinalExams` rebuilds `course_final_exams`.
+- `GenerateCourseTermExams` rebuilds `course_term_exams`.
+- `GenerateGradebookWeights` rebuilds `gradebook_weights`.
+- `GenerateNextYearCourses` rebuilds `54_next_year_courses` from current generated courses and the next academic year.
+- `GenerateNextYearCohorts` rebuilds `55_next_year_cohorts` from current generated cohorts and the next academic year.
+- `GenerateNextYearGroups` rebuilds `56_next_year_groups` from next-year courses and divisions.
+- `GenerateNextYearEnrolments` rebuilds `57_next_year_enrolments` from next-year courses and divisions using cohort-sync enrolment.
+- `GenerateAlumniCohorts` rebuilds `58_alumni_cohorts` from current-year `STD12` cohorts for alumni/archive handling.
+- `GenerateArchivePolicy` rebuilds `59_archive_policy` from the standard archive checklist.
+- `GenerateCompatibilityMatrix` rebuilds `61_compatibility` from the standard Moodle component compatibility map.
 
 Primary ID formulas used by the macros:
 
@@ -100,7 +100,7 @@ Primary ID formulas used by the macros:
 
 Keep a backup copy before running macros against manually edited data.
 
-Most static/reference sheets are intentionally not rebuilt by macros. Manual registration sheets, lookup sheets, template definition sheets, promotion actions, and `47_diksha_content_template` remain operator-managed until the school confirms exact content and policy. The safe generated operational-reference sheets are `33_summary`, `50_academic_year_rollover_check`, `62_alumni_cohorts_2027`, `63_archive_policy`, and `65_compatibility_matrix`.
+Most static/reference sheets are intentionally not rebuilt by macros. Manual registration sheets, lookup sheets, template definition sheets, promotion actions, and `43_content_template` remain operator-managed until the school confirms exact content and policy. The safe generated operational-reference sheets are `29_summary`, `46_rollover_checklist`, `58_alumni_cohorts`, `59_archive_policy`, and `61_compatibility`.
 
 Macro source is maintained in `research/drona_public_school/master_import_process/scripts/libreoffice_master_tools.bas`. Regenerate the ODS with:
 

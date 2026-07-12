@@ -17,6 +17,7 @@ It covers:
 - A reusable master course template with sections, activities, completion defaults, gradebook weights, exams, certificates, and chapter-gated learning flow.
 - Academic-year rollover data for future years without recreating users.
 - Validation scripts and Moodle CLI import scripts.
+- Google Form registration intake for student, parent, teacher, and school-office registration workflows.
 
 Current generated sample scope:
 
