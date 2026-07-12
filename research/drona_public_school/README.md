@@ -9,11 +9,11 @@ The included sample data represents Drona Public School for local testing. Tooli
 For day-to-day use, follow this order:
 
 1. Edit source data in `master/`, `registration/`, `templates/`, `operations/`, or `years/<year>/`.
-2. Run `python3 scripts/assemble.py --year <year>`.
-3. Run `python3 scripts/validate.py --year <year>`.
-4. Run `scripts/import.sh <year> validate-only`.
+2. Run `scripts/doctor.sh <year>` to check local tools and project readiness.
+3. Run `scripts/validate_all.sh <year>` to assemble, validate, and generate the preflight report.
+4. Run `scripts/import.sh <year> validate-only` if you want the Moodle PHP validators only.
 5. Run `scripts/import.sh <year> dry-run`.
-6. Run `scripts/import.sh <year> live` only after backup and dry-run pass.
+6. Run `scripts/import.sh <year> live` only after backup, preflight, and dry-run pass.
 
 The full reference is maintained in [docs/developer-guide.md](docs/developer-guide.md).
 
@@ -28,14 +28,27 @@ cd research/drona_public_school
 Assemble and validate the current year:
 
 ```bash
-python3 scripts/assemble.py --year 2026-2027
-python3 scripts/validate.py --year 2026-2027
+scripts/doctor.sh 2026-2027
+scripts/validate_all.sh 2026-2027
 ```
 
 Validate the Moodle-ready CSVs:
 
 ```bash
 scripts/import.sh 2026-2027 validate-only
+```
+
+Generate only the preflight report and import manifest:
+
+```bash
+scripts/preflight_report.sh 2026-2027
+```
+
+Preflight output:
+
+```text
+build/reports/2026-2027/preflight_report.md
+build/reports/2026-2027/import_manifest.json
 ```
 
 Dry-run against the local Moodle container:

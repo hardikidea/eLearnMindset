@@ -5,13 +5,15 @@ MODE="${2:-dry-run}"
 PACK_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 PROJECT_ROOT="${PROJECT_ROOT:-$(git -C "$PACK_ROOT" rev-parse --show-toplevel 2>/dev/null || pwd)}"
 MOODLE_SERVICE="${MOODLE_SERVICE:-moodle}"
+PYTHON_BIN="${PYTHON_BIN:-python3}"
 BUILD_DIR="$PACK_ROOT/build/assembled_csv/$YEAR"
 CONTAINER_PACK="/tmp/school_master_pack/$YEAR"
 if [ ! -d "$BUILD_DIR" ]; then
-  "$PACK_ROOT/scripts/assemble.py" --year "$YEAR"
+  "$PYTHON_BIN" "$PACK_ROOT/scripts/assemble.py" --year "$YEAR"
 fi
 php -d memory_limit=512M "$PACK_ROOT/scripts/moodle_cli/cli_validate_school_baseline.php" --dir="$BUILD_DIR"
 php -d memory_limit=512M "$PACK_ROOT/scripts/moodle_cli/cli_validate_course_template_csv.php" --dir="$BUILD_DIR"
+"$PYTHON_BIN" "$PACK_ROOT/scripts/preflight_report.py" --year="$YEAR"
 if [ "$MODE" = "validate-only" ]; then
   exit 0
 fi

@@ -349,6 +349,39 @@ Do not edit assembled files by hand. Fix source CSV or workbook data, then reass
 
 ## Chapter 10: Validation
 
+Run the full local preflight first:
+
+```bash
+scripts/doctor.sh 2026-2027
+scripts/validate_all.sh 2026-2027
+```
+
+`scripts/doctor.sh` checks the local execution environment:
+
+- Python and PHP availability.
+- Docker availability and whether the Moodle service is running.
+- LibreOffice availability for macro workbook smoke tests.
+- Python `openpyxl` availability for workbook validation.
+- Required pack folders, source files, Moodle CLI validators, and assembled CSV output.
+
+`scripts/validate_all.sh` is the recommended one-command validation gate before dry-run. It does not import data into Moodle. It runs:
+
+1. Ordered CSV assembly.
+2. Structured source CSV validation.
+3. ID-number formula and relationship validation.
+4. Maintained workbook artifact validation when dependencies are available.
+5. Moodle baseline CSV shape validation.
+6. Moodle course-template CSV shape validation.
+7. Preflight report and import manifest generation.
+
+If `openpyxl` is missing, workbook artifact validation is skipped with a warning. Install the workbook dependencies or provide a Python executable with `openpyxl`:
+
+```bash
+python3 -m pip install -r master_import_process/requirements.txt
+
+PYTHON_BIN=/path/to/python-with-openpyxl scripts/validate_all.sh 2026-2027
+```
+
 Validate the structured source pack:
 
 ```bash
@@ -370,6 +403,23 @@ Validate only the assembled Moodle CLI CSVs:
 ```bash
 scripts/import.sh 2026-2027 validate-only
 ```
+
+Generate only the preflight report:
+
+```bash
+scripts/preflight_report.sh 2026-2027
+```
+
+Preflight outputs:
+
+```text
+build/reports/2026-2027/preflight_report.md
+build/reports/2026-2027/import_manifest.json
+```
+
+The preflight report is a human-readable Markdown review file. It summarizes import scope, relationship checks, blocking errors, warnings, and every assembled CSV file hash.
+
+The import manifest is a machine-readable JSON lock file. It records the academic year, generated timestamp, assembled directory, row count, and SHA-256 hash for every assembled CSV file. Use it to confirm that the exact CSV payload validated before dry-run is the payload being imported.
 
 Run workbook/macro smoke validation:
 
@@ -420,12 +470,13 @@ What the wrapper does:
 
 1. Assembles CSVs if `build/assembled_csv/<year>/` does not exist.
 2. Runs local PHP CSV validators.
-3. Copies Moodle CLI scripts into `moodle/admin/cli/`.
-4. Copies the assembled pack into the Moodle container under `/tmp/school_master_pack/<year>`.
-5. Runs the baseline importer.
-6. Applies course template settings.
-7. Applies gradebook template settings.
-8. Applies course certificates.
+3. Generates `build/reports/<year>/preflight_report.md` and `import_manifest.json`.
+4. Copies Moodle CLI scripts into `moodle/admin/cli/`.
+5. Copies the assembled pack into the Moodle container under `/tmp/school_master_pack/<year>`.
+6. Runs the baseline importer.
+7. Applies course template settings.
+8. Applies gradebook template settings.
+9. Applies course certificates.
 
 Future-year imports automatically skip users:
 
@@ -576,8 +627,8 @@ Use this change flow:
 Recommended command set:
 
 ```bash
-python3 scripts/assemble.py --year 2026-2027
-python3 scripts/validate.py --year 2026-2027
+scripts/doctor.sh 2026-2027
+scripts/validate_all.sh 2026-2027
 scripts/import.sh 2026-2027 validate-only
 scripts/import.sh 2026-2027 dry-run
 python3 master_import_process/scripts/validate_master_workbook.py
