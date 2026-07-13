@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import os
 import re
 import subprocess
 import sys
@@ -20,7 +21,9 @@ DEFAULT_ODS = MASTER_DIR / "school_master_pack_2026_2027_full_predefined_master_
 MACRO_SOURCE = PACK_ROOT / "master_import_process" / "scripts" / "libreoffice_master_tools.bas"
 GENERATOR = PACK_ROOT / "master_import_process" / "scripts" / "create_libreoffice_macro_workbook.py"
 README = MASTER_DIR / "README.md"
-SOFFICE = Path("/Applications/LibreOffice.app/Contents/MacOS/soffice")
+DEFAULT_SOFFICE = Path("/Applications/LibreOffice.app/Contents/MacOS/soffice")
+BUNDLED_SOFFICE = Path.home() / ".cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override/soffice"
+SOFFICE = Path(os.environ.get("SOFFICE", str(DEFAULT_SOFFICE)))
 
 
 REQUIRED_SHEETS = [
@@ -223,7 +226,7 @@ def check_ods_package(errors: list[str], ods_path: Path) -> None:
         "mimetype",
         "content.xml",
         "META-INF/manifest.xml",
-        "Basic/Standard/MatrixTools.xba",
+        "Basic/Standard/MatrixTools.xml",
         "Basic/Standard/script-lb.xml",
         "Basic/script-lc.xml",
     ]
@@ -233,7 +236,7 @@ def check_ods_package(errors: list[str], ods_path: Path) -> None:
         if missing_entries:
             fail(errors, f"ODS missing package entries: {missing_entries}")
             return
-        macro = archive.read("Basic/Standard/MatrixTools.xba").decode("utf-8")
+        macro = archive.read("Basic/Standard/MatrixTools.xml").decode("utf-8")
         content = archive.read("content.xml").decode("utf-8", errors="ignore")
         for token in [
             "GenerateAllDerivedSheets",
@@ -273,14 +276,15 @@ def check_ods_package(errors: list[str], ods_path: Path) -> None:
 
 
 def check_libreoffice_convert(errors: list[str], ods_path: Path) -> None:
-    if not SOFFICE.exists():
-        print(f"SKIP LibreOffice convert smoke; soffice not found at {SOFFICE}")
+    soffice = SOFFICE if SOFFICE.exists() else BUNDLED_SOFFICE
+    if not soffice.exists():
+        print(f"SKIP LibreOffice convert smoke; soffice not found at {SOFFICE} or {BUNDLED_SOFFICE}")
         return
     with tempfile.TemporaryDirectory(prefix="dps_master_smoke_") as tmp:
         tmpdir = Path(tmp)
         profile = tmpdir / "profile"
         command = [
-            str(SOFFICE),
+            str(soffice),
             f"-env:UserInstallation=file://{profile}",
             "--headless",
             "--convert-to",

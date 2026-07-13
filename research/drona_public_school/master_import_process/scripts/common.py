@@ -158,7 +158,7 @@ def normalise_cell(value) -> str:
 
 
 def split_applies_to(value: str) -> list[str]:
-    """Split a stream applies_to value.
+    """Split a scope expression.
 
     Pipe is the canonical delimiter. Comma is accepted only for older workbooks.
     """
@@ -169,9 +169,27 @@ def split_applies_to(value: str) -> list[str]:
     ]
 
 
+def is_grade_scope_token(token: str) -> bool:
+    token = (token or "").strip().upper()
+    if token in {"ALL", "*"}:
+        return True
+    grade_token = token.split("_", 1)[0]
+    if "-" in grade_token:
+        start, end = [part.strip() for part in grade_token.split("-", 1)]
+        return grade_scope_rank(start) is not None and grade_scope_rank(end) is not None
+    if grade_scope_rank(grade_token) is not None:
+        return True
+    return bool(re.fullmatch(r"[A-Z][A-Z0-9_]{2,}", token))
+
+
 def grade_scope_rank(grade_code: str) -> int | None:
     """Return a sortable rank for supported grade scope tokens."""
-    match = re.fullmatch(r"(PRE|STD)(\d{2})", (grade_code or "").strip().upper())
+    code = (grade_code or "").strip().upper()
+    if "_" in code:
+        prefix, suffix = code.split("_", 1)
+        if suffix and re.fullmatch(r"(PRE|STD)\d{2}", prefix):
+            code = prefix
+    match = re.fullmatch(r"(PRE|STD)(\d{2})", code)
     if not match:
         return None
     prefix, number = match.groups()
@@ -189,10 +207,14 @@ def applies_token_matches(token: str, grade_code: str, stream_code: str) -> bool
         return True
 
     grade_token = token
+    required_stream_suffix = ""
     if "_" in token:
-        grade_token, token_stream = token.split("_", 1)
-        if token_stream != stream_code:
-            return False
+        candidate_grade, token_stream = token.split("_", 1)
+        if grade_scope_rank(candidate_grade) is not None:
+            grade_token = candidate_grade
+            if token_stream != stream_code:
+                return False
+            required_stream_suffix = token_stream
 
     if "-" in grade_token:
         start, end = [part.strip() for part in grade_token.split("-", 1)]
@@ -203,7 +225,14 @@ def applies_token_matches(token: str, grade_code: str, stream_code: str) -> bool
             return False
         return start_rank <= grade_rank <= end_rank
 
-    return grade_token == grade_code
+    if required_stream_suffix:
+        return grade_code in {grade_token, f"{grade_token}_{required_stream_suffix}"}
+
+    if grade_token == grade_code:
+        return True
+    if grade_code.startswith(f"{grade_token}_"):
+        return True
+    return f"_{grade_token}_" in f"_{grade_code}_"
 
 
 def stream_applies_to_grade(grade_code: str, stream_code: str, applies_to: str) -> bool:
@@ -223,3 +252,18 @@ def stream_applies_to_grade(grade_code: str, stream_code: str, applies_to: str) 
         return True
     tokens = split_applies_to(applies_to)
     return any(applies_token_matches(token, grade_code, stream_code) for token in tokens)
+
+
+def subject_applies_to_grade_stream(grade_code: str, stream_code: str, applies_to: str) -> bool:
+    """Check whether a subject row applies to a grade/stream combination.
+
+    Subject rows may use an explicit applies_to column. When a workbook does
+    not have that column, the notes column can carry the same scope tokens, for
+    example PRE01-STD12 or STD11_SCI|STD12_SCI. Descriptive tokens that are not
+    grade scopes are ignored.
+    """
+    tokens = split_applies_to(applies_to)
+    scoped_tokens = [token for token in tokens if is_grade_scope_token(token)]
+    if not scoped_tokens:
+        return False
+    return any(applies_token_matches(token, grade_code, stream_code) for token in scoped_tokens)

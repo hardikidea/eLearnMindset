@@ -18,6 +18,7 @@ from common import PACK_ROOT, PROCESS_ROOT, SOURCE_FILES, expected_headers, mani
 
 TEMPLATE_VERSION = "2026.07.07.3"
 MAX_INPUT_ROWS = 2000
+STYLE_DATA_ROW_LIMIT = 200
 HEADER_FILL = PatternFill("solid", fgColor="D9EAF7")
 META_FILL = PatternFill("solid", fgColor="FFF2CC")
 MANIFEST_FILL = PatternFill("solid", fgColor="D9EAD3")
@@ -77,6 +78,8 @@ LOOKUP_FIELDS = {
     "is_compulsory": "boolean",
     "is_current": "boolean",
     "is_elective": "boolean",
+    "matrix_is_compulsory": "boolean",
+    "matrix_is_elective": "boolean",
     "medium_code": "medium_code",
     "moodle_role_shortname": "role_shortname",
     "parent_username": "parent_username",
@@ -166,6 +169,7 @@ OPTIONAL_FIELD_NAMES = {
     "example",
     "example_fix",
     "implementation_hint",
+    "matrix_source_note",
     "notes",
     "phone",
     "source_note",
@@ -217,7 +221,10 @@ MANDATORY_FIELDS_BY_SHEET = {
     "05_grades": {"grade_code", "grade_name", "display_order", "stage", "moodle_label"},
     "06_streams": {"stream_code", "stream_name", "applies_to"},
     "07_divisions": {"division_code", "division_name", "display_order"},
-    "08_subjects": {"subject_code", "subject_name", "subject_category"},
+    "08_subjects": {
+        "subject_code", "subject_name", "subject_category", "applies_to",
+        "matrix_is_compulsory", "matrix_is_elective", "matrix_display_order",
+    },
     "09_subject_matrix": {
         "board_code", "medium_code", "grade_code", "stream_code", "subject_code",
         "subject_name", "subject_category", "is_compulsory", "display_order",
@@ -289,6 +296,10 @@ SUMMARY_OVERRIDES = {
     "language_code": "ISO-style language code for a teaching medium.",
     "lastname": "User last name.",
     "medium_code": "Teaching medium code such as GUJ, ENG or HIN.",
+    "matrix_display_order": "Subject display order copied into generated subject matrix rows.",
+    "matrix_is_compulsory": "Source-driven compulsory flag copied into generated subject matrix rows.",
+    "matrix_is_elective": "Source-driven elective flag copied into generated subject matrix rows.",
+    "matrix_source_note": "Source-driven note copied into generated subject matrix rows.",
     "moodle_role_shortname": "Moodle role shortname used in role assignments.",
     "name": "Display name for the target record.",
     "notes": "Short notes for operators and reviewers.",
@@ -347,6 +358,8 @@ BOOLEAN_FIELDS = {
     "is_compulsory",
     "is_current",
     "is_elective",
+    "matrix_is_compulsory",
+    "matrix_is_elective",
     "locked",
     "notify_parent",
     "required",
@@ -361,6 +374,7 @@ INTEGER_FIELDS = {
     "default_points",
     "display_order",
     "item_order",
+    "matrix_display_order",
     "minimum_attendance_percent",
     "numsections",
     "passing_grade_percent",
@@ -395,6 +409,10 @@ BASE_PATTERNS = {
     "language_code": "ISO language code, e.g. gu/en/hi",
     "lastname": "Family name",
     "medium_code": "<MEDIUM_CODE>, e.g. GUJ/ENG/HIN",
+    "matrix_display_order": "Whole number copied to 09_subject_matrix.display_order",
+    "matrix_is_compulsory": "1 yes, 0 no",
+    "matrix_is_elective": "1 yes, 0 no",
+    "matrix_source_note": "Free-text note copied to 09_subject_matrix.source_note",
     "moodle_role_shortname": "student/teacher/editingteacher/principal/trustee_manager",
     "parent_category_code": "Must match 10_categories.category_code or blank for root",
     "parent_username": "Must match 21_users_parents.username",
@@ -493,11 +511,11 @@ def macro_workbook_notice(label: str) -> str:
     return f"{label}: use the macro-enabled .ods workbook"
 
 
-def fit_columns(ws, max_width=52):
+def fit_columns(ws, max_width=52, max_rows=500):
     for column_cells in ws.columns:
         letter = get_column_letter(column_cells[0].column)
         width = 12
-        for cell in column_cells:
+        for cell in column_cells[:max_rows]:
             value = "" if cell.value is None else str(cell.value)
             width = max(width, min(max_width, len(value) + 2))
         ws.column_dimensions[letter].width = width
@@ -878,7 +896,8 @@ def style_data_sheet(
             cell.font = Font(italic=True)
             cell.alignment = Alignment(wrap_text=True)
             cell.border = THIN_BORDER
-    for row in ws.iter_rows(min_row=header_row + 1):
+    style_last_row = min(ws.max_row, header_row + STYLE_DATA_ROW_LIMIT)
+    for row in ws.iter_rows(min_row=header_row + 1, max_row=style_last_row):
         for cell in row:
             cell.border = THIN_BORDER
     fit_columns(ws)
@@ -962,7 +981,6 @@ def status_expected_formula(sheet: str, row_by_sheet: dict[str, int]) -> str | N
         "55_next_year_cohorts": lambda: c("14_cohorts"),
         "56_next_year_groups": lambda: c("15_groups"),
         "57_next_year_enrolments": lambda: c("25_enrolments"),
-        "58_alumni_cohorts": lambda: f'COUNTIF(\'14_cohorts\'!H7:H{MAX_INPUT_ROWS},"STD12")',
         "59_archive_policy": lambda: "4",
         "61_compatibility": lambda: "18",
         "assessment_plan": lambda: c("12_courses"),

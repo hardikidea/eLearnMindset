@@ -194,6 +194,22 @@ Stream `applies_to` rule:
 - Keep platform/program labels such as `SWAYAM`, `NPTEL`, `UG`, `PG` or `NEET Prep` in `notes` unless they are also modelled as grade codes.
 - Comma-separated values are rejected by validation for new data.
 
+Subject matrix `applies_to` rule:
+
+- Use `08_subjects.applies_to` for machine-readable subject scope.
+- Keep plain human descriptions in `08_subjects.notes`.
+- Supported scope examples are `PRE01-STD10`, `STD11_SCI|STD12_SCI`, `ITI`, `POLY`, `UNI_UG`, `NUR_GNM`, `PRO_CA`, and `LMS_CERT`.
+- `09_subject_matrix` is generated only from matching board, medium, grade, stream, and subject scope combinations.
+- Descriptive labels such as `Online Platforms` or `Exam Prep` do not generate rows unless they are modelled as grade codes or compact grade prefixes.
+
+Subject matrix output values:
+
+- `09_subject_matrix.is_compulsory` comes from `08_subjects.matrix_is_compulsory`.
+- `09_subject_matrix.is_elective` comes from `08_subjects.matrix_is_elective`.
+- `09_subject_matrix.display_order` comes from `08_subjects.matrix_display_order`.
+- `09_subject_matrix.source_note` comes from `08_subjects.matrix_source_note`.
+- Keep these values in the sheet/source CSV. Macros and export scripts must not add hidden static defaults.
+
 ## Chapter 7: Master Workbook Rules
 
 The master workbook is optional but useful when a school operator wants one spreadsheet entry point.
@@ -219,12 +235,33 @@ Every import sheet follows this row contract:
 | 3 | Column usage summary. |
 | 4 | ID-number formula or reference condition. |
 | 5 | Actual CSV headers exported to CSV. |
-| 6 | Example row skipped by CSV generation when `example_row=6`. |
+| 6 | Example row in review/template workbooks; real data row in the operational macro ODS. |
 | 7+ | Operator-entered data rows. |
 
-Do not delete rows 1 to 5. Keep row 6 as a reference example unless you also remove `example_row=6` metadata.
+Do not delete rows 1 to 5. In pure review/template workbooks, keep row 6 as a reference example and export with `--skip-example-row`. In the operational macro `.ods`, row 6 is real source data and must not be skipped.
 
 The macro-enabled `.ods` artifact is different from the `.xlsx` review workbook by design. The `.xlsx` keeps row 6 as a human example/reference row. The `.ods` is operational and is seeded from `build/assembled_csv/<academic-year>/`, so row 6 starts real import data. This keeps the `status` sheet counts and macro-generated rows aligned with the CSV files Moodle actually imports.
+
+`run_master_import.sh` defaults to `SKIP_EXAMPLE_ROW=1` because its default input is the review/template `.xlsx`. Set `SKIP_EXAMPLE_ROW=0` only when the input workbook has real data in row 6.
+
+Operational ODS CSV export:
+
+```bash
+python3 research/drona_public_school/master_import_process/scripts/excel_to_source_csv.py \
+  --workbook <converted-or-edited-workbook.xlsx> \
+  --output <output-dir> \
+  --year 2026-2027
+```
+
+Template/review workbook CSV export:
+
+```bash
+python3 research/drona_public_school/master_import_process/scripts/excel_to_source_csv.py \
+  --workbook <template-workbook.xlsx> \
+  --output <output-dir> \
+  --year 2026-2027 \
+  --skip-example-row
+```
 
 Workbook helper sheets:
 
@@ -614,7 +651,7 @@ Recommended health workflow:
 6. Use `Clear automatic data` only when you want generated rows emptied but manual registration/reference sheets preserved.
 7. Use `Reset and regenerate` when automatic sheets look stale or row counts changed significantly.
 
-Manual sheets are source-of-truth data and must not be overwritten by workbook macros. Automatic sheets are derived from those source sheets. `58_alumni_cohorts` is automatic because it is generated from `14_cohorts` rows where `grade_code=STD12`; promotion action rows remain manual because they are the approval gate before changing live student placement.
+Manual sheets are source-of-truth data and must not be overwritten by workbook macros. Automatic sheets are derived from those source sheets. `34_grade_band_adjust` is the policy source for generated course defaults, template application, certificate settings, assessment weights, gradebook weights, and attendance defaults. Stream-specific rows must stay above broader rows, and the final `ALL` row is the fallback for any grade that has no dedicated grade-band policy. `58_alumni_cohorts` is automatic because it is generated from `14_cohorts` rows that match `45_promotion_rules` alumni rows; promotion action rows remain manual because they are the approval gate before changing live student placement.
 
 ## Chapter 16: Development Rules
 

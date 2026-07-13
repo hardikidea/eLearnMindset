@@ -11,6 +11,7 @@ PYTHON_BIN="${PYTHON_BIN:-python3}"
 WORKBOOK="${WORKBOOK:-$PROCESS_ROOT/input/school_master_import.xlsx}"
 SOURCE_DIR="${SOURCE_DIR:-$PROCESS_ROOT/output/source_csv}"
 REPORT_DIR="${REPORT_DIR:-$PROCESS_ROOT/output/reports}"
+SKIP_EXAMPLE_ROW="${SKIP_EXAMPLE_ROW:-1}"
 
 case "$MODE" in
   validate-only|dry-run|live) ;;
@@ -28,7 +29,11 @@ fi
 
 "$PYTHON_BIN" "$SCRIPT_DIR/validate_master_excel.py" --workbook "$WORKBOOK" --year "$YEAR"
 rm -rf "$SOURCE_DIR"
-"$PYTHON_BIN" "$SCRIPT_DIR/excel_to_source_csv.py" --workbook "$WORKBOOK" --output "$SOURCE_DIR" --year "$YEAR"
+excel_to_csv_args=(--workbook "$WORKBOOK" --output "$SOURCE_DIR" --year "$YEAR")
+if [ "$SKIP_EXAMPLE_ROW" = "1" ]; then
+  excel_to_csv_args+=(--skip-example-row)
+fi
+"$PYTHON_BIN" "$SCRIPT_DIR/excel_to_source_csv.py" "${excel_to_csv_args[@]}"
 "$PYTHON_BIN" "$SCRIPT_DIR/validate_generated_structure.py" --source "$SOURCE_DIR" --year "$YEAR"
 "$PYTHON_BIN" "$SCRIPT_DIR/validate_idnumber_patterns.py" --source "$SOURCE_DIR" --year "$YEAR"
 "$PYTHON_BIN" "$SCRIPT_DIR/generate_import_reports.py" --source "$SOURCE_DIR" --year "$YEAR" --output-dir "$REPORT_DIR"

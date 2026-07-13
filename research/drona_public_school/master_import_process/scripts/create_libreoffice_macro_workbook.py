@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import os
 import shutil
 import subprocess
 import tempfile
@@ -18,7 +19,9 @@ from openpyxl.styles import Alignment, Font, PatternFill
 from common import PACK_ROOT, SOURCE_FILES, source_path
 
 
-SOFFICE = Path("/Applications/LibreOffice.app/Contents/MacOS/soffice")
+DEFAULT_SOFFICE = Path("/Applications/LibreOffice.app/Contents/MacOS/soffice")
+BUNDLED_SOFFICE = Path.home() / ".cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override/soffice"
+SOFFICE = Path(os.environ.get("SOFFICE", str(DEFAULT_SOFFICE)))
 MANIFEST_NS = "urn:oasis:names:tc:opendocument:xmlns:manifest:1.0"
 MACRO_SOURCE = Path(__file__).with_name("libreoffice_master_tools.bas")
 MAX_STATUS_ROWS = 100000
@@ -267,7 +270,6 @@ def status_expected_formula(sheet: str, row_by_sheet: dict[str, int]) -> str | N
         "55_next_year_cohorts": lambda: c("14_cohorts"),
         "56_next_year_groups": lambda: c("15_groups"),
         "57_next_year_enrolments": lambda: c("25_enrolments"),
-        "58_alumni_cohorts": lambda: f'COUNTIF(\'14_cohorts\'!H{ODS_DATA_START_ROW}:H{MAX_STATUS_ROWS},"STD12")',
         "59_archive_policy": lambda: "4",
         "61_compatibility": lambda: "18",
         "assessment_plan": lambda: c("12_courses"),
@@ -376,8 +378,9 @@ def macro_source_code() -> str:
 
 
 def convert_xlsx_to_ods(source_xlsx: Path, output_ods: Path, year: str, source_root: Path) -> Path:
-    if not SOFFICE.exists():
-        raise FileNotFoundError(f"LibreOffice soffice not found: {SOFFICE}")
+    soffice = SOFFICE if SOFFICE.exists() else BUNDLED_SOFFICE
+    if not soffice.exists():
+        raise FileNotFoundError(f"LibreOffice soffice not found at {SOFFICE} or {BUNDLED_SOFFICE}")
     with tempfile.TemporaryDirectory(prefix="dps_macro_") as tmp:
         tmpdir = Path(tmp)
         temp_xlsx = tmpdir / source_xlsx.name
@@ -387,7 +390,7 @@ def convert_xlsx_to_ods(source_xlsx: Path, output_ods: Path, year: str, source_r
         add_status_sheet_to_workbook(temp_xlsx)
         profile = tmpdir / "lo-profile"
         cmd = [
-            str(SOFFICE),
+            str(soffice),
             f"-env:UserInstallation=file://{profile}",
             "--headless",
             "--convert-to",
@@ -428,7 +431,7 @@ def macro_files() -> dict[str, bytes]:
 </library:libraries>
 """
     return {
-        "Basic/Standard/MatrixTools.xba": module_xml.encode("utf-8"),
+        "Basic/Standard/MatrixTools.xml": module_xml.encode("utf-8"),
         "Basic/Standard/script-lb.xml": script_lb.encode("utf-8"),
         "Basic/script-lc.xml": script_lc.encode("utf-8"),
     }
@@ -446,7 +449,7 @@ def patch_manifest(manifest: bytes) -> bytes:
         ("Basic/Standard/", ""),
         ("Basic/script-lc.xml", "text/xml"),
         ("Basic/Standard/script-lb.xml", "text/xml"),
-        ("Basic/Standard/MatrixTools.xba", "text/xml"),
+        ("Basic/Standard/MatrixTools.xml", "text/xml"),
     ]
     for path, media_type in entries:
         if path in existing:

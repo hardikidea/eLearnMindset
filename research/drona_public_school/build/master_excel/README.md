@@ -55,14 +55,45 @@ The macros use a hybrid model:
 - Rerun the relevant macro when row counts change, for example after adding a new subject, division, grade, stream, course, academic year or student.
 - CSV export must use calculated cell values, not raw formula text.
 
-For stream scope, use `|` in `applies_to`: `STD01-STD10`, `STD11_SCI|STD12_SCI`, or `ALL`. Do not use comma-separated values for new data.
+For stream scope, use `|` in `06_streams.applies_to`: `STD01-STD10`, `STD11_SCI|STD12_SCI`, or `ALL`. Do not use comma-separated values for new data.
+
+For subject matrix scope, use `08_subjects.applies_to` when the column is present. Older workbooks may still use `08_subjects.notes` for this value, but new edits should keep machine-readable scope in `applies_to` and human notes in `notes`.
+
+Subject matrix output values are also source-driven from `08_subjects`:
+
+- `matrix_is_compulsory` maps to `09_subject_matrix.is_compulsory`.
+- `matrix_is_elective` maps to `09_subject_matrix.is_elective`.
+- `matrix_display_order` maps to `09_subject_matrix.display_order`.
+- `matrix_source_note` maps to `09_subject_matrix.source_note`.
+
+Do not hardcode these values in macros or export scripts. Change them in `08_subjects`, then rerun `GenerateGradeSubjectMatrix` or `ResetAutomaticData`.
+
+Supported subject scope tokens:
+
+- Exact grade: `STD05`, `ITI_ELEC`, `UNI_UG_BCA_Y1`.
+- Grade range: `PRE01-STD10`, `STD11-STD12`.
+- Grade plus stream: `STD11_SCI|STD12_SCI`, `STD11_COM|STD12_COM`.
+- Compact grade prefix: `ITI`, `POLY`, `UNI_UG`, `NUR_GNM`, `PRO_CA`, `LMS_CERT`.
+
+The generated subject matrix ignores descriptive phrases that are not valid scope tokens, so labels such as `Online Platforms` or `Exam Prep` should be converted to real grade codes/prefixes before they are expected to generate rows.
+
+`34_grade_band_adjust` is the central policy sheet for generated course behavior. The macros read this sheet to set:
+
+- Course format, section count, visibility, completion, grade display and group mode defaults.
+- Course template code and reusable template course shortname.
+- Template application flags for sections, gradebook and completion defaults.
+- Assessment and gradebook weights.
+- Attendance minimum percentage and generated attendance notes.
+- Course certificate policy, custom certificate activity settings, unlock rule, template branding and certificate text.
+
+Use `grade_codes` as the scope column. Put stream-specific rows before broader fallback rows, for example `STD11_SCI|STD12_SCI` before `STD11|STD12`. Keep the final `ALL` row as the default fallback for grades that do not have a dedicated policy row.
 
 Available individual macros:
 
 - `RefreshStatus` recalculates formulas and updates the `status` sheet checks.
 - `ClearAutomaticData` clears only macro-generated data rows.
 - `ResetAutomaticData` clears macro-generated rows and then runs a full rebuild.
-- `GenerateGradeSubjectMatrix` rebuilds `09_subject_matrix` from boards, mediums, grades, streams and subjects.
+- `GenerateGradeSubjectMatrix` rebuilds `09_subject_matrix` from boards, mediums, grades, streams, subject `applies_to` values and subject matrix source columns.
 - `GenerateCategories` rebuilds `10_categories` from school, board, current academic year, medium, grade and stream setup.
 - `GenerateOptionalYearCategoryModel` rebuilds `11_optional_categories` as the optional category-model export from generated categories.
 - `GenerateCourses` rebuilds `12_courses` from the grade-subject matrix and current academic year.
@@ -77,7 +108,7 @@ Available individual macros:
 - `GenerateStudentAcademicHistory` rebuilds `51_academic_history` from student registrations and current academic-year context.
 - `GenerateStudentPromotionPlan` rebuilds `52_promotion_plan` from student registrations and next-year grade progression rules.
 - `GenerateAssessmentPlan` rebuilds `assessment_plan` from generated courses and standard assessment weights.
-- `GenerateAttendancePolicy` rebuilds `attendance_policy` from grade setup and the current academic year.
+- `GenerateAttendancePolicy` rebuilds `attendance_policy` from grade setup, current academic year and `34_grade_band_adjust` attendance defaults.
 - `GenerateCourseCertificates` rebuilds `course_certificates`.
 - `GenerateCourseFinalExams` rebuilds `course_final_exams`.
 - `GenerateCourseTermExams` rebuilds `course_term_exams`.
@@ -86,7 +117,7 @@ Available individual macros:
 - `GenerateNextYearCohorts` rebuilds `55_next_year_cohorts` from current generated cohorts and the next academic year.
 - `GenerateNextYearGroups` rebuilds `56_next_year_groups` from next-year courses and divisions.
 - `GenerateNextYearEnrolments` rebuilds `57_next_year_enrolments` from next-year courses and divisions using cohort-sync enrolment.
-- `GenerateAlumniCohorts` rebuilds `58_alumni_cohorts` from current-year `STD12` cohorts for alumni/archive handling.
+- `GenerateAlumniCohorts` rebuilds `58_alumni_cohorts` from current-year cohorts matched by `45_promotion_rules` rows whose `to_grade_code` or `promotion_decision` is `ALUMNI`.
 - `GenerateArchivePolicy` rebuilds `59_archive_policy` from the standard archive checklist.
 - `GenerateCompatibilityMatrix` rebuilds `61_compatibility` from the standard Moodle component compatibility map.
 
@@ -113,3 +144,9 @@ Run the workbook and macro smoke validation with:
 `python3 research/drona_public_school/master_import_process/scripts/validate_master_workbook.py`
 
 This checks required sheets, row-count relationships, macro-guide alignment, embedded ODS macro files, Basic sheet references, and a LibreOffice headless open/convert pass.
+
+When generating CSV files from the operational ODS, row 6 is treated as real data. Use `--skip-example-row` only for a pure template/review workbook where row 6 is intentionally an example row:
+
+`python3 research/drona_public_school/master_import_process/scripts/excel_to_source_csv.py --workbook <workbook.xlsx> --output <output-dir> --year 2026-2027 --skip-example-row`
+
+`run_master_import.sh` uses `SKIP_EXAMPLE_ROW=1` by default for the review/template `.xlsx` flow. Override with `SKIP_EXAMPLE_ROW=0` only for a workbook where row 6 is operational data.

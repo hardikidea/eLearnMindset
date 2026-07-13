@@ -1,13 +1,125 @@
 academic_year,grade_code,minimum_attendance_percent,notes
-2026-2027,STD01,75,Generated local testing attendance policy.
-2026-2027,STD02,75,Generated local testing attendance policy.
-2026-2027,STD03,75,Generated local testing attendance policy.
-2026-2027,STD04,75,Generated local testing attendance policy.
-2026-2027,STD05,75,Generated local testing attendance policy.
-2026-2027,STD06,75,Generated local testing attendance policy.
-2026-2027,STD07,75,Generated local testing attendance policy.
-2026-2027,STD08,75,Generated local testing attendance policy.
-2026-2027,STD09,75,Generated local testing attendance policy.
-2026-2027,STD10,75,Generated local testing attendance policy.
-2026-2027,STD11,75,Generated local testing attendance policy.
-2026-2027,STD12,75,Generated local testing attendance policy.
+2026-2027,PRE01,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,PRE02,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,PRE03,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,PRE04,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,STD01,75,Generated attendance policy from grade-band setup.
+2026-2027,STD02,75,Generated attendance policy from grade-band setup.
+2026-2027,STD03,75,Generated attendance policy from grade-band setup.
+2026-2027,STD04,75,Generated attendance policy from grade-band setup.
+2026-2027,STD05,75,Generated attendance policy from grade-band setup.
+2026-2027,STD06,75,Generated attendance policy from grade-band setup.
+2026-2027,STD07,75,Generated attendance policy from grade-band setup.
+2026-2027,STD08,75,Generated attendance policy from grade-band setup.
+2026-2027,STD09,75,Generated attendance policy from grade-band setup.
+2026-2027,STD10,75,Generated attendance policy from grade-band setup.
+2026-2027,STD11_SCI,75,Generated attendance policy from grade-band setup.
+2026-2027,STD11_COM,75,Generated attendance policy from grade-band setup.
+2026-2027,STD11_ART,75,Generated attendance policy from grade-band setup.
+2026-2027,STD12_SCI,75,Generated attendance policy from grade-band setup.
+2026-2027,STD12_COM,75,Generated attendance policy from grade-band setup.
+2026-2027,STD12_ART,75,Generated attendance policy from grade-band setup.
+2026-2027,ITI_ELEC,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,ITI_FIT,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,POLY_ME_Y1,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,POLY_ME_Y2,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,POLY_ME_Y3,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,POLY_CE_Y1,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,POLY_CE_Y2,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,POLY_CE_Y3,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_DIP_CS_Y1,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_DIP_AI_Y1,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_DIP_DM_Y1,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_DIP_MLT_Y1,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_DIP_MLT_Y2,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,NUR_GNM_Y1,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,NUR_GNM_Y2,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,PHA_DPHARM_Y1,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,EDU_NTT,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,EDU_DELED_Y1,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_UG_CSE_Y1,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_UG_CSE_Y2,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_UG_CSE_Y3,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_UG_CSE_Y4,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_UG_DS_Y1,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_UG_DS_Y2,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_UG_DS_Y3,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_UG_FT_Y1,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_UG_FT_Y2,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_UG_FT_Y3,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_UG_UX_Y1,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_UG_UX_Y2,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_UG_UX_Y3,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_UG_UX_Y4,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_UG_LAW_Y1,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_UG_LAW_Y5,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_UG_MED_Y1,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_UG_MED_Y2,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_UG_MED_Y3,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_UG_MED_Y4,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_UG_MED_Y5,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,MED_BAMS_Y1,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,MED_BHMS_Y1,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,VET_BVSC_Y1,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,NUR_BSC_Y1,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,PHA_BPHARM_Y1,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,EDU_BED_Y1,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,AGRI_BSC_Y1,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,ART_NIFT_Y1,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,MED_BJMC_Y1,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,VOC_HM_Y1,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,VOC_INT_Y1,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,PRO_CA_FND,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,PRO_CA_INT,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,PRO_CA_FIN,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,PRO_CS_EXE,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_PG_AI_Y1,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_PG_AI_Y2,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_PG_MBA_Y1,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_PG_MBA_Y2,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_PG_SCM_Y1,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_PG_SCM_Y2,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_PG_LAW_Y1,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_PG_LAW_Y2,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,MGT_PGDM_Y1,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,MGT_PGDM_Y2,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_PHD_AI,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_PHD_DS,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_PHD_RE,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,CERT_DRONE,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_UG_BCA_Y1,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_UG_BCA_Y2,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_UG_BCA_Y3,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_UG_BBA_Y1,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_UG_BBA_Y2,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_UG_BBA_Y3,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_UG_BARCH_Y1,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_UG_BARCH_Y5,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_UG_BPT_Y1,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_UG_BPT_Y4,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_UG_BSW_Y1,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_UG_BFA_Y1,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_UG_BHM_Y1,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_PG_MCA_Y1,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_PG_MCA_Y2,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_PG_MARCH_Y1,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_PG_MPT_Y1,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_PG_MSW_Y1,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_PG_MFA_Y1,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_PG_MCOM_Y1,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,LMS_CERT_FSD,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,LMS_CERT_DATA,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,LMS_CERT_CLOUD,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,LMS_CERT_MLOPS,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,LMS_CERT_PM,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,LMS_CERT_AGILE,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,LMS_CERT_CYBER,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,LMS_CERT_WEB3,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,LMS_CERT_DIGMKT,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,LMS_SWAYAM_01,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,LMS_NSDC_L4,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,LMS_NSDC_L6,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_RES_MPHIL,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_RES_PDF,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_RES_DSC,75,Generated fallback attendance policy from grade-band setup.
+2026-2027,UNI_RES_DLITT,75,Generated fallback attendance policy from grade-band setup.

@@ -1,23 +1,69 @@
-subject_code,subject_name,subject_category,notes
-ACC,Accountancy,Commerce,Higher secondary accountancy.
-ART,Art Education,Co-curricular,"Drawing, craft and visual expression."
-BA,Business Studies,Commerce,Business organisation and management.
-BIO,Biology,Science,Higher secondary biology.
-CHEM,Chemistry,Science,Higher secondary chemistry.
-CS,Computer Studies,Skill,Computer awareness and digital literacy.
-ECO,Economics,Commerce,Economics.
-ENG,English,Language,English language and communication.
-EVS,Environmental Studies,Core,Environmental studies and local context learning.
-GEO,Geography,Arts,Geography.
-GUJ,Gujarati,Language,Gujarati language and literature.
-HIN,Hindi,Language,Hindi language and literature.
-HIST,History,Arts,History.
-MATH,Mathematics,Core,Mathematics and numeracy.
-PE,Physical Education,Co-curricular,Health and physical education.
-PHY,Physics,Science,Higher secondary physics.
-POLSCI,Political Science,Arts,Political science.
-PSY,Psychology,Arts,Psychology.
-SCI,Science,Core,General science.
-SOC,Sociology,Arts,Sociology.
-SS,Social Science,Core,"History, geography, civics and economics foundations."
-STAT,Statistics,Commerce,Statistics.
+subject_code,subject_name,subject_category,applies_to,matrix_is_compulsory,matrix_is_elective,matrix_display_order,matrix_source_note,notes
+ENG,English,Language,PRE01-STD12,1,0,1,,"General K-12 English language and literature. Former scope labels moved from applies_to: PRE01-STD12, Online."
+HIN,Hindi,Language,PRE01-STD10,1,0,2,,General K-12 Hindi language and literature.
+REG_LANG,Regional Language,Language,STD01-STD10,1,0,3,,"State board specific regional languages (e.g., Marathi, Tamil, Bengali)."
+MATH,Mathematics,Core,STD01-STD10,1,0,4,,Foundational mathematics for primary to secondary grades.
+SCI,Science,Core,STD01-STD10,1,0,5,,"Combined science (Physics, Chemistry, Biology) up to 10th grade."
+SST,Social Studies,Core,STD01-STD10,1,0,6,,"History, Geography, Civics up to 10th grade."
+EVS,Environmental Studies,Core,STD01-STD05,1,0,7,,EVS for primary grades.
+COMP,Computer Science,Elective,STD01-STD10,1,0,8,,Basic IT and computer skills for school students.
+ART,Art & Craft,Co-curricular,PRE01-STD10,1,0,9,,"Visual expression, drawing, and crafts."
+PE,Physical Education,Co-curricular,STD01-STD12,1,0,10,,"Sports, yoga, and physical fitness."
+PHY,Physics,Science,STD11_SCI|STD12_SCI,1,0,11,,Higher secondary Physics (Theory and Practical).
+CHE,Chemistry,Science,STD11_SCI|STD12_SCI,1,0,12,,Higher secondary Chemistry (Theory and Practical).
+BIO,Biology,Science,STD11_SCI|STD12_SCI,1,0,13,,Higher secondary Biology for medical track students.
+MATH_ADV,Advanced Mathematics,Science,STD11_SCI|STD12_SCI|STD11_COM|STD12_COM,1,0,14,,Core mathematics for engineering track and commerce students.
+APP_MATH,Applied Mathematics,Commerce,STD11_COM|STD12_COM|STD11_ART|STD12_ART,1,0,15,,CBSE Applied Math for Commerce/Arts streams.
+IP,Informatics Practices,Elective,STD11_SCI|STD12_SCI|STD11_COM|STD12_COM|STD11_ART|STD12_ART,1,0,16,,"CBSE CS elective focusing on Python, Data, and SQL."
+ACC,Accountancy,Commerce,STD11_COM|STD12_COM,1,0,17,,Financial accounting principles and partnership accounts.
+BST,Business Studies,Commerce,STD11_COM|STD12_COM,1,0,18,,"Business organization, management principles."
+ECO,Economics,Commerce,STD11_COM|STD12_COM,1,0,19,,Micro and Macro Economics.
+ENT,Entrepreneurship,Elective,STD11_COM|STD12_COM,1,0,20,,"Innovation, business planning, and startups."
+HIS,History,Humanities,STD11_ART|STD12_ART,1,0,21,,Indian and World History.
+GEO,Geography,Humanities,STD11_ART|STD12_ART,1,0,22,,Physical and Human Geography.
+POL,Political Science,Humanities,STD11_ART|STD12_ART,1,0,23,,Indian Constitution and Global Politics.
+PSY,Psychology,Humanities,STD11_ART|STD12_ART,1,0,24,,Behavioral sciences and human psychology.
+SOC,Sociology,Humanities,STD11_ART|STD12_ART,1,0,25,,"Study of society, culture, and institutions."
+ENG_DRAW,Engineering Drawing,Vocational,ITI|POLY,1,0,26,,Technical drawing for ITI and Polytechnic students.
+WORK_PRAC,Workshop Practice,Vocational,ITI|POLY,1,0,27,,Hands-on machine and tool usage.
+ELEC_THEORY,Electrician Theory,Vocational,ITI,1,0,28,,Core electrical concepts for ITI Electrician.
+FIT_THEORY,Fitter Theory,Vocational,ITI,1,0,29,,Core mechanical and fitting concepts for ITI Fitter.
+DSA,Data Structures & Algorithms,Engineering,UNI_UG|UNI_PG,1,0,30,,Core computer science foundation.
+DBMS,Database Management Systems,Engineering,UNI_UG|UNI_PG,1,0,31,,"SQL, NoSQL, and database design."
+OS,Operating Systems,Engineering,UNI_UG|UNI_PG,1,0,32,,"Linux, Windows, and system architecture."
+CN,Computer Networks,Engineering,UNI_UG|UNI_PG,1,0,33,,Networking protocols and internet architecture.
+AI_ML,Artificial Intelligence & ML,Engineering,UNI_UG|UNI_PG|UNI_PHD,1,0,34,,"Neural networks, supervised and unsupervised learning."
+SWE,Software Engineering,Engineering,UNI_UG|UNI_PG,1,0,35,,"SDLC, Agile methodologies, and testing."
+THERMO,Thermodynamics,Engineering,UNI_UG,1,0,36,,Core mechanical engineering subject.
+CIRCUITS,Electronic Circuits,Engineering,UNI_UG,1,0,37,,Core electronics and communication subject.
+ANAT,Human Anatomy,Medical,UNI_UG,1,0,38,,Study of human body structure.
+PHYS,Physiology,Medical,UNI_UG,1,0,39,,Study of human body functions.
+PHARM,Pharmacology,Medical,UNI_UG,1,0,40,,"Drugs, interactions, and therapeutic effects."
+PATH,Pathology,Medical,UNI_UG,1,0,41,,Study of diseases and diagnosis.
+COM_MED,Community Medicine,Medical,UNI_UG,1,0,42,,Public health and epidemiology.
+NUR_FND,Nursing Foundations,Nursing,NUR_GNM|NUR_BSC,1,0,43,,Core clinical nursing principles.
+LAW_CON,Constitutional Law,Law,UNI_UG,1,0,44,,Study of the Constitution of India.
+LAW_IPC,Indian Penal Code,Law,UNI_UG,1,0,45,,Criminal law and procedures.
+LAW_CONTR,Contract Law,Law,UNI_UG,1,0,46,,"Agreements, corporate law, and commercial contracts."
+JURIS,Jurisprudence,Law,UNI_UG,1,0,47,,Legal theory and philosophy of law.
+CORP_ACC,Corporate Accounting,Commerce,UNI_UG,1,0,48,,Company accounts and financial statements.
+FIN_MGT,Financial Management,Management,UNI_UG|UNI_PG,1,0,49,,"Capital budgeting, working capital."
+MKT_MGT,Marketing Management,Management,UNI_UG|UNI_PG,1,0,50,,"Marketing strategies, consumer behavior."
+OB,Organizational Behavior,Management,UNI_UG|UNI_PG,1,0,51,,"Corporate culture, HR, and leadership."
+TAX,Taxation,Professional,PRO_CA|PRO_CS,1,0,52,,Direct and Indirect taxes (GST) for CA/CS/B.Com.
+AUDIT,Auditing,Professional,PRO_CA|PRO_CS,1,0,53,,Financial verification and corporate governance.
+UI_UX,User Interface & Experience,Design,UNI_UG|LMS_CERT,1,0,54,,"Digital product design principles. Former scope labels moved from applies_to: UNI_UG, Online."
+TYPO,Typography,Design,UNI_UG,1,0,55,,Study of fonts and text presentation.
+ARCH_DSN,Architectural Design,Architecture,UNI_UG,1,0,56,,"Building planning, spaces, and aesthetics."
+CLOUD_ARCH,Cloud Architecture,Emerging Tech,Online Platforms,1,0,57,,"AWS, Azure, GCP infrastructure design."
+PROMPT_ENG,Prompt Engineering,Emerging Tech,Online Platforms,1,0,58,,Interacting with Generative AI and LLMs.
+FSD_WEB,Full Stack Web Development,Emerging Tech,Online Platforms,1,0,59,,"MERN stack, React, Node.js."
+CYBER_SEC,Cybersecurity & Ethical Hacking,Emerging Tech,Online Platforms,1,0,60,,"Network security, cryptography, penetration testing."
+DATA_SCI,Data Science & Big Data,Emerging Tech,Online Platforms,1,0,61,,"Python, R, Hadoop, Data Visualization."
+BLK_CHAIN,Blockchain Fundamentals,Emerging Tech,Online Platforms,1,0,62,,"Crypto, smart contracts, Web3 technologies."
+PROD_MGT,Product Management,Management,Online Platforms,1,0,63,,"Product lifecycles, user research, agile execution."
+JEE_PHY,JEE Physics,Competitive Prep,Exam Prep,1,0,64,,Advanced problem solving in Physics.
+JEE_MATH,JEE Mathematics,Competitive Prep,Exam Prep,1,0,65,,Advanced problem solving in Mathematics.
+NEET_BIO,NEET Biology,Competitive Prep,Exam Prep,1,0,66,,In-depth Botany and Zoology for Medical entrance.
+UPSC_POL,UPSC Indian Polity,Competitive Prep,Exam Prep,1,0,67,,Civil services preparation for governance.
+APT_REAS,Aptitude & Reasoning,Competitive Prep,PRO_CA|PRO_CS|LMS_CERT,1,0,68,,"Quantitative aptitude for placements and banking exams. Former scope labels moved from applies_to: Exam Prep, Placements."

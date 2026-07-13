@@ -1,5 +1,27 @@
 stream_code,stream_name,applies_to,notes
-GEN,General,STD01-STD10,"General stream for primary, upper primary and secondary grades."
-SCI,Science,STD11_SCI|STD12_SCI,Higher secondary Science stream.
-COM,Commerce,STD11_COM|STD12_COM,Higher secondary Commerce stream.
-ARTS,Arts / Humanities,STD11_ARTS|STD12_ARTS,Higher secondary Arts / Humanities stream.
+GEN,General,PRE01-STD10,"General stream for early childhood, primary, upper primary and secondary grades."
+SCI,Pure Sciences,STD11_SCI|STD12_SCI|UNI_UG_DS,Science stream for higher secondary science and data science programs.
+COM,Commerce & Biz,STD11_COM|STD12_COM,Commerce stream for higher secondary commerce programs.
+ART,Humanities & Arts,STD11_ART|STD12_ART|UNI_UG_BSW|UNI_UG_BFA|UNI_PG_MSW|UNI_PG_MFA,"Humanities, social sciences and fine arts stream."
+ENG,Engineering & Tech,POLY_ME|POLY_CE|UNI_UG_CSE|LMS_CERT_CLOUD,"Engineering, polytechnic and cloud/technical certification stream."
+MED,Medical & Health,UNI_UG_MED,Core medical stream for MBBS and related medical preparation.
+AHS,Allied Healthcare,UNI_DIP_MLT|UNI_UG_BPT|UNI_PG_MPT,"Allied healthcare stream for MLT, physiotherapy and related programs."
+AYU,AYUSH Medicine,MED_BAMS|MED_BHMS,Traditional Indian medicine stream for Ayurveda and Homeopathy.
+NUR,Nursing,NUR_GNM|NUR_BSC,Nursing stream for GNM and B.Sc Nursing programs.
+PHA,Pharmacy,PHA_DPHARM|PHA_BPHARM,Pharmacy stream for diploma and bachelor pharmacy programs.
+LAW,Law & Legal,UNI_UG_LAW|UNI_PG_LAW|PRO_CS_EXE,Law and legal stream for law degrees and company secretary pathway.
+MGT,Management & Biz,UNI_UG_BBA|UNI_PG_MBA|MGT_PGDM|LMS_CERT_PM|LMS_CERT_AGILE,"Management stream for BBA, MBA, PGDM and professional management certifications."
+CSA,Computer Applications,UNI_DIP_CS|UNI_UG_BCA|UNI_PG_MCA|LMS_CERT_FSD|LMS_CERT_CYBER,"Computer applications stream for BCA, MCA, cybersecurity and full-stack programs."
+AIE,Artificial Intelligence,UNI_DIP_AI|UNI_PG_AI|LMS_CERT_MLOPS|LMS_CERT_DATA,"AI, ML, MLOps and data-focused professional learning stream."
+DES,Design & Creative,UNI_UG_UX|ART_NIFT|VOC_INT,"Design stream for UI/UX, fashion and interior design."
+ARC,Architecture,UNI_UG_BARCH|UNI_PG_MARCH,Architecture stream for B.Arch and M.Arch programs.
+EDU,Education,EDU_NTT|EDU_DELED|EDU_BED,"Education stream for NTT, D.El.Ed and B.Ed teacher training."
+AGR,Agricultural Sci,AGRI_BSC|VET_BVSC,Agriculture and veterinary science stream.
+MED_COM,Media & Comm,MED_BJMC,Media and communication stream for journalism and mass communication.
+HOS,Hospitality & Tourism,VOC_HM|UNI_UG_BHM,Hospitality and tourism stream.
+VOC_IND,Industrial Training,ITI_ELEC|ITI_FIT|LMS_NSDC_L4|LMS_NSDC_L6,Industrial and NSQF vocational training stream.
+PRO_FIN,Commerce & Finance,PRO_CA|UNI_PG_MCOM,Professional finance stream for CA and advanced commerce.
+RES,Research,UNI_PHD|UNI_RES,"Research stream for Ph.D., M.Phil, post-doctoral and higher doctorate programs."
+EMG,Emerging Tech,CERT_DRONE|LMS_CERT_WEB3,"Emerging technology stream for drone, blockchain and Web3 credentials."
+MKT,Marketing & Biz,UNI_DIP_DM|LMS_CERT_DIGMKT,Marketing stream for digital marketing diplomas and certifications.
+VAR,Various/Interdisciplinary,LMS_SWAYAM_01,Interdisciplinary/elective stream for SWAYAM/NPTEL-style online courses.

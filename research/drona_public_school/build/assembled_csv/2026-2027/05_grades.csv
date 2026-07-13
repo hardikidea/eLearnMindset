@@ -1,13 +1,125 @@
 grade_code,grade_name,display_order,stage,moodle_label
-STD01,Standard 1,1,Primary,Grade 1
-STD02,Standard 2,2,Primary,Grade 2
-STD03,Standard 3,3,Primary,Grade 3
-STD04,Standard 4,4,Primary,Grade 4
-STD05,Standard 5,5,Primary,Grade 5
-STD06,Standard 6,6,Upper Primary,Grade 6
-STD07,Standard 7,7,Upper Primary,Grade 7
-STD08,Standard 8,8,Upper Primary,Grade 8
-STD09,Standard 9,9,Secondary,Grade 9
-STD10,Standard 10,10,Secondary,Grade 10
-STD11,Standard 11,11,Higher Secondary,Grade 11
-STD12,Standard 12,12,Higher Secondary,Grade 12
+PRE01,Nursery,1,Pre-Primary,School
+PRE02,Preschool,2,Pre-Primary,School
+PRE03,LKG (Lower Kindergarten),3,Pre-Primary,School
+PRE04,UKG (Upper Kindergarten),4,Pre-Primary,School
+STD01,Standard 1,5,Primary,School
+STD02,Standard 2,6,Primary,School
+STD03,Standard 3,7,Primary,School
+STD04,Standard 4,8,Primary,School
+STD05,Standard 5,9,Primary,School
+STD06,Standard 6,10,Upper Primary,School
+STD07,Standard 7,11,Upper Primary,School
+STD08,Standard 8,12,Upper Primary,School
+STD09,Standard 9,13,Secondary,School
+STD10,Standard 10,14,Secondary,School
+STD11_SCI,Standard 11 (Science),15,Higher Secondary,School
+STD11_COM,Standard 11 (Commerce),16,Higher Secondary,School
+STD11_ART,Standard 11 (Arts),17,Higher Secondary,School
+STD12_SCI,Standard 12 (Science),18,Higher Secondary,School
+STD12_COM,Standard 12 (Commerce),19,Higher Secondary,School
+STD12_ART,Standard 12 (Arts),20,Higher Secondary,School
+ITI_ELEC,ITI Electrician (Vocational),21,Tech Ed,Vocational
+ITI_FIT,ITI Fitter (Vocational),22,Tech Ed,Vocational
+POLY_ME_Y1,Polytechnic Diploma Mechanical - Y1,23,Tech Ed,Diploma
+POLY_ME_Y2,Polytechnic Diploma Mechanical - Y2,24,Tech Ed,Diploma
+POLY_ME_Y3,Polytechnic Diploma Mechanical - Y3,25,Tech Ed,Diploma
+POLY_CE_Y1,Polytechnic Diploma Civil - Y1,26,Tech Ed,Diploma
+POLY_CE_Y2,Polytechnic Diploma Civil - Y2,27,Tech Ed,Diploma
+POLY_CE_Y3,Polytechnic Diploma Civil - Y3,28,Tech Ed,Diploma
+UNI_DIP_CS_Y1,Diploma in Cybersecurity & Cloud,29,Higher Ed,University
+UNI_DIP_AI_Y1,Diploma in Generative AI & Prompts,30,Higher Ed,University
+UNI_DIP_DM_Y1,Diploma in Digital Marketing,31,Higher Ed,University
+UNI_DIP_MLT_Y1,Diploma in Medical Lab Tech (MLT) - Y1,32,Higher Ed,University
+UNI_DIP_MLT_Y2,Diploma in Medical Lab Tech (MLT) - Y2,33,Higher Ed,University
+NUR_GNM_Y1,GNM (General Nursing & Midwifery) - Y1,34,Higher Ed,Diploma
+NUR_GNM_Y2,GNM (General Nursing & Midwifery) - Y2,35,Higher Ed,Diploma
+PHA_DPHARM_Y1,D.Pharm (Diploma in Pharmacy) - Y1,36,Higher Ed,Diploma
+EDU_NTT,Nursery Teacher Training (NTT),37,Higher Ed,Diploma
+EDU_DELED_Y1,D.El.Ed (Diploma in Elementary Ed) - Y1,38,Higher Ed,Diploma
+UNI_UG_CSE_Y1,B.Tech Computer Science (AI/ML) - Y1,39,Higher Ed,University
+UNI_UG_CSE_Y2,B.Tech Computer Science (AI/ML) - Y2,40,Higher Ed,University
+UNI_UG_CSE_Y3,B.Tech Computer Science (AI/ML) - Y3,41,Higher Ed,University
+UNI_UG_CSE_Y4,B.Tech Computer Science (AI/ML) - Y4,42,Higher Ed,University
+UNI_UG_DS_Y1,B.Sc Data Science & Analytics - Y1,43,Higher Ed,University
+UNI_UG_DS_Y2,B.Sc Data Science & Analytics - Y2,44,Higher Ed,University
+UNI_UG_DS_Y3,B.Sc Data Science & Analytics - Y3,45,Higher Ed,University
+UNI_UG_FT_Y1,BBA Financial Technology (FinTech) - Y1,46,Higher Ed,University
+UNI_UG_FT_Y2,BBA Financial Technology (FinTech) - Y2,47,Higher Ed,University
+UNI_UG_FT_Y3,BBA Financial Technology (FinTech) - Y3,48,Higher Ed,University
+UNI_UG_UX_Y1,B.Des UI/UX & Interaction Design - Y1,49,Higher Ed,University
+UNI_UG_UX_Y2,B.Des UI/UX & Interaction Design - Y2,50,Higher Ed,University
+UNI_UG_UX_Y3,B.Des UI/UX & Interaction Design - Y3,51,Higher Ed,University
+UNI_UG_UX_Y4,B.Des UI/UX & Interaction Design - Y4,52,Higher Ed,University
+UNI_UG_LAW_Y1,BA LL.B (Integrated Law) - Year 1,53,Higher Ed,University
+UNI_UG_LAW_Y5,BA LL.B (Integrated Law) - Year 5,54,Higher Ed,University
+UNI_UG_MED_Y1,MBBS (Medical) - Year 1,55,Higher Ed,University
+UNI_UG_MED_Y2,MBBS (Medical) - Year 2,56,Higher Ed,University
+UNI_UG_MED_Y3,MBBS (Medical) - Year 3,57,Higher Ed,University
+UNI_UG_MED_Y4,MBBS (Medical) - Year 4,58,Higher Ed,University
+UNI_UG_MED_Y5,MBBS (Medical) - Year 5,59,Higher Ed,University
+MED_BAMS_Y1,BAMS (Ayurvedic Medicine) - Y1,60,Higher Ed,University
+MED_BHMS_Y1,BHMS (Homeopathic Medicine) - Y1,61,Higher Ed,University
+VET_BVSC_Y1,B.V.Sc (Veterinary Science) - Y1,62,Higher Ed,University
+NUR_BSC_Y1,B.Sc Nursing - Y1,63,Higher Ed,University
+PHA_BPHARM_Y1,B.Pharm (Bachelor of Pharmacy) - Y1,64,Higher Ed,University
+EDU_BED_Y1,B.Ed (Bachelor of Education) - Y1,65,Higher Ed,University
+AGRI_BSC_Y1,B.Sc (Hons.) Agriculture - Y1,66,Higher Ed,University
+ART_NIFT_Y1,B.Des (Fashion Design / NIFT) - Y1,67,Higher Ed,University
+MED_BJMC_Y1,BA Journalism & Mass Comm (BJMC) - Y1,68,Higher Ed,University
+VOC_HM_Y1,B.Voc Hotel Management - Y1,69,Higher Ed,University
+VOC_INT_Y1,B.Voc Interior Design - Y1,70,Higher Ed,University
+PRO_CA_FND,CA Foundation (Chartered Accountancy),71,Professional,Charter
+PRO_CA_INT,CA Intermediate,72,Professional,Charter
+PRO_CA_FIN,CA Final,73,Professional,Charter
+PRO_CS_EXE,CS Executive (Company Secretary),74,Professional,Charter
+UNI_PG_AI_Y1,M.Tech Artificial Intelligence - Y1,75,Higher Ed,University
+UNI_PG_AI_Y2,M.Tech Artificial Intelligence - Y2,76,Higher Ed,University
+UNI_PG_MBA_Y1,MBA Business Analytics & Tech - Y1,77,Higher Ed,University
+UNI_PG_MBA_Y2,MBA Business Analytics & Tech - Y2,78,Higher Ed,University
+UNI_PG_SCM_Y1,M.Sc E-Commerce & Supply Chain - Y1,79,Higher Ed,University
+UNI_PG_SCM_Y2,M.Sc E-Commerce & Supply Chain - Y2,80,Higher Ed,University
+UNI_PG_LAW_Y1,LL.M (Corporate & Tech Law) - Y1,81,Higher Ed,University
+UNI_PG_LAW_Y2,LL.M (Corporate & Tech Law) - Y2,82,Higher Ed,University
+MGT_PGDM_Y1,PGDM (Post Grad Diploma in Mgmt) - Y1,83,Higher Ed,University
+MGT_PGDM_Y2,PGDM (Post Grad Diploma in Mgmt) - Y2,84,Higher Ed,University
+UNI_PHD_AI,Ph.D. Artificial Intelligence & Ethics,85,Higher Ed,University
+UNI_PHD_DS,Ph.D. Data Science & Big Data,86,Higher Ed,University
+UNI_PHD_RE,Ph.D. Renewable Energy & Smart Grid,87,Higher Ed,University
+CERT_DRONE,Certificate in Drone Operation,88,Skill Ed,Certification
+UNI_UG_BCA_Y1,BCA (Bachelor of Computer Applications) - Y1,89,Higher Ed,University
+UNI_UG_BCA_Y2,BCA (Bachelor of Computer Applications) - Y2,90,Higher Ed,University
+UNI_UG_BCA_Y3,BCA (Bachelor of Computer Applications) - Y3,91,Higher Ed,University
+UNI_UG_BBA_Y1,BBA (Bachelor of Business Admin) - Y1,92,Higher Ed,University
+UNI_UG_BBA_Y2,BBA (Bachelor of Business Admin) - Y2,93,Higher Ed,University
+UNI_UG_BBA_Y3,BBA (Bachelor of Business Admin) - Y3,94,Higher Ed,University
+UNI_UG_BARCH_Y1,B.Arch (Architecture) - Y1,95,Higher Ed,University
+UNI_UG_BARCH_Y5,B.Arch (Architecture) - Y5,96,Higher Ed,University
+UNI_UG_BPT_Y1,BPT (Physiotherapy) - Y1,97,Higher Ed,University
+UNI_UG_BPT_Y4,BPT (Physiotherapy) - Y4,98,Higher Ed,University
+UNI_UG_BSW_Y1,BSW (Social Work) - Y1,99,Higher Ed,University
+UNI_UG_BFA_Y1,BFA (Fine Arts) - Y1,100,Higher Ed,University
+UNI_UG_BHM_Y1,BHM (Hotel Management) - Y1,101,Higher Ed,University
+UNI_PG_MCA_Y1,MCA (Master of Computer Applications) - Y1,102,Higher Ed,University
+UNI_PG_MCA_Y2,MCA (Master of Computer Applications) - Y2,103,Higher Ed,University
+UNI_PG_MARCH_Y1,M.Arch (Architecture) - Y1,104,Higher Ed,University
+UNI_PG_MPT_Y1,MPT (Physiotherapy) - Y1,105,Higher Ed,University
+UNI_PG_MSW_Y1,MSW (Master of Social Work) - Y1,106,Higher Ed,University
+UNI_PG_MFA_Y1,MFA (Fine Arts) - Y1,107,Higher Ed,University
+UNI_PG_MCOM_Y1,M.Com (Master of Commerce) - Y1,108,Higher Ed,University
+LMS_CERT_FSD,PG Certification in Full Stack Development,109,Online Ed,Certification
+LMS_CERT_DATA,Executive PG in Data Science,110,Online Ed,Certification
+LMS_CERT_CLOUD,Cloud Architect Certification (AWS/Azure),111,Online Ed,Certification
+LMS_CERT_MLOPS,Advanced Certification in MLOps,112,Online Ed,Certification
+LMS_CERT_PM,PG Certificate in Product Management,113,Online Ed,Certification
+LMS_CERT_AGILE,Certified Scrum Master (CSM/Agile),114,Online Ed,Certification
+LMS_CERT_CYBER,Certified Ethical Hacker (CEH),115,Online Ed,Certification
+LMS_CERT_WEB3,Certification in Blockchain & Web3,116,Online Ed,Certification
+LMS_CERT_DIGMKT,Advanced Digital Marketing Certification,117,Online Ed,Certification
+LMS_SWAYAM_01,SWAYAM / NPTEL Elective Course,118,Online Ed,Certification
+LMS_NSDC_L4,NSDC Skill Certification (NSQF Level 4),119,Skill Ed,Vocational
+LMS_NSDC_L6,NSDC Skill Certification (NSQF Level 6),120,Skill Ed,Vocational
+UNI_RES_MPHIL,M.Phil (Master of Philosophy) - Legacy,121,Higher Ed,University
+UNI_RES_PDF,Post-Doctoral Fellowship (PDF),122,Higher Ed,University
+UNI_RES_DSC,Doctor of Science (D.Sc.),123,Higher Ed,University
+UNI_RES_DLITT,Doctor of Letters (D.Litt.),124,Higher Ed,University
