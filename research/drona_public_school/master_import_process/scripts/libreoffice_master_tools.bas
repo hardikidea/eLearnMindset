@@ -100,6 +100,7 @@ End Sub
 
 Function BuildAllDerivedSheetsMessage(oDoc As Object) As String
     BuildAllDerivedSheetsMessage = "Generated derived sheets:" & Chr(10) & _
+        "07_grade_division_matrix: " & BuildGradeDivisionMatrix(oDoc) & " rows" & Chr(10) & _
         "09_subject_matrix: " & BuildGradeSubjectMatrix(oDoc) & " rows" & Chr(10) & _
         "10_categories: " & BuildCategories(oDoc) & " rows" & Chr(10) & _
         "12_courses: " & BuildCourses(oDoc) & " rows" & Chr(10) & _
@@ -130,6 +131,10 @@ Function BuildAllDerivedSheetsMessage(oDoc As Object) As String
         "status: formulas refreshed"
     oDoc.calculateAll()
 End Function
+
+Sub GenerateGradeDivisionMatrix
+    RunBuilder "grade_division_matrix", "07_grade_division_matrix"
+End Sub
 
 Sub GenerateGradeSubjectMatrix
     RunBuilder "grade_subject_matrix", "09_subject_matrix"
@@ -267,6 +272,8 @@ End Sub
 
 Function BuildByName(oDoc As Object, builderName As String) As Long
     Select Case LCase(builderName)
+        Case "grade_division_matrix"
+            BuildByName = BuildGradeDivisionMatrix(oDoc)
         Case "grade_subject_matrix"
             BuildByName = BuildGradeSubjectMatrix(oDoc)
         Case "categories"
@@ -324,6 +331,75 @@ Function BuildByName(oDoc As Object, builderName As String) As Long
         Case Else
             Err.Raise 1101, "MasterImportTools", "Unknown macro builder: " & builderName
     End Select
+End Function
+
+Function BuildGradeDivisionMatrix(oDoc As Object) As Long
+    Dim oRules As Object, oDivisions As Object, oTarget As Object
+    Dim hRules As Long, hDiv As Long, hTarget As Long
+    Dim rRow As Long, dRow As Long, targetRow As Long, generatedRows As Long
+    Dim academicYear As String, boardCode As String, mediumCode As String, gradeCode As String
+    Dim streamCode As String, divisionCodes As String, divisionCode As String, isActive As String
+    Dim tokens() As String, tokenIndex As Integer
+    Dim yearRef As String, boardRef As String, mediumRef As String, gradeRef As String, streamRef As String
+    Dim capacityRef As String, isActiveRef As String, notesRef As String, divisionCodeFormula As String
+    Dim divisionNameRef As String, sourceRuleFormula As String
+
+    oRules = RequireSheet(oDoc, "07_grade_division_rules")
+    oDivisions = RequireSheet(oDoc, "07_divisions")
+    oTarget = RequireSheet(oDoc, "07_grade_division_matrix")
+    hRules = FindHeaderRow(oRules, "academic_year")
+    hDiv = FindHeaderRow(oDivisions, "division_code")
+    hTarget = FindHeaderRow(oTarget, "academic_year")
+    targetRow = hTarget + 1
+    ClearDataRows oTarget, targetRow
+
+    For rRow = hRules + 1 To LastUsedRow(oRules)
+        academicYear = CellText(oRules, FindColumn(oRules, "academic_year", hRules), rRow)
+        boardCode = CellText(oRules, FindColumn(oRules, "board_code", hRules), rRow)
+        mediumCode = CellText(oRules, FindColumn(oRules, "medium_code", hRules), rRow)
+        gradeCode = CellText(oRules, FindColumn(oRules, "grade_code", hRules), rRow)
+        streamCode = CellText(oRules, FindColumn(oRules, "stream_code", hRules), rRow)
+        divisionCodes = CellText(oRules, FindColumn(oRules, "division_codes", hRules), rRow)
+        isActive = CellText(oRules, FindColumn(oRules, "is_active", hRules), rRow)
+
+        If academicYear <> "" And boardCode <> "" And mediumCode <> "" And gradeCode <> "" And streamCode <> "" _
+                And divisionCodes <> "" And (isActive = "1" Or LCase(isActive) = "true" Or LCase(isActive) = "yes") Then
+            yearRef = FormulaCellByHeader(oRules, hRules, rRow, "academic_year")
+            boardRef = FormulaCellByHeader(oRules, hRules, rRow, "board_code")
+            mediumRef = FormulaCellByHeader(oRules, hRules, rRow, "medium_code")
+            gradeRef = FormulaCellByHeader(oRules, hRules, rRow, "grade_code")
+            streamRef = FormulaCellByHeader(oRules, hRules, rRow, "stream_code")
+            capacityRef = FormulaCellByHeader(oRules, hRules, rRow, "capacity")
+            isActiveRef = FormulaCellByHeader(oRules, hRules, rRow, "is_active")
+            notesRef = FormulaCellByHeader(oRules, hRules, rRow, "notes")
+            sourceRuleFormula = "=" & yearRef & "&" & FormulaText("-") & "&" & boardRef & "&" & FormulaText("-") & "&" & mediumRef & "&" & FormulaText("-") & "&" & gradeRef & "&" & FormulaText("-") & "&" & streamRef
+            divisionCodes = Replace(divisionCodes, ",", "|")
+            tokens = Split(divisionCodes, "|")
+            For tokenIndex = LBound(tokens) To UBound(tokens)
+                divisionCode = UCase(Trim(tokens(tokenIndex)))
+                dRow = FindRowByValue(oDivisions, hDiv, "division_code", divisionCode)
+                If divisionCode <> "" And dRow >= 0 Then
+                    divisionCodeFormula = FormulaStaticText(divisionCode)
+                    divisionNameRef = FormulaCellByHeader(oDivisions, hDiv, dRow, "division_name")
+                    SetFormulaByHeader oTarget, hTarget, targetRow, "academic_year", "=" & yearRef
+                    SetFormulaByHeader oTarget, hTarget, targetRow, "board_code", "=" & boardRef
+                    SetFormulaByHeader oTarget, hTarget, targetRow, "medium_code", "=" & mediumRef
+                    SetFormulaByHeader oTarget, hTarget, targetRow, "grade_code", "=" & gradeRef
+                    SetFormulaByHeader oTarget, hTarget, targetRow, "stream_code", "=" & streamRef
+                    SetFormulaByHeader oTarget, hTarget, targetRow, "division_code", divisionCodeFormula
+                    SetFormulaByHeader oTarget, hTarget, targetRow, "division_name", "=" & divisionNameRef
+                    SetFormulaByHeader oTarget, hTarget, targetRow, "capacity", "=" & capacityRef
+                    SetFormulaByHeader oTarget, hTarget, targetRow, "is_active", "=" & isActiveRef
+                    SetFormulaByHeader oTarget, hTarget, targetRow, "source_rule_key", sourceRuleFormula
+                    SetFormulaByHeader oTarget, hTarget, targetRow, "notes", "=" & notesRef
+                    targetRow = targetRow + 1
+                    generatedRows = generatedRows + 1
+                End If
+            Next tokenIndex
+        End If
+    Next rRow
+
+    BuildGradeDivisionMatrix = generatedRows
 End Function
 
 Function BuildGradeSubjectMatrix(oDoc As Object) As Long
@@ -684,90 +760,70 @@ Function BuildCoursesWithTemplateUpload(oDoc As Object) As Long
 End Function
 
 Function BuildCohorts(oDoc As Object) As Long
-    Dim oTarget As Object, oSchool As Object, oBoards As Object, oYears As Object, oMediums As Object, oGrades As Object, oStreams As Object, oDivisions As Object
-    Dim hTarget As Long, hSchool As Long, hBoard As Long, hYear As Long, hMedium As Long, hGrade As Long, hStream As Long, hDiv As Long
-    Dim targetRow As Long, bRow As Long, yRow As Long, mRow As Long, gRow As Long, sRow As Long, dRow As Long
-    Dim trustCode As String, schoolCode As String, academicYear As String, boardCode As String, mediumCode As String, mediumName As String
-    Dim gradeCode As String, gradeName As String, streamCode As String, appliesTo As String, divisionCode As String, divisionName As String
-    Dim cohortCode As String, generatedRows As Long
-    Dim trustCodeRef As String, schoolCodeRef As String, yearRef As String, boardCodeRef As String
-    Dim mediumCodeRef As String, mediumNameRef As String, gradeCodeRef As String, gradeNameRef As String
-    Dim streamCodeRef As String, divisionCodeRef As String, divisionNameRef As String
+    Dim oTarget As Object, oSchool As Object, oMatrix As Object, oMediums As Object, oGrades As Object
+    Dim hTarget As Long, hSchool As Long, hMatrix As Long, hMedium As Long, hGrade As Long
+    Dim targetRow As Long, mRow As Long, generatedRows As Long
+    Dim academicYear As String, boardCode As String, mediumCode As String, gradeCode As String
+    Dim streamCode As String, divisionCode As String, isActive As String
+    Dim trustCodeRef As String, schoolCodeRef As String, yearRef As String, boardRef As String
+    Dim mediumRef As String, gradeRef As String, streamRef As String, divisionRef As String
+    Dim mediumNameRef As String, gradeNameRef As String, divisionNameRef As String
     Dim cohortCodeFormula As String, contextCategoryFormula As String
+
     oTarget = RequireSheet(oDoc, "14_cohorts")
     oSchool = RequireSheet(oDoc, "01_school_master")
-    oBoards = RequireSheet(oDoc, "03_boards")
-    oYears = RequireSheet(oDoc, "02_academic_years")
+    oMatrix = RequireSheet(oDoc, "07_grade_division_matrix")
     oMediums = RequireSheet(oDoc, "04_mediums")
     oGrades = RequireSheet(oDoc, "05_grades")
-    oStreams = RequireSheet(oDoc, "06_streams")
-    oDivisions = RequireSheet(oDoc, "07_divisions")
     hTarget = FindHeaderRow(oTarget, "cohort_code")
     hSchool = FindHeaderRow(oSchool, "trust_code")
-    hBoard = FindHeaderRow(oBoards, "board_code")
-    hYear = FindHeaderRow(oYears, "academic_year")
+    hMatrix = FindHeaderRow(oMatrix, "academic_year")
     hMedium = FindHeaderRow(oMediums, "medium_code")
     hGrade = FindHeaderRow(oGrades, "grade_code")
-    hStream = FindHeaderRow(oStreams, "stream_code")
-    hDiv = FindHeaderRow(oDivisions, "division_code")
     targetRow = hTarget + 1
     ClearDataRows oTarget, targetRow
-    trustCode = CellText(oSchool, FindColumn(oSchool, "trust_code", hSchool), hSchool + 1)
-    schoolCode = CellText(oSchool, FindColumn(oSchool, "school_code", hSchool), hSchool + 1)
+
     trustCodeRef = FormulaCellByHeader(oSchool, hSchool, hSchool + 1, "trust_code")
     schoolCodeRef = FormulaCellByHeader(oSchool, hSchool, hSchool + 1, "school_code")
-    For bRow = hBoard + 1 To LastUsedRow(oBoards)
-        boardCode = CellText(oBoards, FindColumn(oBoards, "board_code", hBoard), bRow)
-        boardCodeRef = FormulaCellByHeader(oBoards, hBoard, bRow, "board_code")
-        For yRow = hYear + 1 To LastUsedRow(oYears)
-            academicYear = CellText(oYears, FindColumn(oYears, "academic_year", hYear), yRow)
-            If boardCode <> "" And academicYear <> "" And IncludeAcademicYear(oYears, hYear, yRow) Then
-                yearRef = FormulaCellByHeader(oYears, hYear, yRow, "academic_year")
-                For mRow = hMedium + 1 To LastUsedRow(oMediums)
-                    mediumCode = CellText(oMediums, FindColumn(oMediums, "medium_code", hMedium), mRow)
-                    mediumName = CellText(oMediums, FindColumn(oMediums, "medium_name", hMedium), mRow)
-                    mediumCodeRef = FormulaCellByHeader(oMediums, hMedium, mRow, "medium_code")
-                    mediumNameRef = FormulaCellByHeader(oMediums, hMedium, mRow, "medium_name")
-                    For gRow = hGrade + 1 To LastUsedRow(oGrades)
-                        gradeCode = CellText(oGrades, FindColumn(oGrades, "grade_code", hGrade), gRow)
-                        gradeName = CellText(oGrades, FindColumn(oGrades, "grade_name", hGrade), gRow)
-                        gradeCodeRef = FormulaCellByHeader(oGrades, hGrade, gRow, "grade_code")
-                        gradeNameRef = FormulaCellByHeader(oGrades, hGrade, gRow, "grade_name")
-                        For sRow = hStream + 1 To LastUsedRow(oStreams)
-                            streamCode = CellText(oStreams, FindColumn(oStreams, "stream_code", hStream), sRow)
-                            appliesTo = CellText(oStreams, FindColumn(oStreams, "applies_to", hStream), sRow)
-                            If StreamAppliesToGrade(gradeCode, streamCode, appliesTo) Then
-                                streamCodeRef = FormulaCellByHeader(oStreams, hStream, sRow, "stream_code")
-                                For dRow = hDiv + 1 To LastUsedRow(oDivisions)
-                                    divisionCode = CellText(oDivisions, FindColumn(oDivisions, "division_code", hDiv), dRow)
-                                    divisionName = CellText(oDivisions, FindColumn(oDivisions, "division_name", hDiv), dRow)
-                                    cohortCode = MakeCohortCode(schoolCode, academicYear, boardCode, mediumCode, gradeCode, streamCode, divisionCode)
-                                    divisionCodeRef = FormulaCellByHeader(oDivisions, hDiv, dRow, "division_code")
-                                    divisionNameRef = FormulaCellByHeader(oDivisions, hDiv, dRow, "division_name")
-                                    cohortCodeFormula = "=" & schoolCodeRef & "&" & FormulaText("-") & "&LEFT(" & yearRef & ";4)&" & FormulaText("-") & "&" & boardCodeRef & "&" & FormulaText("-") & "&" & mediumCodeRef & "&" & FormulaText("-") & "&" & gradeCodeRef & "&" & FormulaText("-") & "&" & streamCodeRef & "&" & FormulaText("-") & "&" & divisionCodeRef
-                                    contextCategoryFormula = "=" & trustCodeRef & "&" & FormulaText("_") & "&" & boardCodeRef & "&" & FormulaText("_") & "&" & schoolCodeRef & "&" & FormulaText("_") & "&SUBSTITUTE(" & yearRef & ";" & FormulaText("-") & ";" & FormulaText("_") & ")&" & FormulaText("_") & "&" & mediumCodeRef & "&" & FormulaText("_") & "&" & gradeCodeRef & "&" & FormulaText("_") & "&" & streamCodeRef
-                                    SetFormulaByHeader oTarget, hTarget, targetRow, "cohort_code", cohortCodeFormula
-                                    SetFormulaByHeader oTarget, hTarget, targetRow, "name", "=" & schoolCodeRef & "&" & FormulaText(" ") & "&" & yearRef & "&" & FormulaText(" ") & "&" & mediumNameRef & "&" & FormulaText(" ") & "&" & gradeNameRef & "&" & FormulaText(" ") & "&" & streamCodeRef & "&" & FormulaText(" ") & "&" & divisionNameRef
-                                    SetFormulaByHeader oTarget, hTarget, targetRow, "idnumber", cohortCodeFormula
-                                    SetFormulaByHeader oTarget, hTarget, targetRow, "context_category_code", contextCategoryFormula
-                                    SetFormulaByHeader oTarget, hTarget, targetRow, "board_code", "=" & boardCodeRef
-                                    SetFormulaByHeader oTarget, hTarget, targetRow, "school_code", "=" & schoolCodeRef
-                                    SetFormulaByHeader oTarget, hTarget, targetRow, "medium_code", "=" & mediumCodeRef
-                                    SetFormulaByHeader oTarget, hTarget, targetRow, "grade_code", "=" & gradeCodeRef
-                                    SetFormulaByHeader oTarget, hTarget, targetRow, "stream_code", "=" & streamCodeRef
-                                    SetFormulaByHeader oTarget, hTarget, targetRow, "division_code", "=" & divisionCodeRef
-                                    SetFormulaByHeader oTarget, hTarget, targetRow, "academic_year", "=" & yearRef
-                                    SetFormulaByHeader oTarget, hTarget, targetRow, "visible", FormulaStaticText("1")
-                                    targetRow = targetRow + 1
-                                    generatedRows = generatedRows + 1
-                                Next dRow
-                            End If
-                        Next sRow
-                    Next gRow
-                Next mRow
-            End If
-        Next yRow
-    Next bRow
+
+    For mRow = hMatrix + 1 To LastUsedRow(oMatrix)
+        academicYear = CellText(oMatrix, FindColumn(oMatrix, "academic_year", hMatrix), mRow)
+        boardCode = CellText(oMatrix, FindColumn(oMatrix, "board_code", hMatrix), mRow)
+        mediumCode = CellText(oMatrix, FindColumn(oMatrix, "medium_code", hMatrix), mRow)
+        gradeCode = CellText(oMatrix, FindColumn(oMatrix, "grade_code", hMatrix), mRow)
+        streamCode = CellText(oMatrix, FindColumn(oMatrix, "stream_code", hMatrix), mRow)
+        divisionCode = CellText(oMatrix, FindColumn(oMatrix, "division_code", hMatrix), mRow)
+        isActive = CellText(oMatrix, FindColumn(oMatrix, "is_active", hMatrix), mRow)
+        If academicYear <> "" And boardCode <> "" And mediumCode <> "" And gradeCode <> "" And streamCode <> "" And divisionCode <> "" _
+                And (isActive = "1" Or LCase(isActive) = "true" Or LCase(isActive) = "yes") Then
+            yearRef = FormulaCellByHeader(oMatrix, hMatrix, mRow, "academic_year")
+            boardRef = FormulaCellByHeader(oMatrix, hMatrix, mRow, "board_code")
+            mediumRef = FormulaCellByHeader(oMatrix, hMatrix, mRow, "medium_code")
+            gradeRef = FormulaCellByHeader(oMatrix, hMatrix, mRow, "grade_code")
+            streamRef = FormulaCellByHeader(oMatrix, hMatrix, mRow, "stream_code")
+            divisionRef = FormulaCellByHeader(oMatrix, hMatrix, mRow, "division_code")
+            divisionNameRef = FormulaCellByHeader(oMatrix, hMatrix, mRow, "division_name")
+            mediumNameRef = FormulaLookupCellByValue(oMediums, hMedium, "medium_code", mediumCode, "medium_name")
+            gradeNameRef = FormulaLookupCellByValue(oGrades, hGrade, "grade_code", gradeCode, "grade_name")
+            cohortCodeFormula = "=" & schoolCodeRef & "&" & FormulaText("-") & "&LEFT(" & yearRef & ";4)&" & FormulaText("-") & "&" & boardRef & "&" & FormulaText("-") & "&" & mediumRef & "&" & FormulaText("-") & "&" & gradeRef & "&" & FormulaText("-") & "&" & streamRef & "&" & FormulaText("-") & "&" & divisionRef
+            contextCategoryFormula = "=" & trustCodeRef & "&" & FormulaText("_") & "&" & boardRef & "&" & FormulaText("_") & "&" & schoolCodeRef & "&" & FormulaText("_") & "&SUBSTITUTE(" & yearRef & ";" & FormulaText("-") & ";" & FormulaText("_") & ")&" & FormulaText("_") & "&" & mediumRef & "&" & FormulaText("_") & "&" & gradeRef & "&" & FormulaText("_") & "&" & streamRef
+            SetFormulaByHeader oTarget, hTarget, targetRow, "cohort_code", cohortCodeFormula
+            SetFormulaByHeader oTarget, hTarget, targetRow, "name", "=" & schoolCodeRef & "&" & FormulaText(" ") & "&" & yearRef & "&" & FormulaText(" ") & "&" & mediumNameRef & "&" & FormulaText(" ") & "&" & gradeNameRef & "&" & FormulaText(" ") & "&" & streamRef & "&" & FormulaText(" ") & "&" & divisionNameRef
+            SetFormulaByHeader oTarget, hTarget, targetRow, "idnumber", cohortCodeFormula
+            SetFormulaByHeader oTarget, hTarget, targetRow, "context_category_code", contextCategoryFormula
+            SetFormulaByHeader oTarget, hTarget, targetRow, "board_code", "=" & boardRef
+            SetFormulaByHeader oTarget, hTarget, targetRow, "school_code", "=" & schoolCodeRef
+            SetFormulaByHeader oTarget, hTarget, targetRow, "medium_code", "=" & mediumRef
+            SetFormulaByHeader oTarget, hTarget, targetRow, "grade_code", "=" & gradeRef
+            SetFormulaByHeader oTarget, hTarget, targetRow, "stream_code", "=" & streamRef
+            SetFormulaByHeader oTarget, hTarget, targetRow, "division_code", "=" & divisionRef
+            SetFormulaByHeader oTarget, hTarget, targetRow, "academic_year", "=" & yearRef
+            SetFormulaByHeader oTarget, hTarget, targetRow, "visible", FormulaStaticText("1")
+            SetFormulaByHeader oTarget, hTarget, targetRow, "description", "=" & FormulaText("Student cohort for ") & "&" & gradeNameRef & "&" & FormulaText(" ") & "&" & streamRef & "&" & FormulaText(" ") & "&" & divisionNameRef & "&" & FormulaText(" in ") & "&" & yearRef & "&" & FormulaText(".")
+            targetRow = targetRow + 1
+            generatedRows = generatedRows + 1
+        End If
+    Next mRow
     BuildCohorts = generatedRows
 End Function
 
@@ -1574,15 +1630,18 @@ Function BuildAttendancePolicy(oDoc As Object) As Long
 End Function
 
 Function BuildGroupsFromCourses(oDoc As Object, coursesSheet As String, targetSheet As String) As Long
-    Dim oCourses As Object, oDivisions As Object, oTarget As Object
-    Dim hCourses As Long, hDiv As Long, hTarget As Long, cRow As Long, dRow As Long, targetRow As Long
-    Dim courseCode As String, courseShortname As String, divisionCode As String, divisionName As String, generatedRows As Long
+    Dim oCourses As Object, oMatrix As Object, oTarget As Object
+    Dim hCourses As Long, hMatrix As Long, hTarget As Long, cRow As Long, mRow As Long, targetRow As Long
+    Dim courseCode As String, courseShortname As String, academicYear As String, boardCode As String
+    Dim mediumCode As String, gradeCode As String, streamCode As String, divisionCode As String
+    Dim generatedRows As Long
     Dim courseCodeRef As String, courseShortnameRef As String, divisionCodeRef As String, divisionNameRef As String
+    Dim hasExactMatrixMatch As Boolean
     oCourses = RequireSheet(oDoc, coursesSheet)
-    oDivisions = RequireSheet(oDoc, "07_divisions")
+    oMatrix = RequireSheet(oDoc, "07_grade_division_matrix")
     oTarget = RequireSheet(oDoc, targetSheet)
     hCourses = FindHeaderRow(oCourses, "course_code")
-    hDiv = FindHeaderRow(oDivisions, "division_code")
+    hMatrix = FindHeaderRow(oMatrix, "academic_year")
     hTarget = FindHeaderRow(oTarget, "course_code")
     targetRow = hTarget + 1
     ClearDataRows oTarget, targetRow
@@ -1590,41 +1649,49 @@ Function BuildGroupsFromCourses(oDoc As Object, coursesSheet As String, targetSh
         courseCode = CellText(oCourses, FindColumn(oCourses, "course_code", hCourses), cRow)
         courseShortname = CellText(oCourses, FindColumn(oCourses, "shortname", hCourses), cRow)
         If courseCode <> "" Then
-            For dRow = hDiv + 1 To LastUsedRow(oDivisions)
-                divisionCode = CellText(oDivisions, FindColumn(oDivisions, "division_code", hDiv), dRow)
-                divisionName = CellText(oDivisions, FindColumn(oDivisions, "division_name", hDiv), dRow)
-                courseCodeRef = FormulaCellByHeader(oCourses, hCourses, cRow, "course_code")
-                courseShortnameRef = FormulaCellByHeader(oCourses, hCourses, cRow, "shortname")
-                divisionCodeRef = FormulaCellByHeader(oDivisions, hDiv, dRow, "division_code")
-                divisionNameRef = FormulaCellByHeader(oDivisions, hDiv, dRow, "division_name")
-                SetFormulaByHeader oTarget, hTarget, targetRow, "course_code", "=" & courseCodeRef
-                SetFormulaByHeader oTarget, hTarget, targetRow, "course_shortname", "=" & courseShortnameRef
-                SetFormulaByHeader oTarget, hTarget, targetRow, "group_name", "=" & divisionNameRef
-                SetFormulaByHeader oTarget, hTarget, targetRow, "group_idnumber", "=" & courseCodeRef & "&" & FormulaText("-") & "&" & divisionCodeRef
-                CopyCourseIdentityFormulas oCourses, hCourses, cRow, oTarget, hTarget, targetRow
-                SetFormulaByHeader oTarget, hTarget, targetRow, "division_code", "=" & divisionCodeRef
-                SetFormulaByHeader oTarget, hTarget, targetRow, "description", "=" & divisionNameRef & "&" & FormulaText(" group for ") & "&" & courseShortnameRef & "&" & FormulaText(".")
-                targetRow = targetRow + 1
-                generatedRows = generatedRows + 1
-            Next dRow
+            academicYear = CellText(oCourses, FindColumn(oCourses, "academic_year", hCourses), cRow)
+            boardCode = CellText(oCourses, FindColumn(oCourses, "board_code", hCourses), cRow)
+            mediumCode = CellText(oCourses, FindColumn(oCourses, "medium_code", hCourses), cRow)
+            gradeCode = CellText(oCourses, FindColumn(oCourses, "grade_code", hCourses), cRow)
+            streamCode = CellText(oCourses, FindColumn(oCourses, "stream_code", hCourses), cRow)
+            hasExactMatrixMatch = HasExactGradeDivisionMatrixMatch(oMatrix, hMatrix, academicYear, boardCode, mediumCode, gradeCode, streamCode)
+            For mRow = hMatrix + 1 To LastUsedRow(oMatrix)
+                If GradeDivisionMatrixRowMatches(oMatrix, hMatrix, mRow, academicYear, boardCode, mediumCode, gradeCode, streamCode, Not hasExactMatrixMatch) Then
+                    divisionCode = CellText(oMatrix, FindColumn(oMatrix, "division_code", hMatrix), mRow)
+                    courseCodeRef = FormulaCellByHeader(oCourses, hCourses, cRow, "course_code")
+                    courseShortnameRef = FormulaCellByHeader(oCourses, hCourses, cRow, "shortname")
+                    divisionCodeRef = FormulaCellByHeader(oMatrix, hMatrix, mRow, "division_code")
+                    divisionNameRef = FormulaCellByHeader(oMatrix, hMatrix, mRow, "division_name")
+                    SetFormulaByHeader oTarget, hTarget, targetRow, "course_code", "=" & courseCodeRef
+                    SetFormulaByHeader oTarget, hTarget, targetRow, "course_shortname", "=" & courseShortnameRef
+                    SetFormulaByHeader oTarget, hTarget, targetRow, "group_name", "=" & divisionNameRef
+                    SetFormulaByHeader oTarget, hTarget, targetRow, "group_idnumber", "=" & courseCodeRef & "&" & FormulaText("-") & "&" & divisionCodeRef
+                    CopyCourseIdentityFormulas oCourses, hCourses, cRow, oTarget, hTarget, targetRow
+                    SetFormulaByHeader oTarget, hTarget, targetRow, "division_code", "=" & divisionCodeRef
+                    SetFormulaByHeader oTarget, hTarget, targetRow, "description", "=" & divisionNameRef & "&" & FormulaText(" group for ") & "&" & courseShortnameRef & "&" & FormulaText(".")
+                    targetRow = targetRow + 1
+                    generatedRows = generatedRows + 1
+                End If
+            Next mRow
         End If
     Next cRow
     BuildGroupsFromCourses = generatedRows
 End Function
 
 Function BuildEnrolmentsFromCourses(oDoc As Object, coursesSheet As String, targetSheet As String) As Long
-    Dim oCourses As Object, oDivisions As Object, oTarget As Object
-    Dim hCourses As Long, hDiv As Long, hTarget As Long, cRow As Long, dRow As Long, targetRow As Long
+    Dim oCourses As Object, oMatrix As Object, oTarget As Object
+    Dim hCourses As Long, hMatrix As Long, hTarget As Long, cRow As Long, mRow As Long, targetRow As Long
     Dim courseCode As String, courseShortname As String, academicYear As String, boardCode As String, schoolCode As String
-    Dim mediumCode As String, gradeCode As String, streamCode As String, divisionCode As String, divisionName As String, generatedRows As Long
+    Dim mediumCode As String, gradeCode As String, streamCode As String, divisionCode As String, generatedRows As Long
     Dim courseCodeRef As String, courseShortnameRef As String, academicYearRef As String, boardCodeRef As String, schoolCodeRef As String
     Dim mediumCodeRef As String, gradeCodeRef As String, streamCodeRef As String, divisionCodeRef As String, divisionNameRef As String
     Dim cohortCodeFormula As String
+    Dim hasExactMatrixMatch As Boolean
     oCourses = RequireSheet(oDoc, coursesSheet)
-    oDivisions = RequireSheet(oDoc, "07_divisions")
+    oMatrix = RequireSheet(oDoc, "07_grade_division_matrix")
     oTarget = RequireSheet(oDoc, targetSheet)
     hCourses = FindHeaderRow(oCourses, "course_code")
-    hDiv = FindHeaderRow(oDivisions, "division_code")
+    hMatrix = FindHeaderRow(oMatrix, "academic_year")
     hTarget = FindHeaderRow(oTarget, "course_code")
     targetRow = hTarget + 1
     ClearDataRows oTarget, targetRow
@@ -1638,34 +1705,72 @@ Function BuildEnrolmentsFromCourses(oDoc As Object, coursesSheet As String, targ
             mediumCode = CellText(oCourses, FindColumn(oCourses, "medium_code", hCourses), cRow)
             gradeCode = CellText(oCourses, FindColumn(oCourses, "grade_code", hCourses), cRow)
             streamCode = CellText(oCourses, FindColumn(oCourses, "stream_code", hCourses), cRow)
-            For dRow = hDiv + 1 To LastUsedRow(oDivisions)
-                divisionCode = CellText(oDivisions, FindColumn(oDivisions, "division_code", hDiv), dRow)
-                divisionName = CellText(oDivisions, FindColumn(oDivisions, "division_name", hDiv), dRow)
-                courseCodeRef = FormulaCellByHeader(oCourses, hCourses, cRow, "course_code")
-                courseShortnameRef = FormulaCellByHeader(oCourses, hCourses, cRow, "shortname")
-                academicYearRef = FormulaCellByHeader(oCourses, hCourses, cRow, "academic_year")
-                boardCodeRef = FormulaCellByHeader(oCourses, hCourses, cRow, "board_code")
-                schoolCodeRef = FormulaCellByHeader(oCourses, hCourses, cRow, "school_code")
-                mediumCodeRef = FormulaCellByHeader(oCourses, hCourses, cRow, "medium_code")
-                gradeCodeRef = FormulaCellByHeader(oCourses, hCourses, cRow, "grade_code")
-                streamCodeRef = FormulaCellByHeader(oCourses, hCourses, cRow, "stream_code")
-                divisionCodeRef = FormulaCellByHeader(oDivisions, hDiv, dRow, "division_code")
-                divisionNameRef = FormulaCellByHeader(oDivisions, hDiv, dRow, "division_name")
-                cohortCodeFormula = "=" & schoolCodeRef & "&" & FormulaText("-") & "&LEFT(" & academicYearRef & ";4)&" & FormulaText("-") & "&" & boardCodeRef & "&" & FormulaText("-") & "&" & mediumCodeRef & "&" & FormulaText("-") & "&" & gradeCodeRef & "&" & FormulaText("-") & "&" & streamCodeRef & "&" & FormulaText("-") & "&" & divisionCodeRef
-                SetFormulaByHeader oTarget, hTarget, targetRow, "course_code", "=" & courseCodeRef
-                SetFormulaByHeader oTarget, hTarget, targetRow, "course_shortname", "=" & courseShortnameRef
-                SetFormulaByHeader oTarget, hTarget, targetRow, "cohort_code", cohortCodeFormula
-                SetFormulaByHeader oTarget, hTarget, targetRow, "role_shortname", FormulaStaticText("student")
-                SetFormulaByHeader oTarget, hTarget, targetRow, "group_name", "=" & divisionNameRef
-                SetFormulaByHeader oTarget, hTarget, targetRow, "group_idnumber", "=" & courseCodeRef & "&" & FormulaText("-") & "&" & divisionCodeRef
-                SetFormulaByHeader oTarget, hTarget, targetRow, "enrolment_method", FormulaStaticText("cohort_sync")
-                SetFormulaByHeader oTarget, hTarget, targetRow, "status", FormulaStaticText("active")
-                targetRow = targetRow + 1
-                generatedRows = generatedRows + 1
-            Next dRow
+            hasExactMatrixMatch = HasExactGradeDivisionMatrixMatch(oMatrix, hMatrix, academicYear, boardCode, mediumCode, gradeCode, streamCode)
+            For mRow = hMatrix + 1 To LastUsedRow(oMatrix)
+                If GradeDivisionMatrixRowMatches(oMatrix, hMatrix, mRow, academicYear, boardCode, mediumCode, gradeCode, streamCode, Not hasExactMatrixMatch) Then
+                    divisionCode = CellText(oMatrix, FindColumn(oMatrix, "division_code", hMatrix), mRow)
+                    courseCodeRef = FormulaCellByHeader(oCourses, hCourses, cRow, "course_code")
+                    courseShortnameRef = FormulaCellByHeader(oCourses, hCourses, cRow, "shortname")
+                    academicYearRef = FormulaCellByHeader(oCourses, hCourses, cRow, "academic_year")
+                    boardCodeRef = FormulaCellByHeader(oCourses, hCourses, cRow, "board_code")
+                    schoolCodeRef = FormulaCellByHeader(oCourses, hCourses, cRow, "school_code")
+                    mediumCodeRef = FormulaCellByHeader(oCourses, hCourses, cRow, "medium_code")
+                    gradeCodeRef = FormulaCellByHeader(oCourses, hCourses, cRow, "grade_code")
+                    streamCodeRef = FormulaCellByHeader(oCourses, hCourses, cRow, "stream_code")
+                    divisionCodeRef = FormulaCellByHeader(oMatrix, hMatrix, mRow, "division_code")
+                    divisionNameRef = FormulaCellByHeader(oMatrix, hMatrix, mRow, "division_name")
+                    cohortCodeFormula = "=" & schoolCodeRef & "&" & FormulaText("-") & "&LEFT(" & academicYearRef & ";4)&" & FormulaText("-") & "&" & boardCodeRef & "&" & FormulaText("-") & "&" & mediumCodeRef & "&" & FormulaText("-") & "&" & gradeCodeRef & "&" & FormulaText("-") & "&" & streamCodeRef & "&" & FormulaText("-") & "&" & divisionCodeRef
+                    SetFormulaByHeader oTarget, hTarget, targetRow, "course_code", "=" & courseCodeRef
+                    SetFormulaByHeader oTarget, hTarget, targetRow, "course_shortname", "=" & courseShortnameRef
+                    SetFormulaByHeader oTarget, hTarget, targetRow, "cohort_code", cohortCodeFormula
+                    SetFormulaByHeader oTarget, hTarget, targetRow, "role_shortname", FormulaStaticText("student")
+                    SetFormulaByHeader oTarget, hTarget, targetRow, "group_name", "=" & divisionNameRef
+                    SetFormulaByHeader oTarget, hTarget, targetRow, "group_idnumber", "=" & courseCodeRef & "&" & FormulaText("-") & "&" & divisionCodeRef
+                    SetFormulaByHeader oTarget, hTarget, targetRow, "enrolment_method", FormulaStaticText("cohort_sync")
+                    SetFormulaByHeader oTarget, hTarget, targetRow, "status", FormulaStaticText("active")
+                    targetRow = targetRow + 1
+                    generatedRows = generatedRows + 1
+                End If
+            Next mRow
         End If
     Next cRow
     BuildEnrolmentsFromCourses = generatedRows
+End Function
+
+Function HasExactGradeDivisionMatrixMatch(oMatrix As Object, hMatrix As Long, academicYear As String, boardCode As String, mediumCode As String, gradeCode As String, streamCode As String) As Boolean
+    Dim mRow As Long
+    For mRow = hMatrix + 1 To LastUsedRow(oMatrix)
+        If GradeDivisionMatrixRowMatches(oMatrix, hMatrix, mRow, academicYear, boardCode, mediumCode, gradeCode, streamCode, False) Then
+            HasExactGradeDivisionMatrixMatch = True
+            Exit Function
+        End If
+    Next mRow
+    HasExactGradeDivisionMatrixMatch = False
+End Function
+
+Function GradeDivisionMatrixRowMatches(oMatrix As Object, hMatrix As Long, mRow As Long, academicYear As String, boardCode As String, mediumCode As String, gradeCode As String, streamCode As String, allowAnyYear As Boolean) As Boolean
+    Dim matrixYear As String, divisionCode As String, isActive As String
+
+    matrixYear = CellText(oMatrix, FindColumn(oMatrix, "academic_year", hMatrix), mRow)
+    divisionCode = CellText(oMatrix, FindColumn(oMatrix, "division_code", hMatrix), mRow)
+    isActive = CellText(oMatrix, FindColumn(oMatrix, "is_active", hMatrix), mRow)
+
+    GradeDivisionMatrixRowMatches = False
+    If divisionCode = "" Or Not IsActiveFlag(isActive) Then Exit Function
+    If Not allowAnyYear And matrixYear <> academicYear Then Exit Function
+    If allowAnyYear And matrixYear = "" Then Exit Function
+    If CellText(oMatrix, FindColumn(oMatrix, "board_code", hMatrix), mRow) <> boardCode Then Exit Function
+    If CellText(oMatrix, FindColumn(oMatrix, "medium_code", hMatrix), mRow) <> mediumCode Then Exit Function
+    If CellText(oMatrix, FindColumn(oMatrix, "grade_code", hMatrix), mRow) <> gradeCode Then Exit Function
+    If CellText(oMatrix, FindColumn(oMatrix, "stream_code", hMatrix), mRow) <> streamCode Then Exit Function
+
+    GradeDivisionMatrixRowMatches = True
+End Function
+
+Function IsActiveFlag(value As String) As Boolean
+    Dim normalized As String
+    normalized = LCase(Trim(value))
+    IsActiveFlag = (normalized = "1" Or normalized = "true" Or normalized = "yes")
 End Function
 
 Sub WriteCategory(oSheet As Object, headerRow As Long, rowIndex As Long, categoryCode As String, parentCode As String, categoryType As String, name As String, idnumber As String, pathText As String, visible As String, description As String)
@@ -1936,6 +2041,7 @@ Sub ClearGeneratedSheet(oDoc As Object, sheetName As String)
 End Sub
 
 Sub ClearAutomaticSheets(oDoc As Object)
+    ClearGeneratedSheet oDoc, "07_grade_division_matrix"
     ClearGeneratedSheet oDoc, "09_subject_matrix"
     ClearGeneratedSheet oDoc, "10_categories"
     ClearGeneratedSheet oDoc, "11_optional_categories"

@@ -13,6 +13,7 @@ const CONFIG = {
   studentSheet: '20_users_students',
   parentSheet: '21_users_parents',
   parentLinkSheet: '24_parent_links',
+  gradeDivisionMatrixSheet: '07_grade_division_matrix',
   errorSheet: '_intake_errors',
   auditSheet: '_intake_audit',
   headerRow: 5,
@@ -41,7 +42,7 @@ function onStudentRegistrationSubmit(e) {
   }
 
   try {
-    validateSubmission(data);
+    validateSubmission(ss, data);
     const result = createStudentParentRegistration(ss, data);
     logAudit(ss, data, result);
   } catch (err) {
@@ -384,7 +385,7 @@ function firstCode(value) {
   return String(value || '').split(' - ')[0].trim();
 }
 
-function validateSubmission(data) {
+function validateSubmission(ss, data) {
   required(data, [
     'student_firstname',
     'student_lastname',
@@ -433,14 +434,48 @@ function validateSubmission(data) {
   optionalRegex(data.mother_email, /^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'Mother email is invalid.');
   optionalRegex(data.guardian_email, /^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'Guardian email is invalid.');
 
-  const primaryGrades = ['STD01', 'STD02', 'STD03', 'STD04', 'STD05', 'STD06', 'STD07', 'STD08', 'STD09', 'STD10'];
-  const higherGrades = ['STD11', 'STD12'];
-  if (primaryGrades.includes(data.grade_code) && data.stream_code !== 'GEN') {
-    throw new Error('STD01 to STD10 must use stream GEN.');
+  const expectedStream = expectedStreamForGrade(data.grade_code);
+  if (expectedStream && data.stream_code !== expectedStream) {
+    throw new Error(`${data.grade_code} must use stream ${expectedStream}.`);
   }
-  if (higherGrades.includes(data.grade_code) && !['SCI', 'COM', 'ARTS'].includes(data.stream_code)) {
-    throw new Error('STD11 and STD12 must use SCI, COM, or ARTS.');
+
+  validateGradeDivisionPlacement(ss, data);
+}
+
+function expectedStreamForGrade(gradeCode) {
+  const grade = String(gradeCode || '');
+  if (/^PRE[0-9]{2}$/.test(grade) || /^STD0[1-9]$/.test(grade) || grade === 'STD10') {
+    return 'GEN';
   }
+  if (/^STD1[12]_SCI$/.test(grade)) return 'SCI';
+  if (/^STD1[12]_COM$/.test(grade)) return 'COM';
+  if (/^STD1[12]_ART$/.test(grade)) return 'ART';
+  return '';
+}
+
+function validateGradeDivisionPlacement(ss, data) {
+  const matrixSheet = ss.getSheetByName(CONFIG.gradeDivisionMatrixSheet);
+  if (!matrixSheet) {
+    throw new Error('Missing 07_grade_division_matrix tab. Run GenerateGradeDivisionMatrix before accepting student registrations.');
+  }
+  const rows = getRowsByHeader(matrixSheet);
+  const match = rows.some(row =>
+    String(row.academic_year || '') === data.academic_year &&
+    String(row.board_code || CONFIG.boardCode) === CONFIG.boardCode &&
+    String(row.medium_code || '') === data.medium_code &&
+    String(row.grade_code || '') === data.grade_code &&
+    String(row.stream_code || '') === data.stream_code &&
+    String(row.division_code || '') === data.division_code &&
+    isActiveValue(row.is_active)
+  );
+  if (!match) {
+    throw new Error(`Invalid grade/division placement: ${data.academic_year} ${CONFIG.boardCode} ${data.medium_code} ${data.grade_code} ${data.stream_code} ${data.division_code}. Update 07_grade_division_rules and rerun GenerateGradeDivisionMatrix if this division should be allowed.`);
+  }
+}
+
+function isActiveValue(value) {
+  const normalized = String(value || '').trim().toLowerCase();
+  return normalized === '1' || normalized === 'true' || normalized === 'yes';
 }
 
 function required(data, fields) {

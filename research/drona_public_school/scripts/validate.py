@@ -177,6 +177,7 @@ def validate_year(year):
     finals = rows(ydir / 'course_final_exams.csv')
     diksha_content = rows(ydir / 'diksha_content_template.csv')
     exam_terms = rows(ydir / 'exam_terms.csv')
+    grade_division_matrix = rows(ydir / 'grade_division_matrix.csv')
     matrix = rows(ydir / 'grade_subject_matrix.csv')
     holidays = rows(ydir / 'holidays.csv')
     promotion_actions = rows(ydir / 'promotion_actions.csv')
@@ -203,6 +204,7 @@ def validate_year(year):
         'diksha_content_template.csv': diksha_content,
         'enrolments.csv': enrolments,
         'exam_terms.csv': exam_terms,
+        'grade_division_matrix.csv': grade_division_matrix,
         'grade_subject_matrix.csv': matrix,
         'gradebook_weights.csv': gradebook_weights,
         'groups.csv': groups,
@@ -226,6 +228,7 @@ def validate_year(year):
     check_unique_key(errors, courses_upload, ['idnumber'], f'{year}/courses_with_templatecourse_for_moodle_upload.csv')
     check_unique(errors, cohorts, 'cohort_code', f'{year}/cohorts.csv')
     check_unique_key(errors, diksha_content, ['board_code', 'medium_code', 'grade_code', 'stream_code', 'subject_code', 'chapter', 'title'], f'{year}/diksha_content_template.csv', required=False)
+    check_unique_key(errors, grade_division_matrix, ['academic_year', 'board_code', 'medium_code', 'grade_code', 'stream_code', 'division_code'], f'{year}/grade_division_matrix.csv')
     check_unique_key(errors, matrix, ['board_code', 'medium_code', 'grade_code', 'stream_code', 'subject_code'], f'{year}/grade_subject_matrix.csv')
     check_unique_key(errors, exam_terms, ['academic_year', 'term_code'], f'{year}/exam_terms.csv')
     check_unique_key(errors, groups, ['group_idnumber'], f'{year}/groups.csv')
@@ -245,6 +248,20 @@ def validate_year(year):
     course_by_code = {r['course_code']: r for r in courses}
     grade_by_code = {r['grade_code']: r for r in rows(PACK / 'master' / 'grades.csv')}
     cohort_codes = {r['cohort_code'] for r in cohorts}
+    active_division_keys = {
+        (
+            r.get('academic_year', ''),
+            r.get('board_code', ''),
+            r.get('medium_code', ''),
+            r.get('grade_code', ''),
+            r.get('stream_code', ''),
+            r.get('division_code', ''),
+        )
+        for r in grade_division_matrix
+        if r.get('is_active', '1') in {'1', 'yes', 'YES', 'true', 'TRUE'}
+    }
+    groups_by_id = {r.get('group_idnumber', ''): r for r in groups}
+    cohorts_by_code = {r.get('cohort_code', ''): r for r in cohorts}
     cert_codes = {r['course_code'] for r in certs if r.get('certificate_enabled') == '1'}
     if cert_codes != course_codes:
         fail(errors, f'{year}: certificate rows do not match course rows. missing={len(course_codes-cert_codes)} extra={len(cert_codes-course_codes)}')
@@ -266,6 +283,36 @@ def validate_year(year):
             fail(errors, f'{year}: enrolment references missing course {e["course_code"]}')
         if e['cohort_code'] not in cohort_codes:
             fail(errors, f'{year}: enrolment references missing cohort {e["cohort_code"]}')
+        if e.get('group_idnumber') not in groups_by_id:
+            fail(errors, f'{year}: enrolment references missing group {e.get("group_idnumber")}')
+    for cohort in cohorts:
+        key = (
+            cohort.get('academic_year', ''),
+            cohort.get('board_code', ''),
+            cohort.get('medium_code', ''),
+            cohort.get('grade_code', ''),
+            cohort.get('stream_code', ''),
+            cohort.get('division_code', ''),
+        )
+        if active_division_keys and key not in active_division_keys:
+            fail(errors, f'{year}: cohort {cohort.get("cohort_code")} is outside 07_grade_division_matrix')
+    for group in groups:
+        course = course_by_code.get(group.get('course_code', ''), {})
+        key = (
+            course.get('academic_year', ''),
+            group.get('board_code', ''),
+            group.get('medium_code', ''),
+            group.get('grade_code', ''),
+            group.get('stream_code', ''),
+            group.get('division_code', ''),
+        )
+        if active_division_keys and key not in active_division_keys:
+            fail(errors, f'{year}: group {group.get("group_idnumber")} is outside 07_grade_division_matrix')
+    for enrolment in enrolments:
+        group = groups_by_id.get(enrolment.get('group_idnumber', ''), {})
+        cohort = cohorts_by_code.get(enrolment.get('cohort_code', ''), {})
+        if group and cohort and group.get('division_code') != cohort.get('division_code'):
+            fail(errors, f'{year}: enrolment {enrolment.get("group_idnumber")} division does not match cohort {enrolment.get("cohort_code")}')
     if not out.exists():
         fail(errors, f'Missing assembled output. Run scripts/assemble.py --year {year}')
     return errors

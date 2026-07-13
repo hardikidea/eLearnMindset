@@ -26,6 +26,7 @@ Google Sheets target tabs:
 | Teacher Moodle user | `19_users_staff` | `registration/combined/19_users_staff.csv` |
 | Teacher Moodle access | `23_role_assignments` | `years/<academic-year>/role_assignments.csv` |
 | Course matching source | `12_courses` | `years/<academic-year>/courses.csv` |
+| Grade/division validation source | `07_grade_division_matrix` | `years/<academic-year>/grade_division_matrix.csv` |
 
 Rows 1 to 6 in the master workbook sheets are metadata, contract, formula, header, and example rows. Apps Script writes real records from row 7 onward.
 
@@ -43,6 +44,7 @@ Confirm these tabs exist:
 12_courses
 19_users_staff
 23_role_assignments
+07_grade_division_matrix
 ```
 
 Optional audit tabs are created automatically by the script:
@@ -154,7 +156,10 @@ Academic assignment rules:
 ```text
 STD01 to STD10 must use GEN.
 Use STD11_SCI/STD12_SCI with SCI, STD11_COM/STD12_COM with COM, and STD11_ART/STD12_ART with ART.
+Teacher access is course-level. Class divisions are generated as Moodle groups from 07_grade_division_matrix.
 ```
+
+Before accepting teacher registrations for a new year, run `GenerateGradeDivisionMatrix` and `GenerateCourses`. The Apps Script checks that selected academic year, medium, grade, and stream combinations have active rows in `07_grade_division_matrix` before it creates course role assignments.
 
 Subject options:
 
@@ -345,6 +350,7 @@ The script writes to the current workbook tabs:
 | `19_users_staff` | 5 | 7 | `registration/combined/19_users_staff.csv` |
 | `23_role_assignments` | 5 | 7 | `years/<academic-year>/role_assignments.csv` |
 | `12_courses` | 5 | 7 | Source only; do not export from teacher form workflow |
+| `07_grade_division_matrix` | 5 | 7 | Source only; generated validation source |
 
 Do not use older tab names such as `23_users_staff`, `27_role_assignments`, or `16_courses`. Those names are from an older workbook structure and will not match the current master pack.
 
@@ -406,6 +412,7 @@ Before CSV export, verify these relationships:
 | `role_shortname` is a valid Moodle role, usually `editingteacher` or `teacher` | Required |
 | `STD01` to `STD10` use stream `GEN` | Required |
 | Higher-secondary grade and stream pairs match canonical codes: `STD11_SCI`/`STD12_SCI` with `SCI`, `STD11_COM`/`STD12_COM` with `COM`, and `STD11_ART`/`STD12_ART` with `ART` | Required |
+| Selected academic year, medium, grade, and stream has active rows in `07_grade_division_matrix` | Required |
 | At least one matching course exists for the selected academic year, medium, grade, stream, and subject combination | Required |
 
 The script performs basic validation during form submission. The CLI pack validation must still be run before import because it checks cross-file relationships against generated courses and Moodle role rules.
@@ -533,7 +540,7 @@ Example:
 
 ```text
 Medium: ENG
-Grades to teach: STD11, STD12
+Grades to teach: STD11_SCI, STD12_SCI
 Streams to teach: SCI
 Subjects to teach: PHY, CHEM
 ```

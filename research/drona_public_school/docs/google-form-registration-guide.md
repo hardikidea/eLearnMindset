@@ -31,6 +31,7 @@ Google Sheets target tabs:
 | Student Moodle user | `20_users_students` | `registration/combined/20_users_students.csv` |
 | Parent Moodle user | `21_users_parents` | `registration/combined/21_users_parents.csv` |
 | Parent-student link | `24_parent_links` | `registration/parent_links.csv` |
+| Grade/division validation source | `07_grade_division_matrix` | `years/<academic-year>/grade_division_matrix.csv` |
 | Optional sibling links | Dedicated/manual sheet or CSV edit | `registration/sibling_links.csv` |
 | Optional emergency contacts | Dedicated/manual sheet or CSV edit | `registration/emergency_contacts.csv` |
 | Optional health records | Dedicated/manual sheet or CSV edit | `registration/student_health.csv` |
@@ -55,6 +56,7 @@ School Master Pack - Registration Intake
 20_users_students
 21_users_parents
 24_parent_links
+07_grade_division_matrix
 ```
 
 5. Create two optional audit tabs if you want to see failures and successful generated accounts:
@@ -143,7 +145,7 @@ Select the current academic placement. These values must match the school master
 | Medium | Dropdown | Yes | GUJ - Gujarati Medium, ENG - English Medium, HIN - Hindi Medium |
 | Grade | Dropdown | Yes | PRE01, PRE02, STD01-STD10, STD11_SCI, STD11_COM, STD11_ART, STD12_SCI, STD12_COM, STD12_ART |
 | Stream | Dropdown | Yes | GEN - General, SCI - Pure Sciences, COM - Commerce & Biz, ART - Humanities & Arts |
-| Division | Dropdown | Yes | A - Division A through F - Division F |
+| Division | Dropdown | Yes | Use only divisions allowed by `07_grade_division_matrix` for the selected academic year, board, medium, grade, and stream |
 | Admission date | Date | Yes | Official admission date |
 | Roll number | Short answer | No | Leave blank if school will assign later |
 | House | Dropdown | No | ARYA - Aryabhatta House, TAG - Tagore House, GAN - Gandhi House, RAM - Raman House |
@@ -154,6 +156,22 @@ Academic rule:
 STD01 to STD10 must use GEN.
 Use STD11_SCI/STD12_SCI with SCI, STD11_COM/STD12_COM with COM, and STD11_ART/STD12_ART with ART.
 ```
+
+Division rule:
+
+```text
+Do not offer every division globally. `07_divisions` only defines possible labels; `07_grade_division_rules` defines the allowed divisions, and `07_grade_division_matrix` is the generated validation source.
+```
+
+Example:
+
+| Grade/stream | Allowed divisions in form |
+|---|---|
+| STD01 + GEN | A, B, C, D if `07_grade_division_rules.division_codes=A|B|C|D` |
+| STD02 + GEN | A, B, C if `07_grade_division_rules.division_codes=A|B|C` |
+| STD03 + GEN | A only if `07_grade_division_rules.division_codes=A` |
+
+If the school changes division allocation, update `07_grade_division_rules`, run `GenerateGradeDivisionMatrix`, and refresh the Google Form division dropdown choices before accepting new submissions.
 
 ### Section 3: Student IDs
 
@@ -520,7 +538,7 @@ Before CSV export, verify these relationships:
 | Every new student row in `20_users_students` has a matching `student_username` in `24_parent_links` | Required |
 | Every `parent_username` in `24_parent_links` exists in `21_users_parents` | Required |
 | `20_users_students.cohort1` matches an existing generated cohort in `14_cohorts` | Required before Moodle import |
-| `medium_code`, `grade_code`, `stream_code`, and `division_code` use values from master sheets | Required |
+| `medium_code`, `grade_code`, `stream_code`, and `division_code` match an active row in `07_grade_division_matrix` | Required |
 | `STD01` to `STD10` use stream `GEN` | Required |
 | Higher-secondary grade and stream pairs match canonical codes: `STD11_SCI`/`STD12_SCI` with `SCI`, `STD11_COM`/`STD12_COM` with `COM`, and `STD11_ART`/`STD12_ART` with `ART` | Required |
 

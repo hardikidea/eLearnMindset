@@ -7,7 +7,9 @@ import re
 from collections import defaultdict
 from pathlib import Path
 
-from common import PACK_ROOT, applies_token_matches, stream_applies_to_grade
+from common import PACK_ROOT, applies_token_matches, split_applies_to, stream_applies_to_grade
+
+ACTIVE_TRUE_VALUES = {"1", "yes", "YES", "true", "TRUE"}
 
 
 def read_rows(path: Path) -> list[dict[str, str]]:
@@ -193,6 +195,98 @@ def build_lookup_values(
     for row in rows:
         deduped.setdefault((row["lookup_type"], row["code"]), row)
     return [deduped[key] for key in sorted(deduped)]
+
+
+def active_division_codes(divisions: list[dict[str, str]]) -> list[str]:
+    return [
+        row.get("division_code", "")
+        for row in sorted(divisions, key=lambda item: int(item.get("display_order", "0") or "0"))
+        if row.get("division_code")
+    ]
+
+
+def rule_key(row: dict[str, str]) -> tuple[str, str, str, str, str]:
+    return (
+        row.get("academic_year", ""),
+        row.get("board_code", ""),
+        row.get("medium_code", ""),
+        row.get("grade_code", ""),
+        row.get("stream_code", ""),
+    )
+
+
+def build_grade_division_rules(
+    year: str,
+    matrix: list[dict[str, str]],
+    divisions: list[dict[str, str]],
+    existing_rules: list[dict[str, str]],
+) -> list[dict[str, str]]:
+    """Preserve configured rules and add defaults for new grade/stream combinations."""
+    default_divisions = "|".join(active_division_codes(divisions))
+    existing_by_key = {rule_key(row): row for row in existing_rules if all(rule_key(row))}
+    preserved_rules = [row for row in existing_rules if row.get("academic_year") and row.get("academic_year") != year]
+    combinations = sorted({
+        (
+            year,
+            row.get("board_code", ""),
+            row.get("medium_code", ""),
+            row.get("grade_code", ""),
+            row.get("stream_code", ""),
+        )
+        for row in matrix
+        if row.get("board_code") and row.get("medium_code") and row.get("grade_code") and row.get("stream_code")
+    })
+
+    rows: list[dict[str, str]] = []
+    for key in combinations:
+        existing = existing_by_key.get(key, {})
+        rows.append({
+            "academic_year": key[0],
+            "board_code": key[1],
+            "medium_code": key[2],
+            "grade_code": key[3],
+            "stream_code": key[4],
+            "division_codes": existing.get("division_codes") or default_divisions,
+            "capacity": existing.get("capacity") or "40",
+            "is_active": existing.get("is_active") or "1",
+            "notes": existing.get("notes") or "Default from active division master; edit division_codes to scope this grade.",
+        })
+    return preserved_rules + rows
+
+
+def build_grade_division_matrix(
+    rules: list[dict[str, str]],
+    divisions: list[dict[str, str]],
+) -> list[dict[str, str]]:
+    division_map = {row.get("division_code", ""): row for row in divisions if row.get("division_code")}
+    rows: list[dict[str, str]] = []
+    seen: set[tuple[str, str, str, str, str, str]] = set()
+    for rule in rules:
+        if rule.get("is_active", "1") not in {"1", "yes", "YES", "true", "TRUE"}:
+            continue
+        source_key = "-".join(rule_key(rule))
+        for division_code in split_applies_to(rule.get("division_codes", "")):
+            if division_code not in division_map:
+                continue
+            key = (*rule_key(rule), division_code)
+            if key in seen:
+                continue
+            seen.add(key)
+            division = division_map[division_code]
+            rows.append({
+                "academic_year": rule.get("academic_year", ""),
+                "board_code": rule.get("board_code", ""),
+                "medium_code": rule.get("medium_code", ""),
+                "grade_code": rule.get("grade_code", ""),
+                "stream_code": rule.get("stream_code", ""),
+                "division_code": division_code,
+                "division_name": division.get("division_name", division_code),
+                "capacity": rule.get("capacity", ""),
+                "is_active": rule.get("is_active", "1"),
+                "source_rule_key": source_key,
+                "notes": rule.get("notes", ""),
+            })
+    return rows
 
 
 SUBJECT_POLICIES = {
@@ -842,50 +936,74 @@ def build_cohorts(
     school: dict[str, str],
     mediums: list[dict[str, str]],
     grades: list[dict[str, str]],
-    divisions: list[dict[str, str]],
-    matrix: list[dict[str, str]],
+    grade_division_matrix: list[dict[str, str]],
 ) -> list[dict[str, str]]:
     trust = school.get("trust_code", "")
     school_code = school.get("school_code", "")
     medium_map = {row["medium_code"]: row for row in mediums if row.get("medium_code")}
     grade_map = {row["grade_code"]: row for row in grades if row.get("grade_code")}
-    combinations = sorted({(r["board_code"], r["medium_code"], r["grade_code"], r["stream_code"]) for r in matrix})
     rows: list[dict[str, str]] = []
-    for board, medium, grade, stream in combinations:
+    for item in sorted(
+        grade_division_matrix,
+        key=lambda row: (
+            row.get("board_code", ""),
+            row.get("medium_code", ""),
+            display_order(grade_map.get(row.get("grade_code", ""), {})),
+            row.get("stream_code", ""),
+            row.get("division_code", ""),
+        ),
+    ):
+        if item.get("academic_year") != year or item.get("is_active", "1") not in ACTIVE_TRUE_VALUES:
+            continue
+        board = item.get("board_code", "")
+        medium = item.get("medium_code", "")
+        grade = item.get("grade_code", "")
+        stream = item.get("stream_code", "")
+        division_code = item.get("division_code", "")
+        if not all([board, medium, grade, stream, division_code]):
+            continue
         medium_name = medium_map.get(medium, {}).get("medium_name", medium)
         grade_name = grade_map.get(grade, {}).get("grade_name", grade)
         context = make_stream_category(trust, board, school_code, year, medium, grade, stream)
-        for division in divisions:
-            division_code = division.get("division_code", "")
-            if not division_code:
-                continue
-            code = make_cohort_code(school_code, year, board, medium, grade, stream, division_code)
-            division_name = division.get("division_name", division_code)
-            rows.append({
-                "cohort_code": code,
-                "name": f"{school_code} {year} {medium_name} {grade_name} {stream} {division_name}",
-                "idnumber": code,
-                "context_category_code": context,
-                "board_code": board,
-                "school_code": school_code,
-                "medium_code": medium,
-                "grade_code": grade,
-                "stream_code": stream,
-                "division_code": division_code,
-                "academic_year": year,
-                "visible": "1",
-                "description": f"Student cohort for {grade_name} {stream} {division_name} in {year}.",
-            })
+        code = make_cohort_code(school_code, year, board, medium, grade, stream, division_code)
+        division_name = item.get("division_name", division_code)
+        rows.append({
+            "cohort_code": code,
+            "name": f"{school_code} {year} {medium_name} {grade_name} {stream} {division_name}",
+            "idnumber": code,
+            "context_category_code": context,
+            "board_code": board,
+            "school_code": school_code,
+            "medium_code": medium,
+            "grade_code": grade,
+            "stream_code": stream,
+            "division_code": division_code,
+            "academic_year": year,
+            "visible": "1",
+            "description": f"Student cohort for {grade_name} {stream} {division_name} in {year}.",
+        })
     return rows
 
 
-def build_groups(courses: list[dict[str, str]], divisions: list[dict[str, str]]) -> list[dict[str, str]]:
+def division_rows_for_course(course: dict[str, str], grade_division_matrix: list[dict[str, str]]) -> list[dict[str, str]]:
+    return [
+        row
+        for row in grade_division_matrix
+        if row.get("academic_year") == course.get("academic_year")
+        and row.get("board_code") == course.get("board_code")
+        and row.get("medium_code") == course.get("medium_code")
+        and row.get("grade_code") == course.get("grade_code")
+        and row.get("stream_code") == course.get("stream_code")
+        and row.get("division_code")
+        and row.get("is_active", "1") in ACTIVE_TRUE_VALUES
+    ]
+
+
+def build_groups(courses: list[dict[str, str]], grade_division_matrix: list[dict[str, str]]) -> list[dict[str, str]]:
     rows = []
     for course in courses:
-        for division in divisions:
+        for division in division_rows_for_course(course, grade_division_matrix):
             division_code = division.get("division_code", "")
-            if not division_code:
-                continue
             group_name = f"Division {division_code}"
             group_id = f"{course['course_code']}-{division_code}"
             rows.append({
@@ -904,18 +1022,16 @@ def build_groups(courses: list[dict[str, str]], divisions: list[dict[str, str]])
     return rows
 
 
-def build_enrolments(year: str, courses: list[dict[str, str]], divisions: list[dict[str, str]]) -> list[dict[str, str]]:
+def build_enrolments(courses: list[dict[str, str]], grade_division_matrix: list[dict[str, str]]) -> list[dict[str, str]]:
     rows = []
     for course in courses:
-        for division in divisions:
+        for division in division_rows_for_course(course, grade_division_matrix):
             division_code = division.get("division_code", "")
-            if not division_code:
-                continue
             group_name = f"Division {division_code}"
             rows.append({
                 "course_code": course["course_code"],
                 "course_shortname": course["shortname"],
-                "cohort_code": make_cohort_code(course["school_code"], year, course["board_code"], course["medium_code"], course["grade_code"], course["stream_code"], division_code),
+                "cohort_code": make_cohort_code(course["school_code"], course["academic_year"], course["board_code"], course["medium_code"], course["grade_code"], course["stream_code"], division_code),
                 "role_shortname": "student",
                 "group_name": group_name,
                 "group_idnumber": f"{course['course_code']}-{division_code}",
@@ -1157,6 +1273,7 @@ def main() -> None:
     grades = read_rows(master / "grades.csv")
     streams = read_rows(master / "streams.csv")
     divisions = read_rows(master / "divisions.csv")
+    existing_division_rules = read_rows(master / "grade_division_rules.csv")
     subjects = patch_subject_scopes(read_rows(master / "subjects.csv"))
     statuses = read_rows(operations / "promotion_status_codes.csv")
     grade_bands = read_rows(root / "templates" / "legacy" / "34_grade_band_template_adjustments.csv")
@@ -1234,6 +1351,25 @@ def main() -> None:
         build_content_template(args.year, school, boards, mediums, grades, matrix),
     )
 
+    grade_division_rules = build_grade_division_rules(args.year, matrix, divisions, existing_division_rules)
+    grade_division_matrix = build_grade_division_matrix(grade_division_rules, divisions)
+    write_rows(
+        master / "grade_division_rules.csv",
+        [
+            "academic_year", "board_code", "medium_code", "grade_code", "stream_code",
+            "division_codes", "capacity", "is_active", "notes",
+        ],
+        grade_division_rules,
+    )
+    write_rows(
+        year_dir / "grade_division_matrix.csv",
+        [
+            "academic_year", "board_code", "medium_code", "grade_code", "stream_code",
+            "division_code", "division_name", "capacity", "is_active", "source_rule_key", "notes",
+        ],
+        [row for row in grade_division_matrix if row.get("academic_year") == args.year],
+    )
+
     categories = build_categories(args.year, school, boards, mediums, grades, streams, matrix)
     courses = build_courses(args.year, school, boards, mediums, grades, grade_bands, matrix)
     write_rows(
@@ -1266,7 +1402,7 @@ def main() -> None:
             "cohort_code", "name", "idnumber", "context_category_code", "board_code", "school_code",
             "medium_code", "grade_code", "stream_code", "division_code", "academic_year", "visible", "description",
         ],
-        build_cohorts(args.year, school, mediums, grades, divisions, matrix),
+        build_cohorts(args.year, school, mediums, grades, grade_division_matrix),
     )
     write_rows(
         year_dir / "groups.csv",
@@ -1274,12 +1410,12 @@ def main() -> None:
             "course_code", "course_shortname", "group_name", "group_idnumber", "board_code", "school_code",
             "medium_code", "grade_code", "stream_code", "division_code", "description",
         ],
-        build_groups(courses, divisions),
+        build_groups(courses, grade_division_matrix),
     )
     write_rows(
         year_dir / "enrolments.csv",
         ["course_code", "course_shortname", "cohort_code", "role_shortname", "group_name", "group_idnumber", "enrolment_method", "status"],
-        build_enrolments(args.year, courses, divisions),
+        build_enrolments(courses, grade_division_matrix),
     )
     write_rows(
         year_dir / "role_assignments.csv",
@@ -1361,9 +1497,11 @@ def main() -> None:
     print(f"- lookup values: {len(build_lookup_values(years, boards, mediums, grades, streams, divisions, subjects, statuses))}")
     print(f"- subject adjustments: {len(build_subject_adjustments(subjects))}")
     print(f"- promotion rules: {len(build_promotion_rules(grades, streams))}")
+    print(f"- grade division rules: {len(grade_division_rules)}")
+    print(f"- grade division matrix rows: {len([row for row in grade_division_matrix if row.get('academic_year') == args.year])}")
     print(f"- content template rows: {len(matrix)}")
     print(f"- courses: {len(courses)}")
-    print(f"- course groups: {len(courses) * len(divisions)}")
+    print(f"- course groups: {len(build_groups(courses, grade_division_matrix))}")
 
 
 if __name__ == "__main__":

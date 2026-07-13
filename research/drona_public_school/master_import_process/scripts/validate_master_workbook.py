@@ -41,6 +41,8 @@ REQUIRED_SHEETS = [
     "05_grades",
     "06_streams",
     "07_divisions",
+    "07_grade_division_rules",
+    "07_grade_division_matrix",
     "08_subjects",
     "09_subject_matrix",
     "10_categories",
@@ -157,10 +159,10 @@ def check_status_sheet(errors: list[str], workbook) -> None:
     types = [str(ws.cell(row, 1).value or "") for row in range(7, ws.max_row + 1)]
     automatic = types.count("automatic")
     manual = types.count("manual")
-    if automatic != 27:
-        fail(errors, f"status sheet automatic row count mismatch: {automatic} != 27")
-    if manual != 41:
-        fail(errors, f"status sheet manual row count mismatch: {manual} != 41")
+    if automatic != 28:
+        fail(errors, f"status sheet automatic row count mismatch: {automatic} != 28")
+    if manual != 42:
+        fail(errors, f"status sheet manual row count mismatch: {manual} != 42")
     actions = " ".join(str(ws.cell(row, 5).value or "") for row in range(2, min(ws.max_row, 12) + 1))
     if "vnd.sun.star.script" in actions or "Standard.MatrixTools" in actions:
         fail(errors, "xlsx status sheet must not contain document macro hyperlinks; use the .ods macro workbook")
@@ -202,8 +204,8 @@ def check_macro_alignment(errors: list[str], workbook) -> None:
     targets = targets_match.group(1).split(", ")
     if len(macros) != len(targets):
         fail(errors, f"macro/target count mismatch: {len(macros)} != {len(targets)}")
-    if len(macros) != 27:
-        fail(errors, f"expected 27 individual macros, found {len(macros)}")
+    if len(macros) != 28:
+        fail(errors, f"expected 28 individual macros, found {len(macros)}")
 
     missing_subs = [macro for macro in macros if f"Sub {macro}" not in macro_source]
     missing_docs = [macro for macro in macros if f"`{macro}`" not in readme]
@@ -245,6 +247,7 @@ def check_ods_package(errors: list[str], ods_path: Path) -> None:
             "RefreshStatus",
             "ClearAutomaticData",
             "ResetAutomaticData",
+            "GenerateGradeDivisionMatrix",
             "GenerateSummary",
             "GenerateRolloverChecklist",
             "GenerateOptionalYearCategoryModel",
@@ -327,8 +330,8 @@ def main() -> int:
 
     workbook = load_workbook(args.xlsx, read_only=False, data_only=False)
     print(f"OK workbook opens: {len(workbook.sheetnames)} sheets")
-    if len(workbook.sheetnames) != 75:
-        fail(errors, f"expected 75 sheets, found {len(workbook.sheetnames)}")
+    if len(workbook.sheetnames) != 77:
+        fail(errors, f"expected 77 sheets, found {len(workbook.sheetnames)}")
     if len(workbook.sheetnames) != len(set(workbook.sheetnames)):
         fail(errors, "duplicate sheet names found")
     if any(len(name) > 31 for name in workbook.sheetnames):

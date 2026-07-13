@@ -28,6 +28,8 @@ SOURCE_FILES = [
     {"sheet": "05_grades", "source": "master/grades.csv", "ordered": "05_grades.csv", "purpose": "Grade master", "required": True},
     {"sheet": "06_streams", "source": "master/streams.csv", "ordered": "06_streams.csv", "purpose": "Stream master", "required": True},
     {"sheet": "07_divisions", "source": "master/divisions.csv", "ordered": "07_divisions.csv", "purpose": "Division master", "required": True},
+    {"sheet": "07_grade_division_rules", "source": "master/grade_division_rules.csv", "ordered": "07_grade_division_rules.csv", "purpose": "Grade-specific division allocation rules", "required": True},
+    {"sheet": "07_grade_division_matrix", "source": "years/{year}/grade_division_matrix.csv", "ordered": "07_grade_division_matrix.csv", "purpose": "Expanded grade, stream and division matrix", "required": True},
     {"sheet": "08_subjects", "source": "master/subjects.csv", "ordered": "08_subjects.csv", "purpose": "Subject master", "required": True},
     {"sheet": "09_subject_matrix", "source": "years/{year}/grade_subject_matrix.csv", "ordered": "09_grade_subject_matrix.csv", "purpose": "Grade, stream and subject matrix", "required": True},
     {"sheet": "10_categories", "source": "years/{year}/categories.csv", "ordered": "10_categories.csv", "purpose": "Moodle category tree", "required": True},

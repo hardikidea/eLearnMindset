@@ -11,6 +11,7 @@ const CONFIG = {
   staffSheet: '19_users_staff',
   roleAssignmentSheet: '23_role_assignments',
   coursesSheet: '12_courses',
+  gradeDivisionMatrixSheet: '07_grade_division_matrix',
   errorSheet: '_teacher_intake_errors',
   auditSheet: '_teacher_intake_audit',
   headerRow: 5,
@@ -40,6 +41,7 @@ function onTeacherRegistrationSubmit(e) {
 
   try {
     validateTeacherSubmission(data);
+    validateTeacherGradeDivisionScope(ss, data);
     const result = createTeacherRegistration(ss, data);
     logAudit(ss, data, result);
   } catch (err) {
@@ -270,14 +272,62 @@ function validateTeacherSubmission(data) {
   optionalRegex(data.submitted_by_mobile, /^[6-9][0-9]{9}$/, 'Submitted-by mobile must be a valid 10 digit Indian mobile number.');
   optionalRegex(data.teacher_aadhaar_last4, /^[0-9]{4}$/, 'Teacher Aadhaar last 4 must be 4 digits.');
 
+  validateGradeStreamPairs(splitMulti(data.grade_codes), splitMulti(data.stream_codes));
+}
+
+function validateGradeStreamPairs(grades, streams) {
+  grades.forEach(grade => {
+    const expected = expectedStreamForGrade(grade);
+    if (expected && !streams.includes(expected)) {
+      throw new Error(`${grade} must use stream ${expected}.`);
+    }
+  });
+}
+
+function expectedStreamForGrade(gradeCode) {
+  const grade = String(gradeCode || '');
+  if (/^PRE[0-9]{2}$/.test(grade) || /^STD0[1-9]$/.test(grade) || grade === 'STD10') {
+    return 'GEN';
+  }
+  if (/^STD1[12]_SCI$/.test(grade)) return 'SCI';
+  if (/^STD1[12]_COM$/.test(grade)) return 'COM';
+  if (/^STD1[12]_ART$/.test(grade)) return 'ART';
+  return '';
+}
+
+function validateTeacherGradeDivisionScope(ss, data) {
+  const matrixSheet = ss.getSheetByName(CONFIG.gradeDivisionMatrixSheet);
+  if (!matrixSheet) {
+    throw new Error('Missing 07_grade_division_matrix tab. Run GenerateGradeDivisionMatrix before accepting teacher registrations.');
+  }
+  const rows = getRowsByHeader(matrixSheet);
   const grades = splitMulti(data.grade_codes);
   const streams = splitMulti(data.stream_codes);
-  if (grades.some(grade => /^STD0[1-9]$/.test(grade) || grade === 'STD10') && streams.some(stream => stream !== 'GEN')) {
-    throw new Error('STD01 to STD10 teacher assignments must use GEN stream.');
-  }
-  if (grades.some(grade => grade === 'STD11' || grade === 'STD12') && streams.some(stream => !['SCI', 'COM', 'ARTS'].includes(stream))) {
-    throw new Error('STD11 and STD12 teacher assignments must use SCI, COM, or ARTS.');
-  }
+
+  grades.forEach(grade => {
+    streams.forEach(stream => {
+      const expected = expectedStreamForGrade(grade);
+      if (expected && stream !== expected) {
+        return;
+      }
+      const match = rows.some(row =>
+        String(row.academic_year || '') === data.academic_year &&
+        String(row.board_code || CONFIG.boardCode) === CONFIG.boardCode &&
+        String(row.medium_code || '') === data.medium_code &&
+        String(row.grade_code || '') === grade &&
+        String(row.stream_code || '') === stream &&
+        isActiveValue(row.is_active)
+      );
+      if (!match) {
+        throw new Error(`No active grade/division matrix rows found for ${data.academic_year} ${CONFIG.boardCode} ${data.medium_code} ${grade} ${stream}. Update 07_grade_division_rules and rerun GenerateGradeDivisionMatrix if teachers should be assigned here.`);
+      }
+    });
+  });
+}
+
+function isActiveValue(value) {
+  const normalized = String(value || '').trim().toLowerCase();
+  return normalized === '1' || normalized === 'true' || normalized === 'yes';
 }
 
 function required(data, fields) {

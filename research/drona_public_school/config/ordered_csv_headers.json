@@ -56,6 +56,30 @@
     "division_name",
     "display_order"
   ],
+  "07_grade_division_rules.csv": [
+    "academic_year",
+    "board_code",
+    "medium_code",
+    "grade_code",
+    "stream_code",
+    "division_codes",
+    "capacity",
+    "is_active",
+    "notes"
+  ],
+  "07_grade_division_matrix.csv": [
+    "academic_year",
+    "board_code",
+    "medium_code",
+    "grade_code",
+    "stream_code",
+    "division_code",
+    "division_name",
+    "capacity",
+    "is_active",
+    "source_rule_key",
+    "notes"
+  ],
   "08_subjects.csv": [
     "subject_code",
     "subject_name",

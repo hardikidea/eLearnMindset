@@ -41,6 +41,7 @@ DATA_START_ROW = 6
 
 
 AUTOMATIC_SHEETS = {
+    "07_grade_division_matrix",
     "09_subject_matrix",
     "10_categories",
     "11_optional_categories",
@@ -72,6 +73,7 @@ AUTOMATIC_SHEETS = {
 
 
 AUTOMATIC_MACROS = {
+    "07_grade_division_matrix": "GenerateGradeDivisionMatrix",
     "09_subject_matrix": "GenerateGradeSubjectMatrix",
     "10_categories": "GenerateCategories",
     "11_optional_categories": "GenerateOptionalYearCategoryModel",
@@ -103,6 +105,7 @@ AUTOMATIC_MACROS = {
 
 
 ID_PATTERNS = {
+    "07_grade_division_matrix": "<ACADEMIC_YEAR>-<BOARD_CODE>-<MEDIUM_CODE>-<GRADE_CODE>-<STREAM_CODE>-<DIVISION_CODE>",
     "09_subject_matrix": "<BOARD_CODE>-<MEDIUM_CODE>-<GRADE_CODE>-<STREAM_CODE>-<SUBJECT_CODE>",
     "10_categories": "<TRUST_CODE>_<BOARD_CODE>_<SCHOOL_CODE>_<YYYY_YYYY>_<MEDIUM_CODE>_<GRADE_CODE>_<STREAM_CODE>",
     "11_optional_categories": "<TRUST_CODE>_<BOARD_CODE>_<SCHOOL_CODE>_<YYYY_YYYY>_<MEDIUM_CODE>_<GRADE_CODE>_<STREAM_CODE>",
@@ -148,10 +151,10 @@ def add_macro_guide_sheet(xlsx_path: Path) -> None:
         ["LibreOffice macro guide", "", ""],
         ["Macro module", "Standard.MatrixTools", ""],
         ["Main macro", "GenerateAllDerivedSheets", ""],
-        ["Individual macros", "GenerateGradeSubjectMatrix, GenerateCategories, GenerateCourses, GenerateCoursesWithTemplateUpload, GenerateCohorts, GenerateGroups, GenerateCohortMembers, GenerateEnrolments, GenerateSummary, GenerateCourseTemplateApplication, GenerateRolloverChecklist, GenerateCourseCertificates, GenerateCourseFinalExams, GenerateCourseTermExams, GenerateGradebookWeights, GenerateOptionalYearCategoryModel, GenerateStudentAcademicHistory, GenerateStudentPromotionPlan, GenerateAssessmentPlan, GenerateAttendancePolicy, GenerateNextYearCourses, GenerateNextYearCohorts, GenerateNextYearGroups, GenerateNextYearEnrolments, GenerateAlumniCohorts, GenerateArchivePolicy, GenerateCompatibilityMatrix", ""],
-        ["Derived target sheets", "09_subject_matrix, 10_categories, 11_optional_categories, 12_courses, 13_courses_upload, 14_cohorts, 15_groups, 22_cohort_members, 25_enrolments, 29_summary, 37_template_application, 46_rollover_checklist, 51_academic_history, 52_promotion_plan, assessment_plan, attendance_policy, course_certificates, course_final_exams, course_term_exams, gradebook_weights, 54_next_year_courses, 55_next_year_cohorts, 56_next_year_groups, 57_next_year_enrolments, 58_alumni_cohorts, 59_archive_policy, 61_compatibility", ""],
+        ["Individual macros", "GenerateGradeDivisionMatrix, GenerateGradeSubjectMatrix, GenerateCategories, GenerateCourses, GenerateCoursesWithTemplateUpload, GenerateCohorts, GenerateGroups, GenerateCohortMembers, GenerateEnrolments, GenerateSummary, GenerateCourseTemplateApplication, GenerateRolloverChecklist, GenerateCourseCertificates, GenerateCourseFinalExams, GenerateCourseTermExams, GenerateGradebookWeights, GenerateOptionalYearCategoryModel, GenerateStudentAcademicHistory, GenerateStudentPromotionPlan, GenerateAssessmentPlan, GenerateAttendancePolicy, GenerateNextYearCourses, GenerateNextYearCohorts, GenerateNextYearGroups, GenerateNextYearEnrolments, GenerateAlumniCohorts, GenerateArchivePolicy, GenerateCompatibilityMatrix", ""],
+        ["Derived target sheets", "07_grade_division_matrix, 09_subject_matrix, 10_categories, 11_optional_categories, 12_courses, 13_courses_upload, 14_cohorts, 15_groups, 22_cohort_members, 25_enrolments, 29_summary, 37_template_application, 46_rollover_checklist, 51_academic_history, 52_promotion_plan, assessment_plan, attendance_policy, course_certificates, course_final_exams, course_term_exams, gradebook_weights, 54_next_year_courses, 55_next_year_cohorts, 56_next_year_groups, 57_next_year_enrolments, 58_alumni_cohorts, 59_archive_policy, 61_compatibility", ""],
         ["How to run all", "Open this .ods in LibreOffice, enable macros when prompted, then use Tools > Macros > Run Macro > current document > Standard > MatrixTools > GenerateAllDerivedSheets.", ""],
-        ["How to run one sheet", "Use the matching Generate* macro when you only changed one dependency area, for example GenerateCohorts after changing divisions or GenerateCourseCertificates after changing principal/course details.", ""],
+        ["How to run one sheet", "Use the matching Generate* macro when you only changed one dependency area, for example GenerateGradeDivisionMatrix after changing grade division rules or GenerateCourseCertificates after changing principal/course details.", ""],
         ["Formula behavior", "Macros create the required row structure and write formulas into derived cells. If a referenced master value changes later, existing derived rows recalculate automatically.", ""],
         ["Stream applies_to format", "Use pipe-delimited grade scopes in streams, for example STD01-STD10 or STD11_SCI|STD12_SCI. Comma-separated values are accepted only for older workbooks and should not be used for new data.", ""],
         ["Status sheet", "Use the status worksheet for data-health review. It shows manual versus automatic sheets, live row counts, PASSED/FAILED macro-derived checks, and action links for refresh, clear and reset/regenerate.", ""],
@@ -267,12 +270,40 @@ def status_expected_formula(sheet: str, row_by_sheet: dict[str, int]) -> str | N
             f"IF({semester_labels},2,IF({module_labels},1,2)))"
         )
 
+    def grade_division_matrix_count() -> str:
+        active_flags = f"'07_grade_division_rules'!H{ODS_DATA_START_ROW}:H{MAX_STATUS_ROWS}"
+        division_lists = f"'07_grade_division_rules'!F{ODS_DATA_START_ROW}:F{MAX_STATUS_ROWS}"
+        return (
+            f'SUMPRODUCT(--(TRIM({active_flags}&"")="1"),--({division_lists}<>""),'
+            f'LEN({division_lists})-LEN(SUBSTITUTE({division_lists},"|",""))+1)'
+        )
+
+    def course_grade_division_count() -> str:
+        matrix_year = f"'07_grade_division_matrix'!A{ODS_DATA_START_ROW}:A{MAX_STATUS_ROWS}"
+        matrix_board = f"'07_grade_division_matrix'!B{ODS_DATA_START_ROW}:B{MAX_STATUS_ROWS}"
+        matrix_medium = f"'07_grade_division_matrix'!C{ODS_DATA_START_ROW}:C{MAX_STATUS_ROWS}"
+        matrix_grade = f"'07_grade_division_matrix'!D{ODS_DATA_START_ROW}:D{MAX_STATUS_ROWS}"
+        matrix_stream = f"'07_grade_division_matrix'!E{ODS_DATA_START_ROW}:E{MAX_STATUS_ROWS}"
+        matrix_active = f"'07_grade_division_matrix'!I{ODS_DATA_START_ROW}:I{MAX_STATUS_ROWS}"
+        course_board = f"'12_courses'!F{ODS_DATA_START_ROW}:F{MAX_STATUS_ROWS}"
+        course_medium = f"'12_courses'!H{ODS_DATA_START_ROW}:H{MAX_STATUS_ROWS}"
+        course_grade = f"'12_courses'!I{ODS_DATA_START_ROW}:I{MAX_STATUS_ROWS}"
+        course_stream = f"'12_courses'!J{ODS_DATA_START_ROW}:J{MAX_STATUS_ROWS}"
+        course_year = f"'12_courses'!M{ODS_DATA_START_ROW}:M{MAX_STATUS_ROWS}"
+        return (
+            f"SUMPRODUCT(COUNTIFS({matrix_year},{course_year},{matrix_board},{course_board},"
+            f"{matrix_medium},{course_medium},{matrix_grade},{course_grade},"
+            f'{matrix_stream},{course_stream},{matrix_active},"1"))'
+        )
+
     formulas = {
+        "07_grade_division_matrix": grade_division_matrix_count,
         "09_subject_matrix": lambda: c("12_courses"),
         "11_optional_categories": lambda: c("10_categories"),
         "12_courses": lambda: c("09_subject_matrix"),
         "13_courses_upload": lambda: c("12_courses"),
-        "15_groups": lambda: f'{c("12_courses")}*COUNTA(\'07_divisions\'!A{ODS_DATA_START_ROW}:A{MAX_STATUS_ROWS})',
+        "14_cohorts": lambda: c("07_grade_division_matrix"),
+        "15_groups": course_grade_division_count,
         "22_cohort_members": lambda: c("20_users_students"),
         "25_enrolments": lambda: c("15_groups"),
         "29_summary": lambda: "8",

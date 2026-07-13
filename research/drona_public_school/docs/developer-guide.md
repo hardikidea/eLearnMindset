@@ -27,11 +27,13 @@ Current generated sample scope:
 | Students | 5,220 |
 | Parents | 4,698 |
 | Staff users | 69 |
-| Courses per academic year | 360 |
-| Cohorts per academic year | 288 |
-| Groups per academic year | 2,160 |
-| Enrolments per academic year | 2,160 |
-| Course certificates per academic year | 360 |
+| Grade/division allocation rules | 273 |
+| Grade/division matrix rows per academic year | 1,638 |
+| Courses per academic year | 3,222 |
+| Cohorts per academic year | 1,638 |
+| Groups per academic year | 19,332 |
+| Enrolments per academic year | 19,332 |
+| Course certificates per academic year | 3,222 |
 
 ## Chapter 2: Directory Map
 
@@ -153,6 +155,8 @@ Core ordered files:
 | 05 | `05_grades.csv` | `master/grades.csv` |
 | 06 | `06_streams.csv` | `master/streams.csv` |
 | 07 | `07_divisions.csv` | `master/divisions.csv` |
+| 07 | `07_grade_division_rules.csv` | `master/grade_division_rules.csv` |
+| 07 | `07_grade_division_matrix.csv` | `years/<year>/grade_division_matrix.csv` |
 | 08 | `08_subjects.csv` | `master/subjects.csv` |
 | 09 | `09_grade_subject_matrix.csv` | `years/<year>/grade_subject_matrix.csv` |
 | 10 | `10_categories.csv` | `years/<year>/categories.csv` |
@@ -193,6 +197,33 @@ Stream `applies_to` rule:
 - Use `ALL` only when the stream should apply to every configured grade.
 - Keep platform/program labels in `notes` unless they are also modelled as grade codes.
 - Comma-separated values are rejected by validation for new data.
+
+Grade/division allocation rule:
+
+- `07_divisions.csv` is the master list of possible division labels, such as `A`, `B`, `C`, `D`, `E`, and `F`.
+- `07_grade_division_rules.csv` decides which divisions a specific academic year, board, medium, grade, and stream uses.
+- `07_grade_division_rules.division_codes` is pipe-delimited, for example `A|B|C|D`.
+- `07_grade_division_rules.capacity` is the planned capacity for each generated division row.
+- `07_grade_division_rules.is_active=1` includes the row; `0` disables it.
+- `07_grade_division_matrix.csv` is generated from the rules and becomes the source of truth for `14_cohorts.csv`, `15_groups.csv`, and `25_enrolments.csv`.
+
+Examples:
+
+| Requirement | `division_codes` |
+|---|---|
+| Standard 1 has four divisions | `A|B|C|D` |
+| Standard 2 has three divisions | `A|B|C` |
+| Standard 3 has one division | `A` |
+
+After changing grade/division rules, run:
+
+```bash
+python3 research/drona_public_school/master_import_process/scripts/sync_standard_master_dataset.py --year 2026-2027
+python3 research/drona_public_school/scripts/assemble.py --year 2026-2027
+python3 research/drona_public_school/scripts/validate.py --year 2026-2027
+```
+
+In the LibreOffice macro workbook, run `GenerateGradeDivisionMatrix` first, then `GenerateCohorts`, `GenerateGroups`, and `GenerateEnrolments`; or run `ResetAutomaticData` to rebuild all automatic sheets.
 
 Subject matrix `applies_to` rule:
 

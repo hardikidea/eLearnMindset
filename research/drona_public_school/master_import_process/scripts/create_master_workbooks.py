@@ -16,7 +16,7 @@ from openpyxl.utils import get_column_letter
 from common import PACK_ROOT, PROCESS_ROOT, SOURCE_FILES, expected_headers, manifest_rows, read_rows, source_path
 
 
-TEMPLATE_VERSION = "2026.07.07.3"
+TEMPLATE_VERSION = "2026.07.13.1"
 MAX_INPUT_ROWS = 20000
 STYLE_DATA_ROW_LIMIT = 200
 HEADER_FILL = PatternFill("solid", fgColor="D9EAF7")
@@ -77,6 +77,7 @@ LOOKUP_FIELDS = {
     "groupmodeforce": "boolean",
     "is_compulsory": "boolean",
     "is_current": "boolean",
+    "is_active": "boolean",
     "is_elective": "boolean",
     "matrix_is_compulsory": "boolean",
     "matrix_is_elective": "boolean",
@@ -104,6 +105,7 @@ STANDARD_PREFILL_SHEETS = {
     "05_grades",
     "06_streams",
     "07_divisions",
+    "07_grade_division_rules",
     "08_subjects",
     "16_profile_fields",
     "17_custom_roles",
@@ -221,6 +223,14 @@ MANDATORY_FIELDS_BY_SHEET = {
     "05_grades": {"grade_code", "grade_name", "display_order", "stage", "moodle_label"},
     "06_streams": {"stream_code", "stream_name", "applies_to"},
     "07_divisions": {"division_code", "division_name", "display_order"},
+    "07_grade_division_rules": {
+        "academic_year", "board_code", "medium_code", "grade_code", "stream_code",
+        "division_codes", "capacity", "is_active",
+    },
+    "07_grade_division_matrix": {
+        "academic_year", "board_code", "medium_code", "grade_code", "stream_code",
+        "division_code", "division_name", "capacity", "is_active", "source_rule_key",
+    },
     "08_subjects": {
         "subject_code", "subject_name", "subject_category", "applies_to",
         "matrix_is_compulsory", "matrix_is_elective", "matrix_display_order",
@@ -276,6 +286,7 @@ SUMMARY_OVERRIDES = {
     "description": "Short operator-facing description.",
     "display_order": "Numeric sorting order in generated data or UI lists.",
     "district": "District for school or user profile reporting.",
+    "division_codes": "Pipe-delimited divisions allowed for a grade/stream, for example A|B|C.",
     "division_code": "Division/section code such as A, B or C.",
     "email": "Unique email address used by Moodle user accounts.",
     "enablecompletion": "Whether Moodle course completion tracking is enabled.",
@@ -291,6 +302,7 @@ SUMMARY_OVERRIDES = {
     "institution": "School or trust name stored in user profile.",
     "is_compulsory": "Marks whether a subject is compulsory in the matrix.",
     "is_current": "Marks the active academic year.",
+    "is_active": "Marks whether the row is active for generated output.",
     "is_elective": "Marks whether a subject is elective in the matrix.",
     "lang": "Preferred Moodle language code.",
     "language_code": "ISO-style language code for a teaching medium.",
@@ -316,6 +328,7 @@ SUMMARY_OVERRIDES = {
     "school_type": "School type such as private, trust-run or government aided.",
     "shortname": "Moodle short name, usually compact and unique.",
     "source_note": "Source note explaining how the row was selected.",
+    "source_rule_key": "Generated reference key from the grade-division rule that created this matrix row.",
     "source_url": "Reference URL for the source record.",
     "stage": "School stage such as primary, secondary or higher secondary.",
     "state": "State for school or user profile reporting.",
@@ -355,6 +368,7 @@ BOOLEAN_FIELDS = {
     "expiry_enabled",
     "forceunique",
     "groupmodeforce",
+    "is_active",
     "is_compulsory",
     "is_current",
     "is_elective",
@@ -372,6 +386,7 @@ BOOLEAN_FIELDS = {
 INTEGER_FIELDS = {
     "default_extra_sections",
     "default_points",
+    "capacity",
     "display_order",
     "item_order",
     "matrix_display_order",
@@ -397,6 +412,7 @@ BASE_PATTERNS = {
     "course_code": "<SCHOOL_CODE>-<BOARD_CODE>-<MEDIUM_CODE>-<GRADE_CODE>-<STREAM_CODE>-<SUBJECT_CODE>-<START_YEAR>",
     "course_shortname": "Must match 12_courses.shortname",
     "division_code": "<DIVISION_CODE>, e.g. A",
+    "division_codes": "Pipe-delimited division codes, e.g. A|B|C. Edit this per grade/stream.",
     "email": "<unique-account>@<school-domain>",
     "end_date": "YYYY-MM-DD",
     "firstname": "Given name",
@@ -433,6 +449,7 @@ BASE_PATTERNS = {
 
 
 SHEET_IDNUMBER_PATTERNS = {
+    "07_grade_division_matrix": "<ACADEMIC_YEAR>-<BOARD_CODE>-<MEDIUM_CODE>-<GRADE_CODE>-<STREAM_CODE>-<DIVISION_CODE>",
     "10_categories": "<TRUST_CODE>_<BOARD_CODE>_<SCHOOL_CODE>_<YYYY_YYYY>_<MEDIUM_CODE>_<GRADE_CODE>_<STREAM_CODE>",
     "11_optional_categories": "<TRUST_CODE>_<BOARD_CODE>_<SCHOOL_CODE>_<YYYY_YYYY>_<MEDIUM_CODE>_<GRADE_CODE>_<STREAM_CODE>",
     "12_courses": "<SCHOOL_CODE>-<BOARD_CODE>-<MEDIUM_CODE>-<GRADE_CODE>-<STREAM_CODE>-<SUBJECT_CODE>-<START_YEAR>",
@@ -446,6 +463,7 @@ SHEET_IDNUMBER_PATTERNS = {
 
 
 AUTOMATIC_SHEETS = {
+    "07_grade_division_matrix",
     "09_subject_matrix",
     "10_categories",
     "11_optional_categories",
@@ -477,6 +495,7 @@ AUTOMATIC_SHEETS = {
 
 
 AUTOMATIC_MACROS = {
+    "07_grade_division_matrix": "GenerateGradeDivisionMatrix",
     "09_subject_matrix": "GenerateGradeSubjectMatrix",
     "10_categories": "GenerateCategories",
     "11_optional_categories": "GenerateOptionalYearCategoryModel",
@@ -824,7 +843,8 @@ def column_audience(sheet: str, header: str) -> str:
         return "Staff registration"
     if sheet in {
         "01_school_master", "02_academic_years", "03_boards", "04_mediums", "05_grades",
-        "06_streams", "07_divisions", "08_subjects", "16_profile_fields", "17_custom_roles",
+        "06_streams", "07_divisions", "07_grade_division_rules", "08_subjects",
+        "16_profile_fields", "17_custom_roles",
         "18_role_guidelines", "26_lookup_values", "27_validation_rules", "28_source_refs",
         "29_summary",
     }:
@@ -837,7 +857,7 @@ def column_audience(sheet: str, header: str) -> str:
     if sheet.startswith(("30_", "31_", "32_", "33_", "34_", "35_", "36_", "37_", "38_", "39_", "40_", "41_", "42_", "43_")):
         return "Academic/course setup"
     if sheet in {
-        "09_subject_matrix", "10_categories", "11_optional_categories", "12_courses",
+        "07_grade_division_matrix", "09_subject_matrix", "10_categories", "11_optional_categories", "12_courses",
         "13_courses_upload", "14_cohorts", "15_groups", "22_cohort_members",
         "23_role_assignments", "25_enrolments", "assessment_plan", "attendance_policy",
         "course_certificates", "course_final_exams", "course_term_exams", "exam_terms",
@@ -978,12 +998,40 @@ def status_expected_formula(sheet: str, row_by_sheet: dict[str, int]) -> str | N
             f"IF({semester_labels},2,IF({module_labels},1,2)))"
         )
 
+    def grade_division_matrix_count() -> str:
+        active_flags = f"'07_grade_division_rules'!H7:H{MAX_INPUT_ROWS}"
+        division_lists = f"'07_grade_division_rules'!F7:F{MAX_INPUT_ROWS}"
+        return (
+            f'SUMPRODUCT(--(TRIM({active_flags}&"")="1"),--({division_lists}<>""),'
+            f'LEN({division_lists})-LEN(SUBSTITUTE({division_lists},"|",""))+1)'
+        )
+
+    def course_grade_division_count() -> str:
+        matrix_year = f"'07_grade_division_matrix'!A7:A{MAX_INPUT_ROWS}"
+        matrix_board = f"'07_grade_division_matrix'!B7:B{MAX_INPUT_ROWS}"
+        matrix_medium = f"'07_grade_division_matrix'!C7:C{MAX_INPUT_ROWS}"
+        matrix_grade = f"'07_grade_division_matrix'!D7:D{MAX_INPUT_ROWS}"
+        matrix_stream = f"'07_grade_division_matrix'!E7:E{MAX_INPUT_ROWS}"
+        matrix_active = f"'07_grade_division_matrix'!I7:I{MAX_INPUT_ROWS}"
+        course_board = f"'12_courses'!F7:F{MAX_INPUT_ROWS}"
+        course_medium = f"'12_courses'!H7:H{MAX_INPUT_ROWS}"
+        course_grade = f"'12_courses'!I7:I{MAX_INPUT_ROWS}"
+        course_stream = f"'12_courses'!J7:J{MAX_INPUT_ROWS}"
+        course_year = f"'12_courses'!M7:M{MAX_INPUT_ROWS}"
+        return (
+            f"SUMPRODUCT(COUNTIFS({matrix_year},{course_year},{matrix_board},{course_board},"
+            f"{matrix_medium},{course_medium},{matrix_grade},{course_grade},"
+            f'{matrix_stream},{course_stream},{matrix_active},"1"))'
+        )
+
     formulas = {
+        "07_grade_division_matrix": grade_division_matrix_count,
         "09_subject_matrix": lambda: c("12_courses"),
         "11_optional_categories": lambda: c("10_categories"),
         "12_courses": lambda: c("09_subject_matrix"),
         "13_courses_upload": lambda: c("12_courses"),
-        "15_groups": lambda: f'{c("12_courses")}*COUNTA(\'07_divisions\'!A7:A{MAX_INPUT_ROWS})',
+        "14_cohorts": lambda: c("07_grade_division_matrix"),
+        "15_groups": course_grade_division_count,
         "22_cohort_members": lambda: c("20_users_students"),
         "25_enrolments": lambda: c("15_groups"),
         "29_summary": lambda: "8",
@@ -1215,6 +1263,12 @@ def add_data_sheet(wb, entry, year, source_root, sample_limit, include_example_r
         "summary_row", str(summary_row),
         "pattern_row", str(pattern_row),
         "header_row", str(header_row),
+        "generation_rule", status_pattern(entry),
+        "generation_action", (
+            f"Run macro: {AUTOMATIC_MACROS[entry['sheet']]}"
+            if entry["sheet"] in AUTOMATIC_MACROS
+            else "Manual/source sheet"
+        ),
     ]
     if include_example_row:
         metadata.extend([

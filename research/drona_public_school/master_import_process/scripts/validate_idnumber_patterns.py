@@ -104,6 +104,7 @@ def validate(source: Path, year: str) -> list[str]:
     courses = read_rows(ydir / "courses.csv")
     cohorts = read_rows(ydir / "cohorts.csv")
     groups = read_rows(ydir / "groups.csv")
+    grade_division_matrix = read_rows(ydir / "grade_division_matrix.csv")
     enrolments = read_rows(ydir / "enrolments.csv")
     cohort_members = read_rows(ydir / "cohort_members.csv")
     role_assignments = read_rows(ydir / "role_assignments.csv")
@@ -135,6 +136,18 @@ def validate(source: Path, year: str) -> list[str]:
             if cohort_file.exists():
                 all_cohort_codes.update(code_set(read_rows(cohort_file), "cohort_code"))
     group_ids = code_set(groups, "group_idnumber")
+    active_division_keys = {
+        (
+            row.get("academic_year", ""),
+            row.get("board_code", ""),
+            row.get("medium_code", ""),
+            row.get("grade_code", ""),
+            row.get("stream_code", ""),
+            row.get("division_code", ""),
+        )
+        for row in grade_division_matrix
+        if row.get("is_active", "1") in {"1", "yes", "YES", "true", "TRUE"}
+    }
     student_usernames = code_set(students, "username")
     parent_usernames = code_set(parents, "username")
     staff_usernames = code_set(staff, "username")
@@ -197,17 +210,30 @@ def validate(source: Path, year: str) -> list[str]:
             add(errors, f"cohorts.csv line {idx}: context category expected {expected_category}")
         if division not in division_codes:
             add(errors, f"cohorts.csv line {idx}: invalid division_code {division}")
+        if active_division_keys and (year, board_code, medium, grade, stream, division) not in active_division_keys:
+            add(errors, f"cohorts.csv line {idx}: division {division} is not allowed by grade_division_matrix for {medium}/{grade}/{stream}")
 
     for idx, row in enumerate(groups, 2):
         course_code = row.get("course_code", "")
         division = row.get("division_code", "")
         expected = f"{course_code}-{division}"
+        course = course_by_code.get(course_code, {})
         if row.get("group_idnumber") != expected:
             add(errors, f"groups.csv line {idx}: group_idnumber expected {expected}")
         if course_code not in course_by_code:
             add(errors, f"groups.csv line {idx}: missing course reference {course_code}")
         if division not in division_codes:
             add(errors, f"groups.csv line {idx}: invalid division_code {division}")
+        key = (
+            course.get("academic_year", ""),
+            course.get("board_code", ""),
+            course.get("medium_code", ""),
+            course.get("grade_code", ""),
+            course.get("stream_code", ""),
+            division,
+        )
+        if active_division_keys and course and key not in active_division_keys:
+            add(errors, f"groups.csv line {idx}: division {division} is not allowed by grade_division_matrix for {course_code}")
 
     for idx, row in enumerate(students, 2):
         username = row.get("username", "")

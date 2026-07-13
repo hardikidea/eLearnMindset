@@ -51,6 +51,33 @@ def row_map(rows: list[dict[str, str]], field: str) -> dict[str, dict[str, str]]
     return {row.get(field, ""): row for row in rows if row.get(field, "")}
 
 
+def education_system(grade: dict[str, str]) -> str:
+    label = (grade.get("moodle_label", "") or "").upper()
+    stage = (grade.get("stage", "") or "").upper()
+    if label == "SCHOOL":
+        return "SCHOOL"
+    if label == "UNIVERSITY":
+        return "UNIVERSITY"
+    if label == "VOCATIONAL":
+        return "VOCATIONAL"
+    if label == "CHARTER":
+        return "PROFESSIONAL"
+    if label == "CERTIFICATION":
+        return "ONLINE"
+    if "HIGHER ED" in stage:
+        return "UNIVERSITY"
+    return label or "GENERAL"
+
+
+def expected_term_codes(grade: dict[str, str]) -> set[str]:
+    system = education_system(grade)
+    if system in {"UNIVERSITY", "DIPLOMA"}:
+        return {"SEM1", "SEM2"}
+    if system in {"ONLINE", "VOCATIONAL", "PROFESSIONAL"}:
+        return {"MODULE"}
+    return {"TERM1", "TERM2"}
+
+
 def add_issue(issues: list[dict[str, str]], severity: str, area: str, message: str) -> None:
     issues.append({"severity": severity, "area": area, "message": message})
 
@@ -65,6 +92,7 @@ def required_files(year: str) -> list[Path]:
         PACK / "registration" / "combined" / "20_users_students.csv",
         PACK / "registration" / "combined" / "21_users_parents.csv",
         PACK / "registration" / "parent_links.csv",
+        year_dir / "grade_division_matrix.csv",
         year_dir / "categories.csv",
         year_dir / "courses.csv",
         year_dir / "cohorts.csv",
@@ -117,9 +145,11 @@ def check_relationships(year: str) -> tuple[list[dict[str, str]], dict[str, int]
     parent_links = read_rows(PACK / "registration" / "parent_links.csv")
     roles = read_rows(PACK / "master" / "roles.csv")
     divisions = read_rows(PACK / "master" / "divisions.csv")
+    grades = read_rows(PACK / "master" / "grades.csv")
 
     categories = read_rows(year_dir / "categories.csv")
     courses = read_rows(year_dir / "courses.csv")
+    grade_division_matrix = read_rows(year_dir / "grade_division_matrix.csv")
     cohorts = read_rows(year_dir / "cohorts.csv")
     groups = read_rows(year_dir / "groups.csv")
     cohort_members = read_rows(year_dir / "cohort_members.csv")
@@ -140,6 +170,7 @@ def check_relationships(year: str) -> tuple[list[dict[str, str]], dict[str, int]
             "parent_links": len(parent_links),
             "categories": len(categories),
             "courses": len(courses),
+            "grade_division_matrix": len(grade_division_matrix),
             "cohorts": len(cohorts),
             "groups": len(groups),
             "cohort_members": len(cohort_members),
@@ -168,6 +199,7 @@ def check_relationships(year: str) -> tuple[list[dict[str, str]], dict[str, int]
         "trustee_manager",
     }
     courses_by_code = row_map(courses, "course_code")
+    grades_by_code = row_map(grades, "grade_code")
     course_shortnames = code_set(courses, "shortname")
     course_codes = set(courses_by_code)
     category_codes = code_set(categories, "category_code") | code_set(categories, "idnumber")
@@ -175,6 +207,18 @@ def check_relationships(year: str) -> tuple[list[dict[str, str]], dict[str, int]
     group_ids = code_set(groups, "group_idnumber")
     division_codes = code_set(divisions, "division_code")
     grades_used = code_set(courses, "grade_code")
+    active_division_keys = {
+        (
+            row.get("academic_year", ""),
+            row.get("board_code", ""),
+            row.get("medium_code", ""),
+            row.get("grade_code", ""),
+            row.get("stream_code", ""),
+            row.get("division_code", ""),
+        )
+        for row in grade_division_matrix
+        if row.get("is_active", "1") in {"1", "yes", "YES", "true", "TRUE"}
+    }
 
     all_cohort_codes = set(cohort_codes)
     for cohort_file in (PACK / "years").glob("*/cohorts.csv"):
@@ -215,6 +259,17 @@ def check_relationships(year: str) -> tuple[list[dict[str, str]], dict[str, int]
             add_issue(issues, "ERROR", "groups", f"Group {group_id} has wrong course_shortname")
         if division not in division_codes:
             add_issue(issues, "ERROR", "groups", f"Group {group_id} references missing division {division}")
+        if course:
+            key = (
+                course.get("academic_year", ""),
+                row.get("board_code", ""),
+                row.get("medium_code", ""),
+                row.get("grade_code", ""),
+                row.get("stream_code", ""),
+                division,
+            )
+            if active_division_keys and key not in active_division_keys:
+                add_issue(issues, "ERROR", "groups", f"Group {group_id} is outside grade division matrix")
 
     for row in enrolments:
         if row.get("course_code") not in course_codes:
@@ -226,11 +281,34 @@ def check_relationships(year: str) -> tuple[list[dict[str, str]], dict[str, int]
         if row.get("role_shortname") not in roles_defined:
             add_issue(issues, "ERROR", "enrolments", f"Unknown role: {row.get('role_shortname')}")
 
-    if division_codes and groups:
-        expected_groups = len(course_codes) * len(division_codes)
+    for row in cohorts:
+        key = (
+            row.get("academic_year", ""),
+            row.get("board_code", ""),
+            row.get("medium_code", ""),
+            row.get("grade_code", ""),
+            row.get("stream_code", ""),
+            row.get("division_code", ""),
+        )
+        if active_division_keys and key not in active_division_keys:
+            add_issue(issues, "ERROR", "cohorts", f"Cohort {row.get('cohort_code')} is outside grade division matrix")
+
+    if active_division_keys and groups:
+        expected_groups = sum(
+            1
+            for course in courses
+            for key in active_division_keys
+            if key[:5] == (
+                course.get("academic_year", ""),
+                course.get("board_code", ""),
+                course.get("medium_code", ""),
+                course.get("grade_code", ""),
+                course.get("stream_code", ""),
+            )
+        )
         facts["expected_groups"] = expected_groups
         if len(groups) != expected_groups:
-            add_issue(issues, "WARN", "groups", f"Expected {expected_groups} groups from course x division matrix; found {len(groups)}")
+            add_issue(issues, "WARN", "groups", f"Expected {expected_groups} groups from course x grade-division matrix; found {len(groups)}")
 
     if groups and len(enrolments) != len(groups):
         add_issue(issues, "WARN", "enrolments", f"Expected one cohort enrolment per group; groups={len(groups)} enrolments={len(enrolments)}")
@@ -244,16 +322,20 @@ def check_relationships(year: str) -> tuple[list[dict[str, str]], dict[str, int]
             f"Enabled certificate course coverage mismatch. missing={len(course_codes - cert_course_codes)} extra={len(cert_course_codes - course_codes)}",
         )
 
-    active_terms = {row.get("term_code", "") for row in exam_terms if row.get("term_code") and row.get("term_code") != "FINAL"}
-    if not active_terms:
-        active_terms = {"TERM1", "TERM2"}
     term_by_course: dict[str, set[str]] = defaultdict(set)
     for row in term_exams:
         if row.get("enabled") == "1":
             term_by_course[row.get("course_code", "")].add(row.get("term_code", ""))
-    missing_term_courses = [course for course in course_codes if term_by_course.get(course) != active_terms]
+    active_terms = set()
+    missing_term_courses = []
+    for course_code in course_codes:
+        course = courses_by_code.get(course_code, {})
+        expected_terms = expected_term_codes(grades_by_code.get(course.get("grade_code", ""), {}))
+        active_terms.update(expected_terms)
+        if term_by_course.get(course_code) != expected_terms:
+            missing_term_courses.append(course_code)
     if missing_term_courses:
-        add_issue(issues, "ERROR", "term exams", f"{len(missing_term_courses)} course(s) do not have exactly {sorted(active_terms)}")
+        add_issue(issues, "ERROR", "term exams", f"{len(missing_term_courses)} course(s) do not have the expected grade/program term model")
 
     final_course_codes = {row.get("course_code", "") for row in final_exams if row.get("enabled") == "1"}
     if final_course_codes != course_codes:
@@ -319,7 +401,7 @@ def render_report(year: str, metrics: dict[str, int], facts: dict[str, object], 
             "",
             "## Relationship Checks",
             "",
-            f"- Expected groups from course x division matrix: `{facts.get('expected_groups', 'n/a')}`",
+            f"- Expected groups from course x grade-division matrix: `{facts.get('expected_groups', 'n/a')}`",
             f"- Active term exam codes: `{', '.join(facts.get('active_terms', []))}`",
             f"- Blocking errors: `{facts.get('errors', 0)}`",
             f"- Warnings: `{facts.get('warnings', 0)}`",

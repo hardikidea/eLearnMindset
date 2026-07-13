@@ -16,6 +16,7 @@ The full local-testing dataset is intentionally kept in CSV form because it cont
 
 - 5,220 students
 - 4,698 parents
+- 1,638 grade/division rows per academic year
 - 19,332 groups per academic year
 - 19,332 enrolment mappings per academic year
 - 3,222 certificate mappings per academic year
@@ -68,6 +69,18 @@ Subject matrix output values are also source-driven from `08_subjects`:
 
 Do not hardcode these values in macros or export scripts. Change them in `08_subjects`, then rerun `GenerateGradeSubjectMatrix` or `ResetAutomaticData`.
 
+Grade/division output is source-driven from `07_grade_division_rules`:
+
+- `division_codes` uses pipe-delimited division codes, for example `A|B|C|D`.
+- `capacity` is the default planned capacity per generated division row.
+- `is_active=1` includes the rule in `07_grade_division_matrix`; set it to `0` to exclude that grade/stream.
+- `07_grade_division_matrix` expands the rule into one row per allowed division.
+- `14_cohorts`, `15_groups`, and `25_enrolments` are generated from `07_grade_division_matrix`, not from every row in `07_divisions`.
+
+Example: if Standard 1 uses `A|B|C|D`, Standard 2 uses `A|B|C`, and Standard 3 uses `A`, edit the matching `07_grade_division_rules.division_codes` rows and rerun `GenerateGradeDivisionMatrix`, then `GenerateCohorts`, `GenerateGroups`, and `GenerateEnrolments` or just run `ResetAutomaticData`.
+
+Do not hardcode grade/division counts in macros or export scripts. `07_divisions` is only the master list of possible division labels; `07_grade_division_rules` is the allocation rule and `07_grade_division_matrix` is the generated source of truth for cohorts, groups, and enrolments.
+
 Supported subject scope tokens:
 
 - Exact grade: `STD05`, `ITI_ELEC`, `UNI_UG_BCA_Y1`.
@@ -101,15 +114,16 @@ Available individual macros:
 - `RefreshStatus` recalculates formulas and updates the `status` sheet checks.
 - `ClearAutomaticData` clears only macro-generated data rows.
 - `ResetAutomaticData` clears macro-generated rows and then runs a full rebuild.
+- `GenerateGradeDivisionMatrix` rebuilds `07_grade_division_matrix` from `07_grade_division_rules` and `07_divisions`.
 - `GenerateGradeSubjectMatrix` rebuilds `09_subject_matrix` from boards, mediums, grades, streams, subject `applies_to` values and subject matrix source columns.
 - `GenerateCategories` rebuilds `10_categories` from school, board, current academic year, medium, grade and stream setup.
 - `GenerateOptionalYearCategoryModel` rebuilds `11_optional_categories` as the optional category-model export from generated categories.
 - `GenerateCourses` rebuilds `12_courses` from the grade-subject matrix and current academic year.
 - `GenerateCoursesWithTemplateUpload` rebuilds `13_courses_upload` from generated courses and category paths.
-- `GenerateCohorts` rebuilds `14_cohorts` from current academic year, medium, grade, stream and division setup.
-- `GenerateGroups` rebuilds `15_groups` from courses and divisions.
+- `GenerateCohorts` rebuilds `14_cohorts` from `07_grade_division_matrix`.
+- `GenerateGroups` rebuilds `15_groups` from courses and `07_grade_division_matrix`.
 - `GenerateCohortMembers` rebuilds `22_cohort_members` from `20_users_students.cohort1`.
-- `GenerateEnrolments` rebuilds `25_enrolments` from courses and divisions using cohort-sync enrolment.
+- `GenerateEnrolments` rebuilds `25_enrolments` from courses and `07_grade_division_matrix` using cohort-sync enrolment.
 - `GenerateSummary` rebuilds `29_summary` from workbook counts and the school master row.
 - `GenerateCourseTemplateApplication` rebuilds `37_template_application`.
 - `GenerateRolloverChecklist` rebuilds `46_rollover_checklist` from the standard academic-year rollover workflow.
@@ -123,8 +137,8 @@ Available individual macros:
 - `GenerateGradebookWeights` rebuilds `gradebook_weights`.
 - `GenerateNextYearCourses` rebuilds `54_next_year_courses` from current generated courses and the next academic year.
 - `GenerateNextYearCohorts` rebuilds `55_next_year_cohorts` from current generated cohorts and the next academic year.
-- `GenerateNextYearGroups` rebuilds `56_next_year_groups` from next-year courses and divisions.
-- `GenerateNextYearEnrolments` rebuilds `57_next_year_enrolments` from next-year courses and divisions using cohort-sync enrolment.
+- `GenerateNextYearGroups` rebuilds `56_next_year_groups` from next-year courses and the grade/division matrix. If next-year matrix rows are not present yet, it uses the matching current matrix pattern for the same board, medium, grade, and stream.
+- `GenerateNextYearEnrolments` rebuilds `57_next_year_enrolments` from next-year courses and the grade/division matrix using cohort-sync enrolment. If next-year matrix rows are not present yet, it uses the matching current matrix pattern for the same board, medium, grade, and stream.
 - `GenerateAlumniCohorts` rebuilds `58_alumni_cohorts` from current-year cohorts matched by `45_promotion_rules` rows whose `to_grade_code` or `promotion_decision` is `ALUMNI`.
 - `GenerateArchivePolicy` rebuilds `59_archive_policy` from the standard archive checklist.
 - `GenerateCompatibilityMatrix` rebuilds `61_compatibility` from the standard Moodle component compatibility map.

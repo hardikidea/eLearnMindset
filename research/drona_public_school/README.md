@@ -96,7 +96,8 @@ When reviewing a workbook, open the `status` sheet first. It is the health dashb
 
 | Need | Edit here |
 |---|---|
-| School identity, board, medium, grades, streams, divisions, subjects | `master/*.csv` |
+| School identity, board, medium, grades, streams, subjects | `master/*.csv` |
+| Grade-specific division allocation | `master/grade_division_rules.csv` or workbook sheet `07_grade_division_rules` |
 | Students, parents, staff, parent links | `registration/` |
 | Course template, sections, activities, certificates, exams | `templates/` |
 | Year-specific courses, cohorts, groups, enrolments, promotion plans | `years/<academic-year>/` |
@@ -104,6 +105,8 @@ When reviewing a workbook, open the `status` sheet first. It is the health dashb
 | Moodle import behavior | `scripts/moodle_cli/` |
 
 Do not hand-edit `build/assembled_csv/<year>/`; regenerate it from source data.
+
+`master/divisions.csv` is only the list of possible division labels. Actual class sections such as Standard 1 using `A|B|C|D` and Standard 3 using only `A` are controlled by `master/grade_division_rules.csv`. The generated `years/<year>/grade_division_matrix.csv` then drives cohorts, Moodle groups, and cohort-sync enrolments.
 
 ## Maintained Workbook Artifacts
 

@@ -87,6 +87,8 @@ def assemble_year(year, source_root):
         '05_grades.csv': source_root / 'master' / 'grades.csv',
         '06_streams.csv': source_root / 'master' / 'streams.csv',
         '07_divisions.csv': source_root / 'master' / 'divisions.csv',
+        '07_grade_division_rules.csv': source_root / 'master' / 'grade_division_rules.csv',
+        '07_grade_division_matrix.csv': ydir / 'grade_division_matrix.csv',
         '08_subjects.csv': source_root / 'master' / 'subjects.csv',
         '09_grade_subject_matrix.csv': ydir / 'grade_subject_matrix.csv',
         '10_categories.csv': ydir / 'categories.csv',
