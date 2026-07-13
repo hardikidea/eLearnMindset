@@ -1065,7 +1065,7 @@ End Function
 Function BuildCourseTermExams(oDoc As Object) As Long
     Dim oCourses As Object, oTerms As Object, oTarget As Object
     Dim hCourses As Long, hTerms As Long, hTarget As Long, cRow As Long, tRow As Long, targetRow As Long
-    Dim termCode As String, generatedRows As Long
+    Dim termCode As String, gradeCode As String, generatedRows As Long
     oCourses = RequireSheet(oDoc, "12_courses")
     oTerms = RequireSheet(oDoc, "exam_terms")
     oTarget = RequireSheet(oDoc, "course_term_exams")
@@ -1076,9 +1076,10 @@ Function BuildCourseTermExams(oDoc As Object) As Long
     ClearDataRows oTarget, targetRow
     For cRow = hCourses + 1 To LastUsedRow(oCourses)
         If CellText(oCourses, FindColumn(oCourses, "course_code", hCourses), cRow) <> "" Then
+            gradeCode = CellText(oCourses, FindColumn(oCourses, "grade_code", hCourses), cRow)
             For tRow = hTerms + 1 To LastUsedRow(oTerms)
                 termCode = CellText(oTerms, FindColumn(oTerms, "term_code", hTerms), tRow)
-                If termCode <> "" And UCase(termCode) <> "FINAL" And CellText(oTerms, FindColumn(oTerms, "academic_year", hTerms), tRow) = CellText(oCourses, FindColumn(oCourses, "academic_year", hCourses), cRow) Then
+                If termCode <> "" And UCase(termCode) <> "FINAL" And TermAppliesToCourse(oDoc, gradeCode, termCode) And CellText(oTerms, FindColumn(oTerms, "academic_year", hTerms), tRow) = CellText(oCourses, FindColumn(oCourses, "academic_year", hCourses), cRow) Then
                     SetFormulaByHeader oTarget, hTarget, targetRow, "academic_year", "=" & FormulaCellByHeader(oCourses, hCourses, cRow, "academic_year")
                     SetFormulaByHeader oTarget, hTarget, targetRow, "course_code", "=" & FormulaCellByHeader(oCourses, hCourses, cRow, "course_code")
                     SetFormulaByHeader oTarget, hTarget, targetRow, "course_shortname", "=" & FormulaCellByHeader(oCourses, hCourses, cRow, "shortname")
@@ -1086,7 +1087,7 @@ Function BuildCourseTermExams(oDoc As Object) As Long
                     SetFormulaByHeader oTarget, hTarget, targetRow, "term_exam_template_code", "=" & FormulaText("TERM_EXAM_") & "&" & FormulaCellByHeader(oCourses, hCourses, cRow, "grade_code") & "&" & FormulaText("_") & "&" & FormulaCellByHeader(oTerms, hTerms, tRow, "term_code")
                     SetFormulaByHeader oTarget, hTarget, targetRow, "enabled", FormulaStaticText("1")
                     SetFormulaByHeader oTarget, hTarget, targetRow, "required_for_completion", FormulaStaticText("1")
-                    SetFormulaByHeader oTarget, hTarget, targetRow, "notes", FormulaStaticText("Generated grade-wise term exam assignment.")
+                    SetFormulaByHeader oTarget, hTarget, targetRow, "notes", FormulaStaticText("Generated grade/program term or module exam assignment.")
                     targetRow = targetRow + 1
                     generatedRows = generatedRows + 1
                 End If
@@ -1094,6 +1095,20 @@ Function BuildCourseTermExams(oDoc As Object) As Long
         End If
     Next cRow
     BuildCourseTermExams = generatedRows
+End Function
+
+Function TermAppliesToCourse(oDoc As Object, gradeCode As String, termCode As String) As Boolean
+    Dim gradeLabel As String, code As String
+    gradeLabel = UCase(Trim(LookupValue(oDoc, "05_grades", "grade_code", gradeCode, "moodle_label")))
+    code = UCase(Trim(termCode))
+    Select Case gradeLabel
+        Case "UNIVERSITY", "DIPLOMA"
+            TermAppliesToCourse = (code = "SEM1" Or code = "SEM2")
+        Case "CERTIFICATION", "VOCATIONAL", "CHARTER", "PROFESSIONAL"
+            TermAppliesToCourse = (code = "MODULE")
+        Case Else
+            TermAppliesToCourse = (code = "TERM1" Or code = "TERM2")
+    End Select
 End Function
 
 Function BuildGradebookWeights(oDoc As Object) As Long

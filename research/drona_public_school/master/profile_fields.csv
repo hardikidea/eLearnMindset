@@ -80,8 +80,8 @@ current_academic_year,Current Academic Year,Student Academic Year,text,0,1,0,0,0
 current_board_code,Current Board Code,Student Academic Year,text,0,1,0,0,0,,,0,admin_only,"Current board code, for example GSEB or CBSE."
 current_school_code,Current School Code,Student Academic Year,text,0,1,0,0,0,GVS,,0,admin_only,Current school code.
 current_medium_code,Current Medium Code,Student Academic Year,text,0,1,0,0,0,,,0,admin_only,"Current medium code, for example GUJ or ENG."
-current_grade_code,Current Grade Code,Student Academic Year,text,0,1,0,0,0,,,0,admin_only,Current grade/standard code such as STD01 or STD11.
-current_stream_code,Current Stream Code,Student Academic Year,text,0,1,0,0,0,GEN,,0,admin_only,"Current stream code such as GEN, SCI, COM, ARTS, VOC."
+current_grade_code,Current Grade Code,Student Academic Year,text,0,1,0,0,0,,,0,admin_only,"Current grade/program code such as PRE01, STD05, STD11_SCI, UNI_UG_CSE_Y1 or LMS_CERT_DATA."
+current_stream_code,Current Stream Code,Student Academic Year,text,0,1,0,0,0,GEN,,0,admin_only,"Current stream code such as GEN, SCI, COM, ART, ENG or CSA."
 current_division_code,Current Division Code,Student Academic Year,text,0,1,0,0,0,,,0,admin_only,Current school division such as A or B.
 student_status,Student Status,Student Academic Year,menu,0,1,0,0,0,Active,Active|Promoted|Retained|Transferred|Alumni|Left|Suspended,0,admin_only,Current lifecycle status for academic-year rollover.
 previous_academic_year,Previous Academic Year,Student Academic Year,text,0,1,0,0,0,,,0,admin_only,Previous academic year before latest promotion.

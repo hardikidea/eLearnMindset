@@ -191,7 +191,7 @@ Stream `applies_to` rule:
 - Use ranges for grade bands, for example `STD01-STD10`.
 - Use grade+stream tokens for higher-secondary stream specificity, for example `STD11_SCI|STD12_SCI`.
 - Use `ALL` only when the stream should apply to every configured grade.
-- Keep platform/program labels such as `SWAYAM`, `NPTEL`, `UG`, `PG` or `NEET Prep` in `notes` unless they are also modelled as grade codes.
+- Keep platform/program labels in `notes` unless they are also modelled as grade codes.
 - Comma-separated values are rejected by validation for new data.
 
 Subject matrix `applies_to` rule:
@@ -200,7 +200,7 @@ Subject matrix `applies_to` rule:
 - Keep plain human descriptions in `08_subjects.notes`.
 - Supported scope examples are `PRE01-STD10`, `STD11_SCI|STD12_SCI`, `ITI`, `POLY`, `UNI_UG`, `NUR_GNM`, `PRO_CA`, and `LMS_CERT`.
 - `09_subject_matrix` is generated only from matching board, medium, grade, stream, and subject scope combinations.
-- Descriptive labels such as `Online Platforms` or `Exam Prep` do not generate rows unless they are modelled as grade codes or compact grade prefixes.
+- Descriptive labels do not generate rows unless they are modelled as grade codes or compact grade prefixes.
 
 Subject matrix output values:
 
@@ -209,6 +209,14 @@ Subject matrix output values:
 - `09_subject_matrix.display_order` comes from `08_subjects.matrix_display_order`.
 - `09_subject_matrix.source_note` comes from `08_subjects.matrix_source_note`.
 - Keep these values in the sheet/source CSV. Macros and export scripts must not add hidden static defaults.
+
+Use the standard sync script after changing master grade, stream or subject setup:
+
+```bash
+python3 research/drona_public_school/master_import_process/scripts/sync_standard_master_dataset.py --year 2026-2027
+```
+
+The sync refreshes `26_lookup_values`, `35_subject_adjust`, `43_content_template`, `45_promotion_rules` and all year-level derived CSVs from the master sheets.
 
 ## Chapter 7: Master Workbook Rules
 
@@ -564,11 +572,11 @@ Every generated course should receive:
 - Quizzes.
 - Completion tracking.
 - Sequential chapter-gate restrictions.
-- Term exam mappings for `TERM1` and `TERM2`.
+- Term exam mappings from the grade term model: `TERM1`/`TERM2` for school grades, `SEM1`/`SEM2` for university or diploma grades, and `MODULE` for certification, vocational, charter or professional grades.
 - Final exam mapping through `course_final_exams.csv`.
 - One Custom Certificate activity in the `Certificate & Completion` section.
 
-The final exam row is intentionally separate from term exam rows. `exam_terms.csv` may include `FINAL`, but `course_term_exams.csv` should only contain active term exams such as `TERM1` and `TERM2`.
+The final exam row is intentionally separate from term exam rows. `exam_terms.csv` may include `FINAL`, but `course_term_exams.csv` should only contain active term, semester or module checkpoints required by each grade model.
 
 ## Chapter 14: Academic-Year Rollover
 

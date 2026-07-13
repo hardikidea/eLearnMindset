@@ -1,5 +1,5 @@
 subject_code,subject_name,subject_category,applies_to,matrix_is_compulsory,matrix_is_elective,matrix_display_order,matrix_source_note,notes
-ENG,English,Language,PRE01-STD12,1,0,1,,"General K-12 English language and literature. Former scope labels moved from applies_to: PRE01-STD12, Online."
+ENG,English,Language,PRE01-STD12,1,0,1,,General K-12 English language and literature.
 HIN,Hindi,Language,PRE01-STD10,1,0,2,,General K-12 Hindi language and literature.
 REG_LANG,Regional Language,Language,STD01-STD10,1,0,3,,"State board specific regional languages (e.g., Marathi, Tamil, Bengali)."
 MATH,Mathematics,Core,STD01-STD10,1,0,4,,Foundational mathematics for primary to secondary grades.
@@ -52,18 +52,18 @@ MKT_MGT,Marketing Management,Management,UNI_UG|UNI_PG,1,0,50,,"Marketing strateg
 OB,Organizational Behavior,Management,UNI_UG|UNI_PG,1,0,51,,"Corporate culture, HR, and leadership."
 TAX,Taxation,Professional,PRO_CA|PRO_CS,1,0,52,,Direct and Indirect taxes (GST) for CA/CS/B.Com.
 AUDIT,Auditing,Professional,PRO_CA|PRO_CS,1,0,53,,Financial verification and corporate governance.
-UI_UX,User Interface & Experience,Design,UNI_UG|LMS_CERT,1,0,54,,"Digital product design principles. Former scope labels moved from applies_to: UNI_UG, Online."
+UI_UX,User Interface & Experience,Design,UNI_UG|LMS_CERT,1,0,54,,Digital product design principles.
 TYPO,Typography,Design,UNI_UG,1,0,55,,Study of fonts and text presentation.
 ARCH_DSN,Architectural Design,Architecture,UNI_UG,1,0,56,,"Building planning, spaces, and aesthetics."
-CLOUD_ARCH,Cloud Architecture,Emerging Tech,Online Platforms,1,0,57,,"AWS, Azure, GCP infrastructure design."
-PROMPT_ENG,Prompt Engineering,Emerging Tech,Online Platforms,1,0,58,,Interacting with Generative AI and LLMs.
-FSD_WEB,Full Stack Web Development,Emerging Tech,Online Platforms,1,0,59,,"MERN stack, React, Node.js."
-CYBER_SEC,Cybersecurity & Ethical Hacking,Emerging Tech,Online Platforms,1,0,60,,"Network security, cryptography, penetration testing."
-DATA_SCI,Data Science & Big Data,Emerging Tech,Online Platforms,1,0,61,,"Python, R, Hadoop, Data Visualization."
-BLK_CHAIN,Blockchain Fundamentals,Emerging Tech,Online Platforms,1,0,62,,"Crypto, smart contracts, Web3 technologies."
-PROD_MGT,Product Management,Management,Online Platforms,1,0,63,,"Product lifecycles, user research, agile execution."
-JEE_PHY,JEE Physics,Competitive Prep,Exam Prep,1,0,64,,Advanced problem solving in Physics.
-JEE_MATH,JEE Mathematics,Competitive Prep,Exam Prep,1,0,65,,Advanced problem solving in Mathematics.
-NEET_BIO,NEET Biology,Competitive Prep,Exam Prep,1,0,66,,In-depth Botany and Zoology for Medical entrance.
-UPSC_POL,UPSC Indian Polity,Competitive Prep,Exam Prep,1,0,67,,Civil services preparation for governance.
-APT_REAS,Aptitude & Reasoning,Competitive Prep,PRO_CA|PRO_CS|LMS_CERT,1,0,68,,"Quantitative aptitude for placements and banking exams. Former scope labels moved from applies_to: Exam Prep, Placements."
+CLOUD_ARCH,Cloud Architecture,Emerging Tech,LMS_CERT_CLOUD,1,0,57,,"AWS, Azure, GCP infrastructure design."
+PROMPT_ENG,Prompt Engineering,Emerging Tech,UNI_DIP_AI|UNI_PG_AI|LMS_CERT_MLOPS|LMS_CERT_DATA|LMS_CERT_WEB3,1,0,58,,Interacting with Generative AI and LLMs.
+FSD_WEB,Full Stack Web Development,Emerging Tech,UNI_DIP_CS|UNI_UG_BCA|UNI_PG_MCA|LMS_CERT_FSD,1,0,59,,"MERN stack, React, Node.js."
+CYBER_SEC,Cybersecurity & Ethical Hacking,Emerging Tech,UNI_DIP_CS|LMS_CERT_CYBER,1,0,60,,"Network security, cryptography, penetration testing."
+DATA_SCI,Data Science & Big Data,Emerging Tech,UNI_UG_DS|UNI_PG_AI|LMS_CERT_DATA|LMS_CERT_MLOPS,1,0,61,,"Python, R, Hadoop, Data Visualization."
+BLK_CHAIN,Blockchain Fundamentals,Emerging Tech,LMS_CERT_WEB3,1,0,62,,"Crypto, smart contracts, Web3 technologies."
+PROD_MGT,Product Management,Management,UNI_UG_BBA|UNI_PG_MBA|MGT_PGDM|LMS_CERT_PM|LMS_CERT_AGILE,1,0,63,,"Product lifecycles, user research, agile execution."
+JEE_PHY,JEE Physics,Competitive Prep,STD11_SCI|STD12_SCI,1,0,64,,Advanced problem solving in Physics.
+JEE_MATH,JEE Mathematics,Competitive Prep,STD11_SCI|STD12_SCI,1,0,65,,Advanced problem solving in Mathematics.
+NEET_BIO,NEET Biology,Competitive Prep,STD11_SCI|STD12_SCI,1,0,66,,In-depth Botany and Zoology for Medical entrance.
+UPSC_POL,UPSC Indian Polity,Competitive Prep,LMS_SWAYAM_01|UNI_UG_BSW|UNI_PG_MSW,1,0,67,,Civil services preparation for governance.
+APT_REAS,Aptitude & Reasoning,Competitive Prep,PRO_CA|PRO_CS_EXE|LMS_CERT_PM|LMS_NSDC_L4|LMS_NSDC_L6,1,0,68,,Quantitative aptitude for placements and banking exams.

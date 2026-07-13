@@ -1,3 +1,7 @@
 academic_year,term_code,start_date,end_date,notes
-2026-2027,TERM1,2026-04-01,2026-09-30,Term 1 local testing calendar
-2026-2027,TERM2,2026-10-01,2027-03-31,Term 2 local testing calendar
+2026-2027,TERM1,2026-04-01,2026-09-30,School term 1 local testing calendar.
+2026-2027,TERM2,2026-10-01,2027-03-31,School term 2 local testing calendar.
+2026-2027,SEM1,2026-07-01,2026-12-31,University semester 1 planning calendar.
+2026-2027,SEM2,2027-01-01,2027-06-30,University semester 2 planning calendar.
+2026-2027,MODULE,2026-04-01,2027-03-31,Module-based program calendar.
+2026-2027,FINAL,2027-03-01,2027-03-31,Final assessment window.

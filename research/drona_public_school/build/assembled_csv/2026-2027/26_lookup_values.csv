@@ -1,11 +1,71 @@
 lookup_type,code,label
+academic_system,DIPLOMA,Diploma
+academic_system,ONLINE,Online
+academic_system,PROFESSIONAL,Professional
+academic_system,SCHOOL,School
+academic_system,UNIVERSITY,University
+academic_system,VOCATIONAL,Vocational
 academic_year,2026-2027,2026-2027
 academic_year,2027-2028,2027-2028
 academic_year,2028-2029,2028-2029
 academic_year,2029-2030,2029-2030
-medium,GUJ,Gujarati Medium
-medium,ENG,English Medium
-medium,HIN,Hindi Medium
+assessment_period,FINAL,Final exam
+assessment_period,MODULE,Module based
+assessment_period,SEM1,Semester 1
+assessment_period,SEM2,Semester 2
+assessment_period,TERM1,Term 1
+assessment_period,TERM2,Term 2
+board,GSEB,Gujarat Board Education
+division,A,Division A
+division,B,Division B
+division,C,Division C
+division,D,Division D
+division,E,Division E
+division,F,Division F
+grade,AGRI_BSC_Y1,B.Sc (Hons.) Agriculture - Y1
+grade,ART_NIFT_Y1,B.Des (Fashion Design / NIFT) - Y1
+grade,CERT_DRONE,Certificate in Drone Operation
+grade,EDU_BED_Y1,B.Ed (Bachelor of Education) - Y1
+grade,EDU_DELED_Y1,D.El.Ed (Diploma in Elementary Ed) - Y1
+grade,EDU_NTT,Nursery Teacher Training (NTT)
+grade,ITI_ELEC,ITI Electrician (Vocational)
+grade,ITI_FIT,ITI Fitter (Vocational)
+grade,LMS_CERT_AGILE,Certified Scrum Master (CSM/Agile)
+grade,LMS_CERT_CLOUD,Cloud Architect Certification (AWS/Azure)
+grade,LMS_CERT_CYBER,Certified Ethical Hacker (CEH)
+grade,LMS_CERT_DATA,Executive PG in Data Science
+grade,LMS_CERT_DIGMKT,Advanced Digital Marketing Certification
+grade,LMS_CERT_FSD,PG Certification in Full Stack Development
+grade,LMS_CERT_MLOPS,Advanced Certification in MLOps
+grade,LMS_CERT_PM,PG Certificate in Product Management
+grade,LMS_CERT_WEB3,Certification in Blockchain & Web3
+grade,LMS_NSDC_L4,NSDC Skill Certification (NSQF Level 4)
+grade,LMS_NSDC_L6,NSDC Skill Certification (NSQF Level 6)
+grade,LMS_SWAYAM_01,SWAYAM / NPTEL Elective Course
+grade,MED_BAMS_Y1,BAMS (Ayurvedic Medicine) - Y1
+grade,MED_BHMS_Y1,BHMS (Homeopathic Medicine) - Y1
+grade,MED_BJMC_Y1,BA Journalism & Mass Comm (BJMC) - Y1
+grade,MGT_PGDM_Y1,PGDM (Post Grad Diploma in Mgmt) - Y1
+grade,MGT_PGDM_Y2,PGDM (Post Grad Diploma in Mgmt) - Y2
+grade,NUR_BSC_Y1,B.Sc Nursing - Y1
+grade,NUR_GNM_Y1,GNM (General Nursing & Midwifery) - Y1
+grade,NUR_GNM_Y2,GNM (General Nursing & Midwifery) - Y2
+grade,PHA_BPHARM_Y1,B.Pharm (Bachelor of Pharmacy) - Y1
+grade,PHA_DPHARM_Y1,D.Pharm (Diploma in Pharmacy) - Y1
+grade,POLY_CE_Y1,Polytechnic Diploma Civil - Y1
+grade,POLY_CE_Y2,Polytechnic Diploma Civil - Y2
+grade,POLY_CE_Y3,Polytechnic Diploma Civil - Y3
+grade,POLY_ME_Y1,Polytechnic Diploma Mechanical - Y1
+grade,POLY_ME_Y2,Polytechnic Diploma Mechanical - Y2
+grade,POLY_ME_Y3,Polytechnic Diploma Mechanical - Y3
+grade,PRE01,Nursery
+grade,PRE02,Preschool
+grade,PRE03,LKG (Lower Kindergarten)
+grade,PRE04,UKG (Upper Kindergarten)
+grade,PRO_CA_FIN,CA Final
+grade,PRO_CA_FND,CA Foundation (Chartered Accountancy)
+grade,PRO_CA_INT,CA Intermediate
+grade,PRO_CS_EXE,CS Executive (Company Secretary)
 grade,STD01,Standard 1
 grade,STD02,Standard 2
 grade,STD03,Standard 3
@@ -16,37 +76,216 @@ grade,STD07,Standard 7
 grade,STD08,Standard 8
 grade,STD09,Standard 9
 grade,STD10,Standard 10
-grade,STD11,Standard 11
-grade,STD12,Standard 12
+grade,STD11_ART,Standard 11 (Arts)
+grade,STD11_COM,Standard 11 (Commerce)
+grade,STD11_SCI,Standard 11 (Science)
+grade,STD12_ART,Standard 12 (Arts)
+grade,STD12_COM,Standard 12 (Commerce)
+grade,STD12_SCI,Standard 12 (Science)
+grade,UNI_DIP_AI_Y1,Diploma in Generative AI & Prompts
+grade,UNI_DIP_CS_Y1,Diploma in Cybersecurity & Cloud
+grade,UNI_DIP_DM_Y1,Diploma in Digital Marketing
+grade,UNI_DIP_MLT_Y1,Diploma in Medical Lab Tech (MLT) - Y1
+grade,UNI_DIP_MLT_Y2,Diploma in Medical Lab Tech (MLT) - Y2
+grade,UNI_PG_AI_Y1,M.Tech Artificial Intelligence - Y1
+grade,UNI_PG_AI_Y2,M.Tech Artificial Intelligence - Y2
+grade,UNI_PG_LAW_Y1,LL.M (Corporate & Tech Law) - Y1
+grade,UNI_PG_LAW_Y2,LL.M (Corporate & Tech Law) - Y2
+grade,UNI_PG_MARCH_Y1,M.Arch (Architecture) - Y1
+grade,UNI_PG_MBA_Y1,MBA Business Analytics & Tech - Y1
+grade,UNI_PG_MBA_Y2,MBA Business Analytics & Tech - Y2
+grade,UNI_PG_MCA_Y1,MCA (Master of Computer Applications) - Y1
+grade,UNI_PG_MCA_Y2,MCA (Master of Computer Applications) - Y2
+grade,UNI_PG_MCOM_Y1,M.Com (Master of Commerce) - Y1
+grade,UNI_PG_MFA_Y1,MFA (Fine Arts) - Y1
+grade,UNI_PG_MPT_Y1,MPT (Physiotherapy) - Y1
+grade,UNI_PG_MSW_Y1,MSW (Master of Social Work) - Y1
+grade,UNI_PG_SCM_Y1,M.Sc E-Commerce & Supply Chain - Y1
+grade,UNI_PG_SCM_Y2,M.Sc E-Commerce & Supply Chain - Y2
+grade,UNI_PHD_AI,Ph.D. Artificial Intelligence & Ethics
+grade,UNI_PHD_DS,Ph.D. Data Science & Big Data
+grade,UNI_PHD_RE,Ph.D. Renewable Energy & Smart Grid
+grade,UNI_RES_DLITT,Doctor of Letters (D.Litt.)
+grade,UNI_RES_DSC,Doctor of Science (D.Sc.)
+grade,UNI_RES_MPHIL,M.Phil (Master of Philosophy) - Legacy
+grade,UNI_RES_PDF,Post-Doctoral Fellowship (PDF)
+grade,UNI_UG_BARCH_Y1,B.Arch (Architecture) - Y1
+grade,UNI_UG_BARCH_Y5,B.Arch (Architecture) - Y5
+grade,UNI_UG_BBA_Y1,BBA (Bachelor of Business Admin) - Y1
+grade,UNI_UG_BBA_Y2,BBA (Bachelor of Business Admin) - Y2
+grade,UNI_UG_BBA_Y3,BBA (Bachelor of Business Admin) - Y3
+grade,UNI_UG_BCA_Y1,BCA (Bachelor of Computer Applications) - Y1
+grade,UNI_UG_BCA_Y2,BCA (Bachelor of Computer Applications) - Y2
+grade,UNI_UG_BCA_Y3,BCA (Bachelor of Computer Applications) - Y3
+grade,UNI_UG_BFA_Y1,BFA (Fine Arts) - Y1
+grade,UNI_UG_BHM_Y1,BHM (Hotel Management) - Y1
+grade,UNI_UG_BPT_Y1,BPT (Physiotherapy) - Y1
+grade,UNI_UG_BPT_Y4,BPT (Physiotherapy) - Y4
+grade,UNI_UG_BSW_Y1,BSW (Social Work) - Y1
+grade,UNI_UG_CSE_Y1,B.Tech Computer Science (AI/ML) - Y1
+grade,UNI_UG_CSE_Y2,B.Tech Computer Science (AI/ML) - Y2
+grade,UNI_UG_CSE_Y3,B.Tech Computer Science (AI/ML) - Y3
+grade,UNI_UG_CSE_Y4,B.Tech Computer Science (AI/ML) - Y4
+grade,UNI_UG_DS_Y1,B.Sc Data Science & Analytics - Y1
+grade,UNI_UG_DS_Y2,B.Sc Data Science & Analytics - Y2
+grade,UNI_UG_DS_Y3,B.Sc Data Science & Analytics - Y3
+grade,UNI_UG_FT_Y1,BBA Financial Technology (FinTech) - Y1
+grade,UNI_UG_FT_Y2,BBA Financial Technology (FinTech) - Y2
+grade,UNI_UG_FT_Y3,BBA Financial Technology (FinTech) - Y3
+grade,UNI_UG_LAW_Y1,BA LL.B (Integrated Law) - Year 1
+grade,UNI_UG_LAW_Y5,BA LL.B (Integrated Law) - Year 5
+grade,UNI_UG_MED_Y1,MBBS (Medical) - Year 1
+grade,UNI_UG_MED_Y2,MBBS (Medical) - Year 2
+grade,UNI_UG_MED_Y3,MBBS (Medical) - Year 3
+grade,UNI_UG_MED_Y4,MBBS (Medical) - Year 4
+grade,UNI_UG_MED_Y5,MBBS (Medical) - Year 5
+grade,UNI_UG_UX_Y1,B.Des UI/UX & Interaction Design - Y1
+grade,UNI_UG_UX_Y2,B.Des UI/UX & Interaction Design - Y2
+grade,UNI_UG_UX_Y3,B.Des UI/UX & Interaction Design - Y3
+grade,UNI_UG_UX_Y4,B.Des UI/UX & Interaction Design - Y4
+grade,VET_BVSC_Y1,B.V.Sc (Veterinary Science) - Y1
+grade,VOC_HM_Y1,B.Voc Hotel Management - Y1
+grade,VOC_INT_Y1,B.Voc Interior Design - Y1
+grade_stage,Higher Ed,Higher Ed
+grade_stage,Higher Secondary,Higher Secondary
+grade_stage,Online Ed,Online Ed
+grade_stage,Pre-Primary,Pre-Primary
+grade_stage,Primary,Primary
+grade_stage,Professional,Professional
+grade_stage,Secondary,Secondary
+grade_stage,Skill Ed,Skill Ed
+grade_stage,Tech Ed,Tech Ed
+grade_stage,Upper Primary,Upper Primary
+medium,ENG,English Medium
+medium,GUJ,Gujarati Medium
+medium,HIN,Hindi Medium
+promotion_decision,ALUMNI,Alumni
+promotion_decision,MANUAL_CONTINUATION,Manual continuation
+promotion_decision,PROMOTED,Promoted
+promotion_decision,REPEATED,Repeated
+promotion_decision,STREAM_SELECTED,Stream selected
+promotion_decision,TRANSFER_OUT,Transfer out
+result_status,COMPLETED,Completed final standard
+result_status,LEFT,Transferred out / left school
+result_status,PASS,Passed / promoted eligible
+result_status,PENDING,Pending result or documents
+result_status,REPEAT,Repeater / detained
+setup_model,ONLINE_CERTIFICATION,Online certification setup
+setup_model,SCHOOL_YEARLY,School yearly setup
+setup_model,UNIVERSITY_SEMESTER,University semester setup
+setup_model,VOCATIONAL_MODULE,Vocational module setup
+stream,AGR,Agricultural Sci
+stream,AHS,Allied Healthcare
+stream,AIE,Artificial Intelligence
+stream,ARC,Architecture
+stream,ART,Humanities & Arts
+stream,AYU,AYUSH Medicine
+stream,COM,Commerce & Biz
+stream,CSA,Computer Applications
+stream,DES,Design & Creative
+stream,EDU,Education
+stream,EMG,Emerging Tech
+stream,ENG,Engineering & Tech
 stream,GEN,General
-stream,SCI,Science
-stream,COM,Commerce
-stream,ARTS,Arts / Humanities
-division,A,Division A
-division,B,Division B
-division,C,Division C
-division,D,Division D
-division,E,Division E
-division,F,Division F
+stream,HOS,Hospitality & Tourism
+stream,LAW,Law & Legal
+stream,MED,Medical & Health
+stream,MED_COM,Media & Comm
+stream,MGT,Management & Biz
+stream,MKT,Marketing & Biz
+stream,NUR,Nursing
+stream,PHA,Pharmacy
+stream,PRO_FIN,Commerce & Finance
+stream,RES,Research
+stream,SCI,Pure Sciences
+stream,VAR,Various/Interdisciplinary
+stream,VOC_IND,Industrial Training
 subject,ACC,Accountancy
-subject,ART,Art Education
-subject,BA,Business Studies
+subject,AI_ML,Artificial Intelligence & ML
+subject,ANAT,Human Anatomy
+subject,APP_MATH,Applied Mathematics
+subject,APT_REAS,Aptitude & Reasoning
+subject,ARCH_DSN,Architectural Design
+subject,ART,Art & Craft
+subject,AUDIT,Auditing
 subject,BIO,Biology
-subject,CHEM,Chemistry
-subject,CS,Computer Studies
+subject,BLK_CHAIN,Blockchain Fundamentals
+subject,BST,Business Studies
+subject,CHE,Chemistry
+subject,CIRCUITS,Electronic Circuits
+subject,CLOUD_ARCH,Cloud Architecture
+subject,CN,Computer Networks
+subject,COMP,Computer Science
+subject,COM_MED,Community Medicine
+subject,CORP_ACC,Corporate Accounting
+subject,CYBER_SEC,Cybersecurity & Ethical Hacking
+subject,DATA_SCI,Data Science & Big Data
+subject,DBMS,Database Management Systems
+subject,DSA,Data Structures & Algorithms
 subject,ECO,Economics
+subject,ELEC_THEORY,Electrician Theory
 subject,ENG,English
+subject,ENG_DRAW,Engineering Drawing
+subject,ENT,Entrepreneurship
 subject,EVS,Environmental Studies
+subject,FIN_MGT,Financial Management
+subject,FIT_THEORY,Fitter Theory
+subject,FSD_WEB,Full Stack Web Development
 subject,GEO,Geography
-subject,GUJ,Gujarati
 subject,HIN,Hindi
-subject,HIST,History
+subject,HIS,History
+subject,IP,Informatics Practices
+subject,JEE_MATH,JEE Mathematics
+subject,JEE_PHY,JEE Physics
+subject,JURIS,Jurisprudence
+subject,LAW_CON,Constitutional Law
+subject,LAW_CONTR,Contract Law
+subject,LAW_IPC,Indian Penal Code
 subject,MATH,Mathematics
+subject,MATH_ADV,Advanced Mathematics
+subject,MKT_MGT,Marketing Management
+subject,NEET_BIO,NEET Biology
+subject,NUR_FND,Nursing Foundations
+subject,OB,Organizational Behavior
+subject,OS,Operating Systems
+subject,PATH,Pathology
 subject,PE,Physical Education
+subject,PHARM,Pharmacology
 subject,PHY,Physics
-subject,POLSCI,Political Science
+subject,PHYS,Physiology
+subject,POL,Political Science
+subject,PROD_MGT,Product Management
+subject,PROMPT_ENG,Prompt Engineering
 subject,PSY,Psychology
+subject,REG_LANG,Regional Language
 subject,SCI,Science
 subject,SOC,Sociology
-subject,SS,Social Science
-subject,STAT,Statistics
+subject,SST,Social Studies
+subject,SWE,Software Engineering
+subject,TAX,Taxation
+subject,THERMO,Thermodynamics
+subject,TYPO,Typography
+subject,UI_UX,User Interface & Experience
+subject,UPSC_POL,UPSC Indian Polity
+subject,WORK_PRAC,Workshop Practice
+subject_category,Architecture,Architecture
+subject_category,Co-curricular,Co-curricular
+subject_category,Commerce,Commerce
+subject_category,Competitive Prep,Competitive Prep
+subject_category,Core,Core
+subject_category,Design,Design
+subject_category,Elective,Elective
+subject_category,Emerging Tech,Emerging Tech
+subject_category,Engineering,Engineering
+subject_category,Humanities,Humanities
+subject_category,Language,Language
+subject_category,Law,Law
+subject_category,Management,Management
+subject_category,Medical,Medical
+subject_category,Nursing,Nursing
+subject_category,Professional,Professional
+subject_category,Science,Science
+subject_category,Vocational,Vocational
+term_model,MODULE,Module
+term_model,SEMESTER,Semester
+term_model,TWO_TERM,Two Term

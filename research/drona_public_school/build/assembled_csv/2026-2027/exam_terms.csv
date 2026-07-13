@@ -1,4 +1,7 @@
 academic_year,term_code,name,weight_percent,notes
-2026-2027,TERM1,Term 1 Exam,20,Generated term exam definition
-2026-2027,TERM2,Term 2 Exam,20,Generated term exam definition
-2026-2027,FINAL,Final Exam,30,Generated final exam definition
+2026-2027,TERM1,Term 1 Exam,20,School term 1 exam definition.
+2026-2027,TERM2,Term 2 Exam,20,School term 2 exam definition.
+2026-2027,SEM1,Semester 1 Exam,40,University semester 1 exam definition.
+2026-2027,SEM2,Semester 2 Exam,40,University semester 2 exam definition.
+2026-2027,MODULE,Module Checkpoint,40,Online/vocational/professional module checkpoint.
+2026-2027,FINAL,Final Exam,30,Final exam definition.

@@ -17,7 +17,7 @@ from common import PACK_ROOT, PROCESS_ROOT, SOURCE_FILES, expected_headers, mani
 
 
 TEMPLATE_VERSION = "2026.07.07.3"
-MAX_INPUT_ROWS = 2000
+MAX_INPUT_ROWS = 20000
 STYLE_DATA_ROW_LIMIT = 200
 HEADER_FILL = PatternFill("solid", fgColor="D9EAF7")
 META_FILL = PatternFill("solid", fgColor="FFF2CC")
@@ -401,7 +401,7 @@ BASE_PATTERNS = {
     "end_date": "YYYY-MM-DD",
     "firstname": "Given name",
     "format": "topics",
-    "grade_code": "STD<2_DIGITS>, e.g. STD05",
+    "grade_code": "Uppercase grade/program code, e.g. PRE01, STD05, STD11_SCI, UNI_UG_CSE_Y1 or LMS_CERT_DATA",
     "group_idnumber": "<COURSE_IDNUMBER>-<DIVISION_CODE>",
     "group_name": "<Division name> or <Course> - Division <DIVISION_CODE>",
     "idnumber": "<IDNUMBER_FORMULA_BY_SHEET>",
@@ -964,6 +964,20 @@ def status_expected_formula(sheet: str, row_by_sheet: dict[str, int]) -> str | N
     def c(name: str) -> str:
         return f"C{row_by_sheet[name]}"
 
+    def course_term_exam_count() -> str:
+        course_grades = f"'12_courses'!I7:I{MAX_INPUT_ROWS}"
+        grade_codes = f"'05_grades'!A7:A{MAX_INPUT_ROWS}"
+        grade_labels = f"'05_grades'!E7:E{MAX_INPUT_ROWS}"
+        semester_labels = f'(({grade_labels}="University")+({grade_labels}="Diploma"))>0'
+        module_labels = (
+            f'(({grade_labels}="Certification")+({grade_labels}="Vocational")+'
+            f'({grade_labels}="Charter")+({grade_labels}="Professional"))>0'
+        )
+        return (
+            f"SUMPRODUCT(COUNTIF({course_grades},{grade_codes}),"
+            f"IF({semester_labels},2,IF({module_labels},1,2)))"
+        )
+
     formulas = {
         "09_subject_matrix": lambda: c("12_courses"),
         "11_optional_categories": lambda: c("10_categories"),
@@ -987,10 +1001,7 @@ def status_expected_formula(sheet: str, row_by_sheet: dict[str, int]) -> str | N
         "attendance_policy": lambda: f"COUNTA('05_grades'!A7:A{MAX_INPUT_ROWS})",
         "course_certificates": lambda: c("12_courses"),
         "course_final_exams": lambda: c("12_courses"),
-        "course_term_exams": lambda: (
-            f'{c("12_courses")}*COUNTIFS(\'exam_terms\'!B7:B{MAX_INPUT_ROWS},"<>FINAL",'
-            f'\'exam_terms\'!B7:B{MAX_INPUT_ROWS},"<>")'
-        ),
+        "course_term_exams": course_term_exam_count,
         "gradebook_weights": lambda: c("12_courses"),
     }
     factory = formulas.get(sheet)

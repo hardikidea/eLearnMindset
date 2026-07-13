@@ -45,6 +45,7 @@ postgres-data/
 redis-data/
 db-data/
 /plugins/
+.~lock.*#
 
 # Terraform local state and generated working directories.
 **/.terraform/

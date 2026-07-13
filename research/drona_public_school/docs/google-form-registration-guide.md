@@ -141,8 +141,8 @@ Select the current academic placement. These values must match the school master
 | Academic year | Dropdown | Yes | 2026-2027, 2027-2028, 2028-2029, 2029-2030 |
 | Board | Dropdown | Yes | GSEB - Gujarat Board Education |
 | Medium | Dropdown | Yes | GUJ - Gujarati Medium, ENG - English Medium, HIN - Hindi Medium |
-| Grade | Dropdown | Yes | STD01 to STD12 |
-| Stream | Dropdown | Yes | GEN - General, SCI - Science, COM - Commerce, ARTS - Arts / Humanities |
+| Grade | Dropdown | Yes | PRE01, PRE02, STD01-STD10, STD11_SCI, STD11_COM, STD11_ART, STD12_SCI, STD12_COM, STD12_ART |
+| Stream | Dropdown | Yes | GEN - General, SCI - Pure Sciences, COM - Commerce & Biz, ART - Humanities & Arts |
 | Division | Dropdown | Yes | A - Division A through F - Division F |
 | Admission date | Date | Yes | Official admission date |
 | Roll number | Short answer | No | Leave blank if school will assign later |
@@ -152,7 +152,7 @@ Academic rule:
 
 ```text
 STD01 to STD10 must use GEN.
-STD11 and STD12 can use SCI, COM, or ARTS.
+Use STD11_SCI/STD12_SCI with SCI, STD11_COM/STD12_COM with COM, and STD11_ART/STD12_ART with ART.
 ```
 
 ### Section 3: Student IDs
@@ -522,7 +522,7 @@ Before CSV export, verify these relationships:
 | `20_users_students.cohort1` matches an existing generated cohort in `14_cohorts` | Required before Moodle import |
 | `medium_code`, `grade_code`, `stream_code`, and `division_code` use values from master sheets | Required |
 | `STD01` to `STD10` use stream `GEN` | Required |
-| `STD11` and `STD12` use one of `SCI`, `COM`, `ARTS` | Required |
+| Higher-secondary grade and stream pairs match canonical codes: `STD11_SCI`/`STD12_SCI` with `SCI`, `STD11_COM`/`STD12_COM` with `COM`, and `STD11_ART`/`STD12_ART` with `ART` | Required |
 
 The script performs basic validation during form submission. The CLI pack validation must still be run before import because it checks cross-file relationships against the generated course/cohort/enrolment data.
 
@@ -755,7 +755,9 @@ Rule:
 
 ```text
 STD01 to STD10 -> GEN only
-STD11 to STD12 -> SCI, COM, or ARTS
+STD11_SCI/STD12_SCI -> SCI
+STD11_COM/STD12_COM -> COM
+STD11_ART/STD12_ART -> ART
 ```
 
 The script blocks invalid combinations.

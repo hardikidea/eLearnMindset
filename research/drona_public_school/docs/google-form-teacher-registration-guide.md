@@ -144,8 +144,8 @@ Select the course scope this teacher should teach. The script creates one Moodle
 |---|---|---:|---|
 | Academic year | Dropdown | Yes | 2026-2027, 2027-2028, 2028-2029, 2029-2030 |
 | Medium | Dropdown | Yes | GUJ - Gujarati Medium, ENG - English Medium, HIN - Hindi Medium |
-| Grades to teach | Checkboxes | Yes | STD01 to STD12 |
-| Streams to teach | Checkboxes | Yes | GEN - General, SCI - Science, COM - Commerce, ARTS - Arts / Humanities |
+| Grades to teach | Checkboxes | Yes | PRE01, PRE02, STD01-STD10, STD11_SCI, STD11_COM, STD11_ART, STD12_SCI, STD12_COM, STD12_ART |
+| Streams to teach | Checkboxes | Yes | GEN - General, SCI - Pure Sciences, COM - Commerce & Biz, ART - Humanities & Arts |
 | Subjects to teach | Checkboxes | Yes | Subject codes from `master/subjects.csv` |
 | Moodle role | Dropdown | Yes | editingteacher - Editing teacher, teacher - Non-editing teacher |
 
@@ -153,7 +153,7 @@ Academic assignment rules:
 
 ```text
 STD01 to STD10 must use GEN.
-STD11 and STD12 can use SCI, COM, or ARTS.
+Use STD11_SCI/STD12_SCI with SCI, STD11_COM/STD12_COM with COM, and STD11_ART/STD12_ART with ART.
 ```
 
 Subject options:
@@ -405,7 +405,7 @@ Before CSV export, verify these relationships:
 | Every `23_role_assignments.context_identifier` exists in `12_courses.course_code` | Required |
 | `role_shortname` is a valid Moodle role, usually `editingteacher` or `teacher` | Required |
 | `STD01` to `STD10` use stream `GEN` | Required |
-| `STD11` and `STD12` use one of `SCI`, `COM`, `ARTS` | Required |
+| Higher-secondary grade and stream pairs match canonical codes: `STD11_SCI`/`STD12_SCI` with `SCI`, `STD11_COM`/`STD12_COM` with `COM`, and `STD11_ART`/`STD12_ART` with `ART` | Required |
 | At least one matching course exists for the selected academic year, medium, grade, stream, and subject combination | Required |
 
 The script performs basic validation during form submission. The CLI pack validation must still be run before import because it checks cross-file relationships against generated courses and Moodle role rules.

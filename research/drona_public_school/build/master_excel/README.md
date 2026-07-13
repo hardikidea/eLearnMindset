@@ -16,9 +16,9 @@ The full local-testing dataset is intentionally kept in CSV form because it cont
 
 - 5,220 students
 - 4,698 parents
-- 2,160 groups per academic year
-- 2,160 enrolment mappings per academic year
-- 360 certificate mappings per academic year
+- 19,332 groups per academic year
+- 19,332 enrolment mappings per academic year
+- 3,222 certificate mappings per academic year
 
 Use the capped workbook for quick structure, header and example review. Use the full predefined workbook when you need to inspect all generated data in one Excel file. Use `build/assembled_csv/<academic-year>/` for real Moodle validation and import.
 
@@ -75,7 +75,15 @@ Supported subject scope tokens:
 - Grade plus stream: `STD11_SCI|STD12_SCI`, `STD11_COM|STD12_COM`.
 - Compact grade prefix: `ITI`, `POLY`, `UNI_UG`, `NUR_GNM`, `PRO_CA`, `LMS_CERT`.
 
-The generated subject matrix ignores descriptive phrases that are not valid scope tokens, so labels such as `Online Platforms` or `Exam Prep` should be converted to real grade codes/prefixes before they are expected to generate rows.
+The generated subject matrix ignores descriptive phrases that are not valid scope tokens. Use real grade codes, stream-specific grade codes, ranges, or compact program prefixes when a subject should generate rows.
+
+The pack supports three academic models from `05_grades.moodle_label`:
+
+- `School`: two term exams, `TERM1` and `TERM2`.
+- `University` or `Diploma`: two semester exams, `SEM1` and `SEM2`.
+- `Certification`, `Vocational`, `Charter`, or `Professional`: one module checkpoint, `MODULE`.
+
+`course_term_exams` uses this grade label dynamically. Do not hardcode term counts in the macro or status formulas.
 
 `34_grade_band_adjust` is the central policy sheet for generated course behavior. The macros read this sheet to set:
 
@@ -133,7 +141,7 @@ Primary ID formulas used by the macros:
 
 Keep a backup copy before running macros against manually edited data.
 
-Most static/reference sheets are intentionally not rebuilt by macros. Manual registration sheets, lookup sheets, template definition sheets, promotion actions, and `43_content_template` remain operator-managed until the school confirms exact content and policy. The safe generated operational-reference sheets are `29_summary`, `46_rollover_checklist`, `58_alumni_cohorts`, `59_archive_policy`, and `61_compatibility`.
+Most static/reference sheets are intentionally not rebuilt by macros. Manual registration sheets, lookup sheets, template definition sheets and promotion action sheets remain operator-managed until the school confirms exact content and policy. `43_content_template` is generated from the master subject matrix so every course has a default content placeholder, but operators should still update real URLs, descriptions and source links before production import. The safe generated operational-reference sheets are `29_summary`, `46_rollover_checklist`, `58_alumni_cohorts`, `59_archive_policy`, and `61_compatibility`.
 
 Macro source is maintained in `research/drona_public_school/master_import_process/scripts/libreoffice_master_tools.bas`. Regenerate the ODS with:
 

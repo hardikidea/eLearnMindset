@@ -253,6 +253,20 @@ def status_expected_formula(sheet: str, row_by_sheet: dict[str, int]) -> str | N
     def c(name: str) -> str:
         return f"C{row_by_sheet[name]}"
 
+    def course_term_exam_count() -> str:
+        course_grades = f"'12_courses'!I{ODS_DATA_START_ROW}:I{MAX_STATUS_ROWS}"
+        grade_codes = f"'05_grades'!A{ODS_DATA_START_ROW}:A{MAX_STATUS_ROWS}"
+        grade_labels = f"'05_grades'!E{ODS_DATA_START_ROW}:E{MAX_STATUS_ROWS}"
+        semester_labels = f'(({grade_labels}="University")+({grade_labels}="Diploma"))>0'
+        module_labels = (
+            f'(({grade_labels}="Certification")+({grade_labels}="Vocational")+'
+            f'({grade_labels}="Charter")+({grade_labels}="Professional"))>0'
+        )
+        return (
+            f"SUMPRODUCT(COUNTIF({course_grades},{grade_codes}),"
+            f"IF({semester_labels},2,IF({module_labels},1,2)))"
+        )
+
     formulas = {
         "09_subject_matrix": lambda: c("12_courses"),
         "11_optional_categories": lambda: c("10_categories"),
@@ -276,10 +290,7 @@ def status_expected_formula(sheet: str, row_by_sheet: dict[str, int]) -> str | N
         "attendance_policy": lambda: f"COUNTA('05_grades'!A{ODS_DATA_START_ROW}:A{MAX_STATUS_ROWS})",
         "course_certificates": lambda: c("12_courses"),
         "course_final_exams": lambda: c("12_courses"),
-        "course_term_exams": lambda: (
-            f'{c("12_courses")}*COUNTIFS(\'exam_terms\'!B{ODS_DATA_START_ROW}:B{MAX_STATUS_ROWS},"<>FINAL",'
-            f'\'exam_terms\'!B{ODS_DATA_START_ROW}:B{MAX_STATUS_ROWS},"<>")'
-        ),
+        "course_term_exams": course_term_exam_count,
         "gradebook_weights": lambda: c("12_courses"),
     }
     factory = formulas.get(sheet)

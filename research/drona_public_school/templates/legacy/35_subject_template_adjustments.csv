@@ -1,10 +1,19 @@
 subject_area,subject_codes,recommended_template_additions,default_extra_sections
-Mathematics,MATH|AMATH|FNUM,"Practice sets, formula sheet, step-by-step examples, auto-graded quizzes",Use existing Chapter sections; add chapter-wise problem sets and keep the completion gate as a short mastery quiz.
-Science,SCI|PHY|CHEM|BIO|EVS,"Lab safety, experiments, diagrams, observations, practical reports",Use existing Chapter sections; add experiment/practical evidence in assignment activities and keep personal data out of tasks.
-English / Languages,ENG|GUJ|HIN|SAN|MAR|URD|TAM|FRE|GER|SPA|RHYM|FLIT,"Reading passages, grammar tasks, writing assignments, speaking/listening tasks",Use existing Chapter sections; use assignments for writing/speaking evidence and gates for comprehension checks.
-Social Studies,SS|HIST|POLSCI|GEO|SOC|PSY|CIV|ECO,"Maps, timelines, case studies, source analysis, essay assignments",Use existing Chapter sections; add maps/source activities and chapter gates for concept checks.
-Computer Science,CS|IT|ICT|AI|CODING,"Coding tasks, project files, quizzes, practical submissions",Use existing Chapter sections; use assignments for code/practical submissions and gates for theory or practical checks.
-Art / Music,ART|MUSIC|ARTC|DANCE|DRAMA,"Portfolio submissions, performance tasks, reflection journals",Use existing Chapter sections; use assignments for portfolio/performance evidence and lighter teacher-reviewed gates.
-Physical Education,PE|YOGA|SPORTS|HEALTH,"Activity logs, fitness records, practical assessment rubric",Use existing Chapter sections; avoid sensitive health data and use rubrics for practical assessment.
-Commerce,ACC|BST|BA|STAT|ENT|ECO,"Accounting practice sets, case studies, problem-solving worksheets, project work",Use existing Chapter sections; add commerce problem sets and case-study assignments with chapter gates for mastery.
-Vocational / Skill,VOC|SKILL|WORKEDU,"Practical tasks, workplace safety, skill demonstration, portfolio evidence",Use existing Chapter sections; use assignments for skill evidence and gates for safety/process checks.
+Architecture,ARCH_DSN,"Studio briefs, drawings, model reviews and site-analysis tasks",Use portfolio submissions and staged design review checkpoints.
+Co-curricular,ART|PE,"Portfolio/performance evidence, activity logs and reflection",Use lighter completion gates and teacher-reviewed participation evidence.
+Commerce,APP_MATH|ACC|BST|ECO|CORP_ACC,"Accounting practice sets, case studies, worksheets and project work",Use practice activities plus teacher-reviewed business/accounting assignments.
+Competitive Prep,JEE_PHY|JEE_MATH|NEET_BIO|UPSC_POL|APT_REAS,"Timed quizzes, previous-year questions, explanations and performance review","Use quiz banks, analytics and retake rules for exam preparation."
+Core,MATH|SCI|SST|EVS,"Concept overview, practice worksheet, quiz, assignment and mastery gate",Keep chapter gates short and align assignments to board/unit outcomes.
+Design,UI_UX|TYPO,"Portfolio tasks, critique boards, design briefs and usability review",Use assignments for portfolio evidence and discussion for critique.
+Elective,COMP|IP|ENT,"Exploratory activities, short projects and optional extension tasks",Use flexible completion with teacher-reviewed project evidence.
+Emerging Tech,CLOUD_ARCH|PROMPT_ENG|FSD_WEB|CYBER_SEC|DATA_SCI|BLK_CHAIN,"Tool labs, guided demos, project tasks and applied reflection",Use practical assignments and short quizzes for tool/concept validation.
+Engineering,DSA|DBMS|OS|CN|AI_ML|SWE|THERMO|CIRCUITS,"Lab work, code/practical tasks, design problems and project checkpoints",Use assignments for lab/project evidence and quizzes for theory checkpoints.
+Humanities,HIS|GEO|POL|PSY|SOC,"Maps, timelines, case studies, source analysis and essay assignments",Use document/source analysis and reflective written submissions.
+Language,ENG|HIN|REG_LANG,"Reading passages, grammar tasks, writing assignments, speaking/listening tasks","Use chapter sections for reading, grammar, writing and oral evidence."
+Law,LAW_CON|LAW_IPC|LAW_CONTR|JURIS,"Bare act reading, case briefs, argument drafting and moot tasks",Use assignments for case analysis and discussion activities for argumentation.
+Management,FIN_MGT|MKT_MGT|OB|PROD_MGT,"Case studies, simulations, presentations and applied project work","Use group work, reflective journals and short concept quizzes."
+Medical,ANAT|PHYS|PHARM|PATH|COM_MED,"Clinical concepts, diagrams, case scenarios and practical competency checks",Use competency-style assignments and keep sensitive patient data out.
+Nursing,NUR_FND,"Clinical procedure checklist, case notes, skill demonstration and viva prep",Use rubrics for practical skill evidence and reflective clinical logs.
+Professional,TAX|AUDIT,"Exam-style practice, standards reference, mock tests and revision plans",Use timed quizzes and structured practice assignments.
+Science,PHY|CHE|BIO|MATH_ADV,"Lab safety, experiments, diagrams, observations and practical reports",Use assignments for lab/practical evidence and quizzes for conceptual checks.
+Vocational,ENG_DRAW|WORK_PRAC|ELEC_THEORY|FIT_THEORY,"Safety checklist, practical demonstration, workplace evidence and portfolio",Use rubrics and evidence uploads for skill demonstration.

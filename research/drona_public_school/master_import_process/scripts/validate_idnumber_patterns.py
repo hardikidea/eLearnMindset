@@ -83,8 +83,8 @@ def validate(source: Path, year: str) -> list[str]:
         if not re.fullmatch(r"[A-Z][A-Z0-9_]*", value):
             add(errors, f"Invalid uppercase code: {value}")
     for value in grade_codes:
-        if not re.fullmatch(r"STD\d{2}", value):
-            add(errors, f"Invalid grade_code, expected STD##: {value}")
+        if not re.fullmatch(r"[A-Z][A-Z0-9_]*", value):
+            add(errors, f"Invalid grade_code, expected uppercase code such as STD05, STD11_SCI, UNI_UG_CSE_Y1 or LMS_CERT_DATA: {value}")
     for value in division_codes:
         if not re.fullmatch(r"[A-Z][A-Z0-9]*", value):
             add(errors, f"Invalid division_code: {value}")

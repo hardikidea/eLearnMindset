@@ -175,11 +175,13 @@ def check_row_counts(errors: list[str], workbook) -> None:
         filename = str(status_ws.cell(row, 2).value or "")
         if "course_term_exams.csv" in filename:
             formula = str(status_ws.cell(row, 4).value or "")
-            if "'exam_terms'!B7:B" not in formula:
-                fail(errors, "status formula for course_term_exams must count exam_terms term_code column B")
-            if "'exam_terms'!A7:A" in formula:
-                fail(errors, "status formula for course_term_exams incorrectly counts academic_year column A")
-            print("OK course_term_exams status formula uses exam_terms term_code column B")
+            if "SUMPRODUCT(COUNTIF('12_courses'!I7:I" not in formula:
+                fail(errors, "status formula for course_term_exams must count 12_courses grade_code values")
+            if "'05_grades'!E7:E" not in formula:
+                fail(errors, "status formula for course_term_exams must use 05_grades moodle_label values")
+            if "'exam_terms'!A7:A" in formula or "'exam_terms'!B7:B" in formula:
+                fail(errors, "status formula for course_term_exams must not use a fixed exam_terms multiplier")
+            print("OK course_term_exams status formula uses grade-driven term model")
             break
     else:
         fail(errors, "status sheet missing course_term_exams.csv row")
@@ -269,8 +271,10 @@ def check_ods_package(errors: list[str], ods_path: Path) -> None:
         ]:
             if token not in content:
                 fail(errors, f"ODS status sheet missing macro action token: {token}")
-        if "COUNTIFS([$exam_terms.B6:.B100000];&quot;&lt;&gt;FINAL&quot;" not in content:
-            fail(errors, "ODS course_term_exams status formula must count exam_terms term_code column B from row 6")
+        if "SUMPRODUCT(COUNTIF([$&apos;12_courses&apos;.I6:.I100000]" not in content and "SUMPRODUCT(COUNTIF([$12_courses.I6:.I100000]" not in content:
+            fail(errors, "ODS course_term_exams status formula must count 12_courses grade_code values from row 6")
+        if "&apos;05_grades&apos;.E6" not in content and "$05_grades.E6" not in content:
+            fail(errors, "ODS course_term_exams status formula must use 05_grades moodle_label values from row 6")
         if "00_MACRO_GUIDE" in content and "status" in content:
             print("OK ODS macro package")
 

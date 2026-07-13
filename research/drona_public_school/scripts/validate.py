@@ -12,6 +12,31 @@ def optional_rows(path):
         return []
     return rows(path)
 
+def education_system(grade):
+    label = (grade.get('moodle_label', '') or '').upper()
+    stage = (grade.get('stage', '') or '').upper()
+    if label == 'SCHOOL':
+        return 'SCHOOL'
+    if label == 'UNIVERSITY':
+        return 'UNIVERSITY'
+    if label == 'VOCATIONAL':
+        return 'VOCATIONAL'
+    if label == 'CHARTER':
+        return 'PROFESSIONAL'
+    if label == 'CERTIFICATION':
+        return 'ONLINE'
+    if 'HIGHER ED' in stage:
+        return 'UNIVERSITY'
+    return label or 'GENERAL'
+
+def expected_term_codes(grade):
+    system = education_system(grade)
+    if system in {'UNIVERSITY', 'DIPLOMA'}:
+        return {'SEM1', 'SEM2'}
+    if system in {'ONLINE', 'VOCATIONAL', 'PROFESSIONAL'}:
+        return {'MODULE'}
+    return {'TERM1', 'TERM2'}
+
 def fail(errors, msg):
     errors.append(msg)
 
@@ -218,6 +243,7 @@ def validate_year(year):
     check_unique_key(errors, gradebook_weights, ['course_code'], f'{year}/gradebook_weights.csv')
     course_codes = {r['course_code'] for r in courses}
     course_by_code = {r['course_code']: r for r in courses}
+    grade_by_code = {r['grade_code']: r for r in rows(PACK / 'master' / 'grades.csv')}
     cohort_codes = {r['cohort_code'] for r in cohorts}
     cert_codes = {r['course_code'] for r in certs if r.get('certificate_enabled') == '1'}
     if cert_codes != course_codes:
@@ -227,8 +253,10 @@ def validate_year(year):
     for r in terms:
         term_counts.setdefault(r['course_code'], set()).add(r['term_code'])
     for c in course_codes:
-        if term_counts.get(c) != {'TERM1','TERM2'}:
-            fail(errors, f'{year}: course missing TERM1/TERM2 rows: {c}')
+        course = course_by_code.get(c, {})
+        expected_terms = expected_term_codes(grade_by_code.get(course.get('grade_code', ''), {}))
+        if term_counts.get(c) != expected_terms:
+            fail(errors, f'{year}: course term rows expected {sorted(expected_terms)} for {c}, got {sorted(term_counts.get(c, set()))}')
             break
     final_codes = {r['course_code'] for r in finals if r.get('enabled') == '1'}
     if final_codes != course_codes:

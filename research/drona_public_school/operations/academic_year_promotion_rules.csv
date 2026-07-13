@@ -1,28 +1,129 @@
 rule_code,from_grade_code,from_stream_code,result_status,promotion_decision,to_grade_code,to_stream_code,requires_manual_review,notes
-PROMOTE_NUR_TO_LKG,NUR,GEN,PASS,PROMOTED,LKG,GEN,0,Default general promotion rule.
-PROMOTE_LKG_TO_UKG,LKG,GEN,PASS,PROMOTED,UKG,GEN,0,Default general promotion rule.
-PROMOTE_UKG_TO_STD01,UKG,GEN,PASS,PROMOTED,STD01,GEN,0,Default general promotion rule.
-PROMOTE_BAL_TO_STD01,BAL,GEN,PASS,PROMOTED,STD01,GEN,0,Default general promotion rule.
-PROMOTE_STD01_TO_STD02,STD01,GEN,PASS,PROMOTED,STD02,GEN,0,Default general promotion rule.
-PROMOTE_STD02_TO_STD03,STD02,GEN,PASS,PROMOTED,STD03,GEN,0,Default general promotion rule.
-PROMOTE_STD03_TO_STD04,STD03,GEN,PASS,PROMOTED,STD04,GEN,0,Default general promotion rule.
-PROMOTE_STD04_TO_STD05,STD04,GEN,PASS,PROMOTED,STD05,GEN,0,Default general promotion rule.
-PROMOTE_STD05_TO_STD06,STD05,GEN,PASS,PROMOTED,STD06,GEN,0,Default general promotion rule.
-PROMOTE_STD06_TO_STD07,STD06,GEN,PASS,PROMOTED,STD07,GEN,0,Default general promotion rule.
-PROMOTE_STD07_TO_STD08,STD07,GEN,PASS,PROMOTED,STD08,GEN,0,Default general promotion rule.
-PROMOTE_STD08_TO_STD09,STD08,GEN,PASS,PROMOTED,STD09,GEN,0,Default general promotion rule.
-PROMOTE_STD09_TO_STD10,STD09,GEN,PASS,PROMOTED,STD10,GEN,0,Default general promotion rule.
-STD10_TO_STD11_SCI,STD10,GEN,PASS,STREAM_SELECTED,STD11,SCI,1,Std 10 to Std 11 requires manual stream selection and subject validation.
-STD10_TO_STD11_COM,STD10,GEN,PASS,STREAM_SELECTED,STD11,COM,1,Std 10 to Std 11 requires manual stream selection and subject validation.
-STD10_TO_STD11_ARTS,STD10,GEN,PASS,STREAM_SELECTED,STD11,ARTS,1,Std 10 to Std 11 requires manual stream selection and subject validation.
-STD10_TO_STD11_VOC,STD10,GEN,PASS,STREAM_SELECTED,STD11,VOC,1,Std 10 to Std 11 requires manual stream selection and subject validation.
-STD11_SCI_TO_STD12_SCI,STD11,SCI,PASS,PROMOTED,STD12,SCI,0,Continue same stream to Std 12 unless school approves stream change.
-STD11_COM_TO_STD12_COM,STD11,COM,PASS,PROMOTED,STD12,COM,0,Continue same stream to Std 12 unless school approves stream change.
-STD11_ARTS_TO_STD12_ARTS,STD11,ARTS,PASS,PROMOTED,STD12,ARTS,0,Continue same stream to Std 12 unless school approves stream change.
-STD11_VOC_TO_STD12_VOC,STD11,VOC,PASS,PROMOTED,STD12,VOC,0,Continue same stream to Std 12 unless school approves stream change.
-STD12_SCI_TO_ALUMNI,STD12,SCI,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,Mark completed students as alumni; keep records and avoid deleting users.
-STD12_COM_TO_ALUMNI,STD12,COM,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,Mark completed students as alumni; keep records and avoid deleting users.
-STD12_ARTS_TO_ALUMNI,STD12,ARTS,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,Mark completed students as alumni; keep records and avoid deleting users.
-STD12_VOC_TO_ALUMNI,STD12,VOC,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,Mark completed students as alumni; keep records and avoid deleting users.
+PROMOTE_PRE01_TO_PRE02,PRE01,GEN,PASS,PROMOTED,PRE02,GEN,0,Default school annual promotion rule derived from grade display order.
+PROMOTE_PRE02_TO_PRE03,PRE02,GEN,PASS,PROMOTED,PRE03,GEN,0,Default school annual promotion rule derived from grade display order.
+PROMOTE_PRE03_TO_PRE04,PRE03,GEN,PASS,PROMOTED,PRE04,GEN,0,Default school annual promotion rule derived from grade display order.
+PROMOTE_PRE04_TO_STD01,PRE04,GEN,PASS,PROMOTED,STD01,GEN,0,Default school annual promotion rule derived from grade display order.
+PROMOTE_STD01_TO_STD02,STD01,GEN,PASS,PROMOTED,STD02,GEN,0,Default school annual promotion rule derived from grade display order.
+PROMOTE_STD02_TO_STD03,STD02,GEN,PASS,PROMOTED,STD03,GEN,0,Default school annual promotion rule derived from grade display order.
+PROMOTE_STD03_TO_STD04,STD03,GEN,PASS,PROMOTED,STD04,GEN,0,Default school annual promotion rule derived from grade display order.
+PROMOTE_STD04_TO_STD05,STD04,GEN,PASS,PROMOTED,STD05,GEN,0,Default school annual promotion rule derived from grade display order.
+PROMOTE_STD05_TO_STD06,STD05,GEN,PASS,PROMOTED,STD06,GEN,0,Default school annual promotion rule derived from grade display order.
+PROMOTE_STD06_TO_STD07,STD06,GEN,PASS,PROMOTED,STD07,GEN,0,Default school annual promotion rule derived from grade display order.
+PROMOTE_STD07_TO_STD08,STD07,GEN,PASS,PROMOTED,STD08,GEN,0,Default school annual promotion rule derived from grade display order.
+PROMOTE_STD08_TO_STD09,STD08,GEN,PASS,PROMOTED,STD09,GEN,0,Default school annual promotion rule derived from grade display order.
+PROMOTE_STD09_TO_STD10,STD09,GEN,PASS,PROMOTED,STD10,GEN,0,Default school annual promotion rule derived from grade display order.
+STD10_TO_STD11_SCI,STD10,GEN,PASS,STREAM_SELECTED,STD11_SCI,SCI,1,Std 10 to Std 11 requires manual stream selection and subject validation.
+STD10_TO_STD11_COM,STD10,GEN,PASS,STREAM_SELECTED,STD11_COM,COM,1,Std 10 to Std 11 requires manual stream selection and subject validation.
+STD10_TO_STD11_ART,STD10,GEN,PASS,STREAM_SELECTED,STD11_ART,ART,1,Std 10 to Std 11 requires manual stream selection and subject validation.
+STD11_SCI_TO_STD12_SCI,STD11_SCI,SCI,PASS,PROMOTED,STD12_SCI,SCI,0,Continue the same higher-secondary stream to Standard 12 unless school approves a stream change.
+STD11_COM_TO_STD12_COM,STD11_COM,COM,PASS,PROMOTED,STD12_COM,COM,0,Continue the same higher-secondary stream to Standard 12 unless school approves a stream change.
+STD11_ART_TO_STD12_ART,STD11_ART,ART,PASS,PROMOTED,STD12_ART,ART,0,Continue the same higher-secondary stream to Standard 12 unless school approves a stream change.
+STD12_SCI_TO_ALUMNI,STD12_SCI,SCI,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,Mark completed school students as alumni; keep records and avoid deleting users.
+STD12_COM_TO_ALUMNI,STD12_COM,COM,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,Mark completed school students as alumni; keep records and avoid deleting users.
+STD12_ART_TO_ALUMNI,STD12_ART,ART,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,Mark completed school students as alumni; keep records and avoid deleting users.
+ITI_ELEC_TO_ALUMNI,ITI_ELEC,VOC_IND,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
+ITI_FIT_TO_ALUMNI,ITI_FIT,VOC_IND,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
+POLY_ME_Y1_TO_POLY_ME_Y2,POLY_ME_Y1,ENG,PASS,PROMOTED,POLY_ME_Y2,ENG,0,University/diploma semester-year progression rule.
+POLY_ME_Y2_TO_POLY_ME_Y3,POLY_ME_Y2,ENG,PASS,PROMOTED,POLY_ME_Y3,ENG,0,University/diploma semester-year progression rule.
+POLY_ME_Y3_TO_ALUMNI,POLY_ME_Y3,ENG,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,Final listed program year or certification completion; archive as alumni/completed.
+POLY_CE_Y1_TO_POLY_CE_Y2,POLY_CE_Y1,ENG,PASS,PROMOTED,POLY_CE_Y2,ENG,0,University/diploma semester-year progression rule.
+POLY_CE_Y2_TO_POLY_CE_Y3,POLY_CE_Y2,ENG,PASS,PROMOTED,POLY_CE_Y3,ENG,0,University/diploma semester-year progression rule.
+POLY_CE_Y3_TO_ALUMNI,POLY_CE_Y3,ENG,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,Final listed program year or certification completion; archive as alumni/completed.
+UNI_DIP_CS_Y1_TO_ALUMNI,UNI_DIP_CS_Y1,CSA,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
+UNI_DIP_AI_Y1_TO_ALUMNI,UNI_DIP_AI_Y1,AIE,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
+UNI_DIP_DM_Y1_TO_ALUMNI,UNI_DIP_DM_Y1,MKT,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
+UNI_DIP_MLT_Y1_TO_UNI_DIP_MLT_Y2,UNI_DIP_MLT_Y1,AHS,PASS,PROMOTED,UNI_DIP_MLT_Y2,AHS,0,University/diploma semester-year progression rule.
+UNI_DIP_MLT_Y2_TO_ALUMNI,UNI_DIP_MLT_Y2,AHS,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,Final listed program year or certification completion; archive as alumni/completed.
+NUR_GNM_Y1_TO_NUR_GNM_Y2,NUR_GNM_Y1,NUR,PASS,PROMOTED,NUR_GNM_Y2,NUR,0,University/diploma semester-year progression rule.
+NUR_GNM_Y2_TO_ALUMNI,NUR_GNM_Y2,NUR,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,Final listed program year or certification completion; archive as alumni/completed.
+PHA_DPHARM_Y1_TO_ALUMNI,PHA_DPHARM_Y1,PHA,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
+EDU_NTT_TO_ALUMNI,EDU_NTT,EDU,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
+EDU_DELED_Y1_TO_ALUMNI,EDU_DELED_Y1,EDU,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
+UNI_UG_CSE_Y1_TO_UNI_UG_CSE_Y2,UNI_UG_CSE_Y1,ENG,PASS,PROMOTED,UNI_UG_CSE_Y2,ENG,0,University/diploma semester-year progression rule.
+UNI_UG_CSE_Y2_TO_UNI_UG_CSE_Y3,UNI_UG_CSE_Y2,ENG,PASS,PROMOTED,UNI_UG_CSE_Y3,ENG,0,University/diploma semester-year progression rule.
+UNI_UG_CSE_Y3_TO_UNI_UG_CSE_Y4,UNI_UG_CSE_Y3,ENG,PASS,PROMOTED,UNI_UG_CSE_Y4,ENG,0,University/diploma semester-year progression rule.
+UNI_UG_CSE_Y4_TO_ALUMNI,UNI_UG_CSE_Y4,ENG,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,Final listed program year or certification completion; archive as alumni/completed.
+UNI_UG_DS_Y1_TO_UNI_UG_DS_Y2,UNI_UG_DS_Y1,SCI,PASS,PROMOTED,UNI_UG_DS_Y2,SCI,0,University/diploma semester-year progression rule.
+UNI_UG_DS_Y2_TO_UNI_UG_DS_Y3,UNI_UG_DS_Y2,SCI,PASS,PROMOTED,UNI_UG_DS_Y3,SCI,0,University/diploma semester-year progression rule.
+UNI_UG_DS_Y3_TO_ALUMNI,UNI_UG_DS_Y3,SCI,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,Final listed program year or certification completion; archive as alumni/completed.
+UNI_UG_FT_Y1_TO_UNI_UG_FT_Y2,UNI_UG_FT_Y1,GEN,PASS,PROMOTED,UNI_UG_FT_Y2,GEN,0,University/diploma semester-year progression rule.
+UNI_UG_FT_Y2_TO_UNI_UG_FT_Y3,UNI_UG_FT_Y2,GEN,PASS,PROMOTED,UNI_UG_FT_Y3,GEN,0,University/diploma semester-year progression rule.
+UNI_UG_FT_Y3_TO_ALUMNI,UNI_UG_FT_Y3,GEN,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,Final listed program year or certification completion; archive as alumni/completed.
+UNI_UG_UX_Y1_TO_UNI_UG_UX_Y2,UNI_UG_UX_Y1,DES,PASS,PROMOTED,UNI_UG_UX_Y2,DES,0,University/diploma semester-year progression rule.
+UNI_UG_UX_Y2_TO_UNI_UG_UX_Y3,UNI_UG_UX_Y2,DES,PASS,PROMOTED,UNI_UG_UX_Y3,DES,0,University/diploma semester-year progression rule.
+UNI_UG_UX_Y3_TO_UNI_UG_UX_Y4,UNI_UG_UX_Y3,DES,PASS,PROMOTED,UNI_UG_UX_Y4,DES,0,University/diploma semester-year progression rule.
+UNI_UG_UX_Y4_TO_ALUMNI,UNI_UG_UX_Y4,DES,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,Final listed program year or certification completion; archive as alumni/completed.
+UNI_UG_LAW_Y1_TO_UNI_UG_LAW_Y5,UNI_UG_LAW_Y1,LAW,PASS,MANUAL_CONTINUATION,UNI_UG_LAW_Y5,LAW,1,Missing intermediate years in the master grade list; review before promotion.
+UNI_UG_LAW_Y5_TO_ALUMNI,UNI_UG_LAW_Y5,LAW,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,Final listed program year or certification completion; archive as alumni/completed.
+UNI_UG_MED_Y1_TO_UNI_UG_MED_Y2,UNI_UG_MED_Y1,MED,PASS,PROMOTED,UNI_UG_MED_Y2,MED,0,University/diploma semester-year progression rule.
+UNI_UG_MED_Y2_TO_UNI_UG_MED_Y3,UNI_UG_MED_Y2,MED,PASS,PROMOTED,UNI_UG_MED_Y3,MED,0,University/diploma semester-year progression rule.
+UNI_UG_MED_Y3_TO_UNI_UG_MED_Y4,UNI_UG_MED_Y3,MED,PASS,PROMOTED,UNI_UG_MED_Y4,MED,0,University/diploma semester-year progression rule.
+UNI_UG_MED_Y4_TO_UNI_UG_MED_Y5,UNI_UG_MED_Y4,MED,PASS,PROMOTED,UNI_UG_MED_Y5,MED,0,University/diploma semester-year progression rule.
+UNI_UG_MED_Y5_TO_ALUMNI,UNI_UG_MED_Y5,MED,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,Final listed program year or certification completion; archive as alumni/completed.
+MED_BAMS_Y1_TO_ALUMNI,MED_BAMS_Y1,AYU,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
+MED_BHMS_Y1_TO_ALUMNI,MED_BHMS_Y1,AYU,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
+VET_BVSC_Y1_TO_ALUMNI,VET_BVSC_Y1,AGR,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
+NUR_BSC_Y1_TO_ALUMNI,NUR_BSC_Y1,NUR,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
+PHA_BPHARM_Y1_TO_ALUMNI,PHA_BPHARM_Y1,PHA,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
+EDU_BED_Y1_TO_ALUMNI,EDU_BED_Y1,EDU,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
+AGRI_BSC_Y1_TO_ALUMNI,AGRI_BSC_Y1,AGR,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
+ART_NIFT_Y1_TO_ALUMNI,ART_NIFT_Y1,DES,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
+MED_BJMC_Y1_TO_ALUMNI,MED_BJMC_Y1,MED_COM,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
+VOC_HM_Y1_TO_ALUMNI,VOC_HM_Y1,HOS,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
+VOC_INT_Y1_TO_ALUMNI,VOC_INT_Y1,DES,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
+PRO_CA_FND_TO_ALUMNI,PRO_CA_FND,PRO_FIN,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
+PRO_CA_INT_TO_ALUMNI,PRO_CA_INT,PRO_FIN,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
+PRO_CA_FIN_TO_ALUMNI,PRO_CA_FIN,PRO_FIN,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
+PRO_CS_EXE_TO_ALUMNI,PRO_CS_EXE,LAW,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
+UNI_PG_AI_Y1_TO_UNI_PG_AI_Y2,UNI_PG_AI_Y1,AIE,PASS,PROMOTED,UNI_PG_AI_Y2,AIE,0,University/diploma semester-year progression rule.
+UNI_PG_AI_Y2_TO_ALUMNI,UNI_PG_AI_Y2,AIE,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,Final listed program year or certification completion; archive as alumni/completed.
+UNI_PG_MBA_Y1_TO_UNI_PG_MBA_Y2,UNI_PG_MBA_Y1,MGT,PASS,PROMOTED,UNI_PG_MBA_Y2,MGT,0,University/diploma semester-year progression rule.
+UNI_PG_MBA_Y2_TO_ALUMNI,UNI_PG_MBA_Y2,MGT,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,Final listed program year or certification completion; archive as alumni/completed.
+UNI_PG_SCM_Y1_TO_UNI_PG_SCM_Y2,UNI_PG_SCM_Y1,GEN,PASS,PROMOTED,UNI_PG_SCM_Y2,GEN,0,University/diploma semester-year progression rule.
+UNI_PG_SCM_Y2_TO_ALUMNI,UNI_PG_SCM_Y2,GEN,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,Final listed program year or certification completion; archive as alumni/completed.
+UNI_PG_LAW_Y1_TO_UNI_PG_LAW_Y2,UNI_PG_LAW_Y1,LAW,PASS,PROMOTED,UNI_PG_LAW_Y2,LAW,0,University/diploma semester-year progression rule.
+UNI_PG_LAW_Y2_TO_ALUMNI,UNI_PG_LAW_Y2,LAW,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,Final listed program year or certification completion; archive as alumni/completed.
+MGT_PGDM_Y1_TO_MGT_PGDM_Y2,MGT_PGDM_Y1,MGT,PASS,PROMOTED,MGT_PGDM_Y2,MGT,0,University/diploma semester-year progression rule.
+MGT_PGDM_Y2_TO_ALUMNI,MGT_PGDM_Y2,MGT,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,Final listed program year or certification completion; archive as alumni/completed.
+UNI_PHD_AI_TO_ALUMNI,UNI_PHD_AI,RES,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
+UNI_PHD_DS_TO_ALUMNI,UNI_PHD_DS,RES,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
+UNI_PHD_RE_TO_ALUMNI,UNI_PHD_RE,RES,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
+CERT_DRONE_TO_ALUMNI,CERT_DRONE,EMG,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
+UNI_UG_BCA_Y1_TO_UNI_UG_BCA_Y2,UNI_UG_BCA_Y1,CSA,PASS,PROMOTED,UNI_UG_BCA_Y2,CSA,0,University/diploma semester-year progression rule.
+UNI_UG_BCA_Y2_TO_UNI_UG_BCA_Y3,UNI_UG_BCA_Y2,CSA,PASS,PROMOTED,UNI_UG_BCA_Y3,CSA,0,University/diploma semester-year progression rule.
+UNI_UG_BCA_Y3_TO_ALUMNI,UNI_UG_BCA_Y3,CSA,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,Final listed program year or certification completion; archive as alumni/completed.
+UNI_UG_BBA_Y1_TO_UNI_UG_BBA_Y2,UNI_UG_BBA_Y1,MGT,PASS,PROMOTED,UNI_UG_BBA_Y2,MGT,0,University/diploma semester-year progression rule.
+UNI_UG_BBA_Y2_TO_UNI_UG_BBA_Y3,UNI_UG_BBA_Y2,MGT,PASS,PROMOTED,UNI_UG_BBA_Y3,MGT,0,University/diploma semester-year progression rule.
+UNI_UG_BBA_Y3_TO_ALUMNI,UNI_UG_BBA_Y3,MGT,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,Final listed program year or certification completion; archive as alumni/completed.
+UNI_UG_BARCH_Y1_TO_UNI_UG_BARCH_Y5,UNI_UG_BARCH_Y1,ARC,PASS,MANUAL_CONTINUATION,UNI_UG_BARCH_Y5,ARC,1,Missing intermediate years in the master grade list; review before promotion.
+UNI_UG_BARCH_Y5_TO_ALUMNI,UNI_UG_BARCH_Y5,ARC,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,Final listed program year or certification completion; archive as alumni/completed.
+UNI_UG_BPT_Y1_TO_UNI_UG_BPT_Y4,UNI_UG_BPT_Y1,AHS,PASS,MANUAL_CONTINUATION,UNI_UG_BPT_Y4,AHS,1,Missing intermediate years in the master grade list; review before promotion.
+UNI_UG_BPT_Y4_TO_ALUMNI,UNI_UG_BPT_Y4,AHS,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,Final listed program year or certification completion; archive as alumni/completed.
+UNI_UG_BSW_Y1_TO_ALUMNI,UNI_UG_BSW_Y1,ART,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
+UNI_UG_BFA_Y1_TO_ALUMNI,UNI_UG_BFA_Y1,ART,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
+UNI_UG_BHM_Y1_TO_ALUMNI,UNI_UG_BHM_Y1,HOS,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
+UNI_PG_MCA_Y1_TO_UNI_PG_MCA_Y2,UNI_PG_MCA_Y1,CSA,PASS,PROMOTED,UNI_PG_MCA_Y2,CSA,0,University/diploma semester-year progression rule.
+UNI_PG_MCA_Y2_TO_ALUMNI,UNI_PG_MCA_Y2,CSA,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,Final listed program year or certification completion; archive as alumni/completed.
+UNI_PG_MARCH_Y1_TO_ALUMNI,UNI_PG_MARCH_Y1,ARC,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
+UNI_PG_MPT_Y1_TO_ALUMNI,UNI_PG_MPT_Y1,AHS,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
+UNI_PG_MSW_Y1_TO_ALUMNI,UNI_PG_MSW_Y1,ART,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
+UNI_PG_MFA_Y1_TO_ALUMNI,UNI_PG_MFA_Y1,ART,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
+UNI_PG_MCOM_Y1_TO_ALUMNI,UNI_PG_MCOM_Y1,PRO_FIN,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
+LMS_CERT_FSD_TO_ALUMNI,LMS_CERT_FSD,CSA,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
+LMS_CERT_DATA_TO_ALUMNI,LMS_CERT_DATA,AIE,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
+LMS_CERT_CLOUD_TO_ALUMNI,LMS_CERT_CLOUD,ENG,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
+LMS_CERT_MLOPS_TO_ALUMNI,LMS_CERT_MLOPS,AIE,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
+LMS_CERT_PM_TO_ALUMNI,LMS_CERT_PM,MGT,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
+LMS_CERT_AGILE_TO_ALUMNI,LMS_CERT_AGILE,MGT,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
+LMS_CERT_CYBER_TO_ALUMNI,LMS_CERT_CYBER,CSA,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
+LMS_CERT_WEB3_TO_ALUMNI,LMS_CERT_WEB3,EMG,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
+LMS_CERT_DIGMKT_TO_ALUMNI,LMS_CERT_DIGMKT,MKT,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
+LMS_SWAYAM_01_TO_ALUMNI,LMS_SWAYAM_01,VAR,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
+LMS_NSDC_L4_TO_ALUMNI,LMS_NSDC_L4,VOC_IND,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
+LMS_NSDC_L6_TO_ALUMNI,LMS_NSDC_L6,VOC_IND,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
+UNI_RES_MPHIL_TO_ALUMNI,UNI_RES_MPHIL,RES,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
+UNI_RES_PDF_TO_ALUMNI,UNI_RES_PDF,RES,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
+UNI_RES_DSC_TO_ALUMNI,UNI_RES_DSC,RES,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
+UNI_RES_DLITT_TO_ALUMNI,UNI_RES_DLITT,RES,COMPLETED,ALUMNI,ALUMNI,ALUMNI,1,One-stage program or certification completion; archive the learner as alumni/completed.
 REPEAT_SAME_GRADE,ANY,ANY,REPEAT,REPEATED,SAME,SAME,1,Create next-year same grade/stream cohort and enrol student there. Do not keep them only in old cohort.
 TRANSFER_OUT,ANY,ANY,LEFT,TRANSFER_OUT,,,1,"Remove future cohort membership, optionally suspend user after export. Do not delete records."
