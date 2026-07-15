@@ -31,6 +31,8 @@ $addblockbutton = $OUTPUT->addblockbutton();
 
 $customlmsrole = \theme_custom_lms\local\role_access::primary_role_for_user($USER ?? null);
 $PAGE->requires->css(new moodle_url('/theme/custom_lms/style/role_tokens.css'));
+$PAGE->requires->css(new moodle_url('/theme/custom_lms/style/form_guidance.css'));
+$PAGE->requires->css(new moodle_url('/theme/custom_lms/style/navigation_tabs.css'));
 
 $extraclasses = ['custom-lms-role-' . $customlmsrole];
 $bodyattributes = $OUTPUT->body_attributes($extraclasses);

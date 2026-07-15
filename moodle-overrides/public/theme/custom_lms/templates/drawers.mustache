@@ -70,13 +70,16 @@
                         <small>Site administrator</small>
                     </span>
                 </a>
-                <nav class="custom-lms-admin-sidebar-nav" aria-label="Administrator sections">
-                    {{#adminsidebarlinks}}
-                        <a class="{{#active}}active{{/active}}" href="{{url}}">
-                            <span aria-hidden="true">{{icon}}</span>
-                            <strong>{{label}}</strong>
-                        </a>
-                    {{/adminsidebarlinks}}
+                <nav class="custom-lms-admin-section-tree d-print-none" data-region="admin-section-tree" aria-label="Site administration section links" aria-busy="true">
+                    <label class="custom-lms-admin-section-search custom-lms-admin-section-search-loading">
+                        <span class="custom-lms-admin-section-search-icon" aria-hidden="true"></span>
+                        <input class="custom-lms-admin-section-search-input" type="search" placeholder="Search admin menu" aria-label="Search admin menu" disabled>
+                    </label>
+                    <span class="custom-lms-admin-section-tree-title">Site administration</span>
+                    <span class="custom-lms-admin-section-loading">Loading admin menu</span>
+                    <span class="custom-lms-admin-section-loading-line" aria-hidden="true"></span>
+                    <span class="custom-lms-admin-section-loading-line" aria-hidden="true"></span>
+                    <span class="custom-lms-admin-section-loading-line" aria-hidden="true"></span>
                 </nav>
                 <div class="custom-lms-admin-sidebar-foot">
                     <strong>Moodle control centre</strong>
@@ -88,18 +91,16 @@
                     <details class="custom-lms-admin-mobile-menu">
                         <summary>Menu</summary>
                         <nav aria-label="Mobile administrator sections">
-                            {{#adminsidebarlinks}}
-                                <a class="{{#active}}active{{/active}}" href="{{url}}">
-                                    <span aria-hidden="true">{{icon}}</span>
-                                    <strong>{{label}}</strong>
-                                </a>
-                            {{/adminsidebarlinks}}
+                            <div class="custom-lms-admin-mobile-section-tree" data-region="admin-mobile-section-tree" aria-busy="true">
+                                <label class="custom-lms-admin-section-search custom-lms-admin-section-search-loading">
+                                    <span class="custom-lms-admin-section-search-icon" aria-hidden="true"></span>
+                                    <input class="custom-lms-admin-section-search-input" type="search" placeholder="Search admin menu" aria-label="Search admin menu" disabled>
+                                </label>
+                                <span class="custom-lms-admin-section-tree-title">Site administration</span>
+                                <span class="custom-lms-admin-section-loading">Loading admin menu</span>
+                            </div>
                         </nav>
                     </details>
-                    <a class="custom-lms-admin-topbar-search" href="{{{ config.wwwroot }}}/admin/search.php">
-                        <span aria-hidden="true">⌕</span>
-                        <strong>Search site administration</strong>
-                    </a>
                     <div class="custom-lms-admin-topbar-actions">
                         {{{ output.edit_switch }}}
                         {{# output.navbar_plugin_output }}
@@ -200,25 +201,6 @@
                 {{/hasblocks}}
             </div>
             {{{ output.full_header }}}
-            {{#iscustomlmsadmin}}
-                <section class="custom-lms-admin-hero d-print-none" aria-label="Administrator workspace">
-                    <div class="custom-lms-admin-hero-copy">
-                        <span class="custom-lms-admin-eyebrow">Administrator workspace</span>
-                        <h2>Control centre for your LMS</h2>
-                        <p>Use the Moodle settings, reports and tools below. The original Moodle content, permissions and forms remain active.</p>
-                    </div>
-                    {{#hasadminquicklinks}}
-                        <nav class="custom-lms-admin-quicklinks" aria-label="Administrator shortcuts">
-                            {{#adminquicklinks}}
-                                <a class="custom-lms-admin-quicklink" href="{{url}}">
-                                    <span aria-hidden="true">{{icon}}</span>
-                                    <strong>{{label}}</strong>
-                                </a>
-                            {{/adminquicklinks}}
-                        </nav>
-                    {{/hasadminquicklinks}}
-                </section>
-            {{/iscustomlmsadmin}}
             {{#secondarymoremenu}}
                 <div class="secondary-navigation d-print-none">
                     {{> core/moremenu}}
@@ -272,4 +254,9 @@ require(['theme_custom_lms/loader', 'theme_custom_lms/drawer'], function(Loader,
     Drawer.init();
     M.util.js_complete('theme_custom_lms/loader');
 });
+{{#iscustomlmsadmin}}
+require(['theme_custom_lms/admin_navigation'], function(AdminNavigation) {
+    AdminNavigation.init();
+});
+{{/iscustomlmsadmin}}
 {{/js}}

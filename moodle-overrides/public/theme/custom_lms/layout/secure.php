@@ -28,6 +28,8 @@ $blockshtml = $OUTPUT->blocks('side-pre');
 $hasblocks = strpos($blockshtml, 'data-block=') !== false;
 $customlmsrole = \theme_custom_lms\local\role_access::primary_role_for_user($USER ?? null);
 $PAGE->requires->css(new moodle_url('/theme/custom_lms/style/role_tokens.css'));
+$PAGE->requires->css(new moodle_url('/theme/custom_lms/style/form_guidance.css'));
+$PAGE->requires->css(new moodle_url('/theme/custom_lms/style/navigation_tabs.css'));
 $bodyattributes = $OUTPUT->body_attributes(['custom-lms-role-' . $customlmsrole]);
 
 $templatecontext = [

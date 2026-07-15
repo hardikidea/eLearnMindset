@@ -74,10 +74,14 @@ if ($iscustomlmsadmin) {
     $extraclasses[] = 'custom-lms-admin-page';
     $extraclasses[] = 'custom-lms-role-admin';
     $PAGE->requires->css(new moodle_url('/theme/custom_lms/style/role_tokens.css'));
+    $PAGE->requires->css(new moodle_url('/theme/custom_lms/style/form_guidance.css'));
+    $PAGE->requires->css(new moodle_url('/theme/custom_lms/style/navigation_tabs.css'));
     $PAGE->requires->css(new moodle_url('/theme/custom_lms/style/admin_pages.css'));
 } else {
     $extraclasses[] = 'custom-lms-role-' . $customlmsrole;
     $PAGE->requires->css(new moodle_url('/theme/custom_lms/style/role_tokens.css'));
+    $PAGE->requires->css(new moodle_url('/theme/custom_lms/style/form_guidance.css'));
+    $PAGE->requires->css(new moodle_url('/theme/custom_lms/style/navigation_tabs.css'));
 }
 if ($courseindexopen) {
     $extraclasses[] = 'drawer-open-index';
@@ -130,8 +134,6 @@ $coursefullname = ($PAGE->course?->fullname) ? format_string(
     ['context' => context_course::instance($PAGE->course->id), 'escape' => false],
 ) : '';
 $courseurl = $PAGE->course ? new \core\url('/course/view.php', ['id' => $PAGE->course->id]) : null;
-$adminquicklinks = [];
-$adminsidebarlinks = [];
 $pixschoollogo = (new moodle_url('/theme/custom_lms/pix/school-logo.jpg'))->out(false);
 $userfullname = isloggedin() && !isguestuser() ? fullname($USER) : '';
 $userinitials = 'AD';
@@ -139,90 +141,6 @@ if (isloggedin() && !isguestuser()) {
     $firstnameinitial = core_text::substr(trim($USER->firstname ?? ''), 0, 1);
     $lastnameinitial = core_text::substr(trim($USER->lastname ?? ''), 0, 1);
     $userinitials = core_text::strtoupper($firstnameinitial . $lastnameinitial) ?: 'AD';
-}
-if ($iscustomlmsadmin) {
-    $adminquicklinks = [
-        [
-            'label' => 'Dashboard',
-            'url' => (new moodle_url('/theme/custom_lms/page.php', ['page' => 'admin']))->out(false),
-            'icon' => '01',
-        ],
-        [
-            'label' => get_string('administrationsite', 'core'),
-            'url' => (new moodle_url('/admin/search.php'))->out(false),
-            'icon' => '02',
-        ],
-        [
-            'label' => get_string('users', 'core'),
-            'url' => (new moodle_url('/admin/user.php'))->out(false),
-            'icon' => '03',
-        ],
-        [
-            'label' => get_string('courses', 'core'),
-            'url' => (new moodle_url('/course/management.php'))->out(false),
-            'icon' => '04',
-        ],
-        [
-            'label' => get_string('reports', 'core'),
-            'url' => (new moodle_url('/admin/search.php', [], 'linkreports'))->out(false),
-            'icon' => '05',
-        ],
-    ];
-    if (\core_plugin_manager::instance()->get_plugin_info('tool_datasetup')) {
-        $adminquicklinks[] = [
-            'label' => get_string('pluginname', 'tool_datasetup'),
-            'url' => (new moodle_url('/admin/tool/datasetup/index.php'))->out(false),
-            'icon' => '06',
-        ];
-    }
-
-    $adminsidebarlinks = [
-        [
-            'label' => 'Admin overview',
-            'url' => (new moodle_url('/admin/search.php'))->out(false),
-            'icon' => 'H',
-            'active' => $pageurlpath === '/admin/search.php',
-        ],
-        [
-            'label' => get_string('users', 'core'),
-            'url' => (new moodle_url('/admin/user.php'))->out(false),
-            'icon' => 'U',
-            'active' => $pageurlpath === '/admin/user.php',
-        ],
-        [
-            'label' => get_string('courses', 'core'),
-            'url' => (new moodle_url('/course/management.php'))->out(false),
-            'icon' => 'C',
-            'active' => $pageurlpath === '/course/management.php',
-        ],
-        [
-            'label' => get_string('plugins', 'admin'),
-            'url' => (new moodle_url('/admin/plugins.php'))->out(false),
-            'icon' => 'P',
-            'active' => $pageurlpath === '/admin/plugins.php',
-        ],
-        [
-            'label' => get_string('reports', 'core'),
-            'url' => (new moodle_url('/admin/search.php', [], 'linkreports'))->out(false),
-            'icon' => 'R',
-            'active' => strpos($pageurlpath, '/report/') === 0,
-        ],
-        [
-            'label' => get_string('settings'),
-            'url' => (new moodle_url('/admin/settings.php'))->out(false),
-            'icon' => 'S',
-            'active' => $pageurlpath === '/admin/settings.php',
-        ],
-    ];
-
-    if (\core_plugin_manager::instance()->get_plugin_info('tool_datasetup')) {
-        $adminsidebarlinks[] = [
-            'label' => get_string('pluginname', 'tool_datasetup'),
-            'url' => (new moodle_url('/admin/tool/datasetup/index.php'))->out(false),
-            'icon' => 'D',
-            'active' => strpos($pageurlpath, '/admin/tool/datasetup/') === 0,
-        ];
-    }
 }
 
 $templatecontext = [
@@ -248,9 +166,6 @@ $templatecontext = [
     'headercontent' => $headercontent,
     'addblockbutton' => $addblockbutton,
     'iscustomlmsadmin' => $iscustomlmsadmin,
-    'hasadminquicklinks' => !empty($adminquicklinks),
-    'adminquicklinks' => $adminquicklinks,
-    'adminsidebarlinks' => $adminsidebarlinks,
     'pixschoollogo' => $pixschoollogo,
     'userfullname' => $userfullname,
     'userinitials' => $userinitials,
