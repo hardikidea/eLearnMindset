@@ -1,0 +1,42 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_custom_lms/bundle_page
+
+    Moodle shell for generated Custom LMS bundle pages.
+}}
+{{> theme_custom_lms/head }}
+
+<body {{{ bodyattributes }}} data-role="{{role}}">
+{{> core/local/toast/wrapper}}
+<div id="page-wrapper" class="d-print-block">
+    {{{ output.standard_top_of_body_html }}}
+    <a class="visually-hidden-focusable custom-lms-skip-link" href="#custom-lms-maincontent">{{#str}}skipmaincontent, theme_custom_lms{{/str}}</a>
+    {{{ nativecontent }}}
+    <div id="custom-lms-maincontent" class="custom-lms-pagecontent" tabindex="-1">
+        {{{ pagecontent }}}
+    </div>
+    {{{ output.standard_after_main_region_html }}}
+    {{{ output.standard_end_of_body_html }}}
+</div>
+{{#js}}
+require(['theme_custom_lms/bundle_pages'], function(BundlePages) {
+    BundlePages.init();
+});
+{{/js}}
+</body>
+</html>

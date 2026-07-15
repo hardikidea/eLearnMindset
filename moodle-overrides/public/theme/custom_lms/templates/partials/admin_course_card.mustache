@@ -1,0 +1,28 @@
+{{!
+    @template theme_custom_lms/partials/admin_course_card
+}}
+<article class="admin-course-card">
+    <div class="admin-course-media">
+        <img alt="" src="{{coverurl}}">
+        {{^visible}}<span class="admin-course-status">Hidden</span>{{/visible}}
+        {{#visible}}<span class="admin-course-status">Published</span>{{/visible}}
+        <button aria-expanded="false" aria-label="{{#str}}actions{{/str}}" class="admin-course-menu-button" type="button">•••</button>
+        <div class="admin-course-menu">
+            <a href="{{courseurl}}">{{#str}}view{{/str}}</a>
+            {{#canedit}}<a href="{{editurl}}">{{#str}}editsettings{{/str}}</a>{{/canedit}}
+            <a href="{{participantsurl}}">{{#str}}participants{{/str}}</a>
+        </div>
+        <div class="admin-course-overlay">
+            <div class="admin-quick-actions">
+                <a href="{{courseurl}}">{{#str}}view{{/str}}</a>
+                {{#canedit}}<a href="{{editurl}}">{{#str}}edit{{/str}}</a>{{/canedit}}
+                <a href="{{participantsurl}}">{{#str}}participants{{/str}}</a>
+            </div>
+        </div>
+    </div>
+    <div class="admin-course-body">
+        <h3>{{fullname}}</h3>
+        <div class="admin-course-meta"><span>{{categoryname}}</span><span>{{shortname}}</span></div>
+        <div class="admin-course-footer"><strong>{{#visible}}Published{{/visible}}{{^visible}}Hidden{{/visible}}</strong><a class="button secondary" href="{{courseurl}}">Open course</a></div>
+    </div>
+</article>

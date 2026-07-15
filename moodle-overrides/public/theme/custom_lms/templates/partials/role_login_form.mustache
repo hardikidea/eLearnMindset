@@ -1,0 +1,40 @@
+{{! @template theme_custom_lms/partials/role_login_form }}
+<form action="{{{loginurl}}}" method="post" class="custom-lms-login-form">
+    <input type="hidden" name="logintoken" value="{{logintoken}}">
+    <input type="hidden" name="loginredirect" value="1">
+    <input type="hidden" name="role" value="{{loginrole}}">
+
+    {{#loginmessage}}
+        <div class="custom-lms-login-alert" role="alert">{{loginmessage}}</div>
+    {{/loginmessage}}
+
+    <label for="custom-lms-username-{{rolekey}}">Username or email</label>
+    <input
+        autocomplete="username"
+        id="custom-lms-username-{{rolekey}}"
+        name="username"
+        placeholder="name@example.com"
+        required
+        type="text">
+
+    <label for="custom-lms-password-{{rolekey}}">Password</label>
+    <input
+        autocomplete="current-password"
+        id="custom-lms-password-{{rolekey}}"
+        name="password"
+        placeholder="Password"
+        required
+        type="password">
+
+    <div class="between custom-lms-login-options">
+        <label class="custom-lms-remember">
+            <input name="rememberusername" type="checkbox" value="1">
+            <span>Remember me</span>
+        </label>
+        <a href="{{{forgotpasswordurl}}}">Forgot password?</a>
+    </div>
+
+    <button class="button custom-lms-login-submit" type="submit">
+        {{loginsubmitlabel}}
+    </button>
+</form>

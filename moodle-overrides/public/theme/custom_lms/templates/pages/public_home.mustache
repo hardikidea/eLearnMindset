@@ -1,0 +1,72 @@
+{{! @template theme_custom_lms/pages/public_home }}
+{{> theme_custom_lms/partials/public_nav }}
+<main class="public-main immersive-home page-transition">
+<section class="lms-hero" id="discover">
+<div class="hero-copy reveal">
+<div class="live-pill"><span></span> Admissions and public learning are open</div>
+<span class="eyebrow">A connected digital campus</span>
+<h1>Learning that feels <em>alive</em>, personal and limitless.</h1>
+<p>A modern LMS for schools, colleges and universities—bringing courses, live classes, collaboration, analytics and student success into one beautiful experience.</p>
+<div class="actions hero-actions"><a class="button button-xl" href="{{{url_role_login}}}">Start your journey <span>↗</span></a><a class="watch-link" href="{{{url_course_player}}}"><span class="play-orb">▶</span><span><b>Watch platform tour</b><small>2 min interactive preview</small></span></a></div>
+<div class="trust-row"><div class="avatar-stack"><span>AK</span><span>RM</span><span>SP</span><span>+2k</span></div><div><b>Trusted by growing learning communities</b><small>Students, educators, parents and administrators</small></div></div>
+</div>
+<div class="hero-visual reveal" data-tilt="">
+<div class="visual-glow"></div>
+<img alt="Modern student LMS dashboard preview" class="hero-dashboard" height="1024" src="{{{pix_showcase_student_dashboard}}}" width="1536"/>
+<div class="floating-card fc-progress"><span class="mini-icon">◔</span><div><b>Learning progress</b><small>Weekly goal reached</small></div><strong>84%</strong></div>
+<div class="floating-card fc-live"><span class="pulse-dot"></span><div><b>Live class now</b><small>Advanced Mathematics</small></div></div>
+<div class="floating-card fc-badge"><span>🏆</span><div><b>New achievement</b><small>7-day learning streak</small></div></div>
+</div>
+</section>
+<section aria-label="Platform capabilities" class="logo-cloud reveal"><span>Built for</span><b>Schools</b><b>Universities</b><b>Training academies</b><b>Hybrid campuses</b><b>Professional learning</b></section>
+<section aria-label="Learning community statistics" class="metric-strip reveal">
+<article><span class="metric-icon">◎</span><strong data-counter="{{usercount}}">0</strong><small>Active learners</small></article>
+<article><span class="metric-icon">▤</span><strong data-counter="{{coursecount}}">0</strong><small>Interactive courses</small></article>
+<article><span class="metric-icon">✦</span><strong data-counter="98">0</strong><small>Learner satisfaction</small></article>
+<article><span class="metric-icon">◷</span><strong data-counter="24">0</strong><small>Always-on access</small></article>
+</section>
+<section class="section-block" id="programmes">
+<div class="section-title reveal"><div><span class="eyebrow">Explore learning pathways</span><h2>Everything learners need to move forward</h2></div><p>Discover rich, flexible programmes designed for every stage—from foundational learning to career-ready skills.</p></div>
+<div class="programme-grid">
+<a class="programme-card pc-blue reveal" href="{{{url_course}}}"><span class="programme-icon">⚛</span><div><small>Science &amp; research</small><h3>Future Scientists</h3><p>Experiments, simulations and collaborative discovery.</p></div><span class="arrow-chip">↗</span></a>
+<a class="programme-card pc-purple reveal" href="{{{url_course_player}}}"><span class="programme-icon">◈</span><div><small>Digital technology</small><h3>Code &amp; Create</h3><p>Programming, design thinking and digital production.</p></div><span class="arrow-chip">↗</span></a>
+<a class="programme-card pc-orange reveal" href="{{{url_activities}}}"><span class="programme-icon">⌁</span><div><small>Business &amp; leadership</small><h3>Young Innovators</h3><p>Entrepreneurship, communication and real-world projects.</p></div><span class="arrow-chip">↗</span></a>
+<a class="programme-card pc-green reveal" href="{{{url_my_courses}}}"><span class="programme-icon">✿</span><div><small>Arts &amp; humanities</small><h3>Creative Expression</h3><p>Stories, cultures, media and meaningful creative work.</p></div><span class="arrow-chip">↗</span></a>
+</div>
+</section>
+<section class="experience-stage" id="experience">
+<div class="section-title light reveal"><div><span class="eyebrow">One platform, every role</span><h2>A personalised campus experience</h2></div><a class="button ghost" href="{{{url_role_login}}}">Choose your role</a></div>
+<div class="experience-slider reveal" data-slider="">
+<div class="slider-track">
+<article class="experience-slide active"><div class="slide-copy"><span class="slide-number">01</span><span class="role-chip student">Student experience</span><h3>Stay focused with a learning space that knows what comes next.</h3><p>Personal dashboards, intelligent next steps, progress goals, achievements and an immersive course player keep momentum visible.</p><ul><li>Personal course feed</li><li>Smart deadlines and reminders</li><li>Progress, grades and badges</li></ul><a href="{{{url_login_student}}}">Explore student login →</a></div><img alt="Immersive student course player" height="1024" src="{{{pix_showcase_course_player}}}" width="1536"/></article>
+<article class="experience-slide"><div class="slide-copy"><span class="slide-number">02</span><span class="role-chip teacher">Educator experience</span><h3>Teach, assess and support learners without losing your flow.</h3><p>Course authoring, grading workflows, learner insights and communication tools come together in one clear workspace.</p><ul><li>Visual course builder</li><li>Fast grading and feedback</li><li>Actionable learning analytics</li></ul><a href="{{{url_login_teacher}}}">Explore teacher login →</a></div><img alt="Teacher and LMS page system overview" height="1024" src="{{{pix_showcase_page_system}}}" width="1536"/></article>
+<article class="experience-slide"><div class="slide-copy"><span class="slide-number">03</span><span class="role-chip admin">Campus operations</span><h3>Run a secure, scalable digital campus with confidence.</h3><p>Flexible roles, enrolment, reporting, integrations and system health views support institutions of every size.</p><ul><li>User and cohort management</li><li>Reports and scheduled tasks</li><li>Theme and plugin controls</li></ul><a href="{{{url_login_admin}}}">Explore administrator login →</a></div><img alt="Role-based LMS access overview" height="1024" src="{{{pix_showcase_role_experience}}}" width="1536"/></article>
+</div>
+<div class="slider-controls"><button aria-label="Previous experience" data-prev="" type="button">←</button><div class="slider-dots"><button aria-label="Student experience" class="active" data-slide="0"></button><button aria-label="Teacher experience" data-slide="1"></button><button aria-label="Administrator experience" data-slide="2"></button></div><button aria-label="Next experience" data-next="" type="button">→</button></div>
+</div>
+</section>
+<section class="feature-bento section-block">
+<div class="section-title reveal"><div><span class="eyebrow">Designed for engagement</span><h2>More than a course catalogue</h2></div><p>A complete learning ecosystem with delightful interactions and accessible, responsive foundations.</p></div>
+<div class="bento-grid">
+<article class="bento-card bento-large reveal"><div><span class="feature-icon">▶</span><h3>Immersive course player</h3><p>Video-first lessons, module playlists, notes, resources and discussions in a focused learning view.</p><a href="{{{url_course_player}}}">Open the course player →</a></div><img alt="Course player interface" height="1024" src="{{{pix_showcase_course_player}}}" width="1536"/></article>
+<article class="bento-card bento-dark reveal"><span class="feature-icon">✦</span><h3>Meaningful motivation</h3><p>Streaks, badges, milestones and progress celebrations that encourage consistent learning.</p><div class="streak"><b>12</b><span>day streak</span><i>🔥</i></div></article>
+<article class="bento-card reveal"><span class="feature-icon">◫</span><h3>Live and social learning</h3><p>Messages, forums, announcements and collaborative activities keep the campus connected.</p><div class="mini-chat"><span class="chat-avatar">SJ</span><div><b>Dr Sarah</b><small>Great question—let's explore it in class.</small></div></div></article>
+<article class="bento-card reveal"><span class="feature-icon">◉</span><h3>Insight without overload</h3><p>Clear dashboards turn participation, completion and outcomes into practical next actions.</p><div class="spark-bars"><i style="height:34%"></i><i style="height:55%"></i><i style="height:42%"></i><i style="height:80%"></i><i style="height:68%"></i><i style="height:94%"></i></div></article>
+<article class="bento-card bento-image reveal"><img alt="Multi-role login experience" height="1024" src="{{{pix_showcase_role_experience}}}" width="1536"/><div><span class="feature-icon">⌘</span><h3>Beautifully role-aware</h3><p>Distinct experiences for students, teachers, parents and campus teams—on one secure foundation.</p></div></article>
+</div>
+</section>
+<section class="community-section" id="community">
+<div class="community-copy reveal"><span class="eyebrow">A place to belong</span><h2>Build a learning community beyond the classroom.</h2><p>Clubs, mentoring, events, portfolios and peer collaboration help every learner contribute, connect and grow.</p><div class="community-points"><span>✓ Student clubs</span><span>✓ Mentoring spaces</span><span>✓ Digital portfolios</span><span>✓ Campus events</span></div><a class="button" href="{{{url_role_login}}}">Join the community</a></div>
+<div class="community-collage reveal"><div class="photo-card photo-one"><span>Project-based learning</span></div><div class="photo-card photo-two"><span>Creative collaboration</span></div><div class="photo-card photo-three"><span>Campus anywhere</span></div></div>
+</section>
+<section class="news-section section-block" id="news">
+<div class="section-title reveal"><div><span class="eyebrow">Campus pulse</span><h2>News, events and opportunities</h2></div><a href="{{{url_calendar}}}">View full calendar →</a></div>
+<div class="news-grid">
+<article class="news-feature reveal"><div class="news-art art-science"><span>Featured event</span></div><div><small>02 August · Innovation</small><h3>Inter-school science and technology exhibition</h3><p>Learners showcase research, robotics and sustainable ideas to the wider community.</p><a href="{{{url_calendar}}}">View event details →</a></div></article>
+<div class="news-list reveal"><a href="{{{url_calendar}}}"><time><b>18</b>JUL</time><div><small>New academic year</small><h3>Orientation week for learners and families</h3></div><span>→</span></a><a href="{{{url_calendar}}}"><time><b>24</b>JUL</time><div><small>Community</small><h3>Parent-teacher learning conference</h3></div><span>→</span></a><a href="{{{url_calendar}}}"><time><b>07</b>AUG</time><div><small>Student life</small><h3>Clubs, societies and leadership fair</h3></div><span>→</span></a></div>
+</div>
+</section>
+<section class="final-cta reveal"><div><span class="eyebrow">Ready when you are</span><h2>Your next learning experience starts here.</h2><p>Explore public programmes or enter your personalised learning portal.</p></div><div class="actions"><a class="button button-xl" href="{{{url_role_login}}}">Choose your login</a><a class="button ghost button-xl" href="{{{url_all_pages}}}">Browse all 54 layouts</a></div></section>
+</main>
+{{> theme_custom_lms/partials/public_footer }}
+

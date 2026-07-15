@@ -1,0 +1,23 @@
+{{!
+    @template theme_custom_lms/partials/course_overview_card
+}}
+<article class="course-overview-card" data-course-card="">
+    <div class="course-cover">
+        <img alt="" src="{{coverurl}}">
+        <span class="course-category">{{categoryname}}</span>
+        <button aria-expanded="false" aria-label="{{#str}}actions{{/str}}" class="course-menu-button" type="button">•••</button>
+        <div class="course-menu-popover">
+            <a href="{{courseurl}}">{{#str}}view{{/str}}</a>
+        </div>
+    </div>
+    <div class="course-card-body">
+        <h3>{{fullname}}</h3>
+        <div class="course-teacher"><span class="teacher-avatar">{{userinitials}}</span><span>{{teachername}}</span></div>
+        <p class="course-activity">{{shortname}}</p>
+        <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="{{progress}}" class="course-progress" role="progressbar">
+            <span style="{{progressstyle}}"></span>
+        </div>
+        <strong class="course-percent">{{progress}}% Course Completed</strong>
+        <div class="course-card-action"><a class="button secondary" href="{{courseurl}}">{{#str}}viewcourse{{/str}}</a></div>
+    </div>
+</article>

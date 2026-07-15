@@ -1,0 +1,76 @@
+/* Central role palette for Custom LMS. Keep role colours here, not in templates. */
+:root {
+    --custom-lms-role-teacher: #c71822;
+    --custom-lms-role-teacher-rgb: 199, 24, 34;
+    --custom-lms-role-student: #155bd7;
+    --custom-lms-role-student-rgb: 21, 91, 215;
+    --custom-lms-role-admin: #08764d;
+    --custom-lms-role-admin-rgb: 8, 118, 77;
+    --custom-lms-role-parent: #7139b6;
+    --custom-lms-role-parent-rgb: 113, 57, 182;
+    --custom-lms-role-participant: #e87806;
+    --custom-lms-role-participant-rgb: 232, 120, 6;
+    --custom-lms-role-public: #061c3f;
+    --custom-lms-role-public-rgb: 6, 28, 63;
+
+    --teacher: var(--custom-lms-role-teacher);
+    --student: var(--custom-lms-role-student);
+    --admin: var(--custom-lms-role-admin);
+    --parent: var(--custom-lms-role-parent);
+    --participant: var(--custom-lms-role-participant);
+    --navy: var(--custom-lms-role-public);
+}
+
+body[data-role="teacher"],
+body.custom-lms-role-teacher,
+.role-card-teacher {
+    --primary: var(--custom-lms-role-teacher);
+    --primary-rgb: var(--custom-lms-role-teacher-rgb);
+    --role-primary: var(--custom-lms-role-teacher);
+    --role-primary-rgb: var(--custom-lms-role-teacher-rgb);
+}
+
+body[data-role="student"],
+body.custom-lms-role-student,
+.role-card-student {
+    --primary: var(--custom-lms-role-student);
+    --primary-rgb: var(--custom-lms-role-student-rgb);
+    --role-primary: var(--custom-lms-role-student);
+    --role-primary-rgb: var(--custom-lms-role-student-rgb);
+}
+
+body[data-role="admin"],
+body.custom-lms-role-admin,
+body.custom-lms-admin-page,
+.role-card-admin {
+    --primary: var(--custom-lms-role-admin);
+    --primary-rgb: var(--custom-lms-role-admin-rgb);
+    --role-primary: var(--custom-lms-role-admin);
+    --role-primary-rgb: var(--custom-lms-role-admin-rgb);
+}
+
+body[data-role="parent"],
+body.custom-lms-role-parent,
+.role-card-parent {
+    --primary: var(--custom-lms-role-parent);
+    --primary-rgb: var(--custom-lms-role-parent-rgb);
+    --role-primary: var(--custom-lms-role-parent);
+    --role-primary-rgb: var(--custom-lms-role-parent-rgb);
+}
+
+body[data-role="participant"],
+body.custom-lms-role-participant,
+.role-card-participant {
+    --primary: var(--custom-lms-role-participant);
+    --primary-rgb: var(--custom-lms-role-participant-rgb);
+    --role-primary: var(--custom-lms-role-participant);
+    --role-primary-rgb: var(--custom-lms-role-participant-rgb);
+}
+
+body[data-role="public"],
+body.custom-lms-role-public {
+    --primary: var(--custom-lms-role-public);
+    --primary-rgb: var(--custom-lms-role-public-rgb);
+    --role-primary: var(--custom-lms-role-public);
+    --role-primary-rgb: var(--custom-lms-role-public-rgb);
+}

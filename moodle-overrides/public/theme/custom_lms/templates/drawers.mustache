@@ -1,0 +1,275 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_custom_lms/drawers
+
+    Boost drawer template.
+
+    Context variables required for this template:
+    * sitename - The name of the site
+    * output - The core renderer for the page
+    * bodyattributes - attributes for the body tag as a string of html attributes
+    * sidepreblocks - HTML for the blocks
+    * hasblocks - true if there are blocks on this page
+    * courseindexopen - true if the nav drawer should be open on page load
+    * regionmainsettingsmenu - HTML for the region main settings menu
+    * hasregionmainsettingsmenu - There is a region main settings menu on this page.
+
+    Example context (json):
+    {
+        "sitename": "Moodle",
+        "output": {
+            "doctype": "<!DOCTYPE html>",
+            "page_title": "Test page",
+            "favicon": "favicon.ico",
+            "main_content": "<h1>Headings make html validators happier</h1>"
+         },
+        "bodyattributes":"",
+        "sidepreblocks": "<h2>Blocks html goes here</h2>",
+        "hasblocks":true,
+        "courseindexopen": true,
+        "navdraweropen": false,
+        "blockdraweropen": true,
+        "regionmainsettingsmenu": "",
+        "hasregionmainsettingsmenu": false,
+        "addblockbutton": ""
+    }
+}}
+{{> theme_custom_lms/head }}
+
+<body {{{ bodyattributes }}}>
+{{> core/local/toast/wrapper}}
+<div id="page-wrapper" class="d-print-block">
+
+    {{{ output.standard_top_of_body_html }}}
+
+    {{^iscustomlmsadmin}}
+        {{> theme_custom_lms/navbar }}
+    {{/iscustomlmsadmin}}
+    {{#iscustomlmsadmin}}
+        <div class="custom-lms-admin-shell">
+            <aside class="custom-lms-admin-sidebar d-print-none" aria-label="Site administration navigation">
+                <a class="custom-lms-admin-brand" href="{{{ config.homeurl }}}">
+                    <img alt="{{sitename}} logo" src="{{pixschoollogo}}">
+                    <span>
+                        <strong>{{sitename}}</strong>
+                        <small>Site administrator</small>
+                    </span>
+                </a>
+                <nav class="custom-lms-admin-sidebar-nav" aria-label="Administrator sections">
+                    {{#adminsidebarlinks}}
+                        <a class="{{#active}}active{{/active}}" href="{{url}}">
+                            <span aria-hidden="true">{{icon}}</span>
+                            <strong>{{label}}</strong>
+                        </a>
+                    {{/adminsidebarlinks}}
+                </nav>
+                <div class="custom-lms-admin-sidebar-foot">
+                    <strong>Moodle control centre</strong>
+                    <span>Real Moodle pages, site-admin access only.</span>
+                </div>
+            </aside>
+            <section class="custom-lms-admin-shell-main">
+                <header class="custom-lms-admin-topbar d-print-none">
+                    <details class="custom-lms-admin-mobile-menu">
+                        <summary>Menu</summary>
+                        <nav aria-label="Mobile administrator sections">
+                            {{#adminsidebarlinks}}
+                                <a class="{{#active}}active{{/active}}" href="{{url}}">
+                                    <span aria-hidden="true">{{icon}}</span>
+                                    <strong>{{label}}</strong>
+                                </a>
+                            {{/adminsidebarlinks}}
+                        </nav>
+                    </details>
+                    <a class="custom-lms-admin-topbar-search" href="{{{ config.wwwroot }}}/admin/search.php">
+                        <span aria-hidden="true">⌕</span>
+                        <strong>Search site administration</strong>
+                    </a>
+                    <div class="custom-lms-admin-topbar-actions">
+                        {{{ output.edit_switch }}}
+                        {{# output.navbar_plugin_output }}
+                            {{{ . }}}
+                        {{/output.navbar_plugin_output}}
+                        {{#usermenu}}
+                            <div class="custom-lms-admin-usermenu" data-region="usermenu">
+                                <span class="custom-lms-admin-avatar" aria-hidden="true">{{userinitials}}</span>
+                                <span class="custom-lms-admin-userlabel">
+                                    <strong>{{userfullname}}</strong>
+                                    <small>Site administrator</small>
+                                </span>
+                                {{> core/user_menu }}
+                            </div>
+                        {{/usermenu}}
+                    </div>
+                </header>
+    {{/iscustomlmsadmin}}
+    {{#courseindex}}
+        {{< theme_custom_lms/drawer }}
+            {{$id}}theme_custom_lms-drawers-courseindex{{/id}}
+            {{$drawerheadercontent}}
+                {{> theme_custom_lms/courseindexdrawercontrols}}
+            {{/drawerheadercontent}}
+            {{$drawerheading}}{{> theme_custom_lms/courseindexdrawerheading}}{{/drawerheading}}
+            {{$drawerclasses}}drawer drawer-left {{#courseindexopen}}show{{/courseindexopen}}{{/drawerclasses}}
+            {{$drawercontent}}
+                {{{courseindex}}}
+            {{/drawercontent}}
+            {{$drawerpreferencename}}drawer-open-index{{/drawerpreferencename}}
+            {{$drawerstate}}show-drawer-left{{/drawerstate}}
+            {{$tooltipplacement}}right{{/tooltipplacement}}
+            {{$closebuttontext}}{{#str}}closecourseindex, core{{/str}}{{/closebuttontext}}
+            {{$closebuttonicon}}
+                <span class="dir-rtl-hide">{{#pix}} e/sidebar_left, core {{/pix}}</span>
+                <span class="dir-ltr-hide">{{#pix}} e/sidebar_right, core {{/pix}}</span>
+            {{/closebuttonicon}}
+        {{/ theme_custom_lms/drawer}}
+    {{/courseindex}}
+    {{#hasblocks}}
+        {{< theme_custom_lms/drawer }}
+            {{$id}}theme_custom_lms-drawers-blocks{{/id}}
+            {{$drawerclasses}}drawer drawer-right{{#blockdraweropen}} show{{/blockdraweropen}}{{/drawerclasses}}
+            {{$drawercontent}}
+                <div class="d-print-none">
+                    {{{ addblockbutton }}}
+                    {{{ sidepreblocks }}}
+                </div>
+            {{/drawercontent}}
+            {{$drawerpreferencename}}drawer-open-block{{/drawerpreferencename}}
+            {{$forceopen}}{{#forceblockdraweropen}}1{{/forceblockdraweropen}}{{/forceopen}}
+            {{$drawerstate}}show-drawer-right{{/drawerstate}}
+            {{$tooltipplacement}}left{{/tooltipplacement}}
+            {{$drawercloseonresize}}1{{/drawercloseonresize}}
+            {{$closebuttontext}}{{#str}}closeblockdrawer, core{{/str}}{{/closebuttontext}}
+            {{$closebuttonicon}}
+                <span class="dir-rtl-hide">{{#pix}} e/sidebar_right, core {{/pix}}</span>
+                <span class="dir-ltr-hide">{{#pix}} e/sidebar_left, core {{/pix}}</span>
+            {{/closebuttonicon}}
+        {{/ theme_custom_lms/drawer}}
+    {{/hasblocks}}
+    <div id="page" data-region="mainpage" data-usertour="scroller" class="drawers {{#courseindexopen}}show-drawer-left{{/courseindexopen}} {{#blockdraweropen}}show-drawer-right{{/blockdraweropen}} drag-container">
+        <div id="topofscroll" class="main-inner {{#iscustomlmsadmin}}custom-lms-admin-main-inner{{/iscustomlmsadmin}}">
+            <div class="drawer-toggles d-flex">
+                {{#courseindex}}
+                    <div class="drawer-toggler drawer-left-toggle open-nav d-print-none">
+                        <button
+                            class="btn btn-icon icon-size-3"
+                            data-toggler="drawers"
+                            data-action="toggle"
+                            data-target="theme_custom_lms-drawers-courseindex"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="right"
+                            title="{{#str}}opendrawerindex, core{{/str}}"
+                        >
+                            <span class="visually-hidden">{{#str}}opendrawerindex, core{{/str}}</span>
+                            <span class="dir-rtl-hide">{{#pix}} e/sidebar_left, core {{/pix}}</span>
+                            <span class="dir-ltr-hide">{{#pix}} e/sidebar_right, core {{/pix}}</span>
+                        </button>
+                    </div>
+                {{/courseindex}}
+                {{#hasblocks}}
+                    <div class="drawer-toggler drawer-right-toggle ms-auto d-print-none">
+                        <button
+                            class="btn btn-icon icon-size-3"
+                            data-toggler="drawers"
+                            data-action="toggle"
+                            data-target="theme_custom_lms-drawers-blocks"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="right"
+                            title="{{#str}}opendrawerblocks, core{{/str}}"
+                        >
+                            <span class="visually-hidden">{{#str}}opendrawerblocks, core{{/str}}</span>
+                            <span class="dir-rtl-hide">{{#pix}} e/sidebar_right, core {{/pix}}</span>
+                            <span class="dir-ltr-hide">{{#pix}} e/sidebar_left, core {{/pix}}</span>
+                        </button>
+                    </div>
+                {{/hasblocks}}
+            </div>
+            {{{ output.full_header }}}
+            {{#iscustomlmsadmin}}
+                <section class="custom-lms-admin-hero d-print-none" aria-label="Administrator workspace">
+                    <div class="custom-lms-admin-hero-copy">
+                        <span class="custom-lms-admin-eyebrow">Administrator workspace</span>
+                        <h2>Control centre for your LMS</h2>
+                        <p>Use the Moodle settings, reports and tools below. The original Moodle content, permissions and forms remain active.</p>
+                    </div>
+                    {{#hasadminquicklinks}}
+                        <nav class="custom-lms-admin-quicklinks" aria-label="Administrator shortcuts">
+                            {{#adminquicklinks}}
+                                <a class="custom-lms-admin-quicklink" href="{{url}}">
+                                    <span aria-hidden="true">{{icon}}</span>
+                                    <strong>{{label}}</strong>
+                                </a>
+                            {{/adminquicklinks}}
+                        </nav>
+                    {{/hasadminquicklinks}}
+                </section>
+            {{/iscustomlmsadmin}}
+            {{#secondarymoremenu}}
+                <div class="secondary-navigation d-print-none">
+                    {{> core/moremenu}}
+                </div>
+            {{/secondarymoremenu}}
+            <div id="page-content" class="pb-3 d-print-block {{#iscustomlmsadmin}}custom-lms-admin-content{{/iscustomlmsadmin}}">
+                <div id="region-main-box">
+                    {{#hasregionmainsettingsmenu}}
+                    <div id="region-main-settings-menu" class="d-print-none">
+                        <div> {{{ regionmainsettingsmenu }}} </div>
+                    </div>
+                    {{/hasregionmainsettingsmenu}}
+                    <div id="region-main">
+
+                        {{#hasregionmainsettingsmenu}}
+                            <div class="region_main_settings_menu_proxy"></div>
+                        {{/hasregionmainsettingsmenu}}
+                        {{{ output.course_content_header }}}
+                        {{#headercontent}}
+                            {{> core/activity_header }}
+                        {{/headercontent}}
+                        {{#overflow}}
+                            <div class="container-fluid tertiary-navigation">
+                                <div class="navitem">
+                                    {{> core/tertiary_navigation_selector}}
+                                </div>
+                            </div>
+                        {{/overflow}}
+                        {{{ output.main_content }}}
+                        {{{ output.activity_navigation }}}
+                        {{{ output.course_content_footer }}}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{> theme_custom_lms/footer }}
+    </div>
+    {{#iscustomlmsadmin}}
+            </section>
+        </div>
+    {{/iscustomlmsadmin}}
+    {{{ output.standard_after_main_region_html }}}
+</div>
+
+</body>
+</html>
+{{#js}}
+M.util.js_pending('theme_custom_lms/loader');
+require(['theme_custom_lms/loader', 'theme_custom_lms/drawer'], function(Loader, Drawer) {
+    Drawer.init();
+    M.util.js_complete('theme_custom_lms/loader');
+});
+{{/js}}

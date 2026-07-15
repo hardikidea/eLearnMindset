@@ -1,0 +1,259 @@
+<?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * A drawer based layout for the custom_lms theme.
+ *
+ * @package   theme_custom_lms
+ * @copyright 2021 Bas Brands
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+defined('MOODLE_INTERNAL') || die();
+
+require_once($CFG->libdir . '/behat/lib.php');
+require_once($CFG->dirroot . '/course/lib.php');
+
+// Add block button in editing mode.
+$addblockbutton = $OUTPUT->addblockbutton();
+
+if (isloggedin()) {
+    $courseindexopen = (get_user_preferences('drawer-open-index', true) == true);
+    $blockdraweropen = (get_user_preferences('drawer-open-block') == true);
+} else {
+    $courseindexopen = false;
+    $blockdraweropen = false;
+}
+
+if (defined('BEHAT_SITE_RUNNING') && get_user_preferences('behat_keep_drawer_closed') != 1) {
+    $blockdraweropen = true;
+}
+
+$extraclasses = ['uses-drawers'];
+$customlmsrole = \theme_custom_lms\local\role_access::primary_role_for_user($USER ?? null);
+$pageurlpath = parse_url($PAGE->url->out(false), PHP_URL_PATH) ?: '';
+$pagepagetype = $PAGE->pagetype ?? '';
+$siteadminrouteprefixes = [
+    '/ai/',
+    '/cohort/',
+    '/report/',
+];
+$siteadminroutes = [
+    '/tag/manage.php',
+];
+$issiteadminroute = in_array($pageurlpath, $siteadminroutes, true);
+foreach ($siteadminrouteprefixes as $prefix) {
+    if (strpos($pageurlpath, $prefix) === 0) {
+        $issiteadminroute = true;
+        break;
+    }
+}
+$issystemcontext = isset($PAGE->context) && $PAGE->context->contextlevel == CONTEXT_SYSTEM;
+$iscustomlmsadmin = $PAGE->pagelayout === 'admin' ||
+    strpos($pageurlpath, '/admin/') === 0 ||
+    strpos($pagepagetype, 'admin-') === 0 ||
+    ($issystemcontext && $issiteadminroute);
+if ($iscustomlmsadmin) {
+    if (isloggedin() && !isguestuser() && !is_siteadmin()) {
+        throw new required_capability_exception(context_system::instance(), 'moodle/site:config', 'nopermissions', '');
+    }
+    $customlmsrole = 'admin';
+    $extraclasses[] = 'custom-lms-admin-page';
+    $extraclasses[] = 'custom-lms-role-admin';
+    $PAGE->requires->css(new moodle_url('/theme/custom_lms/style/role_tokens.css'));
+    $PAGE->requires->css(new moodle_url('/theme/custom_lms/style/admin_pages.css'));
+} else {
+    $extraclasses[] = 'custom-lms-role-' . $customlmsrole;
+    $PAGE->requires->css(new moodle_url('/theme/custom_lms/style/role_tokens.css'));
+}
+if ($courseindexopen) {
+    $extraclasses[] = 'drawer-open-index';
+}
+
+$blockshtml = $OUTPUT->blocks('side-pre');
+$hasblocks = (strpos($blockshtml, 'data-block=') !== false || !empty($addblockbutton));
+if (!$hasblocks) {
+    $blockdraweropen = false;
+}
+$courseindex = core_course_drawer();
+if (!$courseindex) {
+    $courseindexopen = false;
+}
+
+$bodyattributes = $OUTPUT->body_attributes($extraclasses);
+$forceblockdraweropen = $OUTPUT->firstview_fakeblocks();
+
+$secondarynavigation = false;
+$overflow = '';
+if ($PAGE->has_secondary_navigation()) {
+    $tablistnav = $PAGE->has_tablist_secondary_navigation();
+    $moremenu = new \core\navigation\output\more_menu($PAGE->secondarynav, 'nav-tabs', true, $tablistnav);
+    $secondarynavigation = $moremenu->export_for_template($OUTPUT);
+    $overflowdata = $PAGE->secondarynav->get_overflow_menu_data();
+    if (!is_null($overflowdata)) {
+        $selectmenu = new \core\output\select_menu(
+            'tertiarynavigation',
+            $overflowdata->urls,
+            $overflowdata->selected,
+        );
+        $selectmenu->set_label($overflowdata->label, $overflowdata->labelattributes);
+        $overflow = $selectmenu->export_for_template($OUTPUT);
+    }
+}
+
+$primary = new core\navigation\output\primary($PAGE);
+$renderer = $PAGE->get_renderer('core');
+$primarymenu = $primary->export_for_template($renderer);
+$buildregionmainsettings = !$PAGE->include_region_main_settings_in_header_actions() && !$PAGE->has_secondary_navigation();
+// If the settings menu will be included in the header then don't add it here.
+$regionmainsettingsmenu = $buildregionmainsettings ? $OUTPUT->region_main_settings_menu() : false;
+
+$header = $PAGE->activityheader;
+$headercontent = $header->export_for_template($renderer);
+
+$coursefullname = ($PAGE->course?->fullname) ? format_string(
+    $PAGE->course->fullname,
+    true,
+    ['context' => context_course::instance($PAGE->course->id), 'escape' => false],
+) : '';
+$courseurl = $PAGE->course ? new \core\url('/course/view.php', ['id' => $PAGE->course->id]) : null;
+$adminquicklinks = [];
+$adminsidebarlinks = [];
+$pixschoollogo = (new moodle_url('/theme/custom_lms/pix/school-logo.jpg'))->out(false);
+$userfullname = isloggedin() && !isguestuser() ? fullname($USER) : '';
+$userinitials = 'AD';
+if (isloggedin() && !isguestuser()) {
+    $firstnameinitial = core_text::substr(trim($USER->firstname ?? ''), 0, 1);
+    $lastnameinitial = core_text::substr(trim($USER->lastname ?? ''), 0, 1);
+    $userinitials = core_text::strtoupper($firstnameinitial . $lastnameinitial) ?: 'AD';
+}
+if ($iscustomlmsadmin) {
+    $adminquicklinks = [
+        [
+            'label' => 'Dashboard',
+            'url' => (new moodle_url('/theme/custom_lms/page.php', ['page' => 'admin']))->out(false),
+            'icon' => '01',
+        ],
+        [
+            'label' => get_string('administrationsite', 'core'),
+            'url' => (new moodle_url('/admin/search.php'))->out(false),
+            'icon' => '02',
+        ],
+        [
+            'label' => get_string('users', 'core'),
+            'url' => (new moodle_url('/admin/user.php'))->out(false),
+            'icon' => '03',
+        ],
+        [
+            'label' => get_string('courses', 'core'),
+            'url' => (new moodle_url('/course/management.php'))->out(false),
+            'icon' => '04',
+        ],
+        [
+            'label' => get_string('reports', 'core'),
+            'url' => (new moodle_url('/admin/search.php', [], 'linkreports'))->out(false),
+            'icon' => '05',
+        ],
+    ];
+    if (\core_plugin_manager::instance()->get_plugin_info('tool_datasetup')) {
+        $adminquicklinks[] = [
+            'label' => get_string('pluginname', 'tool_datasetup'),
+            'url' => (new moodle_url('/admin/tool/datasetup/index.php'))->out(false),
+            'icon' => '06',
+        ];
+    }
+
+    $adminsidebarlinks = [
+        [
+            'label' => 'Admin overview',
+            'url' => (new moodle_url('/admin/search.php'))->out(false),
+            'icon' => 'H',
+            'active' => $pageurlpath === '/admin/search.php',
+        ],
+        [
+            'label' => get_string('users', 'core'),
+            'url' => (new moodle_url('/admin/user.php'))->out(false),
+            'icon' => 'U',
+            'active' => $pageurlpath === '/admin/user.php',
+        ],
+        [
+            'label' => get_string('courses', 'core'),
+            'url' => (new moodle_url('/course/management.php'))->out(false),
+            'icon' => 'C',
+            'active' => $pageurlpath === '/course/management.php',
+        ],
+        [
+            'label' => get_string('plugins', 'admin'),
+            'url' => (new moodle_url('/admin/plugins.php'))->out(false),
+            'icon' => 'P',
+            'active' => $pageurlpath === '/admin/plugins.php',
+        ],
+        [
+            'label' => get_string('reports', 'core'),
+            'url' => (new moodle_url('/admin/search.php', [], 'linkreports'))->out(false),
+            'icon' => 'R',
+            'active' => strpos($pageurlpath, '/report/') === 0,
+        ],
+        [
+            'label' => get_string('settings'),
+            'url' => (new moodle_url('/admin/settings.php'))->out(false),
+            'icon' => 'S',
+            'active' => $pageurlpath === '/admin/settings.php',
+        ],
+    ];
+
+    if (\core_plugin_manager::instance()->get_plugin_info('tool_datasetup')) {
+        $adminsidebarlinks[] = [
+            'label' => get_string('pluginname', 'tool_datasetup'),
+            'url' => (new moodle_url('/admin/tool/datasetup/index.php'))->out(false),
+            'icon' => 'D',
+            'active' => strpos($pageurlpath, '/admin/tool/datasetup/') === 0,
+        ];
+    }
+}
+
+$templatecontext = [
+    'sitename' => format_string($SITE->shortname, true, ['context' => context_course::instance(SITEID), "escape" => false]),
+    'coursefullname' => $coursefullname,
+    'courseurl' => $courseurl ? $courseurl->out(false) : null,
+    'output' => $OUTPUT,
+    'sidepreblocks' => $blockshtml,
+    'hasblocks' => $hasblocks,
+    'bodyattributes' => $bodyattributes,
+    'courseindexopen' => $courseindexopen,
+    'blockdraweropen' => $blockdraweropen,
+    'courseindex' => $courseindex,
+    'primarymoremenu' => $primarymenu['moremenu'],
+    'secondarymoremenu' => $secondarynavigation ?: false,
+    'mobileprimarynav' => $primarymenu['mobileprimarynav'],
+    'usermenu' => $primarymenu['user'],
+    'langmenu' => $primarymenu['lang'],
+    'forceblockdraweropen' => $forceblockdraweropen,
+    'regionmainsettingsmenu' => $regionmainsettingsmenu,
+    'hasregionmainsettingsmenu' => !empty($regionmainsettingsmenu),
+    'overflow' => $overflow,
+    'headercontent' => $headercontent,
+    'addblockbutton' => $addblockbutton,
+    'iscustomlmsadmin' => $iscustomlmsadmin,
+    'hasadminquicklinks' => !empty($adminquicklinks),
+    'adminquicklinks' => $adminquicklinks,
+    'adminsidebarlinks' => $adminsidebarlinks,
+    'pixschoollogo' => $pixschoollogo,
+    'userfullname' => $userfullname,
+    'userinitials' => $userinitials,
+];
+
+echo $OUTPUT->render_from_template('theme_custom_lms/drawers', $templatecontext);

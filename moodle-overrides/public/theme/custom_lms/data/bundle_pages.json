@@ -1,0 +1,382 @@
+{
+  "pages": {
+    "activities": {
+      "title": "Activities overview | Drona Public School",
+      "role": "student",
+      "access": "login",
+      "template": "theme_custom_lms/pages/activities",
+      "source": "activities.html"
+    },
+    "activity-picker": {
+      "title": "Add activity or resource | Drona Public School",
+      "role": "teacher",
+      "access": "login",
+      "template": "theme_custom_lms/pages/activity_picker",
+      "source": "activity-picker.html"
+    },
+    "admin": {
+      "title": "Site administration | Drona Public School",
+      "role": "admin",
+      "access": "admin",
+      "template": "theme_custom_lms/pages/admin",
+      "source": "admin.html"
+    },
+    "all-pages": {
+      "title": "All page layouts | Drona Public School",
+      "role": "admin",
+      "access": "admin",
+      "template": "theme_custom_lms/pages/all_pages",
+      "source": "all-pages.html"
+    },
+    "assignment-setup": {
+      "title": "Assignment setup | Drona Public School",
+      "role": "teacher",
+      "access": "login",
+      "template": "theme_custom_lms/pages/assignment_setup",
+      "source": "assignment-setup.html"
+    },
+    "assignment-submit": {
+      "title": "Submit assignment | Drona Public School",
+      "role": "student",
+      "access": "login",
+      "template": "theme_custom_lms/pages/assignment_submit",
+      "source": "assignment-submit.html"
+    },
+    "assignment": {
+      "title": "Assignment | Drona Public School",
+      "role": "student",
+      "access": "login",
+      "template": "theme_custom_lms/pages/assignment",
+      "source": "assignment.html"
+    },
+    "backup": {
+      "title": "Backup and restore | Drona Public School",
+      "role": "teacher",
+      "access": "login",
+      "template": "theme_custom_lms/pages/backup",
+      "source": "backup.html"
+    },
+    "badges": {
+      "title": "Badges | Drona Public School",
+      "role": "student",
+      "access": "login",
+      "template": "theme_custom_lms/pages/badges",
+      "source": "badges.html"
+    },
+    "calendar": {
+      "title": "Calendar | Drona Public School",
+      "role": "student",
+      "access": "login",
+      "template": "theme_custom_lms/pages/calendar",
+      "source": "calendar.html"
+    },
+    "competencies": {
+      "title": "Competencies | Drona Public School",
+      "role": "student",
+      "access": "login",
+      "template": "theme_custom_lms/pages/competencies",
+      "source": "competencies.html"
+    },
+    "content-bank": {
+      "title": "Content bank | Drona Public School",
+      "role": "teacher",
+      "access": "login",
+      "template": "theme_custom_lms/pages/content_bank",
+      "source": "content-bank.html"
+    },
+    "course-edit": {
+      "title": "Course edit mode | Drona Public School",
+      "role": "teacher",
+      "access": "login",
+      "template": "theme_custom_lms/pages/course_edit",
+      "source": "course-edit.html"
+    },
+    "course-player": {
+      "title": "Course player | Drona Public School",
+      "role": "student",
+      "access": "login",
+      "template": "theme_custom_lms/pages/course_player",
+      "source": "course-player.html"
+    },
+    "course": {
+      "title": "Course home | Drona Public School",
+      "role": "student",
+      "access": "login",
+      "template": "theme_custom_lms/pages/course",
+      "source": "course.html"
+    },
+    "courses-admin": {
+      "title": "Course management | Drona Public School",
+      "role": "admin",
+      "access": "admin",
+      "template": "theme_custom_lms/pages/courses_admin",
+      "source": "courses-admin.html"
+    },
+    "error": {
+      "title": "Page not found | Drona Public School",
+      "role": "student",
+      "access": "public",
+      "template": "theme_custom_lms/pages/error",
+      "source": "error.html"
+    },
+    "forgot-password": {
+      "title": "Forgot password",
+      "role": "student",
+      "access": "public",
+      "template": "theme_custom_lms/pages/forgot_password",
+      "source": "forgot-password.html"
+    },
+    "forum-discussion": {
+      "title": "Forum discussion | Drona Public School",
+      "role": "student",
+      "access": "login",
+      "template": "theme_custom_lms/pages/forum_discussion",
+      "source": "forum-discussion.html"
+    },
+    "forum": {
+      "title": "Forum | Drona Public School",
+      "role": "student",
+      "access": "login",
+      "template": "theme_custom_lms/pages/forum",
+      "source": "forum.html"
+    },
+    "gradebook": {
+      "title": "Gradebook | Drona Public School",
+      "role": "teacher",
+      "access": "login",
+      "template": "theme_custom_lms/pages/gradebook",
+      "source": "gradebook.html"
+    },
+    "grades": {
+      "title": "Grades | Drona Public School",
+      "role": "student",
+      "access": "login",
+      "template": "theme_custom_lms/pages/grades",
+      "source": "grades.html"
+    },
+    "grading": {
+      "title": "Assignment grading | Drona Public School",
+      "role": "teacher",
+      "access": "login",
+      "template": "theme_custom_lms/pages/grading",
+      "source": "grading.html"
+    },
+    "index": {
+      "title": "Dashboard | Drona Public School",
+      "role": "student",
+      "access": "login",
+      "template": "theme_custom_lms/pages/index",
+      "source": "index.html"
+    },
+    "lesson": {
+      "title": "Resource page | Drona Public School",
+      "role": "student",
+      "access": "login",
+      "template": "theme_custom_lms/pages/lesson",
+      "source": "lesson.html"
+    },
+    "login-admin": {
+      "title": "Site administrator login | Drona Public School",
+      "role": "admin",
+      "access": "public",
+      "template": "theme_custom_lms/pages/login_admin",
+      "source": "login-admin.html"
+    },
+    "login-parent": {
+      "title": "Parent / guardian login | Drona Public School",
+      "role": "parent",
+      "access": "public",
+      "template": "theme_custom_lms/pages/login_parent",
+      "source": "login-parent.html"
+    },
+    "login-participant": {
+      "title": "Other participant login | Drona Public School",
+      "role": "participant",
+      "access": "public",
+      "template": "theme_custom_lms/pages/login_participant",
+      "source": "login-participant.html"
+    },
+    "login-student": {
+      "title": "Student login | Drona Public School",
+      "role": "student",
+      "access": "public",
+      "template": "theme_custom_lms/pages/login_student",
+      "source": "login-student.html"
+    },
+    "login-teacher": {
+      "title": "Teacher login | Drona Public School",
+      "role": "teacher",
+      "access": "public",
+      "template": "theme_custom_lms/pages/login_teacher",
+      "source": "login-teacher.html"
+    },
+    "login": {
+      "title": "Choose your role | Drona Public School",
+      "role": "public",
+      "access": "public",
+      "template": "theme_custom_lms/pages/login",
+      "source": "login.html"
+    },
+    "logs": {
+      "title": "Logs and scheduled tasks | Drona Public School",
+      "role": "admin",
+      "access": "admin",
+      "template": "theme_custom_lms/pages/logs",
+      "source": "logs.html"
+    },
+    "messages": {
+      "title": "Messages | Drona Public School",
+      "role": "student",
+      "access": "login",
+      "template": "theme_custom_lms/pages/messages",
+      "source": "messages.html"
+    },
+    "my-courses": {
+      "title": "My courses | Drona Public School",
+      "role": "student",
+      "access": "login",
+      "template": "theme_custom_lms/pages/my_courses",
+      "source": "my-courses.html"
+    },
+    "notifications": {
+      "title": "Notifications | Drona Public School",
+      "role": "student",
+      "access": "login",
+      "template": "theme_custom_lms/pages/notifications",
+      "source": "notifications.html"
+    },
+    "participants": {
+      "title": "Participants | Drona Public School",
+      "role": "student",
+      "access": "login",
+      "template": "theme_custom_lms/pages/participants",
+      "source": "participants.html"
+    },
+    "plugins": {
+      "title": "Plugins | Drona Public School",
+      "role": "admin",
+      "access": "admin",
+      "template": "theme_custom_lms/pages/plugins",
+      "source": "plugins.html"
+    },
+    "preferences": {
+      "title": "Preferences | Drona Public School",
+      "role": "student",
+      "access": "login",
+      "template": "theme_custom_lms/pages/preferences",
+      "source": "preferences.html"
+    },
+    "private-files": {
+      "title": "Private files | Drona Public School",
+      "role": "student",
+      "access": "login",
+      "template": "theme_custom_lms/pages/private_files",
+      "source": "private-files.html"
+    },
+    "profile": {
+      "title": "Profile | Drona Public School",
+      "role": "student",
+      "access": "login",
+      "template": "theme_custom_lms/pages/profile",
+      "source": "profile.html"
+    },
+    "progress": {
+      "title": "Progress and completion | Drona Public School",
+      "role": "student",
+      "access": "login",
+      "template": "theme_custom_lms/pages/progress",
+      "source": "progress.html"
+    },
+    "public-home": {
+      "title": "Drona Learning Cloud | Public LMS",
+      "role": "public",
+      "access": "public",
+      "template": "theme_custom_lms/pages/public_home",
+      "source": "public-home.html"
+    },
+    "question-bank": {
+      "title": "Question bank | Drona Public School",
+      "role": "teacher",
+      "access": "login",
+      "template": "theme_custom_lms/pages/question_bank",
+      "source": "question-bank.html"
+    },
+    "quiz-attempt": {
+      "title": "Quiz attempt | Drona Public School",
+      "role": "student",
+      "access": "login",
+      "template": "theme_custom_lms/pages/quiz_attempt",
+      "source": "quiz-attempt.html"
+    },
+    "quiz-review": {
+      "title": "Quiz review | Drona Public School",
+      "role": "student",
+      "access": "login",
+      "template": "theme_custom_lms/pages/quiz_review",
+      "source": "quiz-review.html"
+    },
+    "quiz-setup": {
+      "title": "Quiz setup | Drona Public School",
+      "role": "teacher",
+      "access": "login",
+      "template": "theme_custom_lms/pages/quiz_setup",
+      "source": "quiz-setup.html"
+    },
+    "quiz": {
+      "title": "Quiz start | Drona Public School",
+      "role": "student",
+      "access": "login",
+      "template": "theme_custom_lms/pages/quiz",
+      "source": "quiz.html"
+    },
+    "reports": {
+      "title": "Reports | Drona Public School",
+      "role": "teacher",
+      "access": "login",
+      "template": "theme_custom_lms/pages/reports",
+      "source": "reports.html"
+    },
+    "role-login": {
+      "title": "Choose your role | Drona Public School",
+      "role": "public",
+      "access": "public",
+      "template": "theme_custom_lms/pages/role_login",
+      "source": "role-login.html"
+    },
+    "search": {
+      "title": "Search results | Drona Public School",
+      "role": "student",
+      "access": "login",
+      "template": "theme_custom_lms/pages/search",
+      "source": "search.html"
+    },
+    "settings": {
+      "title": "General settings | Drona Public School",
+      "role": "admin",
+      "access": "admin",
+      "template": "theme_custom_lms/pages/settings",
+      "source": "settings.html"
+    },
+    "site-home": {
+      "title": "Site home | Drona Public School",
+      "role": "student",
+      "access": "login",
+      "template": "theme_custom_lms/pages/site_home",
+      "source": "site-home.html"
+    },
+    "teacher-dashboard": {
+      "title": "Teacher dashboard | Drona Public School",
+      "role": "teacher",
+      "access": "login",
+      "template": "theme_custom_lms/pages/teacher_dashboard",
+      "source": "teacher-dashboard.html"
+    },
+    "users": {
+      "title": "User management | Drona Public School",
+      "role": "admin",
+      "access": "admin",
+      "template": "theme_custom_lms/pages/users",
+      "source": "users.html"
+    }
+  }
+}
