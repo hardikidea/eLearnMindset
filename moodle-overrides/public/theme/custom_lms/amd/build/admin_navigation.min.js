@@ -24,6 +24,7 @@ define([], function() {
         sectionLinks: '.col-sm-9, .col-md-9, .col-lg-9'
     };
 
+    const DASHBOARD_TARGET = 'dashboard';
     const ICON_KEYS = new Map([
         ['general', 'general'],
         ['users', 'users'],
@@ -75,6 +76,31 @@ define([], function() {
             element.textContent = text;
         }
         return element;
+    };
+
+    /**
+     * Render the static dashboard entry that sits before Moodle's generated admin groups.
+     *
+     * @param {HTMLElement} root Render root.
+     * @returns {HTMLAnchorElement|null}
+     */
+    const renderDashboardLink = root => {
+        const url = root.getAttribute('data-dashboard-url');
+        if (!url) {
+            return null;
+        }
+
+        const link = createElement('a', 'custom-lms-admin-dashboard-link');
+        link.setAttribute('href', url);
+        link.setAttribute('data-admin-dashboard-link', '1');
+        link.setAttribute('data-admin-label', DASHBOARD_TARGET);
+
+        const icon = createElement('span', 'custom-lms-admin-dashboard-link-icon');
+        icon.setAttribute('aria-hidden', 'true');
+        const label = createElement('span', 'custom-lms-admin-dashboard-link-label', 'Dashboard');
+        link.append(icon, label);
+
+        return link;
     };
 
     /**
@@ -243,6 +269,12 @@ define([], function() {
                 return;
             }
 
+            root.querySelectorAll('[data-admin-dashboard-link]').forEach(link => {
+                const active = target === DASHBOARD_TARGET;
+                link.classList.toggle('active', active);
+                link.setAttribute('aria-current', active ? 'page' : 'false');
+            });
+
             root.querySelectorAll('[data-admin-section-target]').forEach(group => {
                 const active = Boolean(target) && group.getAttribute('data-admin-section-target') === target;
                 group.classList.toggle('active', active);
@@ -380,6 +412,14 @@ define([], function() {
         const searchTerm = normaliseText(query).toLowerCase();
         const groups = Array.from(root.querySelectorAll('[data-admin-section-target]'));
         let firstVisible = null;
+        const dashboardLink = root.querySelector('[data-admin-dashboard-link]');
+        const dashboardVisible = !searchTerm || DASHBOARD_TARGET.includes(searchTerm);
+
+        if (dashboardLink) {
+            dashboardLink.hidden = !dashboardVisible;
+            dashboardLink.classList.toggle('active', fallbackTarget === DASHBOARD_TARGET && dashboardVisible);
+            dashboardLink.setAttribute('aria-current', fallbackTarget === DASHBOARD_TARGET && dashboardVisible ? 'page' : 'false');
+        }
 
         groups.forEach(group => {
             const groupLabelMatch = (group.getAttribute('data-admin-label') || '').includes(searchTerm);
@@ -431,7 +471,7 @@ define([], function() {
 
         const empty = root.querySelector('[data-region="admin-section-empty"]');
         if (empty) {
-            empty.hidden = !searchTerm || Boolean(firstVisible);
+            empty.hidden = !searchTerm || Boolean(firstVisible) || dashboardVisible;
         }
     };
 
@@ -494,6 +534,11 @@ define([], function() {
     const renderTree = (root, groups, roots, getActiveTarget) => {
         root.replaceChildren();
         root.setAttribute('aria-busy', 'false');
+
+        const dashboardLink = renderDashboardLink(root);
+        if (dashboardLink) {
+            root.append(dashboardLink);
+        }
 
         const searchWrap = createElement('label', 'custom-lms-admin-section-search');
         const searchIcon = createElement('span', 'custom-lms-admin-section-search-icon');
@@ -561,11 +606,14 @@ define([], function() {
             const activeTab = document.querySelector(`${SELECTORS.secondaryTabs}.active`);
             const activeTabTarget = activeTab ? getTabTarget(activeTab) : '';
             const currentPageTarget = getCurrentPageTarget(groups);
-            const initialTarget = groups.some(group => group.target === hashTarget) ?
+            const dashboardActive = roots.some(root => root.getAttribute('data-dashboard-active') === '1');
+            const initialTarget = dashboardActive ?
+                DASHBOARD_TARGET :
+                (groups.some(group => group.target === hashTarget) ?
                 hashTarget :
                 (groups.some(group => group.target === activeTabTarget) ?
                     activeTabTarget :
-                    (currentPageTarget || groups[0].target));
+                    (currentPageTarget || groups[0].target)));
 
             setActiveTarget(initialTarget);
         };

@@ -86,6 +86,6 @@ if (!empty($CFG->nolastloggedin)) {
 }
 
 $SESSION->wantsurl = $role === 'admin'
-    ? (new moodle_url('/admin/search.php'))
+    ? (new moodle_url('/theme/custom_lms/admin_dashboard.php'))
     : $repository->page_url($targetpage);
 redirect(new moodle_url('/login/index.php', ['testsession' => $USER->id]));

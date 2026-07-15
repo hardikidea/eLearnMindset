@@ -1,0 +1,170 @@
+{{!
+    @template theme_custom_lms/admin_dashboard
+
+    Site administrator dashboard backed by Moodle data.
+}}
+<section class="custom-lms-admin-dashboard" aria-label="Site overview">
+    <div class="custom-lms-admin-dashboard-head">
+        <div>
+            <span class="custom-lms-admin-dashboard-kicker">Dashboard</span>
+            <h1>Site overview</h1>
+            <p>A live snapshot of users, courses, enrolments, completion and system health.</p>
+        </div>
+        <div class="custom-lms-admin-dashboard-actions">
+            <a href="{{{urls.admin}}}" class="custom-lms-admin-dashboard-button secondary">Site administration</a>
+            <a href="{{{urls.courses}}}" class="custom-lms-admin-dashboard-button">Manage courses</a>
+        </div>
+    </div>
+
+    <div class="custom-lms-admin-stat-grid" aria-label="Key Moodle statistics">
+        {{#stats}}
+            <article class="custom-lms-admin-stat-card custom-lms-admin-stat-card-{{icon}}">
+                <span class="custom-lms-admin-stat-icon" aria-hidden="true"></span>
+                <div>
+                    <strong>{{value}}</strong>
+                    <span>{{label}}</span>
+                    <small>{{meta}}</small>
+                </div>
+            </article>
+        {{/stats}}
+    </div>
+
+    <div class="custom-lms-admin-dashboard-grid">
+        <article class="custom-lms-admin-dashboard-card custom-lms-admin-dashboard-card-wide">
+            <div class="custom-lms-admin-card-head">
+                <h2>Enrolments over time</h2>
+                <span>Last 12 months</span>
+            </div>
+            <div class="custom-lms-admin-chart-bars" aria-label="Monthly enrolment chart">
+                {{#monthlyenrolments}}
+                    <div class="custom-lms-admin-chart-bar">
+                        <span class="custom-lms-admin-chart-value">{{value}}</span>
+                        <i style="height: {{height}}%"></i>
+                        <small>{{label}}</small>
+                    </div>
+                {{/monthlyenrolments}}
+            </div>
+        </article>
+
+        <article class="custom-lms-admin-dashboard-card">
+            <div class="custom-lms-admin-card-head">
+                <h2>Users by role</h2>
+                <a href="{{{urls.users}}}">Manage users</a>
+            </div>
+            <div class="custom-lms-admin-progress-list">
+                {{#rolecounts}}
+                    <div class="custom-lms-admin-progress-row">
+                        <span>{{label}}</span>
+                        <strong>{{value}}</strong>
+                        <i><b style="width: {{percent}}%"></b></i>
+                    </div>
+                {{/rolecounts}}
+            </div>
+        </article>
+
+        <article class="custom-lms-admin-dashboard-card">
+            <div class="custom-lms-admin-card-head">
+                <h2>System status</h2>
+                <a href="{{{urls.reports}}}">Reports</a>
+            </div>
+            <dl class="custom-lms-admin-status-list">
+                {{#systemstatus}}
+                    <div>
+                        <dt>{{label}}</dt>
+                        <dd>{{value}}</dd>
+                    </div>
+                {{/systemstatus}}
+            </dl>
+        </article>
+
+        <article class="custom-lms-admin-dashboard-card">
+            <div class="custom-lms-admin-card-head">
+                <h2>Courses by category</h2>
+                <a href="{{{urls.courses}}}">Manage</a>
+            </div>
+            <div class="custom-lms-admin-progress-list">
+                {{#categorycounts}}
+                    <div class="custom-lms-admin-progress-row">
+                        <span>{{label}}</span>
+                        <strong>{{value}}</strong>
+                        <i><b style="width: {{percent}}%"></b></i>
+                    </div>
+                {{/categorycounts}}
+            </div>
+        </article>
+
+        <article class="custom-lms-admin-dashboard-card custom-lms-admin-dashboard-card-wide">
+            <div class="custom-lms-admin-card-head">
+                <h2>Top courses</h2>
+                <a href="{{{urls.courses}}}">View all courses</a>
+            </div>
+            <div class="custom-lms-admin-course-table" role="table" aria-label="Top courses">
+                <div class="custom-lms-admin-course-row custom-lms-admin-course-row-head" role="row">
+                    <span role="columnheader">Course</span>
+                    <span role="columnheader">Enrolments</span>
+                    <span role="columnheader">Completion</span>
+                </div>
+                {{#topcourses}}
+                    <div class="custom-lms-admin-course-row" role="row">
+                        <a role="cell" href="{{{url}}}">{{name}}</a>
+                        <span role="cell">{{enrolments}}</span>
+                        <span role="cell">
+                            <em>{{completion}}</em>
+                            <i><b style="width: {{completionraw}}%"></b></i>
+                        </span>
+                    </div>
+                {{/topcourses}}
+            </div>
+        </article>
+
+        <article class="custom-lms-admin-dashboard-card">
+            <div class="custom-lms-admin-card-head">
+                <h2>Recent activity</h2>
+                <a href="{{{urls.reports}}}">Open reports</a>
+            </div>
+            {{#hasrecentactivity}}
+                <ul class="custom-lms-admin-activity-list">
+                    {{#recentactivity}}
+                        <li>
+                            <span aria-hidden="true"></span>
+                            <div>
+                                <strong>{{label}}</strong>
+                                <small>{{meta}} · {{time}}</small>
+                            </div>
+                        </li>
+                    {{/recentactivity}}
+                </ul>
+            {{/hasrecentactivity}}
+            {{^hasrecentactivity}}
+                <p class="custom-lms-admin-empty-state">No recent log records are available yet.</p>
+            {{/hasrecentactivity}}
+        </article>
+
+        <article class="custom-lms-admin-dashboard-card">
+            <div class="custom-lms-admin-card-head">
+                <h2>Reports shortcuts</h2>
+                <a href="{{{urls.reports}}}">All reports</a>
+            </div>
+            <div class="custom-lms-admin-shortcut-list">
+                {{#reportshortcuts}}
+                    <a href="{{{url}}}">{{label}} <span aria-hidden="true">→</span></a>
+                {{/reportshortcuts}}
+            </div>
+        </article>
+
+        <article class="custom-lms-admin-dashboard-card">
+            <div class="custom-lms-admin-card-head">
+                <h2>Quick actions</h2>
+                <span>Common tasks</span>
+            </div>
+            <div class="custom-lms-admin-action-grid">
+                {{#quickactions}}
+                    <a class="custom-lms-admin-action custom-lms-admin-action-{{icon}}" href="{{{url}}}">
+                        <span aria-hidden="true"></span>
+                        <strong>{{label}}</strong>
+                    </a>
+                {{/quickactions}}
+            </div>
+        </article>
+    </div>
+</section>

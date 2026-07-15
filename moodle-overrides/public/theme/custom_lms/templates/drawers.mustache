@@ -70,7 +70,11 @@
                         <small>Site administrator</small>
                     </span>
                 </a>
-                <nav class="custom-lms-admin-section-tree d-print-none" data-region="admin-section-tree" aria-label="Site administration section links" aria-busy="true">
+                <nav class="custom-lms-admin-section-tree d-print-none" data-region="admin-section-tree" data-dashboard-url="{{{admindashboardurl}}}" data-dashboard-active="{{#iscustomlmsadmindashboard}}1{{/iscustomlmsadmindashboard}}{{^iscustomlmsadmindashboard}}0{{/iscustomlmsadmindashboard}}" aria-label="Site administration section links" aria-busy="true">
+                    <a class="custom-lms-admin-dashboard-link {{#iscustomlmsadmindashboard}}active{{/iscustomlmsadmindashboard}}" href="{{{admindashboardurl}}}" aria-current="{{#iscustomlmsadmindashboard}}page{{/iscustomlmsadmindashboard}}{{^iscustomlmsadmindashboard}}false{{/iscustomlmsadmindashboard}}">
+                        <span class="custom-lms-admin-dashboard-link-icon" aria-hidden="true"></span>
+                        <span class="custom-lms-admin-dashboard-link-label">Dashboard</span>
+                    </a>
                     <label class="custom-lms-admin-section-search custom-lms-admin-section-search-loading">
                         <span class="custom-lms-admin-section-search-icon" aria-hidden="true"></span>
                         <input class="custom-lms-admin-section-search-input" type="search" placeholder="Search admin menu" aria-label="Search admin menu" disabled>
@@ -91,7 +95,11 @@
                     <details class="custom-lms-admin-mobile-menu">
                         <summary>Menu</summary>
                         <nav aria-label="Mobile administrator sections">
-                            <div class="custom-lms-admin-mobile-section-tree" data-region="admin-mobile-section-tree" aria-busy="true">
+                            <div class="custom-lms-admin-mobile-section-tree" data-region="admin-mobile-section-tree" data-dashboard-url="{{{admindashboardurl}}}" data-dashboard-active="{{#iscustomlmsadmindashboard}}1{{/iscustomlmsadmindashboard}}{{^iscustomlmsadmindashboard}}0{{/iscustomlmsadmindashboard}}" aria-busy="true">
+                                <a class="custom-lms-admin-dashboard-link {{#iscustomlmsadmindashboard}}active{{/iscustomlmsadmindashboard}}" href="{{{admindashboardurl}}}" aria-current="{{#iscustomlmsadmindashboard}}page{{/iscustomlmsadmindashboard}}{{^iscustomlmsadmindashboard}}false{{/iscustomlmsadmindashboard}}">
+                                    <span class="custom-lms-admin-dashboard-link-icon" aria-hidden="true"></span>
+                                    <span class="custom-lms-admin-dashboard-link-label">Dashboard</span>
+                                </a>
                                 <label class="custom-lms-admin-section-search custom-lms-admin-section-search-loading">
                                     <span class="custom-lms-admin-section-search-icon" aria-hidden="true"></span>
                                     <input class="custom-lms-admin-section-search-input" type="search" placeholder="Search admin menu" aria-label="Search admin menu" disabled>

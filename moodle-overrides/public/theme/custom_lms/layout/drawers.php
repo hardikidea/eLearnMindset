@@ -66,6 +66,7 @@ $iscustomlmsadmin = $PAGE->pagelayout === 'admin' ||
     strpos($pageurlpath, '/admin/') === 0 ||
     strpos($pagepagetype, 'admin-') === 0 ||
     ($issystemcontext && $issiteadminroute);
+$iscustomlmsadmindashboard = $pageurlpath === '/theme/custom_lms/admin_dashboard.php';
 if ($iscustomlmsadmin) {
     if (isloggedin() && !isguestuser() && !is_siteadmin()) {
         throw new required_capability_exception(context_system::instance(), 'moodle/site:config', 'nopermissions', '');
@@ -73,6 +74,9 @@ if ($iscustomlmsadmin) {
     $customlmsrole = 'admin';
     $extraclasses[] = 'custom-lms-admin-page';
     $extraclasses[] = 'custom-lms-role-admin';
+    if ($iscustomlmsadmindashboard) {
+        $extraclasses[] = 'custom-lms-admin-dashboard-page';
+    }
     $PAGE->requires->css(new moodle_url('/theme/custom_lms/style/role_tokens.css'));
     $PAGE->requires->css(new moodle_url('/theme/custom_lms/style/form_guidance.css'));
     $PAGE->requires->css(new moodle_url('/theme/custom_lms/style/navigation_tabs.css'));
@@ -135,6 +139,7 @@ $coursefullname = ($PAGE->course?->fullname) ? format_string(
 ) : '';
 $courseurl = $PAGE->course ? new \core\url('/course/view.php', ['id' => $PAGE->course->id]) : null;
 $pixschoollogo = (new moodle_url('/theme/custom_lms/pix/school-logo.jpg'))->out(false);
+$admindashboardurl = (new moodle_url('/theme/custom_lms/admin_dashboard.php'))->out(false);
 $userfullname = isloggedin() && !isguestuser() ? fullname($USER) : '';
 $userinitials = 'AD';
 if (isloggedin() && !isguestuser()) {
@@ -166,7 +171,9 @@ $templatecontext = [
     'headercontent' => $headercontent,
     'addblockbutton' => $addblockbutton,
     'iscustomlmsadmin' => $iscustomlmsadmin,
+    'iscustomlmsadmindashboard' => $iscustomlmsadmindashboard,
     'pixschoollogo' => $pixschoollogo,
+    'admindashboardurl' => $admindashboardurl,
     'userfullname' => $userfullname,
     'userinitials' => $userinitials,
 ];
