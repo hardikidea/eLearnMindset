@@ -164,7 +164,152 @@ class bundle_page implements renderable, templatable {
             'loginsubmitlabel' => 'Log in as ' . $rolelabel,
             'loginreturnurl' => $this->login_target_url($repository),
             'loginmessage' => $loginmessage,
+        ] + $this->demo_login_context($loginrole);
+    }
+
+    /**
+     * Return local-only demo login values for role login forms and cards.
+     *
+     * Passwords are not recoverable from Moodle's database because they are hashed. These values
+     * are the local demo import defaults, paired with live usernames selected from the database.
+     *
+     * @param string $loginrole Current login role.
+     * @return array
+     */
+    private function demo_login_context(string $loginrole): array {
+        $context = [
+            'loginusername' => '',
+            'loginpassword' => '',
+            'hasdemologin' => false,
+            'showdemocredentials' => false,
         ];
+
+        foreach (['admin', 'teacher', 'student', 'parent', 'participant'] as $role) {
+            $context['demo_' . $role . '_username'] = '';
+            $context['demo_' . $role . '_password'] = '';
+            $context['has_demo_' . $role] = false;
+        }
+
+        if (!$this->allow_demo_credentials()) {
+            return $context;
+        }
+
+        $context['showdemocredentials'] = true;
+        foreach (['admin', 'teacher', 'student', 'parent', 'participant'] as $role) {
+            $credentials = $this->demo_credentials_for_role($role);
+            if ($credentials === null) {
+                continue;
+            }
+
+            $context['demo_' . $role . '_username'] = $credentials['username'];
+            $context['demo_' . $role . '_password'] = $credentials['password'];
+            $context['has_demo_' . $role] = true;
+
+            if ($role === $loginrole) {
+                $context['loginusername'] = $credentials['username'];
+                $context['loginpassword'] = $credentials['password'];
+                $context['hasdemologin'] = true;
+            }
+        }
+
+        return $context;
+    }
+
+    /**
+     * Whether demo credentials may be rendered.
+     *
+     * @return bool
+     */
+    private function allow_demo_credentials(): bool {
+        global $CFG;
+
+        $host = parse_url($CFG->wwwroot, PHP_URL_HOST);
+        $localhosts = ['localhost', '127.0.0.1', '::1', '[::1]'];
+
+        return in_array($host, $localhosts, true);
+    }
+
+    /**
+     * Return one database-backed demo username and its known local demo password for a role.
+     *
+     * @param string $role Custom LMS role.
+     * @return array|null
+     */
+    private function demo_credentials_for_role(string $role): ?array {
+        $username = $this->demo_username_for_role($role);
+        if ($username === '') {
+            return null;
+        }
+
+        $passwords = [
+            'admin' => getenv('MOODLE_ADMIN_PASSWORD') ?: 'admin',
+            'teacher' => 'DronaTeacher2026!',
+            'student' => 'DronaStudent2026!',
+            'parent' => 'DronaParent2026!',
+            'participant' => 'DronaTeacher2026!',
+        ];
+
+        return [
+            'username' => $username,
+            'password' => $passwords[$role] ?? '',
+        ];
+    }
+
+    /**
+     * Select one active database user for a Custom LMS role.
+     *
+     * @param string $role Custom LMS role.
+     * @return string
+     */
+    private function demo_username_for_role(string $role): string {
+        global $DB;
+
+        if ($role === 'admin') {
+            foreach (get_admins() as $admin) {
+                if (empty($admin->deleted) && empty($admin->suspended) && !empty($admin->confirmed)) {
+                    return $admin->username;
+                }
+            }
+
+            return '';
+        }
+
+        $rolemap = [
+            'teacher' => ['editingteacher', 'teacher'],
+            'student' => ['student'],
+            'parent' => ['parent'],
+        ];
+
+        if (isset($rolemap[$role])) {
+            [$rolesql, $params] = $DB->get_in_or_equal($rolemap[$role], SQL_PARAMS_NAMED, 'role');
+            $sql = "SELECT u.username
+                      FROM {user} u
+                      JOIN {role_assignments} ra ON ra.userid = u.id
+                      JOIN {role} r ON r.id = ra.roleid
+                     WHERE r.shortname {$rolesql}
+                       AND u.deleted = 0
+                       AND u.suspended = 0
+                       AND u.confirmed = 1
+                  ORDER BY u.id";
+
+            return (string)($DB->get_field_sql($sql, $params, IGNORE_MISSING) ?: '');
+        }
+
+        if ($role === 'participant') {
+            $sql = "SELECT u.username
+                      FROM {user} u
+                 LEFT JOIN {role_assignments} ra ON ra.userid = u.id
+                     WHERE u.deleted = 0
+                       AND u.suspended = 0
+                       AND u.confirmed = 1
+                       AND u.id > 2
+                       AND ra.id IS NULL
+                  ORDER BY u.id";
+
+            return (string)($DB->get_field_sql($sql, [], IGNORE_MISSING) ?: '');
+        }
+
+        return '';
     }
 
     /**

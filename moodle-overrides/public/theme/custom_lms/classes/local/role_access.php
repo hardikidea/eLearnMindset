@@ -176,6 +176,15 @@ class role_access {
             }
         }
 
+        if ($role === 'participant') {
+            return (int)$user->id > 2
+                && !is_siteadmin($user)
+                && !empty($user->confirmed)
+                && empty($user->deleted)
+                && empty($user->suspended)
+                && empty($roles);
+        }
+
         return false;
     }
 

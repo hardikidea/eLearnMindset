@@ -1,0 +1,74 @@
+{{!
+    @template theme_custom_lms/partials/student_course_overview
+
+    Student course overview panel for real Moodle course pages.
+}}
+<section class="custom-lms-student-course-hero" aria-label="Student course progress">
+    <div class="custom-lms-student-course-progress" style="{{studentcourse_progress_style}}">
+        <div>
+            <strong>{{studentcourse_progress}}%</strong>
+            <span>Complete</span>
+        </div>
+    </div>
+
+    <div class="custom-lms-student-course-primary">
+        <span class="custom-lms-student-course-kicker">Current course</span>
+        <h2>Keep going, {{studentcourse_firstname}}</h2>
+        <p>You are making progress in this course. Continue with the next learning item when you are ready.</p>
+        <div class="custom-lms-student-course-teacher">
+            <span class="custom-lms-student-course-avatar" aria-hidden="true">{{studentcourse_teacher_initials}}</span>
+            <span>Your teacher: <strong>{{studentcourse_teacher_name}}</strong></span>
+        </div>
+    </div>
+
+    <div class="custom-lms-student-course-next">
+        <span class="custom-lms-student-course-icon" aria-hidden="true">
+            <i class="fa fa-book"></i>
+        </span>
+        <div>
+            <span class="custom-lms-student-course-kicker">Next up</span>
+            <h3>{{studentcourse_next_title}}</h3>
+            <p>Open the next available activity, resource or course item.</p>
+            <a class="btn btn-primary custom-lms-student-course-continue" href="{{{studentcourse_next_url}}}">
+                Continue learning <i class="fa fa-arrow-right" aria-hidden="true"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="custom-lms-student-course-art" aria-hidden="true">
+        <span class="paint-dot paint-dot-blue"></span>
+        <span class="paint-dot paint-dot-yellow"></span>
+        <span class="paint-dot paint-dot-red"></span>
+        <span class="paint-brush paint-brush-one"></span>
+        <span class="paint-brush paint-brush-two"></span>
+        <span class="paint-paper"></span>
+    </div>
+
+    <div class="custom-lms-student-course-links">
+        {{#studentcourse_has_announcement}}
+            <a href="{{{studentcourse_announcement_url}}}">
+                <i class="fa fa-comments-o" aria-hidden="true"></i>
+                <span>Announcements</span>
+            </a>
+        {{/studentcourse_has_announcement}}
+        {{#studentcourse_has_teacher_message}}
+            <a href="{{{studentcourse_teacher_message_url}}}">
+                <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                <span>Contact teacher</span>
+            </a>
+        {{/studentcourse_has_teacher_message}}
+        {{#studentcourse_has_certificate}}
+            <a href="{{{studentcourse_certificate_url}}}">
+                <i class="fa fa-certificate" aria-hidden="true"></i>
+                <span>Certificate</span>
+            </a>
+        {{/studentcourse_has_certificate}}
+    </div>
+
+    <div class="custom-lms-student-course-stats" aria-label="Course activity summary">
+        <span><strong>{{studentcourse_activity_count}}</strong> Activities</span>
+        <span><strong>{{studentcourse_resource_count}}</strong> Resources</span>
+        <span><strong>{{studentcourse_quiz_count}}</strong> Quizzes</span>
+        <span><strong>{{studentcourse_assignment_count}}</strong> Assignments</span>
+    </div>
+</section>

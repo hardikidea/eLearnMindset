@@ -24,6 +24,11 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+if (theme_custom_lms_uses_admin_shell()) {
+    require(__DIR__ . '/drawers.php');
+    return;
+}
+
 $customlmsrole = \theme_custom_lms\local\role_access::primary_role_for_user($USER ?? null);
 $PAGE->requires->css(new moodle_url('/theme/custom_lms/style/role_tokens.css'));
 $PAGE->requires->css(new moodle_url('/theme/custom_lms/style/form_guidance.css'));

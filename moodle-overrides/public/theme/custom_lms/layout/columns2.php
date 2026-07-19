@@ -24,6 +24,11 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+if (theme_custom_lms_uses_admin_shell()) {
+    require(__DIR__ . '/drawers.php');
+    return;
+}
+
 require_once($CFG->libdir . '/behat/lib.php');
 
 // Add block button in editing mode.

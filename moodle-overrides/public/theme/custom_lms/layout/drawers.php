@@ -45,27 +45,7 @@ if (defined('BEHAT_SITE_RUNNING') && get_user_preferences('behat_keep_drawer_clo
 $extraclasses = ['uses-drawers'];
 $customlmsrole = \theme_custom_lms\local\role_access::primary_role_for_user($USER ?? null);
 $pageurlpath = parse_url($PAGE->url->out(false), PHP_URL_PATH) ?: '';
-$pagepagetype = $PAGE->pagetype ?? '';
-$siteadminrouteprefixes = [
-    '/ai/',
-    '/cohort/',
-    '/report/',
-];
-$siteadminroutes = [
-    '/tag/manage.php',
-];
-$issiteadminroute = in_array($pageurlpath, $siteadminroutes, true);
-foreach ($siteadminrouteprefixes as $prefix) {
-    if (strpos($pageurlpath, $prefix) === 0) {
-        $issiteadminroute = true;
-        break;
-    }
-}
-$issystemcontext = isset($PAGE->context) && $PAGE->context->contextlevel == CONTEXT_SYSTEM;
-$iscustomlmsadmin = $PAGE->pagelayout === 'admin' ||
-    strpos($pageurlpath, '/admin/') === 0 ||
-    strpos($pagepagetype, 'admin-') === 0 ||
-    ($issystemcontext && $issiteadminroute);
+$iscustomlmsadmin = theme_custom_lms_uses_admin_shell();
 $iscustomlmsadmindashboard = $pageurlpath === '/theme/custom_lms/admin_dashboard.php';
 if ($iscustomlmsadmin) {
     if (isloggedin() && !isguestuser() && !is_siteadmin()) {
@@ -86,6 +66,10 @@ if ($iscustomlmsadmin) {
     $PAGE->requires->css(new moodle_url('/theme/custom_lms/style/role_tokens.css'));
     $PAGE->requires->css(new moodle_url('/theme/custom_lms/style/form_guidance.css'));
     $PAGE->requires->css(new moodle_url('/theme/custom_lms/style/navigation_tabs.css'));
+    if (theme_custom_lms_is_student_course_view()) {
+        $extraclasses[] = 'custom-lms-student-course-view';
+        $PAGE->requires->css(new moodle_url('/theme/custom_lms/style/student_course.css'));
+    }
 }
 if ($courseindexopen) {
     $extraclasses[] = 'drawer-open-index';
@@ -176,6 +160,6 @@ $templatecontext = [
     'admindashboardurl' => $admindashboardurl,
     'userfullname' => $userfullname,
     'userinitials' => $userinitials,
-];
+] + theme_custom_lms_student_course_view_context();
 
 echo $OUTPUT->render_from_template('theme_custom_lms/drawers', $templatecontext);

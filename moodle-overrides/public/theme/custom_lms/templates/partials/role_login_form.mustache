@@ -15,7 +15,8 @@
         name="username"
         placeholder="name@example.com"
         required
-        type="text">
+        type="text"
+        value="{{loginusername}}">
 
     <label for="custom-lms-password-{{rolekey}}">Password</label>
     <input
@@ -24,7 +25,16 @@
         name="password"
         placeholder="Password"
         required
-        type="password">
+        type="password"
+        value="{{loginpassword}}">
+
+    {{#hasdemologin}}
+        <div class="custom-lms-demo-credentials" aria-label="Local demo login credentials">
+            <span class="custom-lms-demo-credential-note">Local demo account</span>
+            <code>{{loginusername}}</code>
+            <code>{{loginpassword}}</code>
+        </div>
+    {{/hasdemologin}}
 
     <div class="between custom-lms-login-options">
         <label class="custom-lms-remember">

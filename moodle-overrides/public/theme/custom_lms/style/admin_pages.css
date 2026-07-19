@@ -618,6 +618,511 @@ body.custom-lms-admin-page .custom-lms-admin-usermenu {
     min-width: 0;
 }
 
+body.custom-lms-admin-page .custom-lms-admin-topbar .popover-region {
+    margin: 0;
+}
+
+body.custom-lms-admin-page .custom-lms-admin-topbar .popover-region-toggle,
+body.custom-lms-admin-page .custom-lms-admin-usermenu .usermenu .dropdown-toggle {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.65rem;
+    height: 2.65rem;
+    padding: 0;
+    border: 1px solid rgba(10, 54, 92, 0.14);
+    border-radius: 0.9rem;
+    color: var(--custom-admin-ink);
+    background: rgba(255, 255, 255, 0.88);
+    box-shadow: 0 0.65rem 1.4rem rgba(15, 23, 42, 0.06);
+    transition:
+        transform 160ms ease,
+        border-color 160ms ease,
+        background-color 160ms ease,
+        box-shadow 160ms ease;
+}
+
+body.custom-lms-admin-page .custom-lms-admin-usermenu .usermenu .dropdown-toggle {
+    min-width: 4.15rem;
+    gap: 0.45rem;
+    padding: 0 0.7rem;
+}
+
+body.custom-lms-admin-page .custom-lms-admin-topbar .popover-region-toggle:hover,
+body.custom-lms-admin-page .custom-lms-admin-topbar .popover-region-toggle:focus,
+body.custom-lms-admin-page .custom-lms-admin-usermenu .usermenu .dropdown-toggle:hover,
+body.custom-lms-admin-page .custom-lms-admin-usermenu .usermenu .dropdown-toggle:focus {
+    border-color: rgba(var(--custom-admin-role-rgb), 0.36);
+    background: rgba(var(--custom-admin-role-rgb), 0.08);
+    box-shadow: 0 0.85rem 1.8rem rgba(var(--custom-admin-role-rgb), 0.12);
+    transform: translateY(-1px);
+}
+
+body.custom-lms-admin-page .custom-lms-admin-topbar .popover-region-toggle .icon,
+body.custom-lms-admin-page .custom-lms-admin-usermenu .usermenu .dropdown-toggle .icon {
+    width: 1.15rem;
+    height: 1.15rem;
+    margin: 0;
+    color: var(--custom-admin-navy);
+}
+
+body.custom-lms-admin-page .custom-lms-admin-topbar .count-container {
+    position: absolute;
+    top: -0.35rem;
+    right: -0.35rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.15rem;
+    height: 1.15rem;
+    padding: 0 0.32rem;
+    border: 2px solid #ffffff;
+    border-radius: 999px;
+    color: #ffffff;
+    background: var(--custom-admin-red);
+    font-size: 0.68rem;
+    font-weight: 800;
+    line-height: 1;
+    box-shadow: 0 0.35rem 0.9rem rgba(211, 18, 36, 0.22);
+}
+
+body.custom-lms-admin-page .custom-lms-admin-topbar .popover-region-container,
+body.custom-lms-admin-page .custom-lms-admin-usermenu .dropdown-menu {
+    overflow: hidden;
+    min-width: min(24rem, calc(100vw - 1.5rem));
+    padding: 0.55rem;
+    border: 1px solid rgba(10, 54, 92, 0.14);
+    border-radius: 1.15rem;
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow:
+        0 1.5rem 3rem rgba(15, 23, 42, 0.16),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+body.custom-lms-admin-page .custom-lms-admin-usermenu .dropdown-menu {
+    min-width: min(18rem, calc(100vw - 1.5rem));
+}
+
+body.custom-lms-admin-page .custom-lms-admin-usermenu #usermenu-carousel,
+body.custom-lms-admin-page .custom-lms-admin-usermenu #usermenu-carousel .carousel-inner,
+body.custom-lms-admin-page .custom-lms-admin-usermenu #usermenu-carousel .carousel-item {
+    border-radius: 0.85rem;
+}
+
+body.custom-lms-admin-page .custom-lms-admin-usermenu .dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    min-height: 2.65rem;
+    margin: 0.1rem 0;
+    padding: 0.65rem 0.75rem;
+    border-radius: 0.75rem;
+    color: var(--custom-admin-ink);
+    font-weight: 650;
+    white-space: normal;
+    transition:
+        color 160ms ease,
+        background-color 160ms ease,
+        transform 160ms ease;
+}
+
+body.custom-lms-admin-page .custom-lms-admin-usermenu .dropdown-item:hover,
+body.custom-lms-admin-page .custom-lms-admin-usermenu .dropdown-item:focus {
+    color: var(--custom-admin-role);
+    background: rgba(var(--custom-admin-role-rgb), 0.09);
+    transform: translateX(2px);
+}
+
+body.custom-lms-admin-page .custom-lms-admin-usermenu .dropdown-item .icon,
+body.custom-lms-admin-page .custom-lms-admin-usermenu .dropdown-item img {
+    flex: 0 0 1.1rem;
+    width: 1.1rem;
+    height: 1.1rem;
+    margin: 0;
+    color: var(--custom-admin-role);
+    object-fit: contain;
+}
+
+body.custom-lms-admin-page .custom-lms-admin-usermenu .dropdown-divider {
+    margin: 0.45rem -0.55rem;
+    border-top-color: rgba(10, 54, 92, 0.12);
+}
+
+body.custom-lms-admin-page .custom-lms-admin-usermenu .dropdown-item[href*="/login/logout.php"] {
+    color: #9f1239;
+}
+
+body.custom-lms-admin-page .custom-lms-admin-usermenu .dropdown-item[href*="/login/logout.php"]:hover,
+body.custom-lms-admin-page .custom-lms-admin-usermenu .dropdown-item[href*="/login/logout.php"]:focus {
+    color: #be123c;
+    background: rgba(211, 18, 36, 0.08);
+}
+
+body.custom-lms-admin-page .custom-lms-admin-topbar .popover-region-header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin: -0.55rem -0.55rem 0;
+    padding: 0.9rem 1rem;
+    border-bottom: 1px solid rgba(10, 54, 92, 0.1);
+    background:
+        linear-gradient(135deg, rgba(var(--custom-admin-role-rgb), 0.1), rgba(10, 54, 92, 0.04)),
+        #ffffff;
+}
+
+body.custom-lms-admin-page .custom-lms-admin-topbar .popover-region-header-text {
+    margin: 0;
+    color: var(--custom-admin-ink);
+    font-size: 1rem;
+    font-weight: 800;
+}
+
+body.custom-lms-admin-page .custom-lms-admin-topbar .popover-region-header-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+}
+
+body.custom-lms-admin-page .custom-lms-admin-topbar .popover-region-header-actions .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.65rem;
+    color: var(--custom-admin-muted);
+}
+
+body.custom-lms-admin-page .custom-lms-admin-topbar .popover-region-header-actions .btn:hover,
+body.custom-lms-admin-page .custom-lms-admin-topbar .popover-region-header-actions .btn:focus {
+    color: var(--custom-admin-role);
+    background: rgba(var(--custom-admin-role-rgb), 0.08);
+}
+
+body.custom-lms-admin-page .custom-lms-admin-topbar .popover-region-content-container {
+    max-height: min(28rem, calc(100vh - 9rem));
+    background: #ffffff;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(var(--custom-admin-role-rgb), 0.42) rgba(10, 54, 92, 0.08);
+}
+
+body.custom-lms-admin-page .custom-lms-admin-topbar .popover-region-content-container::-webkit-scrollbar {
+    width: 0.55rem;
+}
+
+body.custom-lms-admin-page .custom-lms-admin-topbar .popover-region-content-container::-webkit-scrollbar-track {
+    border-radius: 999px;
+    background: rgba(10, 54, 92, 0.08);
+}
+
+body.custom-lms-admin-page .custom-lms-admin-topbar .popover-region-content-container::-webkit-scrollbar-thumb {
+    border: 0.12rem solid rgba(255, 255, 255, 0.9);
+    border-radius: 999px;
+    background: rgba(var(--custom-admin-role-rgb), 0.52);
+}
+
+body.custom-lms-admin-page .custom-lms-admin-topbar .content-item-container {
+    margin: 0.35rem 0;
+    border: 1px solid rgba(10, 54, 92, 0.08);
+    border-radius: 0.85rem;
+    background: #ffffff;
+}
+
+body.custom-lms-admin-page .custom-lms-admin-topbar .content-item-container.unread {
+    border-color: rgba(var(--custom-admin-role-rgb), 0.24);
+    background: rgba(var(--custom-admin-role-rgb), 0.05);
+}
+
+body.custom-lms-admin-page .custom-lms-admin-topbar .content-item-container .context-link,
+body.custom-lms-admin-page .custom-lms-admin-topbar .content-item-container > div[tabindex] {
+    display: block;
+    padding: 0.8rem;
+    color: var(--custom-admin-ink);
+    text-decoration: none;
+}
+
+body.custom-lms-admin-page .custom-lms-admin-topbar .content-item-container .notification-message {
+    font-weight: 650;
+}
+
+body.custom-lms-admin-page .custom-lms-admin-topbar .content-item-container .timestamp {
+    margin-top: 0.35rem;
+    color: var(--custom-admin-muted);
+    font-size: 0.78rem;
+}
+
+body.custom-lms-admin-page .custom-lms-admin-topbar .empty-message {
+    margin: 0.75rem;
+    padding: 1.1rem;
+    border: 1px dashed rgba(10, 54, 92, 0.18);
+    border-radius: 0.9rem;
+    color: var(--custom-admin-muted);
+    text-align: center;
+    background: rgba(10, 54, 92, 0.03);
+}
+
+body.custom-lms-admin-page .custom-lms-admin-topbar .popover-region-footer-container {
+    margin: 0.4rem -0.55rem -0.55rem;
+    padding: 0.85rem 1rem;
+    border-top: 1px solid rgba(10, 54, 92, 0.1);
+    color: var(--custom-admin-role);
+    font-weight: 800;
+    text-align: center;
+    background: rgba(var(--custom-admin-role-rgb), 0.06);
+}
+
+body.custom-lms-admin-page [data-region="right-hand-drawer"].drawer:has(.message-app) {
+    top: 4.5rem;
+    height: calc(100vh - 4.5rem);
+    border-left: 1px solid rgba(10, 54, 92, 0.12);
+    background: transparent !important;
+    box-shadow: -1.4rem 0 3rem rgba(15, 23, 42, 0.18);
+}
+
+@supports (height: 100dvh) {
+    body.custom-lms-admin-page [data-region="right-hand-drawer"].drawer:has(.message-app) {
+        height: calc(100dvh - 4.5rem);
+    }
+}
+
+body.custom-lms-admin-page [data-region="right-hand-drawer"] .message-app {
+    height: 100%;
+    color: var(--custom-admin-ink);
+    background:
+        radial-gradient(circle at top right, rgba(var(--custom-admin-role-rgb), 0.12), transparent 12rem),
+        linear-gradient(180deg, #ffffff 0, #f5f8fc 45%, #eef4f9 100%);
+}
+
+body.custom-lms-admin-page [data-region="right-hand-drawer"] .message-app .closewidget {
+    position: absolute;
+    top: 0.65rem;
+    right: 0.65rem;
+    z-index: 3;
+    padding: 0 !important;
+}
+
+body.custom-lms-admin-page [data-region="right-hand-drawer"] .message-app .closewidget a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 1px solid rgba(10, 54, 92, 0.12);
+    border-radius: 999px;
+    color: var(--custom-admin-ink) !important;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 0.65rem 1.35rem rgba(15, 23, 42, 0.08);
+    text-decoration: none;
+}
+
+body.custom-lms-admin-page [data-region="right-hand-drawer"] .message-app .closewidget a:hover,
+body.custom-lms-admin-page [data-region="right-hand-drawer"] .message-app .closewidget a:focus {
+    color: #ffffff !important;
+    background: var(--custom-admin-navy);
+}
+
+body.custom-lms-admin-page [data-region="right-hand-drawer"] .message-app .header-container {
+    padding-top: 3.4rem;
+    border-bottom: 1px solid rgba(10, 54, 92, 0.1);
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(14px);
+}
+
+body.custom-lms-admin-page [data-region="right-hand-drawer"] .message-app .header-container > [data-region] {
+    padding: 0.8rem 0.9rem 0.9rem !important;
+    border-bottom: 0 !important;
+    background: transparent !important;
+}
+
+body.custom-lms-admin-page [data-region="right-hand-drawer"] .message-app .simplesearchform {
+    overflow: hidden;
+    border: 1px solid rgba(10, 54, 92, 0.16);
+    border-radius: 1rem;
+    background: #ffffff;
+    box-shadow: 0 0.5rem 1.2rem rgba(15, 23, 42, 0.05);
+}
+
+body.custom-lms-admin-page [data-region="right-hand-drawer"] .message-app .simplesearchform .form-control {
+    min-height: 2.9rem;
+    border: 0;
+    border-radius: 0;
+    color: var(--custom-admin-ink);
+    background: #ffffff;
+    box-shadow: none;
+}
+
+body.custom-lms-admin-page [data-region="right-hand-drawer"] .message-app .simplesearchform .form-control::placeholder {
+    color: #94a3b8;
+}
+
+body.custom-lms-admin-page [data-region="right-hand-drawer"] .message-app .simplesearchform .btn-submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 3rem;
+    border: 0;
+    border-left: 1px solid rgba(10, 54, 92, 0.1);
+    border-radius: 0;
+    color: #ffffff;
+    background: var(--custom-admin-role);
+}
+
+body.custom-lms-admin-page [data-region="right-hand-drawer"] .message-app .header-container a[role="button"],
+body.custom-lms-admin-page [data-region="right-hand-drawer"] .message-app .header-container .btn-link {
+    border-radius: 0.8rem;
+    color: var(--custom-admin-ink);
+    text-decoration: none;
+}
+
+body.custom-lms-admin-page [data-region="right-hand-drawer"] .message-app .header-container a[role="button"]:hover,
+body.custom-lms-admin-page [data-region="right-hand-drawer"] .message-app .header-container a[role="button"]:focus,
+body.custom-lms-admin-page [data-region="right-hand-drawer"] .message-app .header-container .btn-link:hover,
+body.custom-lms-admin-page [data-region="right-hand-drawer"] .message-app .header-container .btn-link:focus {
+    color: var(--custom-admin-role);
+    background: rgba(var(--custom-admin-role-rgb), 0.08);
+}
+
+body.custom-lms-admin-page [data-region="right-hand-drawer"] .message-app .header-container .text-end a[data-route="view-contacts"] {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin-top: 0.85rem;
+    padding: 0.55rem 0.8rem;
+    border: 1px solid rgba(var(--custom-admin-role-rgb), 0.18);
+    border-radius: 999px;
+    color: var(--custom-admin-role);
+    background: rgba(var(--custom-admin-role-rgb), 0.08);
+    font-weight: 750;
+}
+
+body.custom-lms-admin-page [data-region="right-hand-drawer"] .message-app .body-container {
+    background: transparent;
+}
+
+body.custom-lms-admin-page [data-region="right-hand-drawer"] .message-app .body-container > * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(var(--custom-admin-role-rgb), 0.46) rgba(10, 54, 92, 0.08);
+}
+
+body.custom-lms-admin-page [data-region="right-hand-drawer"] .message-app .body-container > *::-webkit-scrollbar {
+    width: 0.55rem;
+}
+
+body.custom-lms-admin-page [data-region="right-hand-drawer"] .message-app .body-container > *::-webkit-scrollbar-track {
+    border-radius: 999px;
+    background: rgba(10, 54, 92, 0.08);
+}
+
+body.custom-lms-admin-page [data-region="right-hand-drawer"] .message-app .body-container > *::-webkit-scrollbar-thumb {
+    border: 0.12rem solid rgba(255, 255, 255, 0.9);
+    border-radius: 999px;
+    background: rgba(var(--custom-admin-role-rgb), 0.54);
+}
+
+body.custom-lms-admin-page [data-region="right-hand-drawer"] .message-app .view-overview-body .section,
+body.custom-lms-admin-page [data-region="right-hand-drawer"] .message-app .list-group {
+    margin: 0.75rem;
+    border: 1px solid rgba(10, 54, 92, 0.1);
+    border-radius: 1rem !important;
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 0.75rem 1.8rem rgba(15, 23, 42, 0.06);
+    overflow: hidden;
+}
+
+body.custom-lms-admin-page [data-region="right-hand-drawer"] .message-app .view-overview-body .section .card-header {
+    padding: 0;
+    border: 0;
+    background: transparent;
+}
+
+body.custom-lms-admin-page [data-region="right-hand-drawer"] .message-app .overview-section-toggle {
+    min-height: 3.55rem;
+    padding: 0.85rem 0.95rem !important;
+    border-radius: 0 !important;
+    color: var(--custom-admin-ink);
+    font-size: 1rem;
+    font-weight: 760;
+}
+
+body.custom-lms-admin-page [data-region="right-hand-drawer"] .message-app .overview-section-toggle:hover,
+body.custom-lms-admin-page [data-region="right-hand-drawer"] .message-app .overview-section-toggle:focus {
+    color: var(--custom-admin-role);
+    background: rgba(var(--custom-admin-role-rgb), 0.07);
+}
+
+body.custom-lms-admin-page [data-region="right-hand-drawer"] .message-app .overview-section-toggle .icon {
+    width: 1rem;
+    height: 1rem;
+    color: var(--custom-admin-role);
+}
+
+body.custom-lms-admin-page [data-region="right-hand-drawer"] .message-app .overview-section-toggle small {
+    color: var(--custom-admin-muted);
+    font-weight: 600;
+}
+
+body.custom-lms-admin-page [data-region="right-hand-drawer"] .message-app .list-group .list-group-item {
+    margin: 0;
+    min-height: 4.35rem;
+    border-color: rgba(10, 54, 92, 0.08);
+    color: var(--custom-admin-ink);
+    background: #ffffff;
+}
+
+body.custom-lms-admin-page [data-region="right-hand-drawer"] .message-app .list-group .list-group-item:hover,
+body.custom-lms-admin-page [data-region="right-hand-drawer"] .message-app .list-group .list-group-item:focus {
+    color: var(--custom-admin-ink);
+    background: rgba(var(--custom-admin-role-rgb), 0.07);
+    filter: none;
+}
+
+body.custom-lms-admin-page [data-region="right-hand-drawer"] .message-app .list-group .list-group-item strong,
+body.custom-lms-admin-page [data-region="right-hand-drawer"] .message-app .list-group .list-group-item h6 {
+    color: var(--custom-admin-ink);
+    font-weight: 800;
+}
+
+body.custom-lms-admin-page [data-region="right-hand-drawer"] .message-app .last-message,
+body.custom-lms-admin-page [data-region="right-hand-drawer"] .message-app .list-group .list-group-item p {
+    color: var(--custom-admin-muted);
+}
+
+body.custom-lms-admin-page [data-region="right-hand-drawer"] .message-app .contact-status.online .icon {
+    color: var(--custom-admin-role);
+}
+
+body.custom-lms-admin-page [data-region="right-hand-drawer"] .message-app .badge.bg-primary {
+    background-color: var(--custom-admin-role) !important;
+}
+
+body.custom-lms-admin-page [data-region="right-hand-drawer"] .message-app .footer-container {
+    padding: 0.75rem;
+    border-top: 1px solid rgba(10, 54, 92, 0.1);
+    background: rgba(255, 255, 255, 0.9);
+}
+
+body.custom-lms-admin-page [data-region="right-hand-drawer"] .message-app .footer-container a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 2.8rem;
+    border: 1px solid rgba(var(--custom-admin-role-rgb), 0.18);
+    border-radius: 0.9rem;
+    color: var(--custom-admin-role);
+    background: rgba(var(--custom-admin-role-rgb), 0.08);
+    font-weight: 800;
+    text-decoration: none;
+}
+
+body.custom-lms-admin-page [data-region="right-hand-drawer"] .message-app .footer-container a:hover,
+body.custom-lms-admin-page [data-region="right-hand-drawer"] .message-app .footer-container a:focus {
+    color: #ffffff;
+    background: var(--custom-admin-role);
+}
+
 body.custom-lms-admin-page .custom-lms-admin-avatar {
     display: inline-flex;
     align-items: center;
@@ -1577,6 +2082,29 @@ body.custom-lms-admin-page .custom-lms-admin-action:focus-visible {
 }
 
 @media (max-width: 767.98px) {
+    body.custom-lms-admin-page [data-region="right-hand-drawer"].drawer:has(.message-app) {
+        top: 0;
+        width: 100vw;
+        max-width: 100vw;
+        height: 100vh;
+        border-left: 0;
+        border-radius: 0;
+    }
+
+    body.custom-lms-admin-page [data-region="right-hand-drawer"].hidden:has(.message-app) {
+        right: -100vw;
+    }
+
+    @supports (height: 100dvh) {
+        body.custom-lms-admin-page [data-region="right-hand-drawer"].drawer:has(.message-app) {
+            height: 100dvh;
+        }
+    }
+
+    body.custom-lms-admin-page [data-region="right-hand-drawer"] .message-app .header-container {
+        padding-top: 3.15rem;
+    }
+
     body.custom-lms-admin-page .custom-lms-admin-topbar {
         align-items: flex-start;
         flex-wrap: wrap;

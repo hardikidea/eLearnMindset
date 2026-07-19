@@ -214,6 +214,9 @@
                     {{> core/moremenu}}
                 </div>
             {{/secondarymoremenu}}
+            {{#isstudentcourseview}}
+                {{> theme_custom_lms/partials/student_course_overview }}
+            {{/isstudentcourseview}}
             <div id="page-content" class="pb-3 d-print-block {{#iscustomlmsadmin}}custom-lms-admin-content{{/iscustomlmsadmin}}">
                 <div id="region-main-box">
                     {{#hasregionmainsettingsmenu}}
