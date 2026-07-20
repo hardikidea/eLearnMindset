@@ -1,0 +1,1208 @@
+/* Student dashboard visual shell. Moodle routes and permissions remain authoritative. */
+.custom-lms-student-shell-page {
+    --student-navy: #052657;
+    --student-navy-deep: #031a3d;
+    --student-blue: #0f5de8;
+    --student-blue-soft: #eaf2ff;
+    --student-ink: #0b1d3e;
+    --student-muted: #61718f;
+    --student-line: #e3eaf5;
+    --student-surface: #fff;
+    --student-canvas: #f7f9fd;
+    --student-radius-sm: 8px;
+    --student-radius-md: 10px;
+    --student-radius-lg: 14px;
+    --student-shadow-sm: 0 6px 18px rgba(26, 54, 101, .05);
+    --student-shadow-md: 0 10px 28px rgba(26, 54, 101, .07);
+    background: var(--student-canvas);
+    color: var(--student-ink);
+    height: 100vh;
+    overflow: hidden;
+}
+
+.custom-lms-student-shell-page #page-wrapper,
+.custom-lms-student-shell-page #page {
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    background: var(--student-canvas);
+}
+
+.custom-lms-student-shell-page #page-wrapper {
+    height: 100vh;
+    overflow: hidden;
+}
+
+.custom-lms-student-shell-page .student-portal-dashboard {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.custom-lms-student-shell-page .student-portal-sidebar {
+    display: flex;
+    flex-direction: column;
+    align-self: flex-start;
+    z-index: 1045;
+}
+
+.custom-lms-student-shell-page .student-portal-nav {
+    display: flex;
+    flex-direction: column;
+}
+
+.custom-lms-student-shell-page .student-portal-nav a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.custom-lms-student-shell-page .student-portal-main {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    height: 100vh;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.custom-lms-student-shell-page .student-portal-topbar {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+}
+
+.custom-lms-student-shell-page .student-portal-content {
+    width: 100%;
+    max-width: none;
+    flex: 1 1 auto;
+    min-width: 0;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+    scrollbar-gutter: stable;
+}
+
+/* Moodle underlines every hovered anchor by default. Keep that useful cue for prose links,
+   but remove it from links that are presented as navigation or interactive controls. */
+.custom-lms-student-shell-page :is(
+    .student-portal-sidebar,
+    .student-portal-topbar,
+    .student-portal-section-heading,
+    .student-dashboard-course-card,
+    .student-portal-my-courses,
+    .student-portal-native-tools,
+    .student-portal-native-usermenu,
+    .secondary-navigation,
+    .breadcrumb,
+    .nav-tabs,
+    .nav-pills,
+    .pagination
+) a,
+.custom-lms-student-shell-page :is(
+    .student-portal-sidebar,
+    .student-portal-topbar,
+    .student-portal-section-heading,
+    .student-dashboard-course-card,
+    .student-portal-my-courses,
+    .student-portal-native-tools,
+    .student-portal-native-usermenu,
+    .secondary-navigation,
+    .breadcrumb,
+    .nav-tabs,
+    .nav-pills,
+    .pagination
+) a:hover,
+.custom-lms-student-shell-page a.btn,
+.custom-lms-student-shell-page a.btn:hover {
+    text-decoration: none;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content #page {
+    width: 100%;
+    min-height: 0;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content #topofscroll,
+.custom-lms-student-shell-page .student-portal-native-content .main-inner {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content #page-content {
+    width: 100%;
+    min-width: 0;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content #region-main {
+    min-width: 0;
+    padding: clamp(18px, 2.2vw, 30px);
+    border: 1px solid var(--student-line);
+    border-radius: 14px;
+    background: var(--student-surface);
+    box-shadow: 0 9px 26px rgba(26, 54, 101, .055);
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .secondary-navigation {
+    margin-bottom: 18px;
+    overflow-x: auto;
+    border: 1px solid var(--student-line);
+    border-radius: 12px;
+    background: #fff;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .drawer-toggles {
+    position: relative;
+    z-index: 3;
+}
+
+.custom-lms-student-shell-page .mobile-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1040;
+    display: none;
+    background: rgba(3, 20, 49, .48);
+}
+
+.custom-lms-student-shell-page .mobile-overlay.show {
+    display: block;
+}
+
+.custom-lms-student-shell-page .student-portal-dashboard {
+    min-height: 0;
+    background: var(--student-canvas);
+}
+
+.custom-lms-student-shell-page .student-portal-sidebar {
+    position: sticky;
+    top: 0;
+    width: 236px;
+    flex: 0 0 236px;
+    height: 100vh;
+    min-height: 0;
+    padding: 18px 17px 16px;
+    background: linear-gradient(180deg, #062a61 0%, var(--student-navy) 60%, var(--student-navy-deep) 100%);
+    overflow: hidden auto;
+    scrollbar-color: rgba(255, 255, 255, .28) transparent;
+    scrollbar-width: thin;
+}
+
+.custom-lms-student-shell-page .student-portal-sidebar::-webkit-scrollbar { width: 6px; }
+.custom-lms-student-shell-page .student-portal-sidebar::-webkit-scrollbar-track { background: transparent; }
+.custom-lms-student-shell-page .student-portal-sidebar::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, .28); border-radius: 999px; }
+
+.student-portal-brand {
+    display: grid;
+    justify-items: center;
+    gap: 8px;
+    padding-bottom: 16px;
+    color: #fff;
+    text-align: center;
+}
+
+.student-portal-brand:hover { color: #fff; }
+.student-portal-brand img { width: 92px; height: 92px; border: 1px solid rgba(255, 255, 255, .72); border-radius: 50%; object-fit: cover; }
+.student-portal-brand strong { max-width: 195px; font-size: 14px; line-height: 1.35; text-transform: uppercase; }
+.student-portal-brand > span { width: 72px; height: 1px; background: rgba(255, 255, 255, .55); position: relative; }
+.student-portal-brand > span::after { content: ""; position: absolute; top: -3px; left: 33px; width: 7px; height: 7px; border: 1px solid #fff; transform: rotate(45deg); background: var(--student-navy); }
+
+.custom-lms-student-shell-page .student-portal-nav { gap: 3px; }
+.custom-lms-student-shell-page .student-portal-nav a {
+    min-height: 46px;
+    padding: 10px 13px;
+    gap: 13px;
+    border-radius: 10px;
+    color: rgba(255, 255, 255, .86);
+    opacity: 1;
+    font-size: 14px;
+    transition: background-color .18s ease, color .18s ease;
+}
+
+.custom-lms-student-shell-page .student-portal-nav a:hover,
+.custom-lms-student-shell-page .student-portal-nav a.active {
+    color: #fff;
+    background: var(--student-blue);
+    box-shadow: 0 8px 18px rgba(0, 53, 161, .3);
+    transform: none;
+}
+
+.student-portal-nav a > i { width: 22px; color: currentColor; font-size: 18px; text-align: center; }
+.student-portal-nav a > b { margin-left: auto; min-width: 22px; padding: 2px 6px; border-radius: 999px; background: #ee2b38; color: #fff; font-size: 11px; text-align: center; }
+
+.student-portal-course-divider {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    gap: 10px;
+    margin: 12px 8px 9px;
+    color: rgba(189, 214, 249, .72);
+}
+.student-portal-course-divider span { height: 1px; background: rgba(189, 214, 249, .22); }
+.student-portal-course-divider i { font-size: 14px; }
+.student-portal-course-nav { gap: 2px; }
+.custom-lms-student-shell-page .student-portal-course-nav a { min-height: 40px; padding-top: 8px; padding-bottom: 8px; }
+.student-portal-course-nav a > i { font-size: 16px; }
+
+.student-portal-sidebar-art { margin: auto -10px 6px; padding-top: 16px; color: rgba(94, 145, 218, .16); text-align: center; overflow: hidden; }
+.student-portal-sidebar-art i { font-size: 96px; }
+.student-portal-theme-status { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 46px; padding: 7px 12px; border-radius: 999px; background: rgba(255, 255, 255, .07); color: rgba(255, 255, 255, .82); font-size: 11px; }
+.student-portal-theme-status i { display: grid; width: 32px; height: 32px; place-items: center; border-radius: 50%; background: #fff; color: var(--student-navy); }
+
+.custom-lms-student-shell-page .student-portal-main { min-width: 0; background: var(--student-canvas); }
+.custom-lms-student-shell-page .student-portal-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 15;
+    height: 72px;
+    padding: 0 24px;
+    gap: 18px;
+    border-bottom: 1px solid var(--student-line);
+    background: rgba(255, 255, 255, .97);
+    backdrop-filter: none;
+}
+
+.student-portal-menu { display: none; width: 44px; height: 44px; min-height: 44px; padding: 0; border: 1px solid #dce5f1; border-radius: 10px; background: #fff; color: var(--student-navy); box-shadow: none; font-size: 20px; }
+.student-portal-menu:hover,
+.student-portal-menu:focus { border-color: #b8cef2; background: var(--student-blue-soft); color: var(--student-blue); box-shadow: none; }
+.student-portal-search { position: relative; width: min(480px, 48vw); }
+.student-portal-search i { position: absolute; left: 18px; top: 50%; z-index: 1; color: #4c78c7; transform: translateY(-50%); }
+.student-portal-search input { width: 100%; height: 44px; padding: 0 18px 0 48px; border: 1px solid #e4ebf5; border-radius: 22px; background: #fafcff; color: var(--student-ink); box-shadow: var(--student-shadow-sm); font-size: 14px; }
+.student-portal-search input:focus { border-color: #91b7fa; box-shadow: 0 0 0 3px rgba(15, 93, 232, .12); }
+
+.student-portal-utilities { display: flex; align-items: center; gap: 10px; margin-left: auto; }
+.student-portal-native-tools { display: flex; align-items: center; gap: 9px; }
+.student-portal-native-tools .popover-region { position: relative; margin: 0; }
+.student-portal-native-tools .popover-region-toggle,
+.student-portal-native-usermenu .usermenu .dropdown-toggle {
+    position: relative;
+    display: inline-flex;
+    width: 44px;
+    min-width: 44px;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 1px solid #e7edf6;
+    border-radius: 50%;
+    background: #fff;
+    color: var(--student-navy);
+    box-shadow: 0 6px 18px rgba(20, 52, 101, .06);
+    transition: border-color .18s ease, background-color .18s ease, box-shadow .18s ease, color .18s ease;
+}
+.student-portal-native-tools .popover-region-toggle:hover,
+.student-portal-native-tools .popover-region-toggle:focus,
+.student-portal-native-usermenu .usermenu .dropdown-toggle:hover,
+.student-portal-native-usermenu .usermenu .dropdown-toggle:focus {
+    border-color: #b8cef2;
+    background: var(--student-blue-soft);
+    box-shadow: 0 0 0 3px rgba(15, 93, 232, .1);
+}
+.student-portal-native-tools .popover-region-toggle[aria-expanded="true"] {
+    border-color: var(--student-blue);
+    background: var(--student-blue);
+    color: #fff;
+    box-shadow: 0 9px 22px rgba(15, 93, 232, .22);
+}
+.student-portal-native-tools .popover-region-toggle .icon,
+.student-portal-native-usermenu .usermenu .dropdown-toggle .icon {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    color: currentColor;
+}
+.student-portal-native-tools .count-container {
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    display: inline-flex;
+    min-width: 19px;
+    height: 19px;
+    align-items: center;
+    justify-content: center;
+    padding: 0 5px;
+    border: 2px solid #fff;
+    border-radius: 999px;
+    background: #e72f3d;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 800;
+    line-height: 1;
+}
+.student-portal-native-tools .count-container.hidden { display: none; }
+.student-portal-account {
+    display: flex;
+    min-height: 48px;
+    align-items: center;
+    gap: 10px;
+    padding: 3px 4px 3px 14px;
+    border: 1px solid #e4ebf5;
+    border-radius: 18px;
+    background: #fff;
+    box-shadow: 0 7px 20px rgba(20, 52, 101, .055);
+    transition: border-color .18s ease, box-shadow .18s ease;
+}
+.student-portal-account:hover,
+.student-portal-account:focus-within {
+    border-color: #b8cef2;
+    box-shadow: 0 9px 24px rgba(20, 52, 101, .09);
+}
+.student-portal-account-summary { display: grid; gap: 1px; margin-left: 2px; line-height: 1.25; }
+.student-portal-account-summary strong { color: var(--student-ink); font-size: 14px; }
+.student-portal-account-summary small { color: var(--student-muted); font-size: 12px; }
+.student-portal-native-usermenu,
+.student-portal-native-usermenu .usermenu { position: relative; }
+.student-portal-native-usermenu .usermenu .dropdown-toggle {
+    width: 68px;
+    min-width: 68px;
+    gap: 9px;
+    padding: 0 9px 0 7px;
+    border: 0;
+    border-radius: 14px;
+    background: #f5f8fd;
+    box-shadow: none;
+}
+.student-portal-native-usermenu .usermenu .dropdown-toggle:hover,
+.student-portal-native-usermenu .usermenu .dropdown-toggle:focus,
+.student-portal-native-usermenu .usermenu .dropdown-toggle.show {
+    border: 0;
+    background: var(--student-blue-soft);
+    color: var(--student-blue);
+    box-shadow: none;
+}
+.student-portal-native-usermenu .usermenu .dropdown-toggle::after {
+    width: 8px;
+    height: 8px;
+    margin: -4px 0 0;
+    border: 0;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(45deg);
+    transition: margin-top .18s ease, transform .18s ease;
+}
+.student-portal-native-usermenu .usermenu .dropdown-toggle.show::after {
+    margin-top: 4px;
+    transform: rotate(225deg);
+}
+.student-portal-native-usermenu .usermenu .userbutton,
+.student-portal-native-usermenu .usermenu .avatars,
+.student-portal-native-usermenu .usermenu .avatar {
+    display: inline-flex;
+    width: 35px;
+    height: 35px;
+    align-items: center;
+    justify-content: center;
+}
+.student-portal-native-usermenu .usermenu .avatar.current {
+    overflow: hidden;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    background: var(--student-navy);
+    box-shadow: 0 0 0 1px #cbd8ec;
+}
+.student-portal-native-usermenu .usermenu .userinitials {
+    width: 100% !important;
+    min-width: 100%;
+    height: 100% !important;
+    margin: 0 !important;
+    border: 0;
+    border-radius: 50%;
+    background: var(--student-navy);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 1;
+}
+.student-portal-native-usermenu .usermenu .userpicture { width: 100%; height: 100%; margin: 0; border-radius: 50%; object-fit: cover; }
+.student-portal-native-usermenu .dropdown-menu,
+.student-portal-native-tools .popover-region-container {
+    overflow: hidden;
+    padding: 10px;
+    border: 1px solid #dbe5f2;
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 24px 60px rgba(16, 43, 84, .18);
+}
+.student-portal-native-usermenu .dropdown-menu {
+    top: calc(100% + 12px) !important;
+    right: 0 !important;
+    left: auto !important;
+    margin: 0;
+    transform: none !important;
+    width: min(304px, calc(100vw - 24px));
+    min-width: 0;
+}
+.student-portal-native-usermenu .dropdown-menu::before {
+    content: "";
+    position: absolute;
+    top: -6px;
+    right: 25px;
+    width: 12px;
+    height: 12px;
+    border-top: 1px solid #dbe5f2;
+    border-left: 1px solid #dbe5f2;
+    background: #fff;
+    transform: rotate(45deg);
+}
+.student-portal-native-usermenu .dropdown-menu.show { animation: student-account-menu-in .16s ease-out both; }
+.student-portal-native-usermenu #usermenu-carousel,
+.student-portal-native-usermenu #usermenu-carousel .carousel-inner,
+.student-portal-native-usermenu #usermenu-carousel .carousel-item { border-radius: 10px; }
+.student-portal-native-usermenu .dropdown-item {
+    display: flex;
+    min-height: 48px;
+    align-items: center;
+    gap: 12px;
+    margin: 2px 0;
+    padding: 7px 9px;
+    border-radius: 10px;
+    color: var(--student-ink);
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.35;
+    white-space: normal;
+    transition: background-color .16s ease, color .16s ease;
+}
+.student-portal-native-usermenu .dropdown-item:hover,
+.student-portal-native-usermenu .dropdown-item:focus { background: var(--student-blue-soft); color: var(--student-blue); }
+.student-portal-native-usermenu .dropdown-item .icon,
+.student-portal-native-usermenu .dropdown-item img {
+    width: 34px;
+    min-width: 34px;
+    height: 34px;
+    margin: 0;
+    padding: 8px;
+    border-radius: 9px;
+    color: var(--student-blue);
+    background: #eef4ff;
+    object-fit: contain;
+}
+.student-portal-native-usermenu .dropdown-divider { margin: 8px -10px; border-top-color: #e4eaf3; }
+.student-portal-native-usermenu .dropdown-item[href*="/login/logout.php"] { color: #b42331; }
+.student-portal-native-usermenu .dropdown-item[href*="/login/logout.php"]:hover,
+.student-portal-native-usermenu .dropdown-item[href*="/login/logout.php"]:focus { background: #fff0f1; color: #c61f2d; }
+.student-portal-native-usermenu .dropdown-item[href*="/login/logout.php"] .icon {
+    color: #c61f2d;
+    background: #fff0f1;
+}
+
+@keyframes student-account-menu-in {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .student-portal-native-usermenu .dropdown-menu.show { animation: none; }
+}
+
+@media print {
+    .custom-lms-student-shell-page,
+    .custom-lms-student-shell-page #page-wrapper,
+    .custom-lms-student-shell-page .student-portal-dashboard,
+    .custom-lms-student-shell-page .student-portal-main,
+    .custom-lms-student-shell-page .student-portal-content {
+        height: auto;
+        min-height: 0;
+        overflow: visible;
+    }
+}
+.student-portal-native-tools .popover-region-container {
+    top: calc(100% + 12px) !important;
+    right: 0;
+    left: auto !important;
+    transform: none !important;
+    width: min(380px, calc(100vw - 24px));
+    height: auto;
+    max-height: min(480px, calc(100vh - 104px));
+    padding: 0;
+}
+.student-portal-native-tools .popover-region-header-container { min-height: 58px; padding: 11px 14px 11px 18px; border-bottom: 1px solid #e4eaf3; background: #f8faff; }
+.student-portal-native-tools .popover-region-header-text { margin: 0; color: var(--student-ink); font-size: 15px; font-weight: 800; }
+.student-portal-native-tools .popover-region-header-actions { display: flex; align-items: center; gap: 4px; }
+.student-portal-native-tools .popover-region-header-actions .btn { display: inline-flex; width: 34px; height: 34px; align-items: center; justify-content: center; padding: 0; border: 0; border-radius: 9px; color: var(--student-muted); box-shadow: none; }
+.student-portal-native-tools .popover-region-header-actions .btn:hover,
+.student-portal-native-tools .popover-region-header-actions .btn:focus { background: var(--student-blue-soft); color: var(--student-blue); box-shadow: none; }
+.student-portal-native-tools .popover-region-header-actions .btn .icon { margin: 0; }
+.student-portal-native-tools .popover-region-content-container { height: auto; min-height: 96px; max-height: min(350px, calc(100vh - 190px)); background: #fff; scrollbar-color: #9bb7e2 #edf2f8; scrollbar-width: thin; }
+.student-portal-native-tools .popover-region-content { padding: 6px; }
+.student-portal-native-tools .content-item-container { margin: 6px; overflow: hidden; border: 1px solid #e4eaf3; border-radius: 11px; background: #fff; }
+.student-portal-native-tools .content-item-container:hover,
+.student-portal-native-tools .content-item-container:focus-within { border-color: #bbd2f8; box-shadow: 0 7px 18px rgba(15, 93, 232, .07); }
+.student-portal-native-tools .content-item-container.unread { border-color: #bbd2f8; background: #f2f7ff; }
+.student-portal-native-tools .empty-message { margin: 10px; padding: 22px 18px; border: 1px dashed #ccd8e9; border-radius: 11px; background: #f9fbfe; color: var(--student-muted); text-align: center; }
+.student-portal-native-tools .popover-region-footer-container { padding: 12px 16px; border-top: 1px solid #e4eaf3; background: #f7faff; color: var(--student-blue); font-size: 13px; font-weight: 800; text-align: center; }
+.student-portal-native-tools .see-all-link:hover .popover-region-footer-container,
+.student-portal-native-tools .see-all-link:focus .popover-region-footer-container { background: var(--student-blue-soft); }
+
+.custom-lms-student-shell-page [data-region="right-hand-drawer"].drawer:has(.message-app) {
+    top: 80px;
+    width: min(420px, 100vw);
+    height: calc(100vh - 80px);
+    overflow: hidden;
+    border: 1px solid #dbe5f2;
+    border-right: 0;
+    border-radius: 18px 0 0 0;
+    background: transparent !important;
+    box-shadow: -18px 0 44px rgba(16, 43, 84, .15);
+}
+.custom-lms-student-shell-page [data-region="right-hand-drawer"] .message-app {
+    position: relative;
+    height: 100%;
+    color: var(--student-ink);
+    background: linear-gradient(180deg, #fff 0, #f5f8fd 100%);
+}
+.custom-lms-student-shell-page [data-region="right-hand-drawer"] .message-app > h2.visually-hidden {
+    position: absolute !important;
+    z-index: 2;
+    top: 18px;
+    left: 18px;
+    width: auto !important;
+    height: auto !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    clip: auto !important;
+    white-space: normal !important;
+    color: var(--student-ink);
+    font-size: 16px;
+    font-weight: 800;
+}
+.custom-lms-student-shell-page [data-region="right-hand-drawer"] .message-app .closewidget {
+    display: flex;
+    height: 58px;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 16px !important;
+    border-bottom: 1px solid #e2e9f3;
+    background: #f8faff;
+}
+.custom-lms-student-shell-page [data-region="right-hand-drawer"] .message-app .closewidget a {
+    display: inline-grid;
+    width: 44px;
+    height: 44px;
+    border-radius: 9px;
+    color: var(--student-navy) !important;
+    place-items: center;
+}
+.custom-lms-student-shell-page [data-region="right-hand-drawer"] .message-app .closewidget a:hover,
+.custom-lms-student-shell-page [data-region="right-hand-drawer"] .message-app .closewidget a:focus {
+    background: var(--student-blue-soft);
+    color: var(--student-blue) !important;
+}
+.custom-lms-student-shell-page [data-region="right-hand-drawer"] .message-app .header-container {
+    border-bottom: 1px solid #e2e9f3;
+    background: #fff;
+}
+.custom-lms-student-shell-page [data-region="right-hand-drawer"] .message-app [data-region="view-overview"] {
+    padding: 16px !important;
+}
+.custom-lms-student-shell-page [data-region="right-hand-drawer"] .message-app .simplesearchform .form-control {
+    height: 44px;
+    border-color: #ccd8e9;
+    border-radius: 10px 0 0 10px;
+    box-shadow: none;
+}
+.custom-lms-student-shell-page [data-region="right-hand-drawer"] .message-app .simplesearchform .btn-submit {
+    display: inline-grid;
+    width: 44px;
+    height: 44px;
+    border: 1px solid #ccd8e9;
+    border-left: 0;
+    border-radius: 0 10px 10px 0;
+    background: #f7faff;
+    color: var(--student-navy);
+    place-items: center;
+}
+.custom-lms-student-shell-page [data-region="right-hand-drawer"] .message-app .view-overview-body {
+    padding: 16px;
+    background: #f4f7fc;
+}
+.custom-lms-student-shell-page [data-region="right-hand-drawer"] .message-app .section {
+    flex: 0 0 auto !important;
+    margin-bottom: 12px;
+    overflow: hidden;
+    border: 1px solid #dce5f1;
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: 0 8px 22px rgba(16, 43, 84, .065);
+}
+.custom-lms-student-shell-page [data-region="right-hand-drawer"] .message-app .category-button {
+    min-height: 52px;
+    border: 0;
+    background: #fff;
+    color: var(--student-ink);
+}
+.custom-lms-student-shell-page [data-region="right-hand-drawer"] .message-app .list-group-item {
+    border-color: #e5ebf4;
+    background: #fff;
+}
+.custom-lms-student-shell-page [data-region="right-hand-drawer"] .message-app .list-group-item:hover,
+.custom-lms-student-shell-page [data-region="right-hand-drawer"] .message-app .list-group-item:focus-within { background: #f5f8ff; }
+.custom-lms-student-shell-page [data-region="right-hand-drawer"] .message-app .footer-container {
+    border-top: 1px solid #dce5f1;
+    background: #fff;
+}
+.custom-lms-student-shell-page [data-region="right-hand-drawer"] .message-app .overflow-auto {
+    scrollbar-color: #9bb7e2 transparent;
+    scrollbar-width: thin;
+}
+
+.custom-lms-student-shell-page .student-portal-content { width: 100%; max-width: none; margin: 0; padding: 20px 24px 28px; }
+.custom-lms-student-shell-page .student-portal-my-courses { display: grid; gap: 16px; }
+.custom-lms-student-shell-page .student-my-courses-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 28px;
+    margin: 0;
+    padding: 2px 2px 0;
+}
+.custom-lms-student-shell-page .student-section-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--student-blue);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+}
+.custom-lms-student-shell-page .student-my-courses-heading h1 {
+    margin: 7px 0 3px;
+    color: var(--student-ink);
+    font-size: clamp(27px, 2.7vw, 34px);
+    line-height: 1.15;
+    letter-spacing: 0;
+}
+.custom-lms-student-shell-page .student-my-courses-heading p {
+    margin: 0;
+    color: var(--student-muted);
+    font-size: 14px;
+}
+.custom-lms-student-shell-page .student-my-courses-overall {
+    width: min(240px, 28vw);
+    padding: 12px 14px;
+    border: 1px solid var(--student-line);
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 7px 20px rgba(16, 43, 84, .04);
+}
+.custom-lms-student-shell-page .student-my-courses-overall > span {
+    color: var(--student-muted);
+    font-size: 11px;
+    font-weight: 700;
+}
+.custom-lms-student-shell-page .student-my-courses-overall > strong {
+    float: right;
+    color: var(--student-blue);
+    font-size: 15px;
+}
+.custom-lms-student-shell-page .student-my-courses-overall .student-dashboard-course-meter { clear: both; margin-top: 9px; }
+
+.custom-lms-student-shell-page .student-my-courses-stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    overflow: hidden;
+    border: 1px solid var(--student-line);
+    border-radius: 9px;
+    background: #fff;
+    box-shadow: 0 7px 20px rgba(16, 43, 84, .04);
+}
+.custom-lms-student-shell-page .student-my-courses-stats article {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border-right: 1px solid var(--student-line);
+}
+.custom-lms-student-shell-page .student-my-courses-stats article:last-child { border-right: 0; }
+.custom-lms-student-shell-page .student-my-courses-stats article > i {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    flex: 0 0 38px;
+    place-items: center;
+    border-radius: 9px;
+    background: var(--student-blue-soft);
+    color: var(--student-blue);
+    font-size: 17px;
+}
+.custom-lms-student-shell-page .student-my-courses-stats article:nth-child(2) > i { background: #fff4e7; color: #e9841a; }
+.custom-lms-student-shell-page .student-my-courses-stats article:nth-child(3) > i { background: #e8f7f1; color: #15936f; }
+.custom-lms-student-shell-page .student-my-courses-stats article:nth-child(4) > i { background: #f2edff; color: #7652d5; }
+.custom-lms-student-shell-page .student-my-courses-stats span { min-width: 0; color: var(--student-muted); font-size: 11px; }
+.custom-lms-student-shell-page .student-my-courses-stats strong { display: block; margin-bottom: 3px; color: var(--student-ink); font-size: 19px; line-height: 1; }
+
+.custom-lms-student-shell-page .student-course-library { min-width: 0; padding-top: 2px; }
+.custom-lms-student-shell-page .student-course-library-heading { display: flex; align-items: end; justify-content: space-between; gap: 16px; }
+.custom-lms-student-shell-page .student-course-library-heading h2 { margin: 0; color: var(--student-ink); font-size: 19px; }
+.custom-lms-student-shell-page .student-course-library-heading p { margin: 3px 0 0; color: var(--student-muted); font-size: 12px; }
+.custom-lms-student-shell-page .student-portal-my-courses .course-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 12px 0 18px;
+    padding: 9px;
+    border: 1px solid var(--student-line);
+    border-radius: 11px;
+    background: #fff;
+}
+.custom-lms-student-shell-page .student-portal-my-courses .course-search { flex: 1 1 320px; max-width: 430px; }
+.custom-lms-student-shell-page .student-portal-my-courses .course-search input {
+    min-height: 44px;
+    padding: 8px 14px 8px 41px;
+    border: 1px solid #dce5f1;
+    border-radius: 8px;
+    background: #fafcff;
+    font-size: 13px;
+}
+.custom-lms-student-shell-page .student-portal-my-courses .course-search input:focus {
+    border-color: #91b7fa;
+    box-shadow: 0 0 0 3px rgba(15, 93, 232, .1);
+}
+.custom-lms-student-shell-page .student-portal-my-courses .search-icon { top: 50%; left: 14px; color: #6c7f9e; font-size: 15px; transform: translateY(-50%); }
+.custom-lms-student-shell-page .student-portal-my-courses .view-switch { display: flex; gap: 4px; margin-left: auto; }
+.custom-lms-student-shell-page .student-portal-my-courses .view-switch button {
+    display: grid;
+    width: 44px;
+    height: 44px;
+    min-height: 44px;
+    place-items: center;
+    padding: 0;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background: transparent;
+    color: #71809a;
+    font-size: 15px;
+    box-shadow: none;
+}
+.custom-lms-student-shell-page .student-portal-my-courses .view-switch button:hover { border-color: #dce6f5; background: #f7faff; }
+.custom-lms-student-shell-page .student-portal-my-courses .view-switch button.active { border-color: #cfe0fb; background: var(--student-blue-soft); color: var(--student-blue); }
+.custom-lms-student-shell-page .student-portal-my-courses .view-switch button:focus-visible { outline: 3px solid rgba(15, 93, 232, .2); outline-offset: 2px; }
+
+.custom-lms-student-shell-page .student-portal-my-courses .course-card-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.custom-lms-student-shell-page .student-portal-my-courses .course-overview-card {
+    position: relative;
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid var(--student-line);
+    border-radius: 9px;
+    background: #fff;
+    box-shadow: 0 7px 20px rgba(16, 43, 84, .045);
+    backdrop-filter: none;
+    transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+.custom-lms-student-shell-page .student-portal-my-courses .course-overview-card[hidden] { display: none !important; }
+.custom-lms-student-shell-page .student-portal-my-courses .course-overview-card:hover { border-color: #bfcfe6; box-shadow: 0 12px 26px rgba(16, 43, 84, .09); transform: translateY(-2px); }
+.custom-lms-student-shell-page .student-portal-my-courses .course-cover { position: relative; height: 145px; overflow: hidden; background: var(--student-blue-soft); }
+.custom-lms-student-shell-page .student-portal-my-courses .course-cover > a { display: block; width: 100%; height: 100%; }
+.custom-lms-student-shell-page .student-portal-my-courses .course-cover img { width: 100%; height: 100%; object-fit: cover; transition: transform .25s ease; }
+.custom-lms-student-shell-page .student-portal-my-courses .course-overview-card:hover .course-cover img { transform: scale(1.025); }
+.custom-lms-student-shell-page .student-portal-my-courses .course-category,
+.custom-lms-student-shell-page .student-portal-my-courses .course-progress-chip {
+    position: absolute;
+    z-index: 2;
+    max-width: calc(100% - 20px);
+    padding: 4px 7px;
+    border: 0;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, .94);
+    box-shadow: 0 4px 12px rgba(16, 43, 84, .08);
+    overflow: hidden;
+    font-size: 11px;
+    font-weight: 800;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.custom-lms-student-shell-page .student-portal-my-courses .course-category { bottom: 10px; left: 10px; color: var(--student-ink); }
+.custom-lms-student-shell-page .student-portal-my-courses .course-progress-chip { top: 10px; left: 10px; color: var(--student-blue); }
+.custom-lms-student-shell-page .student-portal-my-courses .course-menu-button {
+    top: 10px;
+    right: 10px;
+    z-index: 4;
+    width: 44px;
+    height: 44px;
+    min-height: 44px;
+    border: 1px solid rgba(218, 228, 242, .9);
+    border-radius: 7px;
+    background: rgba(255, 255, 255, .96);
+    color: var(--student-ink);
+    box-shadow: 0 5px 13px rgba(16, 43, 84, .11);
+}
+.custom-lms-student-shell-page .student-portal-my-courses .course-menu-button:focus-visible { outline: 3px solid rgba(15, 93, 232, .28); outline-offset: 2px; }
+.custom-lms-student-shell-page .student-portal-my-courses .course-menu-popover {
+    top: 56px;
+    right: 10px;
+    z-index: 5;
+    width: 175px;
+    padding: 6px;
+    border: 1px solid var(--student-line);
+    border-radius: 8px;
+    box-shadow: 0 14px 32px rgba(9, 35, 78, .16);
+}
+.custom-lms-student-shell-page .student-portal-my-courses .course-menu-popover a {
+    display: flex;
+    min-height: 38px;
+    align-items: center;
+    gap: 9px;
+    padding: 8px 10px;
+    border-radius: 6px;
+    color: var(--student-ink);
+    font-size: 12px;
+    font-weight: 700;
+}
+.custom-lms-student-shell-page .student-portal-my-courses .course-menu-popover a:hover { background: var(--student-blue-soft); color: var(--student-blue); }
+.custom-lms-student-shell-page .student-portal-my-courses .course-card-body { display: flex; min-height: 225px; flex: 1 1 auto; flex-direction: column; padding: 14px; }
+.custom-lms-student-shell-page .student-portal-my-courses .course-card-body h3 {
+    display: -webkit-box;
+    min-height: 58px;
+    margin: 0 0 8px;
+    overflow: hidden;
+    color: var(--student-ink);
+    font-size: 13.5px;
+    line-height: 1.42;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+}
+.custom-lms-student-shell-page .student-portal-my-courses .course-card-body h3 a { color: inherit; }
+.custom-lms-student-shell-page .student-portal-my-courses .course-card-body h3 a:hover { color: var(--student-blue); }
+.custom-lms-student-shell-page .student-portal-my-courses .course-teacher { display: flex; min-width: 0; align-items: center; gap: 6px; color: var(--student-muted); font-size: 11px; }
+.custom-lms-student-shell-page .student-portal-my-courses .course-teacher i { color: #a4683f; font-size: 15px; }
+.custom-lms-student-shell-page .student-portal-my-courses .course-teacher span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.custom-lms-student-shell-page .student-portal-my-courses .course-activity { margin: 10px 0 8px; overflow: hidden; color: #657895; font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
+.custom-lms-student-shell-page .student-portal-my-courses .course-activity i { margin-right: 4px; }
+.custom-lms-student-shell-page .student-portal-my-courses .course-progress { height: 5px; margin-top: auto; background: #e8edf5; }
+.custom-lms-student-shell-page .student-portal-my-courses .course-progress span { background: var(--student-blue); animation: none; }
+.custom-lms-student-shell-page .student-portal-my-courses .course-card-progress-label { display: flex; justify-content: space-between; gap: 12px; margin-top: 7px; color: var(--student-muted); font-size: 11px; }
+.custom-lms-student-shell-page .student-portal-my-courses .course-card-progress-label span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.custom-lms-student-shell-page .student-portal-my-courses .course-card-action { margin-top: 11px; padding: 0; }
+.custom-lms-student-shell-page .student-portal-my-courses .student-course-open {
+    display: flex;
+    min-height: 44px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 7px 11px;
+    border: 1px solid #d7e4f8;
+    border-radius: 7px;
+    background: #f4f8ff;
+    color: var(--student-blue);
+    font-size: 12px;
+    font-weight: 800;
+}
+.custom-lms-student-shell-page .student-portal-my-courses .student-course-open:hover { border-color: var(--student-blue); background: var(--student-blue); color: #fff; }
+
+.custom-lms-student-shell-page .student-portal-my-courses .course-card-grid.list { grid-template-columns: 1fr; }
+.custom-lms-student-shell-page .student-portal-my-courses .course-card-grid.list .course-overview-card { display: grid; grid-template-columns: 230px minmax(0, 1fr); }
+.custom-lms-student-shell-page .student-portal-my-courses .course-card-grid.list .course-cover { height: 100%; min-height: 205px; }
+.custom-lms-student-shell-page .student-portal-my-courses .course-card-grid.list .course-card-body { min-height: 205px; }
+.custom-lms-student-shell-page .student-portal-my-courses .course-card-grid.list .course-card-body h3 { min-height: 0; -webkit-line-clamp: 2; }
+.custom-lms-student-shell-page .student-portal-my-courses .course-card-grid.summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.custom-lms-student-shell-page .student-portal-my-courses .course-card-grid.summary .course-overview-card { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); }
+.custom-lms-student-shell-page .student-portal-my-courses .course-card-grid.summary .course-cover { min-width: 0; height: 100%; min-height: 225px; }
+.custom-lms-student-shell-page .student-portal-my-courses .course-card-grid.summary .course-card-body { min-height: 225px; padding: 14px; }
+.custom-lms-student-shell-page .student-portal-my-courses .course-card-grid.summary .course-card-body h3 { min-height: 42px; -webkit-line-clamp: 2; }
+.custom-lms-student-shell-page .student-course-search-empty {
+    padding: 36px 18px;
+    color: var(--student-muted);
+    text-align: center;
+}
+.student-portal-welcome {
+    position: relative;
+    min-height: 168px;
+    overflow: hidden;
+    border-radius: 14px;
+    background: linear-gradient(115deg, #05285f 0%, #073474 62%, #052a62 100%);
+    color: #fff;
+    box-shadow: 0 14px 30px rgba(4, 39, 91, .12);
+    touch-action: pan-y;
+}
+.student-portal-welcome:focus-visible { outline: 3px solid #8eb8ff; outline-offset: 3px; }
+
+.student-portal-welcome-track { position: relative; min-height: 168px; }
+.student-portal-welcome-slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 22px 32px 44px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(24px);
+    transition: opacity .32s ease, transform .32s ease, visibility .32s;
+}
+.student-portal-welcome-slide.active { opacity: 1; visibility: visible; transform: translateX(0); }
+.student-portal-welcome-slide > img { width: 96px; height: 96px; flex: 0 0 auto; border: 1px solid rgba(255, 255, 255, .6); border-radius: 50%; object-fit: cover; }
+.student-portal-welcome h1,.student-portal-welcome h2 { position: relative; z-index: 1; margin: 0 0 8px; color: #fff; font-size: clamp(25px, 2.4vw, 34px); line-height: 1.2; }
+.student-portal-welcome p { position: relative; z-index: 1; max-width: 470px; margin: 0; color: rgba(255, 255, 255, .86); font-size: 15px; }
+.student-portal-welcome-slide > i { position: absolute; right: 48px; bottom: -22px; color: rgba(143, 182, 238, .11); font-size: 172px; }
+.student-portal-welcome-dots { position: absolute; z-index: 3; bottom: 0; left: 136px; display: flex; gap: 0; }
+.student-portal-welcome-dots button { display: grid; width: 36px; height: 44px; min-height: 44px; place-items: center; padding: 0; border: 0; border-radius: 8px; background: transparent; box-shadow: none; transform: none; }
+.student-portal-welcome-dots button::after { width: 18px; height: 5px; border-radius: 99px; background: rgba(255, 255, 255, .34); content: ""; transition: width .2s ease, background-color .2s ease; }
+.student-portal-welcome-dots button.active::after { width: 26px; background: #fff; }
+.student-portal-welcome-dots button:hover::after { background: rgba(255, 255, 255, .8); }
+.student-portal-welcome-dots button:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
+
+.student-portal-layout { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 18px; align-items: start; }
+.student-portal-center,.student-portal-right-rail { display: grid; gap: 14px; min-width: 0; }
+.student-portal-courses,.student-portal-stats,.student-portal-continue,
+.student-portal-profile-card,.student-portal-events,.student-portal-announcements {
+    border: 1px solid var(--student-line);
+    border-radius: 14px;
+    background: var(--student-surface);
+    box-shadow: 0 9px 26px rgba(26, 54, 101, .055);
+}
+
+.student-portal-courses { padding: 16px; }
+.student-portal-section-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 15px; }
+.student-portal-section-heading h2 { margin: 0; color: var(--student-ink); font-size: 17px; line-height: 1.3; }
+.student-portal-section-heading > a { display: inline-flex; min-height: 40px; align-items: center; padding: 5px 2px; font-size: 13px; font-weight: 700; }
+.student-dashboard-course-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.student-dashboard-course-card { min-width: 0; overflow: hidden; border: 1px solid var(--student-line); border-radius: 10px; background: #fff; }
+.student-dashboard-course-media { position: relative; display: block; height: 128px; overflow: hidden; background: var(--student-blue-soft); }
+.student-dashboard-course-media img { width: 100%; height: 100%; object-fit: cover; transition: transform .25s ease; }
+.student-dashboard-course-card:hover .student-dashboard-course-media img { transform: scale(1.025); }
+.student-dashboard-course-progress-chip { position: absolute; top: 10px; right: 10px; padding: 5px 8px; border-radius: 6px; background: rgba(255, 255, 255, .94); color: var(--student-blue); font-size: 13px; font-weight: 800; }
+.student-dashboard-course-body { padding: 14px 15px 12px; }
+.student-dashboard-course-body h3 { height: 42px; margin: 0 0 4px; overflow: hidden; font-size: 14px; line-height: 1.5; }
+.student-dashboard-course-body h3 a { color: var(--student-ink); }
+.student-dashboard-course-body > p { margin: 0 0 12px; overflow: hidden; color: var(--student-muted); font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+.student-dashboard-course-meter { height: 5px; overflow: hidden; border-radius: 999px; background: #e8edf5; }
+.student-dashboard-course-meter span { display: block; height: 100%; border-radius: inherit; background: var(--student-blue); }
+.student-dashboard-course-card:nth-child(2) .student-dashboard-course-meter span { background: #f36a2c; }
+.student-dashboard-course-card:nth-child(3) .student-dashboard-course-meter span { background: #12a57d; }
+.student-dashboard-course-meta { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; color: var(--student-muted); font-size: 11px; }
+.student-dashboard-course-meta a { display: grid; width: 44px; height: 44px; margin: -7px -9px -7px 0; place-items: center; border-radius: 50%; color: var(--student-blue); }
+
+.student-portal-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); padding: 14px 12px; }
+.student-portal-stats article { display: grid; grid-template-columns: 52px auto 1fr; align-items: center; gap: 10px; min-width: 0; padding: 0 15px; border-right: 1px solid var(--student-line); }
+.student-portal-stats article:last-child { border-right: 0; }
+.student-portal-stats article > i { display: grid; width: 48px; height: 48px; place-items: center; border-radius: 50%; background: #edf3ff; color: var(--student-blue); font-size: 21px; }
+.student-portal-stats article:nth-child(2) > i { background: #eaf8f4; color: #169a7b; }
+.student-portal-stats article:nth-child(3) > i { background: #fff5e4; color: #e99300; }
+.student-portal-stats article:nth-child(4) > i { background: #eef3ff; color: #155bd7; }
+.student-portal-stats strong { font-size: 23px; }
+.student-portal-stats span { color: var(--student-muted); font-size: 11px; line-height: 1.45; }
+
+.student-portal-continue { padding: 18px 22px; }
+.student-portal-continue-body { display: grid; grid-template-columns: 230px minmax(0, 1fr) auto; align-items: center; gap: 22px; }
+.student-portal-continue-media { position: relative; display: block; height: 125px; overflow: hidden; border-radius: 9px; }
+.student-portal-continue-media img { width: 100%; height: 100%; object-fit: cover; }
+.student-portal-continue-media i { position: absolute; right: 14px; bottom: 14px; display: grid; width: 42px; height: 42px; place-items: center; border-radius: 50%; background: #fff; color: var(--student-blue); box-shadow: 0 8px 18px rgba(8, 35, 81, .18); }
+.student-portal-continue-body h3 { margin: 0 0 5px; font-size: 15px; }
+.student-portal-continue-body p { margin: 0 0 13px; color: var(--student-muted); font-size: 12px; }
+.student-portal-continue-button { display: inline-flex; min-height: 36px; align-items: center; margin-top: 14px; padding: 7px 16px; border-radius: 6px; background: var(--student-blue); color: #fff; font-size: 12px; font-weight: 700; }
+.student-portal-continue-button:hover { color: #fff; }
+
+.student-portal-profile-card,.student-portal-events,.student-portal-announcements { padding: 17px; }
+.student-portal-profile-card { overflow: hidden; }
+.student-portal-profile-heading {
+    display: grid;
+    grid-template-columns: 58px minmax(0, 1fr) 52px;
+    align-items: center;
+    gap: 14px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--student-line);
+}
+.student-portal-profile-avatar {
+    display: grid;
+    width: 58px;
+    height: 58px;
+    overflow: hidden;
+    place-items: center;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    background: var(--student-navy);
+    box-shadow: 0 0 0 1px #c8d7ed, 0 8px 18px rgba(18, 61, 125, .14);
+}
+.student-portal-profile-avatar .userpicture,
+.student-portal-profile-avatar .userinitials {
+    display: grid;
+    width: 100% !important;
+    min-width: 100%;
+    height: 100% !important;
+    margin: 0 !important;
+    place-items: center;
+    border: 0;
+    border-radius: 50%;
+    background: var(--student-navy);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 800;
+    line-height: 1;
+    object-fit: cover;
+}
+.student-portal-profile-identity { min-width: 0; }
+.student-portal-profile-heading h2 { margin: 0; overflow: hidden; color: var(--student-ink); font-size: 17px; line-height: 1.3; text-overflow: ellipsis; white-space: nowrap; }
+.student-portal-profile-heading p { display: flex; align-items: center; gap: 6px; margin: 4px 0 8px; color: var(--student-muted); font-size: 12px; }
+.student-portal-profile-heading p i { color: #6f8fbe; font-size: 11px; }
+.student-portal-profile-heading div b { display: inline-flex; min-height: 25px; align-items: center; gap: 6px; padding: 4px 9px; border: 1px solid #cfe0ff; border-radius: 999px; background: #edf4ff; color: #155bd7; font-size: 10px; font-weight: 800; }
+.student-portal-profile-heading div b i { color: #f2a900; }
+.student-portal-profile-schoolmark { display: grid; width: 52px; height: 52px; place-items: center; border: 1px solid #dce6f3; border-radius: 14px; background: #f7faff; }
+.student-portal-profile-schoolmark img { width: 42px; height: 42px; border-radius: 50%; object-fit: cover; }
+.student-portal-profile-progress { padding-top: 17px; }
+.student-portal-profile-progress-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; font-size: 12px; }
+.student-portal-profile-progress-heading strong,
+.student-portal-profile-progress-heading span { display: inline-flex; align-items: center; gap: 7px; }
+.student-portal-profile-progress-heading strong { color: var(--student-ink); }
+.student-portal-profile-progress-heading strong i { display: grid; width: 27px; height: 27px; place-items: center; border-radius: 8px; background: #edf4ff; color: var(--student-blue); }
+.student-portal-profile-progress-heading span { color: #12805c; font-weight: 700; white-space: nowrap; }
+.student-portal-profile-progress-heading span i { font-size: 10px; }
+.student-portal-profile-progress-meter { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 13px; }
+.student-portal-profile-progress-meter .student-dashboard-course-meter { height: 8px; background: #e7edf6; }
+.student-portal-profile-progress-meter .student-dashboard-course-meter span { background: linear-gradient(90deg, #1769e8, #0f56ca); }
+.student-portal-profile-progress-meter > b { min-width: 36px; color: var(--student-ink); font-size: 13px; text-align: right; }
+.student-portal-profile-progress p { display: flex; align-items: center; gap: 8px; margin: 13px 0 0; color: var(--student-muted); font-size: 11px; }
+.student-portal-profile-progress p i { color: #e99a00; font-size: 13px; }
+
+.student-portal-events .student-portal-section-heading > i { color: var(--student-blue); font-size: 18px; }
+.student-portal-events ul { list-style: none; margin: 0; padding: 0; }
+.student-portal-events li + li { margin-top: 12px; }
+.student-portal-events li > a { display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 13px; color: var(--student-ink); }
+.student-portal-events time { overflow: hidden; border: 1px solid #dfe7f3; border-radius: 7px; text-align: center; }
+.student-portal-events time b { display: block; padding: 4px; background: var(--student-blue); color: #fff; font-size: 9px; }
+.student-portal-events time strong { display: block; padding: 5px; font-size: 17px; }
+.student-portal-events li span strong,.student-portal-events li span small,.student-portal-events li span em { display: block; }
+.student-portal-events li span strong { overflow: hidden; font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+.student-portal-events li span small { overflow: hidden; margin-top: 3px; color: var(--student-muted); font-size: 10px; text-overflow: ellipsis; white-space: nowrap; }
+.student-portal-events li span em { margin-top: 3px; color: #df2536; font-size: 10px; font-style: normal; }
+.student-portal-panel-link { display: flex; justify-content: space-between; margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--student-line); font-size: 12px; font-weight: 700; }
+.student-portal-announcements h2 { display: flex; align-items: center; gap: 10px; }
+.student-portal-announcements h2 i { color: var(--student-blue); }
+.student-portal-announcements > a { position: relative; display: block; padding-right: 24px; color: var(--student-ink); }
+.student-portal-announcements > a strong,.student-portal-announcements > a span { display: block; }
+.student-portal-announcements > a strong { font-size: 12px; }
+.student-portal-announcements > a span { margin-top: 4px; color: var(--student-muted); font-size: 10px; }
+.student-portal-announcements > a > i { position: absolute; top: 50%; right: 0; color: var(--student-blue); transform: translateY(-50%); }
+.student-portal-empty { display: grid; min-height: 180px; place-items: center; align-content: center; color: var(--student-muted); text-align: center; }
+.student-portal-empty > i { color: #8ba8d8; font-size: 30px; }
+.student-portal-empty-copy { margin: 18px 0; color: var(--student-muted); font-size: 12px; }
+
+@media (max-width: 1280px) {
+    .student-portal-layout { grid-template-columns: minmax(0, 1fr) 300px; }
+    .student-portal-stats article { grid-template-columns: 42px auto; }
+    .student-portal-stats article > i { width: 40px; height: 40px; }
+    .student-portal-stats article span { grid-column: 2; }
+}
+
+@media (max-width: 1180px) {
+    .custom-lms-student-shell-page .student-portal-my-courses .course-card-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-width: 1100px) {
+    .custom-lms-student-shell-page .student-portal-sidebar { position: fixed; left: -280px; width: 256px; height: 100vh; flex-basis: 256px; transition: left .2s ease; }
+    .custom-lms-student-shell-page .student-portal-sidebar.open { left: 0; }
+    .custom-lms-student-shell-page .student-portal-sidebar .student-portal-brand strong,
+    .custom-lms-student-shell-page .student-portal-sidebar .student-portal-nav span,
+    .custom-lms-student-shell-page .student-portal-sidebar .student-portal-theme-status { display: flex; }
+    .custom-lms-student-shell-page .student-portal-sidebar .student-portal-nav a { justify-content: flex-start; }
+    .student-portal-menu { display: inline-grid; place-items: center; }
+    .student-portal-layout { grid-template-columns: minmax(0, 1fr) 320px; }
+}
+
+@media (max-width: 900px) {
+    .student-portal-layout { grid-template-columns: 1fr; }
+    .student-portal-right-rail { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .student-portal-profile-card { grid-column: 1 / -1; }
+    .custom-lms-student-shell-page .student-portal-my-courses .course-card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .custom-lms-student-shell-page .student-portal-my-courses .course-card-grid.summary { grid-template-columns: 1fr; }
+    .custom-lms-student-shell-page .student-my-courses-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .custom-lms-student-shell-page .student-my-courses-stats article:nth-child(2) { border-right: 0; }
+    .custom-lms-student-shell-page .student-my-courses-stats article:nth-child(-n+2) { border-bottom: 1px solid var(--student-line); }
+}
+
+@media (max-width: 700px) {
+    .custom-lms-student-shell-page .student-portal-topbar { height: 68px; padding: 0 14px; gap: 10px; }
+    .student-portal-search { flex: 1; width: auto; }
+    .student-portal-search input { height: 44px; }
+    .student-portal-utilities { gap: 7px; }
+    .student-portal-account { min-height: 44px; padding: 2px; border-radius: 14px; }
+    .student-portal-account-summary { display: none; }
+    .student-portal-native-tools { gap: 6px; }
+    .student-portal-native-tools .popover-region-toggle,
+    .student-portal-native-usermenu .usermenu .dropdown-toggle { min-width: 40px; height: 40px; }
+    .student-portal-native-usermenu .usermenu .dropdown-toggle { width: 48px; padding: 0 6px; }
+    .student-portal-native-usermenu .usermenu .dropdown-toggle::after { display: none; }
+    .student-portal-native-usermenu .usermenu .userpicture { width: 32px; height: 32px; }
+    .student-portal-native-tools .popover-region-container {
+        position: fixed;
+        top: 76px !important;
+        right: 12px;
+        left: auto !important;
+        width: min(380px, calc(100vw - 24px));
+        max-height: calc(100vh - 88px);
+    }
+    .student-portal-native-usermenu .dropdown-menu {
+        position: fixed !important;
+        top: 76px !important;
+        right: 12px !important;
+        width: min(304px, calc(100vw - 24px));
+    }
+    .custom-lms-student-shell-page [data-region="right-hand-drawer"].drawer:has(.message-app) { top: 68px; height: calc(100vh - 68px); }
+    .custom-lms-student-shell-page .student-portal-content { padding: 12px; }
+    .custom-lms-student-shell-page .student-my-courses-heading { align-items: stretch; flex-direction: column; gap: 14px; }
+    .custom-lms-student-shell-page .student-my-courses-overall { width: 100%; }
+    .custom-lms-student-shell-page .student-portal-my-courses .course-toolbar { align-items: stretch; }
+    .custom-lms-student-shell-page .student-portal-my-courses .course-search { max-width: none; }
+    .student-portal-welcome,.student-portal-welcome-track { min-height: 170px; }
+    .student-portal-welcome-slide { gap: 16px; padding: 24px 20px 48px; }
+    .student-portal-welcome-slide > img { width: 72px; height: 72px; }
+    .student-portal-welcome h1,.student-portal-welcome h2 { font-size: 23px; }
+    .student-portal-welcome p { font-size: 13px; }
+    .student-portal-welcome-slide > i { right: -20px; font-size: 140px; }
+    .student-portal-welcome-dots { bottom: 22px; left: 108px; }
+    .student-dashboard-course-grid { grid-template-columns: 1fr; }
+    .student-dashboard-course-media { height: 156px; }
+    .student-dashboard-course-body h3 { height: auto; }
+    .student-portal-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 0; }
+    .student-portal-stats article:nth-child(2) { border-right: 0; }
+    .student-portal-continue-body { grid-template-columns: 1fr; }
+    .student-portal-continue-media { height: 170px; }
+    .student-portal-continue-body > strong { position: absolute; visibility: hidden; }
+    .student-portal-right-rail { grid-template-columns: 1fr; }
+    .student-portal-profile-card { grid-column: auto; }
+}
+
+@media (max-width: 430px) {
+    .student-portal-search { display: none; }
+    .student-portal-search input::placeholder { color: transparent; }
+    .student-portal-welcome,.student-portal-welcome-track { min-height: 210px; }
+    .student-portal-welcome-slide { display: block; padding: 18px 18px 42px; }
+    .student-portal-welcome-slide > img { width: 62px; height: 62px; margin-bottom: 10px; }
+    .student-portal-welcome h1,.student-portal-welcome h2 { margin-bottom: 5px; font-size: 22px; }
+    .student-portal-welcome p { font-size: 12.5px; line-height: 1.45; }
+    .student-portal-welcome-dots { bottom: 4px; left: 12px; }
+    .student-portal-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; padding: 7px; }
+    .student-portal-stats article { grid-template-columns: 36px minmax(0, 1fr); gap: 8px; padding: 10px 8px; border-right: 1px solid var(--student-line); border-bottom: 1px solid var(--student-line); }
+    .student-portal-stats article:nth-child(2n) { border-right: 0; }
+    .student-portal-stats article:nth-last-child(-n+2) { border-bottom: 0; }
+    .student-portal-stats article > i { width: 34px; height: 34px; font-size: 16px; }
+    .student-portal-stats article strong { font-size: 18px; }
+    .student-portal-stats article span { grid-column: 2; font-size: 10.5px; }
+    .custom-lms-student-shell-page .student-portal-my-courses { gap: 14px; }
+    .custom-lms-student-shell-page .student-my-courses-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .custom-lms-student-shell-page .student-my-courses-stats article { min-height: 68px; padding: 11px 12px; border-right: 1px solid var(--student-line); border-bottom: 1px solid var(--student-line); }
+    .custom-lms-student-shell-page .student-my-courses-stats article:nth-child(2n) { border-right: 0; }
+    .custom-lms-student-shell-page .student-my-courses-stats article:nth-last-child(-n+2) { border-bottom: 0; }
+    .custom-lms-student-shell-page .student-portal-my-courses .course-toolbar { flex-wrap: wrap; }
+    .custom-lms-student-shell-page .student-portal-my-courses .course-search { flex-basis: 100%; }
+    .custom-lms-student-shell-page .student-portal-my-courses .view-switch { margin-left: 0; }
+    .custom-lms-student-shell-page .student-portal-my-courses .course-card-grid,
+    .custom-lms-student-shell-page .student-portal-my-courses .course-card-grid.summary { grid-template-columns: 1fr; }
+    .custom-lms-student-shell-page .student-portal-my-courses .course-card-grid.list .course-overview-card,
+    .custom-lms-student-shell-page .student-portal-my-courses .course-card-grid.summary .course-overview-card { display: flex; }
+    .custom-lms-student-shell-page .student-portal-my-courses .course-card-grid.list .course-cover,
+    .custom-lms-student-shell-page .student-portal-my-courses .course-card-grid.summary .course-cover { height: 180px; min-height: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .student-dashboard-course-media img,.custom-lms-student-shell-page .student-portal-sidebar,
+    .student-portal-welcome-slide,.student-portal-welcome-dots button { transition: none; }
+}

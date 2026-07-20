@@ -201,10 +201,14 @@ function theme_custom_lms_uses_admin_shell(): bool {
 
     $issystemcontext = isset($PAGE->context) && $PAGE->context->contextlevel == CONTEXT_SYSTEM;
 
-    return $PAGE->pagelayout === 'admin' ||
-        strpos($pageurlpath, '/admin/') === 0 ||
-        strpos($pagepagetype, 'admin-') === 0 ||
-        ($issystemcontext && $issiteadminroute) ||
+    // Some self-service pages (for example /user/preferences.php) use Moodle's
+    // admin pagelayout even though they are available to ordinary users. The
+    // custom admin shell must never turn that layout choice into an
+    // authorisation decision for a student or teacher.
+    return ($isloggedinsiteadmin && strpos($pageurlpath, '/admin/') === 0) ||
+        ($isloggedinsiteadmin && strpos($pagepagetype, 'admin-') === 0) ||
+        ($isloggedinsiteadmin && $PAGE->pagelayout === 'admin') ||
+        ($isloggedinsiteadmin && $issystemcontext && $issiteadminroute) ||
         $issiteadminaccountroute;
 }
 
@@ -235,8 +239,17 @@ function theme_custom_lms_is_student_course_view(): bool {
         return false;
     }
 
-    return \theme_custom_lms\local\role_access::primary_role_for_user($USER ?? null) === 'student' ||
-        is_enrolled($coursecontext, $USER, '', true);
+    if (!is_enrolled($coursecontext, $USER, '', true)) {
+        return false;
+    }
+
+    foreach (get_user_roles($coursecontext, $USER->id, false) as $role) {
+        if ($role->shortname === 'student') {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 /**
@@ -245,7 +258,7 @@ function theme_custom_lms_is_student_course_view(): bool {
  * @return array
  */
 function theme_custom_lms_student_course_view_context(): array {
-    global $CFG, $COURSE, $USER;
+    global $CFG, $COURSE, $OUTPUT, $USER;
 
     if (!theme_custom_lms_is_student_course_view()) {
         return ['isstudentcourseview' => false];
@@ -266,9 +279,16 @@ function theme_custom_lms_student_course_view_context(): array {
     $quizcount = 0;
     $assignmentcount = 0;
     $resourcecount = 0;
+    $sectioncount = 0;
     $nextcm = null;
     $announcementurl = null;
     $certificateurl = null;
+
+    foreach ($modinfo->get_section_info_all() as $section) {
+        if ($section->section > 0 && $section->uservisible) {
+            $sectioncount++;
+        }
+    }
 
     foreach ($modinfo->get_cms() as $cm) {
         if (!$cm->uservisible || !empty($cm->deletioninprogress)) {
@@ -343,7 +363,7 @@ function theme_custom_lms_student_course_view_context(): array {
         $coursecontext,
         'moodle/course:update',
         0,
-        'u.id, u.firstname, u.lastname',
+        'u.id, u.firstname, u.lastname, u.picture, u.imagealt, u.email',
         'u.lastname ASC, u.firstname ASC',
         0,
         1
@@ -361,19 +381,90 @@ function theme_custom_lms_student_course_view_context(): array {
         ) ?: 'T';
     }
 
+    $teacherpicture = '';
+    if ($teacher) {
+        $teacherpicture = $OUTPUT->user_picture($teacher, [
+            'class' => 'custom-lms-student-course-teacher-picture',
+            'link' => false,
+            'size' => 64,
+        ]);
+    }
+
+    $courseimage = \core_course\external\course_summary_exporter::get_course_image($COURSE);
+    if (!$courseimage) {
+        $coursename = core_text::strtolower($COURSE->fullname . ' ' . $COURSE->shortname);
+        if (preg_match('/business|commerce|account|economics/', $coursename)) {
+            $fallbackimage = 'business.svg';
+        } else if (preg_match('/science|chemistry|physics|biology|environment/', $coursename)) {
+            $fallbackimage = 'chemistry.svg';
+        } else if (preg_match('/marketing|communication|language|english/', $coursename)) {
+            $fallbackimage = 'marketing.svg';
+        } else {
+            $fallbackimage = 'product.svg';
+        }
+        $courseimage = (new moodle_url('/theme/custom_lms/pix/courses/' . $fallbackimage))->out(false);
+    }
+
+    $coursesummary = '';
+    $coursesummaryplain = '';
+    if (!empty(trim((string)$COURSE->summary))) {
+        $coursesummary = format_text($COURSE->summary, $COURSE->summaryformat, [
+            'context' => $coursecontext,
+            'noclean' => false,
+            'overflowdiv' => true,
+        ]);
+        $coursesummaryplain = shorten_text(trim(html_to_text($coursesummary, 0, false)), 220);
+    }
+
+    $categoryname = '';
+    $category = core_course_category::get($COURSE->category, IGNORE_MISSING, true);
+    if ($category) {
+        $categoryname = format_string($category->name, true, ['context' => $category->get_context()]);
+    }
+
+    $dateformat = get_string('strftimedatefullshort', 'langconfig');
+    $startdate = !empty($COURSE->startdate) ? userdate($COURSE->startdate, $dateformat) : '';
+    $enddate = !empty($COURSE->enddate) ? userdate($COURSE->enddate, $dateformat) : '';
+    $durationweeks = 0;
+    if (!empty($COURSE->startdate) && !empty($COURSE->enddate) && $COURSE->enddate > $COURSE->startdate) {
+        $durationweeks = (int)ceil(($COURSE->enddate - $COURSE->startdate) / WEEKSECS);
+    }
+
+    $canviewparticipants = has_capability('moodle/course:viewparticipants', $coursecontext);
+    $enrolledcount = 0;
+    if ($canviewparticipants) {
+        $enrolledcount = count_enrolled_users($coursecontext, 'moodle/course:isincompletionreports');
+    }
+
     $firstname = trim($USER->firstname ?? '');
-    $nexttitle = $nextcm ? format_string($nextcm->name, true, ['context' => $nextcm->context]) : 'Review course sections';
+    $nexttitle = $nextcm
+        ? format_string($nextcm->name, true, ['context' => $nextcm->context])
+        : get_string('studentcoursereviewsections', 'theme_custom_lms');
     $nexturl = $nextcm && $nextcm->url ? $nextcm->url->out(false) : (new moodle_url('/course/view.php', ['id' => $COURSE->id]))->out(false);
     $messageurl = $teacher ? (new moodle_url('/message/index.php', ['id' => $teacher->id]))->out(false) : null;
+    $completioncopy = get_string('studentcoursecompleteditems', 'theme_custom_lms', (object)[
+        'completed' => $completedcount,
+        'total' => $trackedcount ?: $activitycount,
+    ]);
 
     return [
         'isstudentcourseview' => true,
         'studentcourse_firstname' => $firstname !== '' ? $firstname : fullname($USER),
+        'studentcourse_course_name' => format_string($COURSE->fullname, true, ['context' => $coursecontext]),
+        'studentcourse_course_code' => format_string($COURSE->shortname, true, ['context' => $coursecontext]),
+        'studentcourse_course_image' => $courseimage,
+        'studentcourse_has_summary' => $coursesummary !== '',
+        'studentcourse_summary' => $coursesummary,
+        'studentcourse_summary_plain' => $coursesummaryplain,
+        'studentcourse_has_category' => $categoryname !== '',
+        'studentcourse_category' => $categoryname,
         'studentcourse_progress' => $progress,
         'studentcourse_progress_style' => '--student-course-progress:' . max(0, min(100, $progress)) . '%',
         'studentcourse_completed_count' => $completedcount,
         'studentcourse_total_count' => $trackedcount ?: $activitycount,
+        'studentcourse_completed_copy' => $completioncopy,
         'studentcourse_activity_count' => $activitycount,
+        'studentcourse_section_count' => $sectioncount,
         'studentcourse_resource_count' => $resourcecount,
         'studentcourse_quiz_count' => $quizcount,
         'studentcourse_assignment_count' => $assignmentcount,
@@ -381,8 +472,19 @@ function theme_custom_lms_student_course_view_context(): array {
         'studentcourse_next_url' => $nexturl,
         'studentcourse_teacher_name' => $teachername,
         'studentcourse_teacher_initials' => $teacherinitials,
+        'studentcourse_has_teacher_picture' => $teacherpicture !== '',
+        'studentcourse_teacher_picture' => $teacherpicture,
         'studentcourse_has_teacher_message' => !empty($messageurl),
         'studentcourse_teacher_message_url' => $messageurl,
+        'studentcourse_can_view_participants' => $canviewparticipants,
+        'studentcourse_enrolled_count' => $enrolledcount,
+        'studentcourse_has_start_date' => $startdate !== '',
+        'studentcourse_start_date' => $startdate,
+        'studentcourse_has_end_date' => $enddate !== '',
+        'studentcourse_end_date' => $enddate,
+        'studentcourse_has_duration' => $durationweeks > 0,
+        'studentcourse_duration_weeks' => $durationweeks,
+        'studentcourse_duration_label' => get_string('studentcourseweeks', 'theme_custom_lms', $durationweeks),
         'studentcourse_has_announcement' => !empty($announcementurl),
         'studentcourse_announcement_url' => $announcementurl,
         'studentcourse_has_certificate' => !empty($certificateurl),

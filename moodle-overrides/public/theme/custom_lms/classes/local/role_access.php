@@ -96,7 +96,7 @@ class role_access {
         $map = [
             'admin' => 'admin',
             'teacher' => 'teacher-dashboard',
-            'student' => 'my-courses',
+            'student' => 'index',
             'parent' => 'index',
             'participant' => 'index',
         ];

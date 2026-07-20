@@ -56,6 +56,30 @@ The generated templates receive Moodle-backed data from `classes/output/bundle_p
 
 If Moodle has no matching records, the original static design cards remain as fallback content so the design still renders cleanly.
 
+## Student Course Workspace
+
+An enrolled user with the Moodle `student` role in the current course receives the responsive course workspace on the real course and section routes:
+
+```text
+/course/view.php?id=<course-id>
+/course/section.php?id=<section-id>
+```
+
+The workspace does not replace Moodle course logic. It presents the following live data around the native course renderer:
+
+- Moodle-generated primary navigation in the left drawer and the permission-filtered course outline in the right rail.
+- Course title, breadcrumbs, course image, summary, teacher, dates and completion progress.
+- Visible section and activity counts.
+- The next visible course item, announcements, teacher messaging and certificate links when available.
+- Native Moodle course sections, availability rules, completion controls and activity URLs.
+- Existing course blocks in a responsive right rail instead of a second desktop drawer.
+
+Users with course editing capabilities continue to receive the normal teacher/course-management layout. A visual role class is never used as an authorization check.
+
+## Course Management Workspace
+
+The native `/course/management.php` route receives a responsive, route-scoped visual layer. Moodle continues to render and control the category tree, course list, search, sorting, bulk operations, action menus and drag controls. The theme only improves panel structure, nested-category readability, overflow handling and responsive control alignment.
+
 ## Sync and Install
 
 Run from the repository root:

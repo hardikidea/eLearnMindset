@@ -22,13 +22,15 @@
  * @since      2.9
  */
 
-import * as Aria from './aria';
-import * as Bootstrap from './index';
+// Moodle core components import Bootstrap from theme_boost. Reuse that runtime
+// here so data-api controls are not registered twice by the cloned theme.
+import * as Aria from 'theme_boost/aria';
+import * as Bootstrap from 'theme_boost/index';
 import Pending from 'core/pending';
 import {eventTypes} from 'core_filters/events';
-import {DefaultAllowlist} from './bootstrap/util/sanitizer';
-import setupBootstrapPendingChecks from './pending';
-import EventHandler from './bootstrap/dom/event-handler';
+import {DefaultAllowlist} from 'theme_boost/bootstrap/util/sanitizer';
+import setupBootstrapPendingChecks from 'theme_boost/pending';
+import EventHandler from 'theme_boost/bootstrap/dom/event-handler';
 
 /**
  * Rember the last visited tabs.

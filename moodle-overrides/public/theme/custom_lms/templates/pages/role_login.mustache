@@ -1,130 +1,253 @@
-{{! @template theme_custom_lms/pages/role_login }}
-<main class="role-picker page-transition">
-    <header class="role-header">
-        <img alt="{{schoolname}} logo" src="{{{pix_school_logo}}}">
-        <div>
-            <span class="eyebrow">Secure role-based access</span>
-            <h1>Choose your login experience</h1>
-            <p>Select a role to preview its distinct colour identity. Authentication remains a single secure Moodle flow.</p>
+{{!
+    @template theme_custom_lms/pages/role_login
+
+    Unified role-aware login page. Every authenticated form posts to the
+    theme's Moodle-backed role login endpoint; guest access remains public.
+}}
+<main class="multi-role-login page-transition">
+    <header class="multi-role-login__header">
+        <a class="multi-role-login__brand" href="{{{url_public_home}}}">
+            <img alt="{{schoolname}} logo" src="{{{pix_school_logo}}}">
+            <span>
+                <strong>{{schoolname}}</strong>
+                <small>Learn. Grow. Succeed.</small>
+            </span>
+        </a>
+        <div class="multi-role-login__title">
+            <span class="multi-role-login__eyebrow">Secure school access</span>
+            <h1>Multi-role login system</h1>
+            <p>Choose your role and continue to your personalised learning workspace.</p>
         </div>
-        <a class="button ghost public-cta" href="{{{url_public_home}}}">Explore public site</a>
+        <a class="multi-role-login__public-link" href="{{{url_public_home}}}">
+            <i class="fa fa-arrow-left" aria-hidden="true"></i>
+            <span>Public site</span>
+        </a>
     </header>
 
-    <section aria-label="Login roles" class="role-grid">
-        <article class="role-card role-card-teacher">
-            <div class="role-top" data-icon="T">
-                <strong>Teacher</strong>
-                <h2>Teacher login</h2>
-            </div>
-            <div class="role-body">
-                <p class="muted">Manage classes, grade work and review learning analytics.</p>
-                <ul class="role-features">
-                    <li>Course management</li>
-                    <li>Grading and feedback</li>
-                    <li>Learning analytics</li>
-                </ul>
-                {{#has_demo_teacher}}
-                    <div class="custom-lms-demo-credentials">
-                        <span class="custom-lms-demo-credential-note">Local demo account</span>
-                        <code>{{demo_teacher_username}}</code>
-                        <code>{{demo_teacher_password}}</code>
+    <section class="multi-role-login__cards" aria-label="Role login options">
+        <article class="multi-role-card multi-role-card--teacher">
+            <header class="multi-role-card__visual">
+                <span class="multi-role-card__label">Teacher login</span>
+                <i class="fa fa-black-tie multi-role-card__watermark" aria-hidden="true"></i>
+                <span class="multi-role-card__avatar" aria-hidden="true"><i class="fa fa-graduation-cap"></i></span>
+            </header>
+            <div class="multi-role-card__body">
+                <h2>Welcome back, Teacher!</h2>
+                <p>Sign in to access your teaching dashboard.</p>
+                {{#has_demo_teacher}}<span class="multi-role-card__demo">Local demo account</span>{{/has_demo_teacher}}
+                <form action="{{{loginurl}}}" method="post" class="multi-role-card__form">
+                    <input type="hidden" name="logintoken" value="{{logintoken}}">
+                    <input type="hidden" name="loginredirect" value="1">
+                    <input type="hidden" name="role" value="teacher">
+                    <label class="multi-role-field" for="role-login-teacher-username">
+                        <span class="visually-hidden">Teacher username or email</span>
+                        <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                        <input autocomplete="username" id="role-login-teacher-username" name="username" placeholder="Username or email" required type="text" value="{{demo_teacher_username}}">
+                    </label>
+                    <label class="multi-role-field" for="role-login-teacher-password">
+                        <span class="visually-hidden">Teacher password</span>
+                        <i class="fa fa-lock" aria-hidden="true"></i>
+                        <input autocomplete="current-password" id="role-login-teacher-password" name="password" placeholder="Password" required type="password" value="{{demo_teacher_password}}">
+                    </label>
+                    <div class="multi-role-card__options">
+                        <label for="role-login-teacher-remember"><input id="role-login-teacher-remember" name="rememberusername" type="checkbox" value="1"> Remember me</label>
+                        <a href="{{{forgotpasswordurl}}}">Forgot password?</a>
                     </div>
-                {{/has_demo_teacher}}
-                <a class="button" href="{{{url_login_teacher}}}">Continue as Teacher <span aria-hidden="true">-&gt;</span></a>
+                    <button type="submit">Log in as Teacher <i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+                </form>
             </div>
+            <ul class="multi-role-card__features" aria-label="Teacher workspace features">
+                <li><i class="fa fa-calendar-check-o" aria-hidden="true"></i><span><strong>Manage classes</strong><small>Create and manage learning</small></span></li>
+                <li><i class="fa fa-check-square-o" aria-hidden="true"></i><span><strong>Grade work</strong><small>Evaluate and respond</small></span></li>
+                <li><i class="fa fa-line-chart" aria-hidden="true"></i><span><strong>Reports</strong><small>Track learner progress</small></span></li>
+            </ul>
         </article>
 
-        <article class="role-card role-card-student">
-            <div class="role-top" data-icon="S">
-                <strong>Student</strong>
-                <h2>Student login</h2>
-            </div>
-            <div class="role-body">
-                <p class="muted">Access courses, activities, grades and progress.</p>
-                <ul class="role-features">
-                    <li>Personal courses</li>
-                    <li>Progress tracking</li>
-                    <li>Achievements</li>
-                </ul>
-                {{#has_demo_student}}
-                    <div class="custom-lms-demo-credentials">
-                        <span class="custom-lms-demo-credential-note">Local demo account</span>
-                        <code>{{demo_student_username}}</code>
-                        <code>{{demo_student_password}}</code>
+        <article class="multi-role-card multi-role-card--student">
+            <header class="multi-role-card__visual">
+                <span class="multi-role-card__label">Student login</span>
+                <i class="fa fa-lightbulb-o multi-role-card__watermark" aria-hidden="true"></i>
+                <span class="multi-role-card__avatar" aria-hidden="true"><i class="fa fa-user"></i></span>
+            </header>
+            <div class="multi-role-card__body">
+                <h2>Welcome back, Student!</h2>
+                <p>Sign in to continue your learning journey.</p>
+                {{#has_demo_student}}<span class="multi-role-card__demo">Local demo account</span>{{/has_demo_student}}
+                <form action="{{{loginurl}}}" method="post" class="multi-role-card__form">
+                    <input type="hidden" name="logintoken" value="{{logintoken}}">
+                    <input type="hidden" name="loginredirect" value="1">
+                    <input type="hidden" name="role" value="student">
+                    <label class="multi-role-field" for="role-login-student-username">
+                        <span class="visually-hidden">Student username or email</span>
+                        <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                        <input autocomplete="username" id="role-login-student-username" name="username" placeholder="Username or email" required type="text" value="{{demo_student_username}}">
+                    </label>
+                    <label class="multi-role-field" for="role-login-student-password">
+                        <span class="visually-hidden">Student password</span>
+                        <i class="fa fa-lock" aria-hidden="true"></i>
+                        <input autocomplete="current-password" id="role-login-student-password" name="password" placeholder="Password" required type="password" value="{{demo_student_password}}">
+                    </label>
+                    <div class="multi-role-card__options">
+                        <label for="role-login-student-remember"><input id="role-login-student-remember" name="rememberusername" type="checkbox" value="1"> Remember me</label>
+                        <a href="{{{forgotpasswordurl}}}">Forgot password?</a>
                     </div>
-                {{/has_demo_student}}
-                <a class="button" href="{{{url_login_student}}}">Continue as Student <span aria-hidden="true">-&gt;</span></a>
+                    <button type="submit">Log in as Student <i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+                </form>
             </div>
+            <ul class="multi-role-card__features" aria-label="Student workspace features">
+                <li><i class="fa fa-book" aria-hidden="true"></i><span><strong>My courses</strong><small>Access learning material</small></span></li>
+                <li><i class="fa fa-check-circle-o" aria-hidden="true"></i><span><strong>Track progress</strong><small>Monitor your learning</small></span></li>
+                <li><i class="fa fa-trophy" aria-hidden="true"></i><span><strong>Achievements</strong><small>Earn badges and certificates</small></span></li>
+            </ul>
         </article>
 
-        <article class="role-card role-card-admin">
-            <div class="role-top" data-icon="A">
-                <strong>Site administrator</strong>
-                <h2>Administrator login</h2>
-            </div>
-            <div class="role-body">
-                <p class="muted">Configure users, courses, plugins and reports.</p>
-                <ul class="role-features">
-                    <li>Site configuration</li>
-                    <li>User management</li>
-                    <li>System reports</li>
-                </ul>
-                {{#has_demo_admin}}
-                    <div class="custom-lms-demo-credentials">
-                        <span class="custom-lms-demo-credential-note">Local demo account</span>
-                        <code>{{demo_admin_username}}</code>
-                        <code>{{demo_admin_password}}</code>
+        <article class="multi-role-card multi-role-card--admin">
+            <header class="multi-role-card__visual">
+                <span class="multi-role-card__label">Admin login</span>
+                <i class="fa fa-shield multi-role-card__watermark" aria-hidden="true"></i>
+                <span class="multi-role-card__avatar" aria-hidden="true"><i class="fa fa-cog"></i></span>
+            </header>
+            <div class="multi-role-card__body">
+                <h2>Welcome back, Admin!</h2>
+                <p>Sign in to access site administration.</p>
+                {{#has_demo_admin}}<span class="multi-role-card__demo">Local demo account</span>{{/has_demo_admin}}
+                <form action="{{{loginurl}}}" method="post" class="multi-role-card__form">
+                    <input type="hidden" name="logintoken" value="{{logintoken}}">
+                    <input type="hidden" name="loginredirect" value="1">
+                    <input type="hidden" name="role" value="admin">
+                    <label class="multi-role-field" for="role-login-admin-username">
+                        <span class="visually-hidden">Administrator username or email</span>
+                        <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                        <input autocomplete="username" id="role-login-admin-username" name="username" placeholder="Username or email" required type="text" value="{{demo_admin_username}}">
+                    </label>
+                    <label class="multi-role-field" for="role-login-admin-password">
+                        <span class="visually-hidden">Administrator password</span>
+                        <i class="fa fa-lock" aria-hidden="true"></i>
+                        <input autocomplete="current-password" id="role-login-admin-password" name="password" placeholder="Password" required type="password" value="{{demo_admin_password}}">
+                    </label>
+                    <div class="multi-role-card__options">
+                        <label for="role-login-admin-remember"><input id="role-login-admin-remember" name="rememberusername" type="checkbox" value="1"> Remember me</label>
+                        <a href="{{{forgotpasswordurl}}}">Forgot password?</a>
                     </div>
-                {{/has_demo_admin}}
-                <a class="button" href="{{{url_login_admin}}}">Continue as Site administrator <span aria-hidden="true">-&gt;</span></a>
+                    <button type="submit">Log in as Administrator <i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+                </form>
             </div>
+            <ul class="multi-role-card__features" aria-label="Administrator workspace features">
+                <li><i class="fa fa-building-o" aria-hidden="true"></i><span><strong>Site management</strong><small>Manage platform settings</small></span></li>
+                <li><i class="fa fa-users" aria-hidden="true"></i><span><strong>User management</strong><small>Manage roles and accounts</small></span></li>
+                <li><i class="fa fa-bar-chart" aria-hidden="true"></i><span><strong>System reports</strong><small>Review Moodle reporting</small></span></li>
+            </ul>
         </article>
 
-        <article class="role-card role-card-parent">
-            <div class="role-top" data-icon="P">
-                <strong>Parent / guardian</strong>
-                <h2>Parent login</h2>
-            </div>
-            <div class="role-body">
-                <p class="muted">Track attendance, progress and school communication.</p>
-                <ul class="role-features">
-                    <li>Linked learner progress</li>
-                    <li>School communication</li>
-                    <li>Calendar and notices</li>
-                </ul>
-                {{#has_demo_parent}}
-                    <div class="custom-lms-demo-credentials">
-                        <span class="custom-lms-demo-credential-note">Local demo account</span>
-                        <code>{{demo_parent_username}}</code>
-                        <code>{{demo_parent_password}}</code>
+        <article class="multi-role-card multi-role-card--parent">
+            <header class="multi-role-card__visual">
+                <span class="multi-role-card__label">Parent / guardian login</span>
+                <i class="fa fa-heart-o multi-role-card__watermark" aria-hidden="true"></i>
+                <span class="multi-role-card__avatar" aria-hidden="true"><i class="fa fa-users"></i></span>
+            </header>
+            <div class="multi-role-card__body">
+                <h2>Welcome back, Parent!</h2>
+                <p>Stay connected with your child&apos;s learning.</p>
+                {{#has_demo_parent}}<span class="multi-role-card__demo">Local demo account</span>{{/has_demo_parent}}
+                <form action="{{{loginurl}}}" method="post" class="multi-role-card__form">
+                    <input type="hidden" name="logintoken" value="{{logintoken}}">
+                    <input type="hidden" name="loginredirect" value="1">
+                    <input type="hidden" name="role" value="parent">
+                    <label class="multi-role-field" for="role-login-parent-username">
+                        <span class="visually-hidden">Parent or guardian username or email</span>
+                        <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                        <input autocomplete="username" id="role-login-parent-username" name="username" placeholder="Username or email" required type="text" value="{{demo_parent_username}}">
+                    </label>
+                    <label class="multi-role-field" for="role-login-parent-password">
+                        <span class="visually-hidden">Parent or guardian password</span>
+                        <i class="fa fa-lock" aria-hidden="true"></i>
+                        <input autocomplete="current-password" id="role-login-parent-password" name="password" placeholder="Password" required type="password" value="{{demo_parent_password}}">
+                    </label>
+                    <div class="multi-role-card__options">
+                        <label for="role-login-parent-remember"><input id="role-login-parent-remember" name="rememberusername" type="checkbox" value="1"> Remember me</label>
+                        <a href="{{{forgotpasswordurl}}}">Forgot password?</a>
                     </div>
-                {{/has_demo_parent}}
-                <a class="button" href="{{{url_login_parent}}}">Continue as Parent / guardian <span aria-hidden="true">-&gt;</span></a>
+                    <button type="submit">Log in as Parent <i class="fa fa-arrow-right" aria-hidden="true"></i></button>
+                </form>
             </div>
+            <ul class="multi-role-card__features" aria-label="Parent workspace features">
+                <li><i class="fa fa-line-chart" aria-hidden="true"></i><span><strong>Track progress</strong><small>Monitor learning progress</small></span></li>
+                <li><i class="fa fa-calendar" aria-hidden="true"></i><span><strong>Attendance</strong><small>Review school activity</small></span></li>
+                <li><i class="fa fa-comments-o" aria-hidden="true"></i><span><strong>Communicate</strong><small>Connect with the school</small></span></li>
+            </ul>
         </article>
 
-        <article class="role-card role-card-participant">
-            <div class="role-top" data-icon="O">
-                <strong>Other participant</strong>
-                <h2>Participant login</h2>
+        <article class="multi-role-card multi-role-card--guest">
+            <header class="multi-role-card__visual">
+                <span class="multi-role-card__label">Guest access</span>
+                <i class="fa fa-university multi-role-card__watermark" aria-hidden="true"></i>
+                <span class="multi-role-card__avatar" aria-hidden="true"><i class="fa fa-user-o"></i></span>
+            </header>
+            <div class="multi-role-card__body multi-role-card__body--guest">
+                <h2>Welcome, Guest!</h2>
+                <p>Explore public school information and available learning opportunities.</p>
+                <div class="multi-role-card__guest-note">
+                    <i class="fa fa-info-circle" aria-hidden="true"></i>
+                    <span>No account is required for public content.</span>
+                </div>
+                <a class="multi-role-card__guest-primary" href="{{{url_public_home}}}">Continue as Guest <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                <span class="multi-role-card__divider">or</span>
+                <a class="multi-role-card__guest-secondary" href="{{{url_moodle_course_search}}}"><i class="fa fa-book" aria-hidden="true"></i> Browse public courses</a>
             </div>
-            <div class="role-body">
-                <p class="muted">Join approved learning spaces and collaborative activities.</p>
-                <ul class="role-features">
-                    <li>Approved courses</li>
-                    <li>Collaboration</li>
-                    <li>Shared resources</li>
-                </ul>
-                {{#has_demo_participant}}
-                    <div class="custom-lms-demo-credentials">
-                        <span class="custom-lms-demo-credential-note">Local demo account</span>
-                        <code>{{demo_participant_username}}</code>
-                        <code>{{demo_participant_password}}</code>
-                    </div>
-                {{/has_demo_participant}}
-                <a class="button" href="{{{url_login_participant}}}">Continue as Other participant <span aria-hidden="true">-&gt;</span></a>
-            </div>
+            <ul class="multi-role-card__features" aria-label="Guest access features">
+                <li><i class="fa fa-search" aria-hidden="true"></i><span><strong>Explore content</strong><small>Browse public resources</small></span></li>
+                <li><i class="fa fa-university" aria-hidden="true"></i><span><strong>School information</strong><small>Learn about the school</small></span></li>
+                <li><i class="fa fa-calendar-o" aria-hidden="true"></i><span><strong>Events and news</strong><small>View public updates</small></span></li>
+            </ul>
         </article>
     </section>
+
+    <section class="multi-role-login__supporting" aria-label="Login help and security information">
+        <article class="multi-role-panel multi-role-panel--chooser">
+            <header>
+                <h2>Choose your role</h2>
+                <p>Select a role to open its focused login page.</p>
+            </header>
+            <nav class="multi-role-chooser" aria-label="Focused role login pages">
+                <a class="multi-role-chooser__item multi-role-chooser__item--teacher" href="{{{url_login_teacher}}}"><i class="fa fa-graduation-cap" aria-hidden="true"></i><span>Teacher</span></a>
+                <a class="multi-role-chooser__item multi-role-chooser__item--student" href="{{{url_login_student}}}"><i class="fa fa-user" aria-hidden="true"></i><span>Student</span></a>
+                <a class="multi-role-chooser__item multi-role-chooser__item--admin" href="{{{url_login_admin}}}"><i class="fa fa-cog" aria-hidden="true"></i><span>Administrator</span></a>
+                <a class="multi-role-chooser__item multi-role-chooser__item--parent" href="{{{url_login_parent}}}"><i class="fa fa-users" aria-hidden="true"></i><span>Parent</span></a>
+                <a class="multi-role-chooser__item multi-role-chooser__item--participant" href="{{{url_login_participant}}}"><i class="fa fa-id-badge" aria-hidden="true"></i><span>Other participant</span></a>
+            </nav>
+            <p class="multi-role-panel__note"><i class="fa fa-shield" aria-hidden="true"></i> Each account is validated against the selected Moodle role.</p>
+        </article>
+
+        <article class="multi-role-panel multi-role-panel--school">
+            <div class="multi-role-school-brand">
+                <img alt="" src="{{{pix_school_logo}}}">
+                <span><strong>{{schoolname}}</strong><small>Learning powered by Moodle</small></span>
+            </div>
+            <p>Empowering learners, educators and families through one connected digital campus.</p>
+            <dl class="multi-role-school-stats">
+                <div><dt>{{studentcount}}</dt><dd>Students</dd></div>
+                <div><dt>{{coursecount}}</dt><dd>Courses</dd></div>
+                <div><dt>{{teachercount}}</dt><dd>Teachers</dd></div>
+                <div><dt>5</dt><dd>Access roles</dd></div>
+            </dl>
+        </article>
+
+        <article class="multi-role-panel multi-role-panel--security">
+            <header>
+                <h2>Your security is our priority</h2>
+                <p>Authentication remains managed by Moodle core.</p>
+            </header>
+            <ul class="multi-role-security-list">
+                <li><i class="fa fa-lock" aria-hidden="true"></i><span><strong>Secure sign-in</strong><small>Moodle authentication and sessions</small></span></li>
+                <li><i class="fa fa-user-secret" aria-hidden="true"></i><span><strong>Role validation</strong><small>Access checked before login completes</small></span></li>
+                <li><i class="fa fa-shield" aria-hidden="true"></i><span><strong>Request protection</strong><small>Login token included with every form</small></span></li>
+                <li><i class="fa fa-key" aria-hidden="true"></i><span><strong>Account recovery</strong><small>Standard Moodle password reset</small></span></li>
+            </ul>
+        </article>
+    </section>
+
+    <footer class="multi-role-login__footer">
+        <span><i class="fa fa-life-ring" aria-hidden="true"></i> Need help? Contact your school administrator.</span>
+        <span>&copy; {{copyrightyear}} {{schoolname}}. Powered by Moodle.</span>
+    </footer>
 </main>
-{{> theme_custom_lms/partials/global_mini_footer }}

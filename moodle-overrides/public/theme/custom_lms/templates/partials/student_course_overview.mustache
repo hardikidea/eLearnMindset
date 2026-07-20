@@ -1,74 +1,113 @@
 {{!
     @template theme_custom_lms/partials/student_course_overview
 
-    Student course overview panel for real Moodle course pages.
+    Permission-safe student course overview built from live Moodle course data.
 }}
-<section class="custom-lms-student-course-hero" aria-label="Student course progress">
-    <div class="custom-lms-student-course-progress" style="{{studentcourse_progress_style}}">
-        <div>
-            <strong>{{studentcourse_progress}}%</strong>
-            <span>Complete</span>
+<section class="custom-lms-student-course-hero" aria-labelledby="page-heading">
+    <div class="custom-lms-student-course-hero-main">
+        {{{ output.full_header }}}
+
+        {{#studentcourse_has_summary}}
+            <p class="custom-lms-student-course-lead">{{studentcourse_summary_plain}}</p>
+        {{/studentcourse_has_summary}}
+        {{^studentcourse_has_summary}}
+            <p class="custom-lms-student-course-lead">
+                {{#str}}studentcoursekeepgoing, theme_custom_lms{{/str}}
+            </p>
+        {{/studentcourse_has_summary}}
+
+        <div class="custom-lms-student-course-progress-line">
+            <div class="custom-lms-student-course-progress-copy">
+                <span>{{#str}}studentcourseprogress, theme_custom_lms{{/str}}</span>
+                <strong>{{studentcourse_progress}}%</strong>
+            </div>
+            <div class="progress" role="progressbar" aria-label="{{#str}}studentcourseprogress, theme_custom_lms{{/str}}" aria-valuenow="{{studentcourse_progress}}" aria-valuemin="0" aria-valuemax="100">
+                <div class="progress-bar" style="width: {{studentcourse_progress}}%"></div>
+            </div>
         </div>
     </div>
 
-    <div class="custom-lms-student-course-primary">
-        <span class="custom-lms-student-course-kicker">Current course</span>
-        <h2>Keep going, {{studentcourse_firstname}}</h2>
-        <p>You are making progress in this course. Continue with the next learning item when you are ready.</p>
-        <div class="custom-lms-student-course-teacher">
-            <span class="custom-lms-student-course-avatar" aria-hidden="true">{{studentcourse_teacher_initials}}</span>
-            <span>Your teacher: <strong>{{studentcourse_teacher_name}}</strong></span>
-        </div>
+    <div class="custom-lms-student-course-hero-media" aria-hidden="true">
+        <span class="custom-lms-student-course-media-window custom-lms-student-course-media-window-top"></span>
+        <span class="custom-lms-student-course-media-window custom-lms-student-course-media-window-bottom"></span>
+        <img src="{{studentcourse_course_image}}" alt="" loading="eager">
     </div>
 
-    <div class="custom-lms-student-course-next">
-        <span class="custom-lms-student-course-icon" aria-hidden="true">
-            <i class="fa fa-book"></i>
-        </span>
-        <div>
-            <span class="custom-lms-student-course-kicker">Next up</span>
-            <h3>{{studentcourse_next_title}}</h3>
-            <p>Open the next available activity, resource or course item.</p>
-            <a class="btn btn-primary custom-lms-student-course-continue" href="{{{studentcourse_next_url}}}">
-                Continue learning <i class="fa fa-arrow-right" aria-hidden="true"></i>
-            </a>
-        </div>
-    </div>
-
-    <div class="custom-lms-student-course-art" aria-hidden="true">
-        <span class="paint-dot paint-dot-blue"></span>
-        <span class="paint-dot paint-dot-yellow"></span>
-        <span class="paint-dot paint-dot-red"></span>
-        <span class="paint-brush paint-brush-one"></span>
-        <span class="paint-brush paint-brush-two"></span>
-        <span class="paint-paper"></span>
-    </div>
-
-    <div class="custom-lms-student-course-links">
-        {{#studentcourse_has_announcement}}
-            <a href="{{{studentcourse_announcement_url}}}">
-                <i class="fa fa-comments-o" aria-hidden="true"></i>
-                <span>Announcements</span>
-            </a>
-        {{/studentcourse_has_announcement}}
-        {{#studentcourse_has_teacher_message}}
-            <a href="{{{studentcourse_teacher_message_url}}}">
-                <i class="fa fa-envelope-o" aria-hidden="true"></i>
-                <span>Contact teacher</span>
-            </a>
-        {{/studentcourse_has_teacher_message}}
-        {{#studentcourse_has_certificate}}
-            <a href="{{{studentcourse_certificate_url}}}">
-                <i class="fa fa-certificate" aria-hidden="true"></i>
-                <span>Certificate</span>
-            </a>
-        {{/studentcourse_has_certificate}}
-    </div>
-
-    <div class="custom-lms-student-course-stats" aria-label="Course activity summary">
-        <span><strong>{{studentcourse_activity_count}}</strong> Activities</span>
-        <span><strong>{{studentcourse_resource_count}}</strong> Resources</span>
-        <span><strong>{{studentcourse_quiz_count}}</strong> Quizzes</span>
-        <span><strong>{{studentcourse_assignment_count}}</strong> Assignments</span>
-    </div>
 </section>
+
+<section class="custom-lms-student-course-summary-card" aria-labelledby="custom-lms-course-summary-title">
+    <h2 id="custom-lms-course-summary-title">{{#str}}studentcoursecoursesummary, theme_custom_lms{{/str}}</h2>
+    <dl class="custom-lms-student-course-summary-grid">
+        <div class="custom-lms-student-course-summary-item custom-lms-student-course-summary-teacher">
+            {{#studentcourse_has_teacher_picture}}
+                {{{studentcourse_teacher_picture}}}
+            {{/studentcourse_has_teacher_picture}}
+            {{^studentcourse_has_teacher_picture}}
+                <span class="custom-lms-student-course-avatar" aria-hidden="true">{{studentcourse_teacher_initials}}</span>
+            {{/studentcourse_has_teacher_picture}}
+            <span>
+                <dt>{{#str}}studentcourseinstructor, theme_custom_lms{{/str}}</dt>
+                <dd>{{studentcourse_teacher_name}}</dd>
+            </span>
+        </div>
+
+        {{#studentcourse_can_view_participants}}
+            <div class="custom-lms-student-course-summary-item">
+                <span class="custom-lms-student-course-summary-icon" aria-hidden="true"><i class="fa fa-users"></i></span>
+                <span>
+                    <dt>{{#str}}studentcourseenrolledstudents, theme_custom_lms{{/str}}</dt>
+                    <dd>{{studentcourse_enrolled_count}}</dd>
+                </span>
+            </div>
+        {{/studentcourse_can_view_participants}}
+
+        {{#studentcourse_has_start_date}}
+            <div class="custom-lms-student-course-summary-item">
+                <span class="custom-lms-student-course-summary-icon" aria-hidden="true"><i class="fa fa-calendar"></i></span>
+                <span>
+                    <dt>{{#str}}studentcoursestartdate, theme_custom_lms{{/str}}</dt>
+                    <dd>{{studentcourse_start_date}}</dd>
+                </span>
+            </div>
+        {{/studentcourse_has_start_date}}
+
+        {{#studentcourse_has_end_date}}
+            <div class="custom-lms-student-course-summary-item">
+                <span class="custom-lms-student-course-summary-icon" aria-hidden="true"><i class="fa fa-calendar-check-o"></i></span>
+                <span>
+                    <dt>{{#str}}studentcourseenddate, theme_custom_lms{{/str}}</dt>
+                    <dd>{{studentcourse_end_date}}</dd>
+                </span>
+            </div>
+        {{/studentcourse_has_end_date}}
+    </dl>
+</section>
+
+{{#studentcourse_has_summary}}
+    <section class="custom-lms-student-course-about" aria-labelledby="custom-lms-course-about-title">
+        <h2 id="custom-lms-course-about-title">{{#str}}studentcourseabout, theme_custom_lms{{/str}}</h2>
+        <div class="custom-lms-student-course-about-copy">{{{studentcourse_summary}}}</div>
+        <dl class="custom-lms-student-course-facts">
+            {{#studentcourse_has_category}}
+                <div>
+                    <dt>{{#str}}category, core{{/str}}</dt>
+                    <dd>{{studentcourse_category}}</dd>
+                </div>
+            {{/studentcourse_has_category}}
+            <div>
+                <dt>{{#str}}studentcoursesections, theme_custom_lms{{/str}}</dt>
+                <dd>{{studentcourse_section_count}}</dd>
+            </div>
+            <div>
+                <dt>{{#str}}studentcourseactivities, theme_custom_lms{{/str}}</dt>
+                <dd>{{studentcourse_activity_count}}</dd>
+            </div>
+            {{#studentcourse_has_duration}}
+                <div>
+                    <dt>{{#str}}studentcourseduration, theme_custom_lms{{/str}}</dt>
+                    <dd>{{studentcourse_duration_label}}</dd>
+                </div>
+            {{/studentcourse_has_duration}}
+        </dl>
+    </section>
+{{/studentcourse_has_summary}}

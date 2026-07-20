@@ -1,0 +1,24 @@
+{{! @template theme_custom_lms/partials/student_portal_topbar }}
+<header class="topbar student-portal-topbar">
+    <button aria-label="Open navigation" class="menu student-portal-menu" type="button">
+        <i aria-hidden="true" class="fa fa-bars"></i>
+    </button>
+    <form action="{{{url_moodle_course_search}}}" class="student-portal-search" method="get" role="search">
+        <i aria-hidden="true" class="fa fa-search"></i>
+        <input aria-label="Search courses" name="search" placeholder="Search courses, resources, activities..." type="search">
+    </form>
+    <nav class="student-portal-utilities" aria-label="Account tools">
+        <div class="student-portal-native-tools">{{{navbarpluginoutput}}}</div>
+        <div class="student-portal-account">
+            <div class="student-portal-account-summary" aria-hidden="true">
+                <strong>Hi, {{userfirstname}}</strong>
+                <small>{{rolelabel}}</small>
+            </div>
+            {{#usermenu}}
+                <div class="student-portal-native-usermenu" data-region="usermenu">
+                    {{> core/user_menu }}
+                </div>
+            {{/usermenu}}
+        </div>
+    </nav>
+</header>

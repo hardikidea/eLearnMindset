@@ -1,0 +1,79 @@
+{{!
+    @template theme_custom_lms/partials/student_course_right_rail
+
+    Student course progress, next action and permission-safe support links.
+}}
+<aside class="custom-lms-student-course-rail" aria-label="{{#str}}studentcoursetools, theme_custom_lms{{/str}}">
+    {{#courseindex}}
+        <section class="custom-lms-student-course-rail-card custom-lms-student-course-outline-card">
+            <div class="custom-lms-student-course-outline-header">
+                <h2>
+                    <i class="fa fa-list-ul" aria-hidden="true"></i>
+                    <span>{{#str}}studentcoursecourseoutline, theme_custom_lms{{/str}}</span>
+                </h2>
+                {{> theme_custom_lms/courseindexdrawercontrols}}
+            </div>
+            <nav class="custom-lms-student-course-index" aria-label="{{#str}}studentcoursecourseoutline, theme_custom_lms{{/str}}">
+                {{{courseindex}}}
+            </nav>
+        </section>
+    {{/courseindex}}
+
+    <section class="custom-lms-student-course-rail-card">
+        <h2>{{#str}}studentcoursecompletionprogress, theme_custom_lms{{/str}}</h2>
+        <div class="custom-lms-student-course-progress-summary">
+            <div class="custom-lms-student-course-progress-ring" style="{{studentcourse_progress_style}}">
+                <strong>{{studentcourse_progress}}%</strong>
+            </div>
+            <div>
+                <strong>{{#str}}studentcourseprogress, theme_custom_lms{{/str}}</strong>
+                <p>{{#str}}studentcoursekeepgoing, theme_custom_lms{{/str}}</p>
+            </div>
+        </div>
+        <p class="custom-lms-student-course-completed-copy">
+            {{studentcourse_completed_copy}}
+        </p>
+    </section>
+
+    <section class="custom-lms-student-course-rail-card custom-lms-student-course-next-card">
+        <span class="custom-lms-student-course-kicker">{{#str}}studentcoursenextup, theme_custom_lms{{/str}}</span>
+        <h2>{{studentcourse_next_title}}</h2>
+        <a class="btn btn-primary" href="{{{studentcourse_next_url}}}">
+            <span>{{#str}}studentcourseopenactivity, theme_custom_lms{{/str}}</span>
+            <i class="fa fa-arrow-right" aria-hidden="true"></i>
+        </a>
+    </section>
+
+    <section class="custom-lms-student-course-rail-card">
+        <h2>{{#str}}studentcoursesupport, theme_custom_lms{{/str}}</h2>
+        <nav class="custom-lms-student-course-support-links" aria-label="{{#str}}studentcoursesupport, theme_custom_lms{{/str}}">
+            {{#studentcourse_has_announcement}}
+                <a href="{{{studentcourse_announcement_url}}}">
+                    <i class="fa fa-bullhorn" aria-hidden="true"></i>
+                    <span>{{#str}}studentcourseannouncements, theme_custom_lms{{/str}}</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            {{/studentcourse_has_announcement}}
+            {{#studentcourse_has_teacher_message}}
+                <a href="{{{studentcourse_teacher_message_url}}}">
+                    <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                    <span>{{#str}}studentcoursecontactteacher, theme_custom_lms{{/str}}</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            {{/studentcourse_has_teacher_message}}
+            {{#studentcourse_has_certificate}}
+                <a href="{{{studentcourse_certificate_url}}}">
+                    <i class="fa fa-certificate" aria-hidden="true"></i>
+                    <span>{{#str}}studentcoursecertificate, theme_custom_lms{{/str}}</span>
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                </a>
+            {{/studentcourse_has_certificate}}
+        </nav>
+    </section>
+
+    {{#hasblocks}}
+        <div class="custom-lms-student-course-blocks d-print-none">
+            {{{sidepreblocks}}}
+        </div>
+    {{/hasblocks}}
+</aside>

@@ -1,0 +1,46 @@
+{{!
+    @template theme_custom_lms/partials/student_course_sidebar
+
+    Moodle-generated primary navigation for the student course workspace.
+}}
+<div class="custom-lms-student-course-sidebar">
+    <span class="custom-lms-student-course-sidebar-heading">
+        {{#str}}studentcoursemainnavigation, theme_custom_lms{{/str}}
+    </span>
+    <nav class="custom-lms-student-course-primary-nav" aria-label="{{#str}}studentcoursemainnavigation, theme_custom_lms{{/str}}">
+        <ul>
+            {{#mobileprimarynav}}
+                {{#divider}}
+                    <li class="custom-lms-student-course-nav-divider" aria-hidden="true"></li>
+                {{/divider}}
+                {{^divider}}
+                    <li data-nav-key="{{key}}">
+                        {{#haschildren}}
+                            <details {{#isopen}}open{{/isopen}}>
+                                <summary class="{{#isactive}}active{{/isactive}}">
+                                    <i class="custom-lms-student-course-nav-icon {{iconclass}}" aria-hidden="true"></i>
+                                    <span>{{{text}}}</span>
+                                    <i class="fa fa-angle-down" aria-hidden="true"></i>
+                                </summary>
+                                <ul>
+                                    {{#children}}
+                                        {{^divider}}
+                                            <li><a class="{{#isactive}}active{{/isactive}}" href="{{{url}}}">{{{text}}}</a></li>
+                                        {{/divider}}
+                                    {{/children}}
+                                </ul>
+                            </details>
+                        {{/haschildren}}
+                        {{^haschildren}}
+                            <a class="{{#isactive}}active{{/isactive}}" href="{{{url}}}" {{#isactive}}aria-current="page"{{/isactive}}>
+                                <i class="custom-lms-student-course-nav-icon {{iconclass}}" aria-hidden="true"></i>
+                                <span>{{{text}}}</span>
+                            </a>
+                        {{/haschildren}}
+                    </li>
+                {{/divider}}
+            {{/mobileprimarynav}}
+        </ul>
+    </nav>
+
+</div>

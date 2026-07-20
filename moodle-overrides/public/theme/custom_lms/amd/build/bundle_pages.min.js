@@ -12,15 +12,17 @@
  * @copyright  2026 eLearn Mindset
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-define([], function() {
+define(['theme_custom_lms/loader'], function() {
     /**
      * Initialise mobile navigation drawers.
      */
     const initDrawer = () => {
         const sidebar = document.querySelector('.sidebar');
         let overlay = document.querySelector('.mobile-overlay');
+        let trigger = null;
 
         if (sidebar && !overlay) {
+            sidebar.id = sidebar.id || 'custom-lms-mobile-navigation';
             overlay = document.createElement('div');
             overlay.className = 'mobile-overlay';
             document.body.appendChild(overlay);
@@ -33,16 +35,29 @@ define([], function() {
             sidebar.classList.toggle('open', open);
             overlay?.classList.toggle('show', open);
             document.body.style.overflow = open ? 'hidden' : '';
+            document.querySelectorAll('.menu').forEach(button => {
+                button.setAttribute('aria-expanded', String(open));
+            });
+            if (open) {
+                sidebar.querySelector('a')?.focus();
+            } else if (trigger) {
+                trigger.focus();
+            }
         };
 
         document.querySelectorAll('.menu').forEach(button => {
             button.setAttribute('aria-label', button.getAttribute('aria-label') || 'Toggle navigation');
-            button.addEventListener('click', () => setDrawer(!sidebar?.classList.contains('open')));
+            button.setAttribute('aria-controls', sidebar?.id || 'custom-lms-mobile-navigation');
+            button.setAttribute('aria-expanded', 'false');
+            button.addEventListener('click', () => {
+                trigger = button;
+                setDrawer(!sidebar?.classList.contains('open'));
+            });
         });
 
         overlay?.addEventListener('click', () => setDrawer(false));
         document.addEventListener('keydown', event => {
-            if (event.key === 'Escape') {
+            if (event.key === 'Escape' && sidebar?.classList.contains('open')) {
                 setDrawer(false);
             }
         });
@@ -72,6 +87,13 @@ define([], function() {
      * Initialise course overview menus and view switchers.
      */
     const initCourseControls = () => {
+        const closeCourseMenus = () => {
+            document.querySelectorAll('.course-menu-popover.open').forEach(item => {
+                item.classList.remove('open');
+                item.parentElement?.querySelector('.course-menu-button')?.setAttribute('aria-expanded', 'false');
+            });
+        };
+
         document.querySelectorAll('.course-menu-button').forEach(button => {
             button.addEventListener('click', event => {
                 event.stopPropagation();
@@ -79,6 +101,7 @@ define([], function() {
                 document.querySelectorAll('.course-menu-popover.open').forEach(item => {
                     if (item !== popover) {
                         item.classList.remove('open');
+                        item.parentElement?.querySelector('.course-menu-button')?.setAttribute('aria-expanded', 'false');
                     }
                 });
                 const open = popover?.classList.toggle('open');
@@ -86,20 +109,63 @@ define([], function() {
             });
         });
 
-        document.addEventListener('click', () => {
-            document.querySelectorAll('.course-menu-popover.open').forEach(item => item.classList.remove('open'));
+        document.addEventListener('click', closeCourseMenus);
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape') {
+                closeCourseMenus();
+            }
         });
 
         const grid = document.querySelector('[data-course-grid]');
-        document.querySelectorAll('[data-course-view]').forEach(button => {
+        const viewButtons = [...document.querySelectorAll('[data-course-view]')];
+        const supportedViews = ['grid', 'list', 'summary'];
+        const storageKey = 'theme_custom_lms_course_view';
+        const setCourseView = view => {
+            const selectedView = supportedViews.includes(view) ? view : 'grid';
+            viewButtons.forEach(item => {
+                const active = item.dataset.courseView === selectedView;
+                item.classList.toggle('active', active);
+                item.setAttribute('aria-pressed', String(active));
+            });
+            grid?.classList.remove('list', 'summary');
+            if (selectedView !== 'grid') {
+                grid?.classList.add(selectedView);
+            }
+        };
+
+        let savedView = 'grid';
+        try {
+            savedView = window.localStorage.getItem(storageKey) || 'grid';
+        } catch (error) {
+            savedView = 'grid';
+        }
+        setCourseView(savedView);
+
+        viewButtons.forEach(button => {
             button.addEventListener('click', () => {
-                document.querySelectorAll('[data-course-view]').forEach(item => item.classList.remove('active'));
-                button.classList.add('active');
-                grid?.classList.remove('list', 'summary');
-                if (button.dataset.courseView !== 'grid') {
-                    grid?.classList.add(button.dataset.courseView);
+                const view = button.dataset.courseView || 'grid';
+                setCourseView(view);
+                try {
+                    window.localStorage.setItem(storageKey, view);
+                } catch (error) {
+                    // The selected view still works when persistent browser storage is unavailable.
                 }
             });
+        });
+
+        const search = document.querySelector('[data-course-search]');
+        const empty = document.querySelector('[data-course-search-empty]');
+        search?.addEventListener('input', () => {
+            const query = search.value.trim().toLocaleLowerCase();
+            let visible = 0;
+            grid?.querySelectorAll('[data-course-card]').forEach(card => {
+                const matches = !query || card.textContent.toLocaleLowerCase().includes(query);
+                card.hidden = !matches;
+                visible += matches ? 1 : 0;
+            });
+            if (empty) {
+                empty.hidden = visible !== 0;
+            }
         });
     };
 
@@ -286,6 +352,102 @@ define([], function() {
     };
 
     /**
+     * Initialise the student dashboard highlight carousel.
+     */
+    const initStudentWelcomeSlider = () => {
+        document.querySelectorAll('[data-student-welcome-slider]').forEach(slider => {
+            if (slider.dataset.sliderInitialised === 'true') {
+                return;
+            }
+
+            const slides = Array.from(slider.querySelectorAll('[data-student-welcome-slide]'));
+            const dots = Array.from(slider.querySelectorAll('[data-student-welcome-dot]'));
+            const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+            let index = Math.max(0, slides.findIndex(slide => slide.classList.contains('active')));
+            let timer = null;
+            let pointerStart = null;
+
+            if (slides.length < 2 || slides.length !== dots.length) {
+                return;
+            }
+            slider.dataset.sliderInitialised = 'true';
+
+            const show = next => {
+                index = (next + slides.length) % slides.length;
+                slides.forEach((slide, slideIndex) => {
+                    const active = slideIndex === index;
+                    slide.classList.toggle('active', active);
+                    slide.setAttribute('aria-hidden', String(!active));
+                });
+                dots.forEach((dot, dotIndex) => {
+                    const active = dotIndex === index;
+                    dot.classList.toggle('active', active);
+                    dot.setAttribute('aria-current', String(active));
+                });
+            };
+
+            const stop = () => {
+                window.clearInterval(timer);
+                timer = null;
+            };
+
+            const start = () => {
+                stop();
+                if (!reducedMotion.matches && !document.hidden
+                        && !slider.matches(':hover') && !slider.contains(document.activeElement)) {
+                    timer = window.setInterval(() => show(index + 1), 7000);
+                }
+            };
+
+            dots.forEach(dot => dot.addEventListener('click', () => {
+                show(Number(dot.dataset.slide || 0));
+                start();
+            }));
+
+            slider.addEventListener('keydown', event => {
+                if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+                    event.preventDefault();
+                    show(index + (event.key === 'ArrowRight' ? 1 : -1));
+                    dots[index].focus();
+                } else if (event.key === 'Home' || event.key === 'End') {
+                    event.preventDefault();
+                    show(event.key === 'Home' ? 0 : slides.length - 1);
+                    dots[index].focus();
+                }
+            });
+
+            slider.addEventListener('pointerdown', event => {
+                pointerStart = event.clientX;
+                stop();
+            });
+            slider.addEventListener('pointerup', event => {
+                if (pointerStart !== null && Math.abs(event.clientX - pointerStart) >= 45) {
+                    show(index + (event.clientX < pointerStart ? 1 : -1));
+                }
+                pointerStart = null;
+                start();
+            });
+            slider.addEventListener('pointercancel', () => {
+                pointerStart = null;
+                start();
+            });
+            slider.addEventListener('mouseenter', stop);
+            slider.addEventListener('mouseleave', start);
+            slider.addEventListener('focusin', stop);
+            slider.addEventListener('focusout', event => {
+                if (!slider.contains(event.relatedTarget)) {
+                    start();
+                }
+            });
+            document.addEventListener('visibilitychange', () => document.hidden ? stop() : start());
+            reducedMotion.addEventListener?.('change', start);
+
+            show(index);
+            start();
+        });
+    };
+
+    /**
      * Module entry point.
      */
     const init = () => {
@@ -296,6 +458,7 @@ define([], function() {
         initPublicControls();
         initPublicCounters();
         initPublicSlider();
+        initStudentWelcomeSlider();
     };
 
     return {

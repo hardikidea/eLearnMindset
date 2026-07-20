@@ -81,6 +81,13 @@ class bundle_page_repository {
         $context['url_moodle_dashboard'] = (new moodle_url('/my/'))->out(false);
         $context['url_moodle_courses'] = (new moodle_url('/my/courses.php'))->out(false);
         $context['url_moodle_calendar'] = (new moodle_url('/calendar/view.php'))->out(false);
+        $context['url_moodle_course_search'] = (new moodle_url('/course/search.php'))->out(false);
+        $context['url_moodle_private_files'] = (new moodle_url('/user/files.php'))->out(false);
+        $context['url_moodle_content_bank'] = (new moodle_url('/contentbank/index.php'))->out(false);
+        $context['url_moodle_grades'] = (new moodle_url('/grade/report/overview/index.php'))->out(false);
+        $context['url_moodle_messages'] = (new moodle_url('/message/index.php'))->out(false);
+        $context['url_moodle_notifications'] = (new moodle_url('/message/output/popup/notifications.php'))->out(false);
+        $context['url_moodle_preferences'] = (new moodle_url('/user/preferences.php'))->out(false);
 
         return $context;
     }

@@ -38,7 +38,7 @@ $url = new moodle_url('/theme/custom_lms/page.php', ['page' => $requestedpage]);
 $loginredirecttargets = [
     'login-admin' => 'admin',
     'login-teacher' => 'teacher-dashboard',
-    'login-student' => 'my-courses',
+    'login-student' => 'index',
     'login-parent' => 'index',
     'login-participant' => 'index',
 ];
@@ -50,6 +50,16 @@ $PAGE->set_title($metadata['title']);
 $PAGE->set_heading($SITE->fullname);
 $PAGE->requires->css(new moodle_url('/theme/custom_lms/style/bundle_pages.css'));
 $PAGE->requires->css(new moodle_url('/theme/custom_lms/style/role_tokens.css'));
+$isrolelogin = $requestedpage === 'role-login';
+if ($isrolelogin) {
+    $PAGE->requires->css(new moodle_url('/theme/custom_lms/style/role_login.css'));
+}
+$PAGE->requires->js_call_amd('theme_custom_lms/bundle_pages', 'init');
+$isstudentshell = in_array($requestedpage, ['index', 'my-courses'], true);
+if ($isstudentshell) {
+    $PAGE->requires->css(new moodle_url('/theme/custom_lms/style/student_dashboard.css'));
+    $PAGE->requires->css(new moodle_url('/theme/custom_lms/style/student_dialogs.css'));
+}
 
 if ($metadata['access'] === 'admin') {
     require_login();
@@ -85,7 +95,11 @@ $templatecontext['bodyattributes'] = $OUTPUT->body_attributes([
     'theme-custom-lms-bundle',
     'theme-custom-lms-bundle-page-' . $requestedpage,
     'custom-lms-role-' . $pagerole,
+    $isstudentshell ? 'custom-lms-student-shell-page' : '',
 ]);
+$templatecontext['isstudentshell'] = $isstudentshell;
 $templatecontext['pagecontent'] = $OUTPUT->render_from_template($metadata['template'], $templatecontext);
+$templatecontext['standardafterhtml'] = $OUTPUT->standard_after_main_region_html();
+$templatecontext['standardendhtml'] = $PAGE->requires->get_end_code();
 
 echo $OUTPUT->render_from_template('theme_custom_lms/bundle_page', $templatecontext);

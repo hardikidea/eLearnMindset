@@ -1,0 +1,531 @@
+/* Route-scoped visual treatment for Moodle's native course and category manager. */
+body.custom-lms-course-management-page {
+    --course-manager-role: var(--custom-admin-role, #08764d);
+    --course-manager-role-rgb: var(--custom-admin-role-rgb, 8, 118, 77);
+    --course-manager-ink: #162033;
+    --course-manager-muted: #64748b;
+    --course-manager-line: #dbe4ef;
+    --course-manager-soft: #f5f8fc;
+    --course-manager-card: #ffffff;
+}
+
+body.custom-lms-course-management-page #page-header {
+    margin-bottom: 0.5rem;
+}
+
+body.custom-lms-course-management-page #action_bar {
+    margin: 0 0 1rem;
+    padding: 0.75rem;
+    border: 1px solid var(--course-manager-line);
+    border-radius: 0.5rem;
+    background: var(--course-manager-card);
+}
+
+body.custom-lms-course-management-page #action_bar > .d-flex {
+    gap: 0.75rem;
+    align-items: center;
+}
+
+body.custom-lms-course-management-page #action_bar .navitem,
+body.custom-lms-course-management-page #action_bar form,
+body.custom-lms-course-management-page #action_bar .input-group {
+    min-width: 0;
+}
+
+body.custom-lms-course-management-page #action_bar .form-select,
+body.custom-lms-course-management-page #action_bar .form-control,
+body.custom-lms-course-management-page #action_bar .btn {
+    min-height: 2.55rem;
+}
+
+body.custom-lms-course-management-page #action_bar .form-select {
+    min-width: 17rem;
+}
+
+body.custom-lms-course-management-page #action_bar .simplesearchform .input-group {
+    width: min(100%, 22rem);
+}
+
+body.custom-lms-course-management-page #action_bar .search-icon {
+    width: 2.75rem;
+    display: inline-grid;
+    place-items: center;
+    padding: 0;
+    background: var(--course-manager-role);
+    border-color: var(--course-manager-role);
+}
+
+body.custom-lms-course-management-page div[role="main"] > h2 {
+    margin: 0 0 1rem;
+    color: var(--course-manager-ink);
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0;
+}
+
+body.custom-lms-course-management-page #course-category-listings {
+    display: grid !important;
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    gap: 1rem;
+    align-items: start;
+    margin: 0;
+}
+
+body.custom-lms-course-management-page #course-category-listings > #category-listing,
+body.custom-lms-course-management-page #course-category-listings > #course-listing,
+body.custom-lms-course-management-page #course-category-listings > #course-detail {
+    width: auto !important;
+    min-width: 0;
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+body.custom-lms-course-management-page #course-category-listings > #course-detail {
+    grid-column: 1 / -1;
+}
+
+body.custom-lms-course-management-page #course-category-listings .card {
+    min-height: 0;
+    overflow: visible;
+    border: 1px solid var(--course-manager-line);
+    border-radius: 0.5rem;
+    background: var(--course-manager-card);
+    box-shadow: 0 0.45rem 1.4rem rgba(15, 23, 42, 0.05);
+}
+
+body.custom-lms-course-management-page #course-category-listings .card-header {
+    min-height: 3.35rem;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0.8rem 1rem;
+    border-bottom: 1px solid var(--course-manager-line);
+    border-radius: 0.5rem 0.5rem 0 0;
+    background: #f8fafc;
+    color: var(--course-manager-ink);
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: 0;
+}
+
+body.custom-lms-course-management-page #course-category-listings .card-header::before {
+    width: 0.28rem;
+    height: 1.35rem;
+    margin-inline-end: 0.65rem;
+    border-radius: 999px;
+    background: var(--course-manager-role);
+    content: "";
+}
+
+body.custom-lms-course-management-page #course-category-listings .card-body {
+    min-width: 0;
+    padding: 0.85rem;
+}
+
+body.custom-lms-course-management-page #course-category-listings .listing-actions {
+    min-width: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.65rem;
+    margin-bottom: 0.85rem !important;
+    text-align: start;
+}
+
+body.custom-lms-course-management-page #course-category-listings .listing-actions > .moodle-actionmenu {
+    display: inline-flex;
+    margin: 0;
+}
+
+body.custom-lms-course-management-page #course-category-listings .listing-actions .btn-secondary {
+    color: #ffffff;
+    background: var(--course-manager-role);
+    border-color: var(--course-manager-role);
+}
+
+body.custom-lms-course-management-page #course-category-listings .listing-actions .btn-secondary:hover,
+body.custom-lms-course-management-page #course-category-listings .listing-actions .btn-secondary:focus-visible {
+    color: #ffffff;
+    background: #075f3f;
+    border-color: #075f3f;
+}
+
+body.custom-lms-course-management-page #course-category-listings .course-listing-actions .moodle-actionmenu .dropdown-toggle {
+    min-height: 2.35rem;
+    display: inline-flex;
+    align-items: center;
+    padding: 0.45rem 0.65rem;
+    border: 1px solid var(--course-manager-line);
+    border-radius: 0.4rem;
+    background: #ffffff;
+    color: #334155;
+    text-decoration: none;
+}
+
+body.custom-lms-course-management-page #course-category-listings .category-list {
+    max-height: min(66vh, 48rem);
+    margin: 0 !important;
+    padding: 0.25rem !important;
+    overflow-x: hidden;
+    overflow-y: auto;
+    border: 1px solid var(--course-manager-line);
+    border-radius: 0.45rem;
+    background: #fbfdff;
+    overscroll-behavior: contain;
+    scrollbar-gutter: stable;
+    scrollbar-width: thin;
+    scrollbar-color: #94a3b8 #edf2f7;
+}
+
+body.custom-lms-course-management-page #course-category-listings .category-list::-webkit-scrollbar {
+    width: 0.6rem;
+}
+
+body.custom-lms-course-management-page #course-category-listings .category-list::-webkit-scrollbar-track {
+    border-radius: 999px;
+    background: #edf2f7;
+}
+
+body.custom-lms-course-management-page #course-category-listings .category-list::-webkit-scrollbar-thumb {
+    border: 0.14rem solid #edf2f7;
+    border-radius: 999px;
+    background: #94a3b8;
+}
+
+body.custom-lms-course-management-page #course-category-listings ul.ml {
+    width: auto;
+    margin: 0.2rem 0 0.2rem 0.45rem !important;
+    padding: 0 0 0 0.65rem;
+    border-inline-start: 1px solid #dbe5f0;
+    list-style: none;
+}
+
+[dir="rtl"] body.custom-lms-course-management-page #course-category-listings ul.ml {
+    margin-right: 0.45rem !important;
+    margin-left: 0 !important;
+    padding-right: 0.65rem;
+    padding-left: 0;
+}
+
+body.custom-lms-course-management-page #course-category-listings .listitem-category {
+    min-width: 0;
+    margin: 0.18rem 0;
+    padding: 0 !important;
+    overflow: visible;
+    border: 0 !important;
+    border-radius: 0.4rem;
+    background: transparent;
+}
+
+body.custom-lms-course-management-page #course-category-listings .listitem-category > .clearfix {
+    min-width: 0;
+    display: grid;
+    grid-template-columns: auto auto minmax(0, 1fr);
+    gap: 0.25rem 0.4rem;
+    align-items: center;
+    min-height: 3rem;
+    padding: 0.45rem 0.5rem;
+    border: 1px solid transparent;
+    border-radius: 0.4rem;
+    background: #ffffff;
+    transition: border-color 140ms ease, background-color 140ms ease, box-shadow 140ms ease;
+}
+
+body.custom-lms-course-management-page #course-category-listings .listitem-category:hover > .clearfix,
+body.custom-lms-course-management-page #course-category-listings .listitem-category:focus-within > .clearfix {
+    border-color: #cbd9e8;
+    background: #f8fbff;
+}
+
+body.custom-lms-course-management-page #course-category-listings .listitem-category[data-selected="1"] {
+    padding-left: 0;
+    border-left: 0;
+}
+
+body.custom-lms-course-management-page #course-category-listings .listitem-category[data-selected="1"] > .clearfix {
+    border-color: rgba(var(--course-manager-role-rgb), 0.32);
+    background: rgba(var(--course-manager-role-rgb), 0.08);
+    box-shadow: inset 0.22rem 0 var(--course-manager-role);
+}
+
+[dir="rtl"] body.custom-lms-course-management-page #course-category-listings .listitem-category[data-selected="1"] > .clearfix {
+    box-shadow: inset -0.22rem 0 var(--course-manager-role);
+}
+
+body.custom-lms-course-management-page #course-category-listings .listitem-category > .clearfix > .float-start,
+body.custom-lms-course-management-page #course-category-listings .listitem-category > .clearfix > .float-end {
+    float: none !important;
+}
+
+body.custom-lms-course-management-page #course-category-listings .listitem-category .form-check {
+    min-height: 1.25rem;
+    margin: 0 !important;
+}
+
+body.custom-lms-course-management-page #course-category-listings .listitem-category > .clearfix > a[data-action],
+body.custom-lms-course-management-page #course-category-listings .listitem-category > .clearfix > span.float-start {
+    width: 1.65rem;
+    height: 1.65rem;
+    display: inline-grid;
+    place-items: center;
+    border-radius: 0.35rem;
+    color: var(--course-manager-role);
+    text-decoration: none;
+}
+
+body.custom-lms-course-management-page #course-category-listings .listitem-category > .clearfix > a[data-action]:hover,
+body.custom-lms-course-management-page #course-category-listings .listitem-category > .clearfix > a[data-action]:focus-visible {
+    background: rgba(var(--course-manager-role-rgb), 0.12);
+}
+
+body.custom-lms-course-management-page #course-category-listings .listitem-category .tree-icon {
+    margin: 0;
+}
+
+body.custom-lms-course-management-page #course-category-listings .listitem-category .categoryname {
+    min-width: 0;
+    margin: 0 !important;
+    padding: 0.15rem 0;
+    color: #1d4f8f;
+    font-size: 0.86rem;
+    font-weight: 650;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+}
+
+body.custom-lms-course-management-page #course-category-listings .listitem-category > .clearfix > .float-end {
+    grid-column: 3;
+    min-width: 0;
+    display: flex !important;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.25rem 0.5rem;
+}
+
+body.custom-lms-course-management-page #course-category-listings .listitem-category .idnumber {
+    min-width: 0;
+    max-width: 62%;
+    margin: 0;
+    padding: 0.15rem 0.4rem;
+    overflow: hidden;
+    border-radius: 0.3rem;
+    background: #eef3f8;
+    color: #607089 !important;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.66rem;
+    line-height: 1.35;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+body.custom-lms-course-management-page #course-category-listings .listitem-category .item-actions {
+    margin: 0;
+}
+
+body.custom-lms-course-management-page #course-category-listings .listitem-category .menubar,
+body.custom-lms-course-management-page #course-category-listings .listitem-category .course-count {
+    display: inline-flex;
+    align-items: center;
+}
+
+body.custom-lms-course-management-page #course-category-listings .listitem-category .menubar {
+    gap: 0.05rem;
+}
+
+body.custom-lms-course-management-page #course-category-listings .listitem-category .menu-action,
+body.custom-lms-course-management-page #course-category-listings .listitem-category .actionmenu {
+    width: 1.75rem;
+    height: 1.75rem;
+    display: inline-grid;
+    place-items: center;
+    border-radius: 0.35rem;
+    color: #52647c;
+}
+
+body.custom-lms-course-management-page #course-category-listings .listitem-category .menu-action:hover,
+body.custom-lms-course-management-page #course-category-listings .listitem-category .menu-action:focus-visible,
+body.custom-lms-course-management-page #course-category-listings .listitem-category .actionmenu:hover,
+body.custom-lms-course-management-page #course-category-listings .listitem-category .actionmenu:focus-visible {
+    background: #e8eef6;
+    color: var(--course-manager-role);
+}
+
+body.custom-lms-course-management-page #course-category-listings .listitem-category .course-count {
+    min-width: auto;
+    margin: 0;
+    padding: 0.15rem 0.35rem;
+    border-radius: 999px;
+    background: #f0f4f8;
+    color: #52647c !important;
+    font-size: 0.7rem;
+}
+
+body.custom-lms-course-management-page #course-category-listings .listitem-category .course-count .icon {
+    margin: 0 0 0 0.2rem;
+}
+
+body.custom-lms-course-management-page #course-category-listings .category-bulk-actions,
+body.custom-lms-course-management-page #course-category-listings .course-bulk-actions {
+    margin: 0.85rem 0 0;
+    padding: 0.8rem;
+    border: 1px solid var(--course-manager-line);
+    border-radius: 0.45rem;
+    background: var(--course-manager-soft);
+}
+
+body.custom-lms-course-management-page #course-category-listings .detail-pair {
+    min-width: 0;
+    display: grid !important;
+    grid-template-columns: minmax(8rem, 0.42fr) minmax(0, 1fr);
+    gap: 0.65rem;
+    align-items: center;
+    margin: 0 0 0.55rem;
+}
+
+body.custom-lms-course-management-page #course-category-listings .detail-pair:last-child {
+    margin-bottom: 0;
+}
+
+body.custom-lms-course-management-page #course-category-listings .detail-pair .pair-key,
+body.custom-lms-course-management-page #course-category-listings .detail-pair .pair-value {
+    width: auto !important;
+    min-width: 0;
+    max-width: none;
+    display: block;
+    flex: none;
+    padding: 0;
+}
+
+body.custom-lms-course-management-page #course-category-listings .detail-pair .pair-key {
+    color: #334155;
+    font-size: 0.75rem;
+    font-weight: 650;
+    line-height: 1.35;
+    overflow-wrap: normal;
+    word-break: normal;
+}
+
+body.custom-lms-course-management-page #course-category-listings .detail-pair .pair-key span {
+    margin: 0;
+}
+
+body.custom-lms-course-management-page #course-category-listings .detail-pair .pair-value {
+    display: flex;
+    gap: 0.45rem;
+    align-items: center;
+}
+
+body.custom-lms-course-management-page #course-category-listings .detail-pair select {
+    width: 100%;
+    min-width: 0;
+    margin: 0 !important;
+}
+
+body.custom-lms-course-management-page #course-category-listings .detail-pair .btn {
+    flex: 0 0 auto;
+}
+
+body.custom-lms-course-management-page #course-category-listings .course-list {
+    gap: 0.45rem;
+    margin: 0;
+}
+
+body.custom-lms-course-management-page #course-category-listings .listitem-course {
+    padding: 0.65rem 0.75rem;
+    border: 1px solid var(--course-manager-line);
+    border-radius: 0.4rem;
+    background: #ffffff;
+}
+
+body.custom-lms-course-management-page #course-category-listings .listitem-course:hover,
+body.custom-lms-course-management-page #course-category-listings .listitem-course:focus-within {
+    border-color: #b9c9dc;
+    background: #f8fbff;
+}
+
+body.custom-lms-course-management-page #course-category-listings .select-a-category,
+body.custom-lms-course-management-page #course-category-listings .listing-pagination-totals {
+    color: var(--course-manager-muted);
+}
+
+body.custom-lms-course-management-page #course-category-listings .dropdown-menu {
+    max-width: min(22rem, calc(100vw - 2rem));
+}
+
+body.custom-lms-course-management-page #course-category-listings .dropdown-item {
+    white-space: normal;
+}
+
+body.custom-lms-course-management-page #course-category-listings a:focus-visible,
+body.custom-lms-course-management-page #course-category-listings button:focus-visible,
+body.custom-lms-course-management-page #course-category-listings input:focus-visible,
+body.custom-lms-course-management-page #course-category-listings select:focus-visible {
+    outline: 0.16rem solid rgba(var(--course-manager-role-rgb), 0.4);
+    outline-offset: 0.1rem;
+}
+
+@media (max-width: 1199.98px) {
+    body.custom-lms-course-management-page #course-category-listings {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    body.custom-lms-course-management-page #course-category-listings > #course-detail {
+        grid-column: auto;
+    }
+}
+
+@media (max-width: 767.98px) {
+    body.custom-lms-course-management-page div[role="main"] > h2 {
+        font-size: 1.5rem;
+    }
+
+    body.custom-lms-course-management-page #action_bar {
+        padding: 0.65rem;
+    }
+
+    body.custom-lms-course-management-page #action_bar > .d-flex,
+    body.custom-lms-course-management-page #action_bar .navitem,
+    body.custom-lms-course-management-page #action_bar form,
+    body.custom-lms-course-management-page #action_bar .input-group,
+    body.custom-lms-course-management-page #action_bar .form-select,
+    body.custom-lms-course-management-page #action_bar .simplesearchform .input-group {
+        width: 100%;
+        min-width: 0;
+    }
+
+    body.custom-lms-course-management-page #action_bar > .d-flex {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    body.custom-lms-course-management-page #action_bar .navitem.ms-auto {
+        margin-left: 0 !important;
+    }
+
+    body.custom-lms-course-management-page #course-category-listings .card-body {
+        padding: 0.65rem;
+    }
+
+    body.custom-lms-course-management-page #course-category-listings .category-list {
+        max-height: 58vh;
+    }
+
+    body.custom-lms-course-management-page #course-category-listings .detail-pair {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 0.35rem;
+    }
+
+    body.custom-lms-course-management-page #course-category-listings .detail-pair .pair-value {
+        align-items: stretch;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body.custom-lms-course-management-page #course-category-listings .listitem-category > .clearfix {
+        transition: none;
+    }
+}

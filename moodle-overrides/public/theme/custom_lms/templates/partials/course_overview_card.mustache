@@ -3,21 +3,28 @@
 }}
 <article class="course-overview-card" data-course-card="">
     <div class="course-cover">
-        <img alt="" src="{{coverurl}}">
+        <a aria-label="{{#str}}viewcourse, theme_custom_lms{{/str}}: {{fullname}}" href="{{{courseurl}}}">
+            <img alt="" src="{{{coverurl}}}">
+        </a>
         <span class="course-category">{{categoryname}}</span>
-        <button aria-expanded="false" aria-label="{{#str}}actions{{/str}}" class="course-menu-button" type="button">•••</button>
+        <span class="course-progress-chip">{{progress}}%</span>
+        <button aria-expanded="false" aria-label="{{#str}}actions{{/str}}: {{fullname}}" class="course-menu-button" type="button">
+            <i aria-hidden="true" class="fa fa-ellipsis-h"></i>
+        </button>
         <div class="course-menu-popover">
-            <a href="{{courseurl}}">{{#str}}view{{/str}}</a>
+            <a href="{{{courseurl}}}"><i aria-hidden="true" class="fa fa-arrow-right"></i> {{#str}}viewcourse, theme_custom_lms{{/str}}</a>
         </div>
     </div>
     <div class="course-card-body">
-        <h3>{{fullname}}</h3>
-        <div class="course-teacher"><span class="teacher-avatar">{{userinitials}}</span><span>{{teachername}}</span></div>
-        <p class="course-activity">{{shortname}}</p>
+        <h3><a href="{{{courseurl}}}">{{{fullname}}}</a></h3>
+        <div class="course-teacher"><i aria-hidden="true" class="fa fa-user-circle-o"></i><span>{{teachername}}</span></div>
+        <p class="course-activity"><i aria-hidden="true" class="fa fa-tag"></i> {{shortname}}</p>
         <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="{{progress}}" class="course-progress" role="progressbar">
             <span style="{{progressstyle}}"></span>
         </div>
-        <strong class="course-percent">{{progress}}% Course Completed</strong>
-        <div class="course-card-action"><a class="button secondary" href="{{courseurl}}">{{#str}}viewcourse{{/str}}</a></div>
+        <div class="course-card-progress-label"><span>{{progress}}% complete</span><span>{{categoryname}}</span></div>
+        <div class="course-card-action">
+            <a class="student-course-open" href="{{{courseurl}}}">{{#str}}viewcourse, theme_custom_lms{{/str}} <i aria-hidden="true" class="fa fa-arrow-right"></i></a>
+        </div>
     </div>
 </article>

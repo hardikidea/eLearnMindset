@@ -1,0 +1,530 @@
+/* Student workspace overlays. Moodle owns all dialog state, focus, and actions. */
+.custom-lms-student-shell-page {
+    --student-dialog-backdrop: rgba(3, 20, 49, .62);
+    --student-dialog-shadow: 0 24px 70px rgba(5, 38, 87, .22);
+}
+
+.custom-lms-student-shell-page .modal {
+    z-index: 1080;
+    padding: 16px !important;
+    color: var(--student-ink);
+}
+
+.custom-lms-student-shell-page .modal-backdrop {
+    z-index: 1070;
+    background: #031431;
+}
+
+.custom-lms-student-shell-page .modal-backdrop.show {
+    opacity: .62;
+}
+
+.custom-lms-student-shell-page .modal-dialog {
+    display: flex;
+    width: min(560px, 100%);
+    min-height: 100%;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.custom-lms-student-shell-page .modal-sm {
+    width: min(420px, 100%);
+    max-width: 420px;
+}
+
+.custom-lms-student-shell-page .modal-lg {
+    width: min(860px, 100%);
+    max-width: 860px;
+}
+
+.custom-lms-student-shell-page .modal-xl {
+    width: min(1120px, 100%);
+    max-width: 1120px;
+}
+
+.custom-lms-student-shell-page .modal-dialog-scrollable {
+    height: auto;
+    max-height: none;
+}
+
+.custom-lms-student-shell-page .modal-dialog-scrollable .modal-content,
+.custom-lms-student-shell-page .modal-content {
+    width: 100%;
+    max-height: calc(100vh - 32px);
+    overflow: hidden;
+    border: 1px solid #d8e3f1;
+    border-radius: 14px !important;
+    background: #fff;
+    box-shadow: var(--student-dialog-shadow);
+}
+
+.custom-lms-student-shell-page .modal.fade .modal-dialog {
+    transform: translateY(10px) scale(.985);
+    transition: transform .18s ease-out;
+}
+
+.custom-lms-student-shell-page .modal.show .modal-dialog {
+    transform: none;
+}
+
+.custom-lms-student-shell-page .modal-header {
+    min-height: 64px;
+    flex: 0 0 auto;
+    gap: 16px;
+    padding: 14px 16px 14px 20px;
+    border-bottom: 1px solid var(--student-line);
+    background: #f8faff;
+}
+
+.custom-lms-student-shell-page .modal-title {
+    min-width: 0;
+    margin: 0;
+    color: var(--student-ink);
+    font-size: 18px;
+    font-weight: 650;
+    letter-spacing: 0;
+    line-height: 1.35;
+}
+
+.custom-lms-student-shell-page .modal-header .btn-close,
+.custom-lms-student-shell-page .modal-body .btn-close,
+.custom-lms-student-shell-page .toast .btn-close {
+    width: 40px;
+    min-width: 40px;
+    height: 40px;
+    margin: 0 0 0 auto;
+    padding: 0;
+    border: 1px solid transparent;
+    border-radius: 9px;
+    background-color: transparent;
+    background-size: 12px;
+    opacity: .65;
+    transition: border-color .16s ease, background-color .16s ease, opacity .16s ease;
+}
+
+.custom-lms-student-shell-page .modal-header .btn-close:hover,
+.custom-lms-student-shell-page .modal-header .btn-close:focus,
+.custom-lms-student-shell-page .modal-body .btn-close:hover,
+.custom-lms-student-shell-page .modal-body .btn-close:focus,
+.custom-lms-student-shell-page .toast .btn-close:hover,
+.custom-lms-student-shell-page .toast .btn-close:focus {
+    border-color: #d6e2f1;
+    background-color: #edf3fb;
+    opacity: 1;
+}
+
+.custom-lms-student-shell-page .modal-body {
+    min-height: 88px;
+    padding: 20px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    color: #40516d;
+    font-size: 14px;
+    line-height: 1.55;
+    scrollbar-color: #aebdd2 transparent;
+    scrollbar-width: thin;
+}
+
+.custom-lms-student-shell-page .modal-body > :first-child {
+    margin-top: 0;
+}
+
+.custom-lms-student-shell-page .modal-body > :last-child {
+    margin-bottom: 0;
+}
+
+.custom-lms-student-shell-page .modal-body > .loading-icon {
+    min-height: 96px;
+}
+
+.custom-lms-student-shell-page .modal-body .form-control,
+.custom-lms-student-shell-page .modal-body .form-select,
+.custom-lms-student-shell-page .modal-body select.custom-select {
+    min-height: 42px;
+    border-color: #c8d5e7;
+    border-radius: 8px;
+    color: var(--student-ink);
+    font-size: 14px;
+}
+
+.custom-lms-student-shell-page .modal-body textarea.form-control {
+    min-height: 108px;
+}
+
+.custom-lms-student-shell-page .modal-body label,
+.custom-lms-student-shell-page .modal-body .col-form-label {
+    color: var(--student-ink);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.custom-lms-student-shell-page .modal-body .form-text,
+.custom-lms-student-shell-page .modal-body .text-muted {
+    color: var(--student-muted) !important;
+    font-size: 12px;
+}
+
+.custom-lms-student-shell-page .modal-body .alert {
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+}
+
+.custom-lms-student-shell-page .modal-footer {
+    min-height: 66px;
+    flex: 0 0 auto;
+    gap: 10px;
+    justify-content: flex-end;
+    padding: 12px 20px;
+    border-top: 1px solid var(--student-line);
+    background: #fff;
+}
+
+.custom-lms-student-shell-page .modal-footer:empty {
+    display: none;
+}
+
+.custom-lms-student-shell-page .modal .btn,
+.custom-lms-student-shell-page .moodle-dialogue-base .btn {
+    min-height: 42px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.25;
+}
+
+.custom-lms-student-shell-page .modal .btn-primary,
+.custom-lms-student-shell-page .moodle-dialogue-base .btn-primary {
+    border-color: var(--student-blue);
+    background: var(--student-blue);
+    color: #fff;
+}
+
+.custom-lms-student-shell-page .modal .btn-primary:hover,
+.custom-lms-student-shell-page .moodle-dialogue-base .btn-primary:hover {
+    border-color: #0849bb;
+    background: #0849bb;
+}
+
+.custom-lms-student-shell-page .modal .btn-secondary,
+.custom-lms-student-shell-page .moodle-dialogue-base .btn-secondary {
+    border-color: #c7d4e5;
+    background: #f4f7fb;
+    color: var(--student-ink);
+}
+
+.custom-lms-student-shell-page .modal .btn-secondary:hover,
+.custom-lms-student-shell-page .moodle-dialogue-base .btn-secondary:hover {
+    border-color: #aebed4;
+    background: #e8eef7;
+}
+
+.custom-lms-student-shell-page .modal .btn-danger,
+.custom-lms-student-shell-page .moodle-dialogue-base .btn-danger {
+    border-color: #c92738;
+    background: #c92738;
+    color: #fff;
+}
+
+.custom-lms-student-shell-page .modal :is(a, button, input, select, textarea):focus-visible,
+.custom-lms-student-shell-page .moodle-dialogue-base :is(a, button, input, select, textarea):focus-visible {
+    outline: 3px solid rgba(15, 93, 232, .24);
+    outline-offset: 2px;
+    box-shadow: none;
+}
+
+/* Legacy Moodle/YUI dialogues, including the file picker and chooser. */
+.custom-lms-student-shell-page .moodle-dialogue-base {
+    z-index: 1080 !important;
+    color: var(--student-ink);
+    font-size: 14px;
+}
+
+.custom-lms-student-shell-page .moodle-dialogue-base .moodle-dialogue-lightbox {
+    background: var(--student-dialog-backdrop);
+    opacity: 1;
+}
+
+.custom-lms-student-shell-page .moodle-dialogue-base .moodle-dialogue:not(.moodle-dialogue-fullscreen) {
+    max-width: calc(100vw - 24px);
+}
+
+.custom-lms-student-shell-page .moodle-dialogue-base .moodle-dialogue-wrap {
+    overflow: hidden;
+    border: 1px solid #d8e3f1;
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: var(--student-dialog-shadow);
+}
+
+.custom-lms-student-shell-page .moodle-dialogue-base .moodle-dialogue-hd {
+    min-height: 62px;
+    align-items: center;
+    padding: 14px 16px 14px 20px;
+    border-bottom: 1px solid var(--student-line);
+    background: #f8faff;
+    color: var(--student-ink);
+}
+
+.custom-lms-student-shell-page .moodle-dialogue-base .moodle-dialogue-hd h5,
+.custom-lms-student-shell-page .moodle-dialogue-base .moodle-dialogue-hd.yui3-widget-hd {
+    color: var(--student-ink);
+    font-size: 18px;
+    font-weight: 650;
+    letter-spacing: 0;
+    line-height: 1.35;
+}
+
+.custom-lms-student-shell-page .moodle-dialogue-base .closebutton {
+    display: grid;
+    width: 40px;
+    height: 40px;
+    margin: 0 0 0 auto;
+    padding: 0;
+    place-items: center;
+    border: 1px solid transparent;
+    border-radius: 9px;
+    color: #5f6f87;
+    font-size: 0;
+    opacity: 1;
+}
+
+.custom-lms-student-shell-page .moodle-dialogue-base .closebutton::after {
+    content: "\00d7";
+    font-size: 28px;
+    font-weight: 300;
+    line-height: 1;
+}
+
+.custom-lms-student-shell-page .moodle-dialogue-base .closebutton:hover,
+.custom-lms-student-shell-page .moodle-dialogue-base .closebutton:focus {
+    border-color: #d6e2f1;
+    background: #edf3fb;
+    color: var(--student-ink);
+}
+
+.custom-lms-student-shell-page .moodle-dialogue-base .moodle-dialogue-bd {
+    padding: 20px;
+    color: #40516d;
+    line-height: 1.55;
+    scrollbar-color: #aebdd2 transparent;
+    scrollbar-width: thin;
+}
+
+.custom-lms-student-shell-page .moodle-dialogue-base .moodle-dialogue-ft {
+    min-height: 66px;
+    padding: 12px 20px;
+    border-top: 1px solid var(--student-line);
+    background: #fff;
+}
+
+.custom-lms-student-shell-page .moodle-dialogue-confirm .confirmation-message,
+.custom-lms-student-shell-page .filemanager.fp-dlg .fp-dlg-text {
+    margin: 0 0 18px;
+    color: #40516d;
+    font-size: 14px;
+    line-height: 1.55;
+}
+
+.custom-lms-student-shell-page .filemanager.fp-dlg .btn + .btn {
+    margin-left: 8px;
+}
+
+.custom-lms-student-shell-page .file-picker {
+    min-height: min(520px, 70vh);
+    color: var(--student-ink);
+}
+
+.custom-lms-student-shell-page .file-picker .fp-repo-area {
+    gap: 4px;
+    padding: 10px !important;
+    border-right: 1px solid var(--student-line);
+    background: #f8faff;
+}
+
+.custom-lms-student-shell-page .file-picker .fp-repo .nav-link {
+    min-height: 40px;
+    padding: 9px 10px;
+    border-radius: 7px;
+    color: #40516d;
+}
+
+.custom-lms-student-shell-page .file-picker .fp-repo.active .nav-link,
+.custom-lms-student-shell-page .file-picker .fp-repo .nav-link:hover,
+.custom-lms-student-shell-page .file-picker .fp-repo .nav-link:focus {
+    background: var(--student-blue-soft);
+    color: var(--student-blue);
+}
+
+.custom-lms-student-shell-page .file-picker .fp-repo-items {
+    overflow: hidden;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.custom-lms-student-shell-page .file-picker .fp-navbar {
+    border-bottom-color: var(--student-line) !important;
+    background: #fff;
+}
+
+.custom-lms-student-shell-page .file-picker .fp-content {
+    min-height: 360px;
+    overflow: auto;
+    background: #fbfcff;
+}
+
+.custom-lms-student-shell-page .chooserdialogue .moodle-dialogue-wrap {
+    width: min(960px, calc(100vw - 24px));
+}
+
+.custom-lms-student-shell-page .chooserdialogue .choosercontainer .option {
+    border-color: var(--student-line);
+    border-radius: 8px;
+}
+
+/* Small contextual overlays and status feedback. */
+.custom-lms-student-shell-page .popover:not(.footer-popover),
+.custom-lms-student-shell-page [data-for="dropdowndialog_dialog"] {
+    overflow: hidden;
+    border: 1px solid #d8e3f1;
+    border-radius: 10px;
+    background: #fff;
+    color: var(--student-ink);
+    box-shadow: 0 16px 42px rgba(5, 38, 87, .16);
+}
+
+.custom-lms-student-shell-page .popover-header {
+    padding: 11px 14px;
+    border-bottom-color: var(--student-line);
+    background: #f8faff;
+    color: var(--student-ink);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.custom-lms-student-shell-page .popover-body {
+    padding: 13px 14px;
+    color: #40516d;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.custom-lms-student-shell-page .toast-wrapper {
+    z-index: 1090;
+    width: min(420px, calc(100vw - 24px));
+    margin-top: 14px;
+}
+
+.custom-lms-student-shell-page .toast {
+    overflow: hidden;
+    border: 1px solid #d8e3f1;
+    border-radius: 10px;
+    background: #fff;
+    color: var(--student-ink);
+    box-shadow: 0 16px 42px rgba(5, 38, 87, .16);
+}
+
+.custom-lms-student-shell-page .toast-header {
+    min-height: 44px;
+    padding: 9px 12px;
+    border-bottom-color: var(--student-line);
+    background: #f8faff;
+    color: var(--student-ink);
+}
+
+.custom-lms-student-shell-page .toast-body {
+    align-items: center;
+    padding: 12px;
+    color: #40516d;
+    font-size: 13px;
+}
+
+@media (max-width: 575.98px) {
+    .custom-lms-student-shell-page .modal {
+        padding: 10px !important;
+    }
+
+    .custom-lms-student-shell-page .modal-dialog {
+        width: 100%;
+    }
+
+    .custom-lms-student-shell-page .modal-dialog-scrollable .modal-content,
+    .custom-lms-student-shell-page .modal-content {
+        max-height: calc(100dvh - 20px);
+        border-radius: 12px;
+    }
+
+    .custom-lms-student-shell-page .modal-header {
+        min-height: 58px;
+        padding: 10px 10px 10px 15px;
+    }
+
+    .custom-lms-student-shell-page .modal-title {
+        font-size: 17px;
+    }
+
+    .custom-lms-student-shell-page .modal-body {
+        padding: 16px;
+    }
+
+    .custom-lms-student-shell-page .modal-footer {
+        min-height: 62px;
+        padding: 10px 15px;
+    }
+
+    .custom-lms-student-shell-page .modal-footer .btn {
+        flex: 1 1 auto;
+    }
+
+    .custom-lms-student-shell-page .file-picker {
+        display: block;
+        min-height: min(560px, 72vh);
+    }
+
+    .custom-lms-student-shell-page .file-picker .fp-repo-area {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        width: 100% !important;
+        max-height: 164px;
+        align-content: start;
+        overflow-x: hidden;
+        overflow-y: auto;
+        border-right: 0;
+        border-bottom: 1px solid var(--student-line);
+    }
+
+    .custom-lms-student-shell-page .file-picker .fp-repo {
+        width: auto !important;
+        min-width: 0;
+        height: auto !important;
+        margin: 0 !important;
+    }
+
+    .custom-lms-student-shell-page .file-picker .fp-repo .nav-link {
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .custom-lms-student-shell-page .file-picker .fp-content {
+        min-height: 280px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .custom-lms-student-shell-page .modal.fade .modal-dialog {
+        transition: none;
+    }
+}
+
+@media print {
+    .custom-lms-student-shell-page .modal,
+    .custom-lms-student-shell-page .modal-backdrop,
+    .custom-lms-student-shell-page .moodle-dialogue-base,
+    .custom-lms-student-shell-page .toast-wrapper {
+        display: none !important;
+    }
+}

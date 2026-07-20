@@ -1,0 +1,35 @@
+{{! @template theme_custom_lms/partials/student_portal_sidebar }}
+<aside class="sidebar student-portal-sidebar" aria-label="Student navigation">
+    <a class="student-portal-brand" href="{{{url_index}}}">
+        <img alt="{{schoolname}} logo" src="{{{pix_school_logo}}}">
+        <strong>{{schoolname}}</strong>
+        <span aria-hidden="true"></span>
+    </a>
+
+    <nav class="nav student-portal-nav">
+        <a class="{{#studentnavdashboard}}active{{/studentnavdashboard}}" href="{{{url_index}}}" {{#studentnavdashboard}}aria-current="page"{{/studentnavdashboard}}>
+            <i aria-hidden="true" class="fa fa-home"></i><span>Dashboard</span>
+        </a>
+        <a class="{{#studentnavcourses}}active{{/studentnavcourses}}" href="{{{url_my_courses}}}" {{#studentnavcourses}}aria-current="page"{{/studentnavcourses}}>
+            <i aria-hidden="true" class="fa fa-book"></i><span>My courses</span>
+        </a>
+    </nav>
+
+    {{#hasstudentcoursenavigation}}
+        <div class="student-portal-course-divider" role="separator" aria-label="{{#str}}studentcoursenavigation, theme_custom_lms{{/str}}">
+            <span aria-hidden="true"></span>
+            <i aria-hidden="true" class="fa fa-graduation-cap"></i>
+            <span aria-hidden="true"></span>
+        </div>
+        <nav class="nav student-portal-nav student-portal-course-nav" aria-label="{{#str}}studentcoursenavigation, theme_custom_lms{{/str}}">
+            {{#studentcoursenavigation}}
+                <a class="{{#isactive}}active{{/isactive}}" data-nav-key="{{key}}" href="{{{url}}}" {{#isactive}}aria-current="page"{{/isactive}}>
+                    <i aria-hidden="true" class="{{iconclass}}"></i><span>{{text}}</span>
+                </a>
+            {{/studentcoursenavigation}}
+        </nav>
+    {{/hasstudentcoursenavigation}}
+
+    <div class="student-portal-sidebar-art" aria-hidden="true"><i class="fa fa-university"></i></div>
+    <div class="student-portal-theme-status"><span>Student workspace</span><i aria-hidden="true" class="fa fa-moon-o"></i></div>
+</aside>

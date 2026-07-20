@@ -1,0 +1,796 @@
+/* Moodle-native pages displayed inside the authenticated student workspace. */
+.custom-lms-student-shell-page {
+    font: 15px/1.5 Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content {
+    color: var(--student-ink);
+    font-size: 15px;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content a {
+    color: var(--student-blue);
+    text-underline-offset: 2px;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content a:hover {
+    color: #0847b8;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content #page-header {
+    min-height: 0;
+    margin-bottom: 14px;
+    padding: 18px 22px;
+    border: 1px solid var(--student-line);
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 7px 20px rgba(26, 54, 101, .045);
+}
+
+.custom-lms-student-shell-page .student-portal-native-content #page-header .page-header-headings,
+.custom-lms-student-shell-page .student-portal-native-content #page-header .page-context-header {
+    min-width: 0;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content #page-header h1,
+.custom-lms-student-shell-page .student-portal-native-content #page-header h2,
+.custom-lms-student-shell-page .student-portal-native-content #region-main > h1:first-child {
+    margin: 0;
+    color: var(--student-ink);
+    font-size: clamp(24px, 2.2vw, 30px);
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 1.22;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content #page-header .userpicture {
+    width: 72px;
+    height: 72px;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 0 0 1px var(--student-line), 0 6px 15px rgba(8, 35, 81, .12);
+}
+
+.custom-lms-student-shell-page .student-portal-native-content #page-header .page-context-header .userinitials {
+    display: inline-grid;
+    width: 72px;
+    min-width: 72px;
+    height: 72px;
+    margin: 0 16px 0 0;
+    place-items: center;
+    border: 0;
+    border-radius: 50%;
+    background: #e9edf3;
+    color: #344054;
+    font-size: 25px;
+    line-height: 1;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content #region-main {
+    padding: clamp(18px, 2vw, 26px);
+    border-radius: 10px;
+    box-shadow: 0 7px 22px rgba(26, 54, 101, .05);
+}
+
+.custom-lms-student-shell-page .student-portal-native-content #region-main h2 {
+    color: var(--student-ink);
+    font-size: clamp(19px, 1.8vw, 22px);
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: 1.3;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content #region-main h3,
+.custom-lms-student-shell-page .student-portal-native-content #region-main legend {
+    color: var(--student-ink);
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .secondary-navigation {
+    scrollbar-color: #b9c8dd transparent;
+    scrollbar-width: thin;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .secondary-navigation .navigation {
+    min-height: 52px;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .secondary-navigation .nav-link {
+    min-height: 50px;
+    padding: 14px 16px 11px;
+    border: 0;
+    color: #52637e;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .secondary-navigation .nav-link:hover,
+.custom-lms-student-shell-page .student-portal-native-content .secondary-navigation .nav-link:focus-visible {
+    background: #f4f7fc;
+    color: var(--student-blue);
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .secondary-navigation .nav-link.active {
+    border-bottom: 3px solid var(--student-blue);
+    background: var(--student-blue-soft);
+    color: var(--student-blue);
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .card {
+    border: 1px solid var(--student-line);
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: none;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .card-header {
+    padding: 13px 16px;
+    border-bottom-color: var(--student-line);
+    background: #f8faff;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .card-body {
+    padding: 17px;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .btn {
+    min-height: 40px;
+    padding: 8px 14px;
+    border-radius: 7px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .btn-primary {
+    border-color: var(--student-blue);
+    background: var(--student-blue);
+    color: #fff;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .btn-primary:hover {
+    border-color: #0849bb;
+    background: #0849bb;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .btn-secondary {
+    border-color: #cbd7e8;
+    background: #f5f8fc;
+    color: var(--student-ink);
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .btn-secondary:hover {
+    border-color: #aebed4;
+    background: #eaf0f8;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .form-control,
+.custom-lms-student-shell-page .student-portal-native-content .form-select,
+.custom-lms-student-shell-page .student-portal-native-content select.custom-select {
+    min-height: 42px;
+    border-color: #cbd7e8;
+    border-radius: 7px;
+    color: var(--student-ink);
+    font-size: 14px;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content textarea.form-control {
+    min-height: 110px;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .form-control:focus,
+.custom-lms-student-shell-page .student-portal-native-content .form-select:focus,
+.custom-lms-student-shell-page .student-portal-native-content select.custom-select:focus,
+.custom-lms-student-shell-page .student-portal-native-content .btn:focus-visible,
+.custom-lms-student-shell-page .student-portal-native-content a:focus-visible {
+    border-color: var(--student-blue);
+    outline: 3px solid rgba(15, 93, 232, .18);
+    outline-offset: 2px;
+    box-shadow: none;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .mform fieldset {
+    margin-bottom: 20px;
+    padding: 0;
+    border: 0;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .mform fieldset.collapsible {
+    overflow: clip;
+    border: 1px solid var(--student-line);
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 10px 28px rgba(27, 55, 98, .06);
+    transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .mform fieldset.collapsible > .d-flex.align-items-center.mb-2 {
+    min-height: 58px;
+    margin-bottom: 0 !important;
+    padding: 9px 16px;
+    border-bottom: 1px solid var(--student-line);
+    background: #f8faff;
+    transition: background-color .2s ease, border-color .2s ease;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .mform fieldset.collapsible:hover {
+    border-color: #bfd0e8;
+    box-shadow: 0 12px 32px rgba(27, 55, 98, .09);
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .mform fieldset.collapsible:has(.fheader[aria-expanded="false"]) > .d-flex.align-items-center.mb-2 {
+    border-bottom-color: transparent;
+    background: #fff;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .mform fieldset.collapsible > .d-flex.align-items-center.mb-2 .ftoggler {
+    flex: 1 1 auto;
+    width: 100%;
+    min-width: 0;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .mform fieldset.collapsible .fheader.btn-icon {
+    z-index: 1;
+    flex: 0 0 38px;
+    width: 38px;
+    height: 38px;
+    margin-right: 12px !important;
+    border: 1px solid #cfe0f5;
+    border-radius: 9px;
+    background: #eaf3ff;
+    color: var(--student-blue);
+    transition: background-color .2s ease, border-color .2s ease, color .2s ease;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .mform fieldset.collapsible .fheader.btn-icon:hover {
+    border-color: #a9c8ef;
+    background: #dcecff;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .mform fieldset.collapsible .fheader.btn-icon:focus-visible {
+    border-color: var(--student-blue);
+    outline: 3px solid rgba(15, 93, 232, .2);
+    outline-offset: 2px;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .mform fieldset.collapsible .ftoggler h3 {
+    min-width: 0;
+    margin: 0 !important;
+    color: var(--student-ink);
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .mform fieldset.collapsible .fheader[aria-expanded="false"] .expanded-icon,
+.custom-lms-student-shell-page .student-portal-native-content .mform fieldset.collapsible .fheader[aria-expanded="true"] .collapsed-icon {
+    display: none !important;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .mform fieldset.collapsible .fheader[aria-expanded="true"] .expanded-icon,
+.custom-lms-student-shell-page .student-portal-native-content .mform fieldset.collapsible .fheader[aria-expanded="false"] .collapsed-icon {
+    display: flex !important;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .mform fieldset.collapsible > .fcontainer {
+    padding: 20px;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .mform fieldset.collapsible > .fcontainer.collapsing {
+    overflow: hidden;
+    transition: height .24s ease;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .mform .collapsible-actions {
+    margin-bottom: 12px;
+    text-align: end;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .mform .collapsible-actions .collapseexpand {
+    display: inline-flex;
+    min-height: 38px;
+    align-items: center;
+    padding: 7px 12px;
+    border: 1px solid #cbd7e8;
+    border-radius: 8px;
+    background: #fff;
+    color: var(--student-blue);
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .mform .collapsible-actions .collapseexpand:hover {
+    border-color: #a9c8ef;
+    background: #f3f8ff;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .mform .fitem {
+    margin-bottom: 15px;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .mform .col-form-label,
+.custom-lms-student-shell-page .student-portal-native-content .mform label {
+    color: #263957;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .form-text,
+.custom-lms-student-shell-page .student-portal-native-content .form-description,
+.custom-lms-student-shell-page .student-portal-native-content .fdescription,
+.custom-lms-student-shell-page .student-portal-native-content .text-muted {
+    color: var(--student-muted) !important;
+    font-size: 13px;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .alert {
+    padding: 14px 16px;
+    border-width: 1px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .alert-info {
+    border-color: #cce0ff;
+    background: #eef5ff;
+    color: #244772;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .alert-info::before {
+    margin-inline-end: 9px;
+    color: var(--student-blue);
+    content: "\f05a";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .table-responsive,
+.custom-lms-student-shell-page .student-portal-native-content .no-overflow {
+    max-width: 100%;
+    overflow-x: auto;
+    scrollbar-color: #b9c8dd #eff3f8;
+    scrollbar-width: thin;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .generaltable {
+    width: 100%;
+    margin-bottom: 0;
+    border: 1px solid var(--student-line);
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .generaltable thead th {
+    padding: 12px 14px;
+    border-bottom: 1px solid #cedaeb;
+    background: #eef4fd;
+    color: #2f4362;
+    font-weight: 600;
+    vertical-align: middle;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .generaltable tbody td,
+.custom-lms-student-shell-page .student-portal-native-content .generaltable tbody th {
+    padding: 12px 14px;
+    border-color: var(--student-line);
+    vertical-align: middle;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .generaltable tbody tr:nth-child(even) {
+    background: #fafcff;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .generaltable tbody tr:hover {
+    background: #f3f7fd;
+}
+
+/* User profile. */
+.custom-lms-student-shell-page.path-user .student-portal-native-content .userprofile .profile_tree {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    align-items: start;
+}
+
+.custom-lms-student-shell-page.path-user .student-portal-native-content .userprofile .profile_tree > section,
+.custom-lms-student-shell-page.path-user .student-portal-native-content .userprofile .profile_tree > div {
+    min-width: 0;
+    margin: 0;
+    padding: 17px;
+    border: 1px solid var(--student-line);
+    border-radius: 8px;
+    background: #fff;
+}
+
+.custom-lms-student-shell-page.path-user .student-portal-native-content .userprofile .profile_tree h3 {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin: 0 0 13px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--student-line);
+}
+
+.custom-lms-student-shell-page.path-user .student-portal-native-content .userprofile .profile_tree h3::before {
+    display: grid;
+    width: 28px;
+    height: 28px;
+    flex: 0 0 28px;
+    place-items: center;
+    border-radius: 7px;
+    background: var(--student-blue-soft);
+    color: var(--student-blue);
+    content: "\f2bd";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    font-size: 14px;
+}
+
+.custom-lms-student-shell-page.path-user .student-portal-native-content .userprofile .profile_tree ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.custom-lms-student-shell-page.path-user .student-portal-native-content .userprofile .profile_tree li + li {
+    margin-top: 7px;
+}
+
+.custom-lms-student-shell-page.path-user .student-portal-native-content .userprofile .profile_tree dt {
+    color: #344965;
+    font-weight: 600;
+}
+
+.custom-lms-student-shell-page.path-user .student-portal-native-content .userprofile .profile_tree dd {
+    color: var(--student-muted);
+}
+
+/* Preferences landing page and all account preference destinations. */
+.custom-lms-student-shell-page#page-user-preferences .student-portal-native-content #region-main > .container-fluid > .row {
+    margin-inline: -7px;
+}
+
+.custom-lms-student-shell-page#page-user-preferences .student-portal-native-content #region-main > .container-fluid > .row > [class*="col-"] {
+    display: flex;
+    padding-inline: 7px;
+}
+
+.custom-lms-student-shell-page#page-user-preferences .student-portal-native-content .card {
+    width: 100%;
+}
+
+.custom-lms-student-shell-page#page-user-preferences .student-portal-native-content .card-title {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--student-line);
+}
+
+.custom-lms-student-shell-page#page-user-preferences .student-portal-native-content .card-title::before {
+    display: grid;
+    width: 28px;
+    height: 28px;
+    place-items: center;
+    border-radius: 7px;
+    background: var(--student-blue-soft);
+    color: var(--student-blue);
+    content: "\f013";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    font-size: 13px;
+}
+
+.custom-lms-student-shell-page#page-user-preferences .student-portal-native-content .card-text li {
+    margin: 0 !important;
+}
+
+.custom-lms-student-shell-page#page-user-preferences .student-portal-native-content .card-text a {
+    display: flex;
+    min-height: 38px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 8px 9px;
+    border-radius: 6px;
+    color: #344965;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.custom-lms-student-shell-page#page-user-preferences .student-portal-native-content .card-text a::after {
+    flex: 0 0 auto;
+    color: #91a2ba;
+    content: "\f105";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+}
+
+.custom-lms-student-shell-page#page-user-preferences .student-portal-native-content .card-text a:hover {
+    background: var(--student-blue-soft);
+    color: var(--student-blue);
+}
+
+/* Calendar. */
+.custom-lms-student-shell-page.path-calendar .student-portal-native-content .calendarwrapper {
+    max-width: 100%;
+    overflow-x: auto;
+    border: 1px solid var(--student-line);
+    border-radius: 8px;
+    background: #fff;
+    scrollbar-color: #b9c8dd #eff3f8;
+    scrollbar-width: thin;
+}
+
+.custom-lms-student-shell-page.path-calendar .student-portal-native-content .calendarwrapper .header {
+    min-height: 48px;
+    padding: 10px 14px;
+    background: #eef4fd;
+    color: #3d526f;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.custom-lms-student-shell-page.path-calendar .student-portal-native-content .calendarmonth {
+    min-width: 720px;
+}
+
+.custom-lms-student-shell-page.path-calendar .student-portal-native-content .calendarmonth td {
+    min-width: 96px;
+    height: 112px;
+    padding: 8px;
+    border-color: var(--student-line);
+    background: #fff;
+}
+
+.custom-lms-student-shell-page.path-calendar .student-portal-native-content .calendarmonth td.weekend {
+    background: #fbfcff;
+}
+
+.custom-lms-student-shell-page.path-calendar .student-portal-native-content .calendarmonth td.today {
+    background: #eef5ff;
+    box-shadow: inset 0 0 0 2px var(--student-blue);
+}
+
+.custom-lms-student-shell-page.path-calendar .student-portal-native-content .calendarmonth .day-number-circle {
+    display: inline-grid;
+    width: 27px;
+    height: 27px;
+    place-items: center;
+    border-radius: 50%;
+    font-size: 12px;
+}
+
+.custom-lms-student-shell-page.path-calendar .student-portal-native-content .calendarmonth td.today .day-number-circle {
+    background: var(--student-blue);
+    color: #fff;
+}
+
+.custom-lms-student-shell-page.path-calendar .student-portal-native-content .calendarmonth ul {
+    margin-top: 7px;
+    padding: 0;
+    list-style: none;
+}
+
+.custom-lms-student-shell-page.path-calendar .student-portal-native-content .calendarmonth .eventname {
+    display: inline-block;
+    max-width: calc(100% - 18px);
+    overflow: hidden;
+    font-size: 11px;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+/* Private files and file-backed preference forms. */
+.custom-lms-student-shell-page .student-portal-native-content .filemanager {
+    overflow: hidden;
+    border: 1px solid var(--student-line);
+    border-radius: 8px;
+    background: #fbfcff;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .filemanager-toolbar {
+    min-height: 54px;
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--student-line);
+    background: #eef4fd;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .filemanager-toolbar .btn {
+    min-width: 40px;
+    min-height: 38px;
+    padding: 7px 10px;
+    border-color: #c8d5e8;
+    background: #fff;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .filemanager-container.card {
+    min-height: 250px;
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+    background: #fff;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .filemanager-container .fm-empty-container,
+.custom-lms-student-shell-page .student-portal-native-content .filemanager-container .dndupload-target {
+    min-height: 220px;
+    border: 2px dashed #c7d8ef;
+    background: #f8fbff;
+    color: var(--student-muted);
+}
+
+/* Report builder and grade overview. */
+.custom-lms-student-shell-page.path-admin-reportbuilder .student-portal-native-content .reportbuilder-wrapper,
+.custom-lms-student-shell-page.path-grade .student-portal-native-content .gradeparent {
+    min-width: 0;
+}
+
+.custom-lms-student-shell-page.path-admin-reportbuilder .student-portal-native-content .reportbuilder-report > .reportbuilder-wrapper > .dropdown {
+    min-height: 42px;
+    align-items: center;
+}
+
+.custom-lms-student-shell-page.path-admin-reportbuilder .student-portal-native-content .reportbuilder-filters-sidebar {
+    border-color: var(--student-line);
+    border-radius: 8px;
+    background: #f8faff;
+}
+
+.custom-lms-student-shell-page.path-grade .student-portal-native-content .gradeparent .courseitem a {
+    color: #213c68;
+    font-weight: 600;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .pagination {
+    gap: 4px;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .page-link {
+    min-width: 36px;
+    min-height: 36px;
+    border-color: var(--student-line);
+    border-radius: 6px !important;
+    color: var(--student-blue);
+    text-align: center;
+}
+
+.custom-lms-student-shell-page .student-portal-native-content .page-item.active .page-link {
+    border-color: var(--student-blue);
+    background: var(--student-blue);
+    color: #fff;
+}
+
+@media (max-width: 900px) {
+    .custom-lms-student-shell-page.path-user .student-portal-native-content .userprofile .profile_tree {
+        grid-template-columns: 1fr;
+    }
+
+    .custom-lms-student-shell-page#page-user-preferences .student-portal-native-content #region-main > .container-fluid > .row > [class*="col-"] {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+
+@media (max-width: 700px) {
+    .custom-lms-student-shell-page .student-portal-native-content #page-header {
+        padding: 13px 14px;
+    }
+
+    .custom-lms-student-shell-page .student-portal-native-content #page-header h1,
+    .custom-lms-student-shell-page .student-portal-native-content #page-header h2,
+    .custom-lms-student-shell-page .student-portal-native-content #region-main > h1:first-child {
+        font-size: 23px;
+    }
+
+    .custom-lms-student-shell-page .student-portal-native-content #region-main {
+        padding: 14px;
+    }
+
+    .custom-lms-student-shell-page .student-portal-native-content .mform .fitem .col-md-3,
+    .custom-lms-student-shell-page .student-portal-native-content .mform .fitem .col-md-9 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .custom-lms-student-shell-page .student-portal-native-content .mform .fitem .col-form-label {
+        padding-bottom: 5px;
+        text-align: start;
+    }
+
+    .custom-lms-student-shell-page .student-portal-native-content .mform fieldset.collapsible > .d-flex.align-items-center.mb-2 {
+        min-height: 54px;
+        padding: 7px 11px;
+    }
+
+    .custom-lms-student-shell-page .student-portal-native-content .mform fieldset.collapsible .fheader.btn-icon {
+        flex-basis: 36px;
+        width: 36px;
+        height: 36px;
+        margin-right: 9px !important;
+    }
+
+    .custom-lms-student-shell-page .student-portal-native-content .mform fieldset.collapsible .ftoggler h3 {
+        font-size: 16px;
+    }
+
+    .custom-lms-student-shell-page .student-portal-native-content .mform fieldset.collapsible > .fcontainer {
+        padding: 15px 12px;
+    }
+
+    .custom-lms-student-shell-page#page-user-preferences .student-portal-native-content #region-main > .container-fluid > .row > [class*="col-"] {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .custom-lms-student-shell-page .student-portal-native-content .generaltable {
+        min-width: 620px;
+    }
+
+    .custom-lms-student-shell-page.path-calendar .student-portal-native-content .calendarmonth {
+        min-width: 100%;
+        table-layout: fixed;
+    }
+
+    .custom-lms-student-shell-page.path-calendar .student-portal-native-content .calendarwrapper .header {
+        padding: 8px 2px;
+        font-size: 11px;
+        text-align: center;
+    }
+
+    .custom-lms-student-shell-page.path-calendar .student-portal-native-content .calendarmonth td {
+        min-width: 0;
+        height: 72px;
+        padding: 4px 2px;
+        text-align: center;
+    }
+
+    .custom-lms-student-shell-page.path-calendar .student-portal-native-content .calendarmonth .day-number-circle {
+        width: 24px;
+        height: 24px;
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 430px) {
+    .custom-lms-student-shell-page .student-portal-native-content #page-header .userpicture {
+        width: 58px;
+        height: 58px;
+    }
+
+    .custom-lms-student-shell-page .student-portal-native-content #page-header .page-context-header .userinitials {
+        width: 58px;
+        min-width: 58px;
+        height: 58px;
+        margin-right: 12px;
+        font-size: 21px;
+    }
+
+    .custom-lms-student-shell-page .student-portal-native-content #region-main {
+        padding: 12px;
+    }
+
+    .custom-lms-student-shell-page .student-portal-native-content .card-body {
+        padding: 14px;
+    }
+
+    .custom-lms-student-shell-page .student-portal-native-content .btn {
+        white-space: normal;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .custom-lms-student-shell-page .student-portal-native-content *,
+    .custom-lms-student-shell-page .student-portal-native-content *::before,
+    .custom-lms-student-shell-page .student-portal-native-content *::after {
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+    }
+}

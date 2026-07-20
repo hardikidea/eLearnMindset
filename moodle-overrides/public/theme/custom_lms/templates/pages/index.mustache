@@ -1,11 +1,166 @@
 {{! @template theme_custom_lms/pages/index }}
-<div class="app"><aside class="sidebar"><div class="brand"><img alt="{{schoolname}} logo" src="{{{pix_school_logo}}}"/><div><strong>{{schoolname}}</strong><small>{{moodleversionlabel}}</small></div></div><nav class="nav"><a class="active" href="{{{url_index}}}"><span class="icon">H</span><span>Dashboard</span></a><a class="" href="{{{url_site_home}}}"><span class="icon">O</span><span>Site home</span></a><a class="" href="{{{url_my_courses}}}"><span class="icon">C</span><span>My courses</span></a><a class="" href="{{{url_course_player}}}"><span class="icon">P</span><span>Course player</span></a><a class="" href="{{{url_calendar}}}"><span class="icon">K</span><span>Calendar</span></a><a class="" href="{{{url_grades}}}"><span class="icon">G</span><span>Grades</span></a><a class="" href="{{{url_messages}}}"><span class="icon">M</span><span>Messages</span></a><a class="" href="{{{url_notifications}}}"><span class="icon">N</span><span>Notifications</span></a><a class="" href="{{{url_profile}}}"><span class="icon">U</span><span>Profile</span></a><a class="" href="{{{url_settings}}}"><span class="icon">S</span><span>Settings</span></a></nav><div class="sidebar-foot">Role theme: Student<br/>Responsive flex layout</div></aside><section class="main"><header class="topbar"><button aria-label="Open navigation" class="menu secondary">Menu</button><div class="search"><input aria-label="Search" placeholder="Search courses, activities, resources..."/></div><div class="user-mini"><div class="avatar-sm">{{userinitials}}</div><div><strong>{{userfullname}}</strong><small>{{rolelabel}}</small></div></div></header><main class="content page-transition dashboard-page"><div class="page-heading"><span class="eyebrow dark">Student command centre</span><h1>Dashboard</h1><p>A clear view of enrolments, completion and learning activity.</p></div><section aria-label="Learning statistics" class="dashboard-stat-strip"><article><span class="stat-icon">▤</span><div><strong data-counter="17">17</strong><span>Courses Enrolled</span></div></article><article><span class="stat-icon">✓</span><div><strong data-counter="0">0</strong><span>Courses Completed</span></div></article><article><span class="stat-icon">▣</span><div><strong data-counter="0">0</strong><span>Activities Completed</span></div></article><article><span class="stat-icon">☷</span><div><strong data-counter="185">185</strong><span>Activities Due</span></div></article></section><section class="hero compact-dashboard-hero"><div><span class="eyebrow">Student dashboard</span><h2>Welcome back, Alex</h2><p>Continue learning across multiple courses and stay ahead of deadlines.</p><div class="actions"><a class="button" href="{{{url_course_player}}}">Continue learning</a><a class="button secondary" href="{{{url_calendar}}}">View calendar</a></div></div><img alt="School logo" src="{{{pix_school_logo}}}"/></section><div class="dashboard-course-row"><div class="section-head"><div><h2>Continue your courses</h2><p class="muted">Pick up where you left off.</p></div><a href="{{{url_my_courses}}}">View all courses →</a></div><div class="course-card-grid mini"><article class="course-overview-card" data-course-card="">
-<div class="course-cover"><img alt="" src="{{{pix_courses_business}}}"/><span class="course-category">Psychology</span><button aria-expanded="false" aria-label="Course actions" class="course-menu-button">•••</button></div>
-<div class="course-card-body"><h3>Introduction to Psychology</h3><div class="course-teacher"><span class="teacher-avatar">JS</span><span>Julia Sheldon</span></div><p class="course-activity">9 out of 12 activities completed</p><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="75" class="course-progress" role="progressbar"><span style="width:75%"></span></div><strong class="course-percent">75% Course Completed</strong><div class="course-card-action"><a class="button secondary" href="{{{url_course_player}}}">View Course</a></div></div>
-</article><article class="course-overview-card" data-course-card="">
-<div class="course-cover"><img alt="" src="{{{pix_courses_product}}}"/><span class="course-category">Computer Science</span><button aria-expanded="false" aria-label="Course actions" class="course-menu-button">•••</button></div>
-<div class="course-card-body"><h3>Data Structures</h3><div class="course-teacher"><span class="teacher-avatar">JS</span><span>Julia Sheldon</span></div><p class="course-activity">11 out of 18 activities completed</p><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="60" class="course-progress" role="progressbar"><span style="width:60%"></span></div><strong class="course-percent">60% Course Completed</strong><div class="course-card-action"><a class="button secondary" href="{{{url_course_player}}}">View Course</a></div></div>
-</article><article class="course-overview-card" data-course-card="">
-<div class="course-cover"><img alt="" src="{{{pix_courses_marketing}}}"/><span class="course-category">Technology</span><button aria-expanded="false" aria-label="Course actions" class="course-menu-button">•••</button></div>
-<div class="course-card-body"><h3>Web Development</h3><div class="course-teacher"><span class="teacher-avatar">JS</span><span>Julia Sheldon</span></div><p class="course-activity">6 out of 15 activities completed</p><div aria-valuemax="100" aria-valuemin="0" aria-valuenow="40" class="course-progress" role="progressbar"><span style="width:40%"></span></div><strong class="course-percent">40% Course Completed</strong><div class="course-card-action"><a class="button secondary" href="{{{url_course_player}}}">View Course</a></div></div>
-</article></div></div><div class="split dashboard-lower"><section class="panel wide"><div class="section-head"><h2>Upcoming deadlines</h2><a href="{{{url_calendar}}}">View all</a></div><ul class="timeline"><li><b>Assignment 1</b><span>Due in 2 days</span></li><li><b>Project proposal</b><span>Due in 5 days</span></li><li><b>Quiz 2</b><span>Due in 10 days</span></li></ul></section><aside class="panel side"><h2>Your progress</h2><div class="meter"><span style="width:68%"></span></div><h3>68% overall</h3><p class="muted">12 activities completed this month.</p></aside></div></main></section></div>{{> theme_custom_lms/partials/global_mini_footer }}
+<div class="student-portal-layout">
+                <div class="student-portal-center">
+                    <section class="student-portal-welcome student-portal-welcome-slider"
+                             aria-label="Student dashboard highlights"
+                             aria-roledescription="carousel"
+                             data-student-welcome-slider
+                             tabindex="0">
+                        <div class="student-portal-welcome-track" aria-live="off">
+                            <article class="student-portal-welcome-slide active"
+                                     data-student-welcome-slide
+                                     id="student-welcome-slide-1"
+                                     aria-hidden="false">
+                                <img alt="" src="{{{pix_school_logo}}}">
+                                <div>
+                                    <h1 id="student-welcome-heading">Welcome back, {{userfirstname}}!</h1>
+                                    <p>Keep up the great work and continue your journey of learning and growth.</p>
+                                </div>
+                                <i aria-hidden="true" class="fa fa-university"></i>
+                            </article>
+                            <article class="student-portal-welcome-slide"
+                                     data-student-welcome-slide
+                                     id="student-welcome-slide-2"
+                                     aria-hidden="true">
+                                <img alt="" src="{{{pix_school_logo}}}">
+                                <div>
+                                    <h2>{{enrolledcoursecount}} courses in your learning plan</h2>
+                                    <p>Your overall course progress is {{overallprogress}}%. Continue where you left off.</p>
+                                </div>
+                                <i aria-hidden="true" class="fa fa-graduation-cap"></i>
+                            </article>
+                            <article class="student-portal-welcome-slide"
+                                     data-student-welcome-slide
+                                     id="student-welcome-slide-3"
+                                     aria-hidden="true">
+                                <img alt="" src="{{{pix_school_logo}}}">
+                                <div>
+                                    <h2>{{completedactivitycount}} activities completed</h2>
+                                    <p>{{pendingactivitycount}} learning activities are ready for your next study session.</p>
+                                </div>
+                                <i aria-hidden="true" class="fa fa-check-circle-o"></i>
+                            </article>
+                            <article class="student-portal-welcome-slide"
+                                     data-student-welcome-slide
+                                     id="student-welcome-slide-4"
+                                     aria-hidden="true">
+                                <img alt="" src="{{{pix_school_logo}}}">
+                                <div>
+                                    <h2>Stay on track this week</h2>
+                                    <p>Review your calendar, upcoming activities and announcements before your next lesson.</p>
+                                </div>
+                                <i aria-hidden="true" class="fa fa-calendar-check-o"></i>
+                            </article>
+                        </div>
+                        <div class="student-portal-welcome-dots" aria-label="Choose dashboard highlight">
+                            <button class="active" type="button" data-student-welcome-dot data-slide="0"
+                                    aria-controls="student-welcome-slide-1" aria-current="true">
+                                <span class="visually-hidden">Welcome message</span>
+                            </button>
+                            <button type="button" data-student-welcome-dot data-slide="1"
+                                    aria-controls="student-welcome-slide-2" aria-current="false">
+                                <span class="visually-hidden">Learning plan summary</span>
+                            </button>
+                            <button type="button" data-student-welcome-dot data-slide="2"
+                                    aria-controls="student-welcome-slide-3" aria-current="false">
+                                <span class="visually-hidden">Activity completion summary</span>
+                            </button>
+                            <button type="button" data-student-welcome-dot data-slide="3"
+                                    aria-controls="student-welcome-slide-4" aria-current="false">
+                                <span class="visually-hidden">Weekly planning reminder</span>
+                            </button>
+                        </div>
+                    </section>
+
+                    <section class="student-portal-courses" aria-labelledby="student-courses-heading">
+                        <div class="student-portal-section-heading">
+                            <h2 id="student-courses-heading">My courses</h2>
+                            <a href="{{{url_my_courses}}}">View all <i aria-hidden="true" class="fa fa-angle-right"></i></a>
+                        </div>
+                        {{#hasdashboardcourses}}
+                            <div class="student-dashboard-course-grid">
+                                {{#dashboardcourses}}
+                                    {{> theme_custom_lms/partials/student_dashboard_course_card }}
+                                {{/dashboardcourses}}
+                            </div>
+                        {{/hasdashboardcourses}}
+                        {{^hasdashboardcourses}}
+                            <div class="student-portal-empty"><i aria-hidden="true" class="fa fa-book"></i><p>Courses assigned to your account will appear here.</p></div>
+                        {{/hasdashboardcourses}}
+                    </section>
+
+                    <section aria-label="Learning statistics" class="student-portal-stats">
+                        <article><i aria-hidden="true" class="fa fa-book"></i><strong>{{enrolledcoursecount}}</strong><span>Courses<br>enrolled</span></article>
+                        <article><i aria-hidden="true" class="fa fa-check-circle-o"></i><strong>{{completedactivitycount}}</strong><span>Activities<br>completed</span></article>
+                        <article><i aria-hidden="true" class="fa fa-clock-o"></i><strong>{{pendingactivitycount}}</strong><span>Activities<br>pending</span></article>
+                        <article><i aria-hidden="true" class="fa fa-line-chart"></i><strong>{{overallprogress}}%</strong><span>Overall<br>progress</span></article>
+                    </section>
+
+                    {{#firstcourse}}
+                    <section class="student-portal-continue" aria-labelledby="student-continue-heading">
+                        <div class="student-portal-section-heading">
+                            <h2 id="student-continue-heading">Continue learning</h2>
+                            <a href="{{{url_my_courses}}}">View all <i aria-hidden="true" class="fa fa-angle-right"></i></a>
+                        </div>
+                        <div class="student-portal-continue-body">
+                            <a class="student-portal-continue-media" href="{{{courseurl}}}"><img alt="" src="{{{coverurl}}}"><i aria-hidden="true" class="fa fa-play"></i></a>
+                            <div>
+                                <h3>{{fullname}}</h3>
+                                <p>{{shortname}}</p>
+                                <div class="student-dashboard-course-meter"><span style="{{progressstyle}}"></span></div>
+                                <a class="student-portal-continue-button" href="{{{courseurl}}}">Continue learning</a>
+                            </div>
+                            <strong>{{progress}}%</strong>
+                        </div>
+                    </section>
+                    {{/firstcourse}}
+                </div>
+
+                <aside class="student-portal-right-rail">
+                    <section class="student-portal-profile-card">
+                        <div class="student-portal-profile-heading">
+                            <span class="student-portal-profile-avatar">{{{userpicture}}}</span>
+                            <div class="student-portal-profile-identity">
+                                <h2>{{userfullname}}</h2>
+                                <p><i aria-hidden="true" class="fa fa-graduation-cap"></i>{{rolelabel}}</p>
+                                <b><i aria-hidden="true" class="fa fa-star"></i>Level {{enrolledcoursecount}}</b>
+                            </div>
+                            <span class="student-portal-profile-schoolmark">
+                                <img alt="{{schoolname}} logo" src="{{{pix_school_logo}}}">
+                            </span>
+                        </div>
+                        <div class="student-portal-profile-progress">
+                            <div class="student-portal-profile-progress-heading">
+                                <strong><i aria-hidden="true" class="fa fa-line-chart"></i>Your progress</strong>
+                                <span><i aria-hidden="true" class="fa fa-arrow-up"></i>Keep going!</span>
+                            </div>
+                            <div class="student-portal-profile-progress-meter">
+                                <div class="student-dashboard-course-meter" role="progressbar" aria-label="Your progress" aria-valuenow="{{overallprogress}}" aria-valuemin="0" aria-valuemax="100"><span style="{{overallprogressstyle}}"></span></div>
+                                <b>{{overallprogress}}%</b>
+                            </div>
+                            <p><i aria-hidden="true" class="fa fa-lightbulb-o"></i>Keep it up and achieve more.</p>
+                        </div>
+                    </section>
+
+                    <section class="student-portal-events">
+                        <div class="student-portal-section-heading"><h2>Upcoming events</h2><i aria-hidden="true" class="fa fa-calendar"></i></div>
+                        {{#hasupcomingevents}}
+                            <ul>
+                            {{#upcomingevents}}
+                                <li><a href="{{{url}}}"><time datetime=""><b>{{month}}</b><strong>{{day}}</strong></time><span><strong>{{name}}</strong><small>{{course}}</small><em>{{timelabel}}</em></span></a></li>
+                            {{/upcomingevents}}
+                            </ul>
+                        {{/hasupcomingevents}}
+                        {{^hasupcomingevents}}<p class="student-portal-empty-copy">No upcoming events in the next 45 days.</p>{{/hasupcomingevents}}
+                        <a class="student-portal-panel-link" href="{{{url_moodle_calendar}}}">View calendar <i aria-hidden="true" class="fa fa-angle-right"></i></a>
+                    </section>
+
+                    <section class="student-portal-announcements">
+                        <div class="student-portal-section-heading"><h2><i aria-hidden="true" class="fa fa-bullhorn"></i> Latest announcements</h2></div>
+                        {{#haslatestannouncement}}
+                            {{#latestannouncement}}<a href="{{{url}}}"><strong>{{title}}</strong><span>{{course}} · {{date}}</span><i aria-hidden="true" class="fa fa-angle-right"></i></a>{{/latestannouncement}}
+                        {{/haslatestannouncement}}
+                        {{^haslatestannouncement}}<p class="student-portal-empty-copy">No course announcements are available.</p>{{/haslatestannouncement}}
+                    </section>
+                </aside>
+</div>

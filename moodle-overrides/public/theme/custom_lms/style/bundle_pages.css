@@ -127,3 +127,33 @@ img{height:auto}.button,button,a{touch-action:manipulation}.button,button{min-he
 @media(min-width:1600px){.content,.public-main{max-width:1540px}.course-card-grid,.admin-course-grid{gap:26px}}
 @media(max-width:760px){html{scroll-padding-top:78px}body.landing-page #discover,body.landing-page #programmes,body.landing-page #experience,body.landing-page #community,body.landing-page #news{scroll-margin-top:78px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+/* Shared viewport contract for role-login and authenticated bundle shells. */
+.theme-custom-lms-bundle {
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+.theme-custom-lms-bundle #page-wrapper,
+.theme-custom-lms-bundle #page,
+.theme-custom-lms-bundle .app {
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+}
+
+.theme-custom-lms-bundle button,
+.theme-custom-lms-bundle input,
+.theme-custom-lms-bundle select,
+.theme-custom-lms-bundle textarea {
+    font-family: inherit;
+    letter-spacing: 0;
+}

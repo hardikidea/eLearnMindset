@@ -1,0 +1,23 @@
+{{!
+    @template theme_custom_lms/partials/student_dashboard_course_card
+}}
+<article class="student-dashboard-course-card">
+    <a class="student-dashboard-course-media" href="{{{courseurl}}}">
+        <img alt="" src="{{{coverurl}}}">
+        <span class="student-dashboard-course-progress-chip">{{progress}}%</span>
+    </a>
+    <div class="student-dashboard-course-body">
+        <h3><a href="{{{courseurl}}}">{{fullname}}</a></h3>
+        <p>{{teachername}}</p>
+        <div aria-label="{{progress}}% complete" aria-valuemax="100" aria-valuemin="0" aria-valuenow="{{progress}}"
+                class="student-dashboard-course-meter" role="progressbar">
+            <span style="{{progressstyle}}"></span>
+        </div>
+        <div class="student-dashboard-course-meta">
+            <span>{{progress}}% complete</span>
+            <a href="{{{courseurl}}}" aria-label="{{#str}}viewcourse, theme_custom_lms{{/str}}: {{fullname}}">
+                <i aria-hidden="true" class="fa fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+</article>

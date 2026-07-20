@@ -1,0 +1,33 @@
+{{!
+    @template theme_custom_lms/partials/main_content
+
+    Shared Moodle main-content region used by standard and student course layouts.
+}}
+<div id="page-content" class="pb-3 d-print-block {{#iscustomlmsadmin}}custom-lms-admin-content{{/iscustomlmsadmin}}">
+    <div id="region-main-box">
+        {{#hasregionmainsettingsmenu}}
+        <div id="region-main-settings-menu" class="d-print-none">
+            <div> {{{ regionmainsettingsmenu }}} </div>
+        </div>
+        {{/hasregionmainsettingsmenu}}
+        <div id="region-main">
+            {{#hasregionmainsettingsmenu}}
+                <div class="region_main_settings_menu_proxy"></div>
+            {{/hasregionmainsettingsmenu}}
+            {{{ output.course_content_header }}}
+            {{#headercontent}}
+                {{> core/activity_header }}
+            {{/headercontent}}
+            {{#overflow}}
+                <div class="container-fluid tertiary-navigation">
+                    <div class="navitem">
+                        {{> core/tertiary_navigation_selector}}
+                    </div>
+                </div>
+            {{/overflow}}
+            {{{ output.main_content }}}
+            {{{ output.activity_navigation }}}
+            {{{ output.course_content_footer }}}
+        </div>
+    </div>
+</div>

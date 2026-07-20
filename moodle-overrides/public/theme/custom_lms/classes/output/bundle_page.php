@@ -33,6 +33,7 @@ use stdClass;
 use templatable;
 use theme_custom_lms\local\bundle_page_repository;
 use theme_custom_lms\local\role_access;
+use theme_custom_lms\local\student_user_menu;
 
 /**
  * Exports Moodle-backed data for generated Custom LMS pages.
@@ -58,10 +59,12 @@ class bundle_page implements renderable, templatable {
      * @return array
      */
     public function export_for_template(object $output): array {
-        global $CFG, $DB, $SITE, $USER, $release;
+        global $CFG, $DB, $PAGE, $SITE, $USER, $release;
 
         require_once($CFG->libdir . '/enrollib.php');
         require_once($CFG->dirroot . '/course/lib.php');
+        require_once($CFG->dirroot . '/calendar/lib.php');
+        require_once($CFG->libdir . '/completionlib.php');
 
         $repository = new bundle_page_repository();
         $metadata = $repository->get_metadata($this->page);
@@ -82,14 +85,41 @@ class bundle_page implements renderable, templatable {
             'platformname' => get_config('core', 'sitename') ?: $sitefullname,
             'moodleversionlabel' => 'Moodle ' . ($release ?? ''),
             'userfullname' => $fullname,
+            'userfirstname' => $isloggedin ? format_string($USER->firstname) : get_string('guestuser'),
             'userinitials' => $this->initials($fullname),
+            'userpicture' => $isloggedin ? $output->user_picture($USER, [
+                'size' => 96,
+                'class' => 'student-dashboard-user-picture',
+                'alttext' => true,
+            ]) : '',
             'rolelabel' => $rolelabel,
             'isloggedin' => $isloggedin,
             'coursecount' => max(0, $DB->count_records_select('course', 'id <> ?', [$SITE->id])),
             'usercount' => $DB->count_records_select('user', 'deleted = 0 AND suspended = 0 AND id > 1'),
+            'copyrightyear' => userdate(time(), '%Y'),
+            'studentnavdashboard' => $this->page === 'index',
+            'studentnavcourses' => $this->page === 'my-courses',
+            'studentnavhome' => false,
+            'studentnavcontentbank' => false,
         ];
 
+        if ($this->page === 'role-login') {
+            $context['studentcount'] = $this->role_user_count(['student']);
+            $context['teachercount'] = $this->role_user_count(['editingteacher', 'teacher']);
+        }
+
         $context += $repository->get_page_url_context();
+        if ($isloggedin) {
+            $context['url_moodle_profile'] = (new moodle_url('/user/profile.php', ['id' => $USER->id]))->out(false);
+
+            // Keep account, notification, and messaging permissions and behaviour owned by Moodle core.
+            $primary = new \core\navigation\output\primary($PAGE);
+            $primarymenu = $primary->export_for_template($PAGE->get_renderer('core'));
+
+            student_user_menu::prepare($primarymenu['user']['items'], (int) $USER->id);
+            $context['usermenu'] = $primarymenu['user'];
+            $context['navbarpluginoutput'] = $output->navbar_plugin_output();
+        }
         if ($metadata['access'] === 'admin') {
             $context = array_replace($context, $this->admin_moodle_url_context());
         }
@@ -101,11 +131,221 @@ class bundle_page implements renderable, templatable {
         $context['hascourses'] = !empty($courses);
         $context['currentcourse_fullname'] = $courses[0]['fullname'] ?? get_string('course');
 
+        $dashboardcourses = array_slice($courses, 0, 3);
+        $completedcoursecount = 0;
+        $inprogresscoursecount = 0;
+        $notstartedcoursecount = 0;
+        $totalprogress = 0;
+        foreach ($courses as $course) {
+            $progress = (int)$course['progress'];
+            $totalprogress += $progress;
+            if ($progress >= 100) {
+                $completedcoursecount++;
+            } else if ($progress > 0) {
+                $inprogresscoursecount++;
+            } else {
+                $notstartedcoursecount++;
+            }
+        }
+
+        $overallprogress = empty($courses) ? 0 : (int)round($totalprogress / count($courses));
+        $context['dashboardcourses'] = $dashboardcourses;
+        $context['hasdashboardcourses'] = !empty($dashboardcourses);
+        $context['enrolledcoursecount'] = count($courses);
+        $context['completedcoursecount'] = $completedcoursecount;
+        $context['inprogresscoursecount'] = $inprogresscoursecount;
+        $context['notstartedcoursecount'] = $notstartedcoursecount;
+        $context['overallprogress'] = $overallprogress;
+        $context['overallprogressstyle'] = 'width:' . $overallprogress . '%';
+        $context['firstcourseurl'] = $dashboardcourses[0]['courseurl'] ?? $repository->page_url('my-courses');
+        $context['firstcourse'] = $dashboardcourses[0] ?? null;
+
+        $activitysummary = $this->activity_completion_summary($courses);
+        $context['completedactivitycount'] = $activitysummary['completed'];
+        $context['pendingactivitycount'] = $activitysummary['pending'];
+
+        $upcomingevents = $this->upcoming_events();
+        $context['upcomingevents'] = $upcomingevents;
+        $context['hasupcomingevents'] = !empty($upcomingevents);
+
+        $announcement = $this->latest_announcement($courses);
+        $context['latestannouncement'] = $announcement;
+        $context['haslatestannouncement'] = $announcement !== null;
+
+        $context['unreadnotificationcount'] = $isloggedin
+            ? (int)\message_popup\api::count_unread_popup_notifications($USER->id)
+            : 0;
+        $context['hasunreadnotifications'] = $context['unreadnotificationcount'] > 0;
+
         $managedcourses = $this->managed_course_cards($output, $systemcontext);
         $context['managedcourses'] = $managedcourses;
         $context['hasmanagedcourses'] = !empty($managedcourses);
 
         return $context;
+    }
+
+    /**
+     * Count distinct active users assigned to any of the supplied role shortnames.
+     *
+     * @param string[] $shortnames Moodle role shortnames.
+     * @return int
+     */
+    private function role_user_count(array $shortnames): int {
+        global $DB;
+
+        [$rolesql, $params] = $DB->get_in_or_equal($shortnames, SQL_PARAMS_NAMED, 'countrole');
+        $sql = "SELECT COUNT(DISTINCT u.id)
+                  FROM {user} u
+                  JOIN {role_assignments} ra ON ra.userid = u.id
+                  JOIN {role} r ON r.id = ra.roleid
+                 WHERE r.shortname {$rolesql}
+                   AND u.deleted = 0
+                   AND u.suspended = 0
+                   AND u.confirmed = 1";
+
+        return (int)$DB->count_records_sql($sql, $params);
+    }
+
+    /**
+     * Return visible completion-tracked activity totals for the current learner.
+     *
+     * @param array $courses Exported enrolled course cards.
+     * @return array
+     */
+    private function activity_completion_summary(array $courses): array {
+        global $USER;
+
+        $summary = ['completed' => 0, 'pending' => 0];
+        foreach ($courses as $coursecard) {
+            try {
+                $course = get_course((int)$coursecard['id']);
+                $completion = new \completion_info($course);
+                $modinfo = get_fast_modinfo($course, $USER->id);
+                foreach ($modinfo->cms as $cm) {
+                    if (!$cm->uservisible || $cm->completion === COMPLETION_TRACKING_NONE) {
+                        continue;
+                    }
+
+                    $data = $completion->get_data($cm, false, $USER->id);
+                    if (in_array((int)$data->completionstate, [
+                            COMPLETION_COMPLETE,
+                            COMPLETION_COMPLETE_PASS,
+                            COMPLETION_COMPLETE_FAIL,
+                        ], true)) {
+                        $summary['completed']++;
+                    } else {
+                        $summary['pending']++;
+                    }
+                }
+            } catch (\Throwable $error) {
+                // A damaged course must not prevent the learner dashboard from loading.
+                continue;
+            }
+        }
+
+        return $summary;
+    }
+
+    /**
+     * Return upcoming events already filtered by Moodle calendar visibility rules.
+     *
+     * @return array
+     */
+    private function upcoming_events(): array {
+        global $USER;
+
+        if (!isloggedin() || isguestuser()) {
+            return [];
+        }
+
+        $now = time();
+        try {
+            $events = calendar_get_legacy_events($now, $now + (45 * DAYSECS), $USER->id, true, true, true, true, [], 3);
+        } catch (\Throwable $error) {
+            return [];
+        }
+
+        $items = [];
+        foreach ($events as $event) {
+            $items[] = [
+                'name' => format_string($event->name),
+                'day' => userdate((int)$event->timestart, '%d'),
+                'month' => \core_text::strtoupper(userdate((int)$event->timestart, '%b')),
+                'course' => !empty($event->courseid) ? $this->course_name((int)$event->courseid) : get_string('site'),
+                'timelabel' => get_string('duein', 'theme_custom_lms', format_time(max(0, (int)$event->timestart - $now))),
+                'url' => (new moodle_url('/calendar/view.php', [
+                    'view' => 'day',
+                    'time' => (int)$event->timestart,
+                ]))->out(false),
+            ];
+        }
+
+        return $items;
+    }
+
+    /**
+     * Return the latest announcement visible to the current user.
+     *
+     * @param array $courses Exported enrolled course cards.
+     * @return array|null
+     */
+    private function latest_announcement(array $courses): ?array {
+        global $DB, $USER;
+
+        $latest = null;
+        foreach ($courses as $coursecard) {
+            try {
+                $modinfo = get_fast_modinfo((int)$coursecard['id'], $USER->id);
+                foreach ($modinfo->get_instances_of('forum') as $cm) {
+                    if (!$cm->uservisible) {
+                        continue;
+                    }
+
+                    $forum = $DB->get_record('forum', ['id' => $cm->instance], 'id, type', IGNORE_MISSING);
+                    if (!$forum || $forum->type !== 'news') {
+                        continue;
+                    }
+
+                    $records = $DB->get_records('forum_discussions', ['forum' => $forum->id], 'timemodified DESC',
+                        'id, name, timemodified', 0, 1);
+                    $discussion = $records ? reset($records) : null;
+                    if (!$discussion || ($latest !== null && $discussion->timemodified <= $latest['timestamp'])) {
+                        continue;
+                    }
+
+                    $latest = [
+                        'title' => format_string($discussion->name, true, [
+                            'context' => context_course::instance((int)$coursecard['id']),
+                        ]),
+                        'course' => $coursecard['fullname'],
+                        'date' => userdate((int)$discussion->timemodified, get_string('strftimedatetimeshort')),
+                        'url' => (new moodle_url('/mod/forum/discuss.php', ['d' => $discussion->id]))->out(false),
+                        'timestamp' => (int)$discussion->timemodified,
+                    ];
+                }
+            } catch (\Throwable $error) {
+                continue;
+            }
+        }
+
+        if ($latest !== null) {
+            unset($latest['timestamp']);
+        }
+        return $latest;
+    }
+
+    /**
+     * Return a formatted course name without exposing unavailable records.
+     *
+     * @param int $courseid Course id.
+     * @return string
+     */
+    private function course_name(int $courseid): string {
+        try {
+            return format_string(get_course($courseid)->fullname);
+        } catch (\Throwable $error) {
+            return get_string('course');
+        }
     }
 
     /**
