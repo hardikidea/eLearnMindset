@@ -50,6 +50,7 @@ $iscourseindex = ($PAGE->pagelayout === 'coursecategory' && $PAGE->pagetype === 
         $PAGE->pagetype === 'course-search';
 $iscourseindexroot = $PAGE->pagetype === 'course-index-category' && optional_param('categoryid', 0, PARAM_INT) === 0;
 $currentpath = $PAGE->url->get_path();
+$ismycourses = $currentpath === '/my/courses.php';
 $usesmodernheader = $isdashboard || in_array($currentpath, [
     '/user/profile.php',
     '/my/courses.php',
@@ -67,6 +68,307 @@ if ($isfrontpage) {
 if ($usesmodernheader) {
     $extraclasses[] = 'theme-boost-override-custom-dashboard-header';
     $PAGE->requires->css(new \moodle_url('/theme/boost_override_custom/style/dashboardheader.css'));
+}
+if ($ismycourses) {
+    $extraclasses[] = 'theme-boost-override-custom-mycourses';
+    $PAGE->requires->css(new \moodle_url('/theme/boost_override_custom/style/mycourses.css'));
+    $PAGE->requires->js_init_code(<<<'JS'
+        (function() {
+            var pageSelector = '.theme-boost-override-custom-mycourses';
+            var scheduled = false;
+
+            var cleanText = function(value) {
+                return (value || '').replace(/\s+/g, ' ').trim();
+            };
+
+            var textWithoutHidden = function(node) {
+                var clone;
+
+                if (!node) {
+                    return '';
+                }
+
+                clone = node.cloneNode(true);
+                clone.querySelectorAll('.visually-hidden, .sr-only, .accesshide').forEach(function(hidden) {
+                    hidden.remove();
+                });
+                return cleanText(clone.textContent);
+            };
+
+            var getCourseTitle = function(card) {
+                var titleNode = card.querySelector('.coursename .multiline[title]');
+                var title = titleNode ? cleanText(titleNode.getAttribute('title')) : '';
+
+                if (title) {
+                    return title;
+                }
+
+                return textWithoutHidden(card.querySelector('.coursename')) ||
+                    textWithoutHidden(card.querySelector('a[href*="/course/view.php"]')) ||
+                    'Course';
+            };
+
+            var displayFullCourseTitle = function(card, title) {
+                var titleNode = card.querySelector('.coursename .multiline[title]');
+                var visibleTitle;
+
+                if (!titleNode || !title) {
+                    return;
+                }
+
+                titleNode.setAttribute('title', title);
+                visibleTitle = titleNode.querySelector('[aria-hidden="true"]');
+                if (!visibleTitle) {
+                    visibleTitle = document.createElement('span');
+                    visibleTitle.setAttribute('aria-hidden', 'true');
+                    titleNode.appendChild(visibleTitle);
+                }
+                visibleTitle.textContent = title;
+            };
+
+            var courseLink = function(card) {
+                return card.querySelector('.coursename[href*="/course/view.php"], .coursename a[href*="/course/view.php"], a[href*="/course/view.php"]');
+            };
+
+            var parseCourseDetails = function(title) {
+                var parts = cleanText(title).split(' - ').map(function(part) {
+                    return cleanText(part);
+                }).filter(Boolean);
+                var details = {
+                    board: '',
+                    medium: '',
+                    standard: '',
+                    stream: '',
+                    subject: '',
+                    year: ''
+                };
+
+                parts.forEach(function(part) {
+                    if (!details.medium && /medium/i.test(part)) {
+                        details.medium = part;
+                    } else if (!details.standard && /(standard|nursery|preschool|lkg|ukg|year\s*\d|semester|sem\s*\d)/i.test(part)) {
+                        details.standard = part;
+                    } else if (!details.year && /\b20\d{2}\s*[-/]\s*20\d{2}\b|\b20\d{2}\b/.test(part)) {
+                        details.year = part;
+                    }
+                });
+
+                if (parts.length > 1) {
+                    details.board = parts[1];
+                }
+                if (parts.length > 4) {
+                    details.stream = parts[4];
+                }
+                if (parts.length > 5) {
+                    details.subject = parts.slice(5).filter(function(part) {
+                        return part !== details.year;
+                    }).join(' - ');
+                }
+
+                return details;
+            };
+
+            var categoryTone = function(label, title) {
+                var value = (label + ' ' + title).toLowerCase();
+                var tones = [
+                    { pattern: /physical|sports|health|medical|nursing/, name: 'health', icon: 'pulse' },
+                    { pattern: /science|math|computer|technology|polytechnic|engineering|data|ai|coding/, name: 'science', icon: 'flask' },
+                    { pattern: /commerce|finance|business|management|account|marketing/, name: 'commerce', icon: 'briefcase' },
+                    { pattern: /law|legal/, name: 'law', icon: 'scale' },
+                    { pattern: /art|craft|creative|design|humanities/, name: 'arts', icon: 'palette' },
+                    { pattern: /teacher|training|education|school|standard|nursery|preschool|lkg|ukg/, name: 'school', icon: 'cap' }
+                ];
+                return tones.find(function(tone) {
+                    return tone.pattern.test(value);
+                }) || { name: 'general', icon: 'book' };
+            };
+
+            var iconSvg = function(name) {
+                var paths = {
+                    book: '<path d="M7 5.5A2.5 2.5 0 0 1 9.5 3H18v15.5H9.25A2.25 2.25 0 0 0 7 20.75V5.5Z"/><path d="M6 5.5A2.5 2.5 0 0 0 3.5 3H3v15.5h.75A2.25 2.25 0 0 1 6 20.75V5.5Z" opacity=".56"/>',
+                    cap: '<path d="M12 4 3 8.4l9 4.4 9-4.4L12 4Z"/><path d="M6.2 11.4v3.15c0 1.65 2.62 3.1 5.8 3.1s5.8-1.45 5.8-3.1V11.4L12 14.25 6.2 11.4Z" opacity=".64"/>',
+                    flask: '<path d="M9 3h6v2l-1.15.8v3.05l4.95 8.2A2.55 2.55 0 0 1 16.62 21H7.38a2.55 2.55 0 0 1-2.18-3.95l4.95-8.2V5.8L9 5V3Z"/><path d="M8.25 16h7.5" opacity=".58"/>',
+                    briefcase: '<path d="M9 6V4.8A1.8 1.8 0 0 1 10.8 3h2.4A1.8 1.8 0 0 1 15 4.8V6h3.5A1.5 1.5 0 0 1 20 7.5v3.1a19.6 19.6 0 0 1-16 0V7.5A1.5 1.5 0 0 1 5.5 6H9Z"/><path d="M4 12.8v5.7A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5v-5.7a21.6 21.6 0 0 1-16 0Z" opacity=".58"/>',
+                    scale: '<path d="M12 4v15"/><path d="M6 7h12"/><path d="M7 7 4.5 13h5L7 7Z"/><path d="M17 7l-2.5 6h5L17 7Z"/><path d="M8.5 20h7"/>',
+                    palette: '<path d="M12 3.5a8.5 8.5 0 0 0 0 17h1.2a1.75 1.75 0 0 0 .85-3.28 1.6 1.6 0 0 1 .78-3h1.35A4.2 4.2 0 0 0 20.4 10 6.9 6.9 0 0 0 12 3.5Z"/><circle cx="8.1" cy="10.2" r="1.1"/><circle cx="11" cy="7.8" r="1.1"/><circle cx="14.4" cy="8.4" r="1.1"/>',
+                    pulse: '<path d="M20 12.1c0 5-6.8 8.2-8 8.2s-8-3.2-8-8.2A4.6 4.6 0 0 1 8.6 7.5c1.45 0 2.55.7 3.4 1.78.85-1.08 1.95-1.78 3.4-1.78A4.6 4.6 0 0 1 20 12.1Z"/><path d="M7 13h2.4l1-2.6 1.8 5.1 1.2-2.5H17" opacity=".7"/>'
+                };
+
+                return '<svg aria-hidden="true" viewBox="0 0 24 24" focusable="false">' +
+                    '<g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">' +
+                    (paths[name] || paths.book) +
+                    '</g></svg>';
+            };
+
+            var addCardChips = function(card, details, category) {
+                var body = card.querySelector('.course-info-container');
+                var target = body ? body.querySelector('.text-muted') : null;
+                var existing = card.querySelector('.boc-mycourse-chips');
+                var values = [
+                    details.standard,
+                    details.medium,
+                    details.stream,
+                    details.year
+                ].filter(function(value, index, list) {
+                    return value && list.indexOf(value) === index;
+                }).slice(0, 4);
+                var chips;
+
+                if (existing) {
+                    existing.remove();
+                }
+
+                if (!target || !values.length) {
+                    return;
+                }
+
+                chips = document.createElement('div');
+                chips.className = 'boc-mycourse-chips';
+                values.forEach(function(value) {
+                    var chip = document.createElement('span');
+                    chip.textContent = value;
+                    chips.appendChild(chip);
+                });
+                target.insertAdjacentElement('afterend', chips);
+
+                if (category) {
+                    card.setAttribute('data-boc-category-label', category);
+                }
+            };
+
+            var decorateCategory = function(card, tone) {
+                var category = card.querySelector('.categoryname');
+                var icon;
+
+                if (!category || category.querySelector('.boc-mycourse-category-icon')) {
+                    return;
+                }
+
+                icon = document.createElement('span');
+                icon.className = 'boc-mycourse-category-icon';
+                icon.innerHTML = iconSvg(tone.icon);
+                category.prepend(icon);
+            };
+
+            var buildHoverPanel = function(card, title, details, category) {
+                var link = courseLink(card);
+                var panel = card.querySelector('.boc-mycourse-hover-panel');
+                var facts = [
+                    ['Category', category || 'General'],
+                    ['Level', details.standard || details.stream || 'Learning space'],
+                    ['Medium', details.medium || 'Moodle course'],
+                    ['Academic', details.year || 'Active course']
+                ];
+
+                if (!panel) {
+                    panel = document.createElement('div');
+                    panel.className = 'boc-mycourse-hover-panel';
+                    card.appendChild(panel);
+                }
+
+                panel.innerHTML = '<strong></strong><p></p><div class="boc-mycourse-hover-facts"></div><a class="boc-mycourse-hover-cta"></a>';
+                panel.querySelector('strong').textContent = title;
+                panel.querySelector('p').textContent = 'Open the course workspace for activities, resources, submissions, announcements and grade tracking.';
+                facts.forEach(function(item) {
+                    var fact = document.createElement('span');
+                    var label = document.createElement('b');
+                    var value = document.createElement('em');
+                    label.textContent = item[0];
+                    value.textContent = item[1];
+                    fact.appendChild(label);
+                    fact.appendChild(value);
+                    panel.querySelector('.boc-mycourse-hover-facts').appendChild(fact);
+                });
+
+                panel.querySelector('.boc-mycourse-hover-cta').textContent = 'View course';
+                if (link && link.href) {
+                    panel.querySelector('.boc-mycourse-hover-cta').href = link.href;
+                    panel.querySelector('.boc-mycourse-hover-cta').tabIndex = -1;
+                }
+            };
+
+            var bindTitleHover = function(card) {
+                var title = card.querySelector('.coursename');
+
+                if (!title || title.getAttribute('data-boc-title-hover-ready') === '1') {
+                    return;
+                }
+
+                title.addEventListener('mouseenter', function() {
+                    card.classList.add('boc-mycourse-preview-open');
+                });
+                title.addEventListener('focus', function() {
+                    card.classList.add('boc-mycourse-preview-open');
+                });
+                card.addEventListener('mouseleave', function() {
+                    card.classList.remove('boc-mycourse-preview-open');
+                });
+                card.addEventListener('focusout', function() {
+                    window.setTimeout(function() {
+                        if (!card.contains(document.activeElement)) {
+                            card.classList.remove('boc-mycourse-preview-open');
+                        }
+                    }, 0);
+                });
+                title.setAttribute('data-boc-title-hover-ready', '1');
+            };
+
+            var enhanceCard = function(card, index) {
+                var title = getCourseTitle(card);
+                var category = cleanText(card.querySelector('.categoryname') ? card.querySelector('.categoryname').textContent : '');
+                var details = parseCourseDetails(title);
+                var tone = categoryTone(category, title);
+
+                card.setAttribute('data-boc-mycourse-ready', '1');
+                card.setAttribute('data-boc-tone', tone.name);
+                card.style.setProperty('--boc-course-index', index % 8);
+                displayFullCourseTitle(card, title);
+                addCardChips(card, details, category);
+                decorateCategory(card, tone);
+                buildHoverPanel(card, title, details, category);
+                bindTitleHover(card);
+            };
+
+            var enhanceMyCourses = function() {
+                document.querySelectorAll(pageSelector + ' .block-myoverview [data-region="course-content"].course-card').forEach(function(card, index) {
+                    if (card.getAttribute('data-boc-mycourse-ready') !== '1') {
+                        enhanceCard(card, index);
+                    }
+                });
+            };
+
+            var scheduleEnhancement = function() {
+                if (scheduled) {
+                    return;
+                }
+                scheduled = true;
+                window.requestAnimationFrame(function() {
+                    scheduled = false;
+                    enhanceMyCourses();
+                });
+            };
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', enhanceMyCourses);
+            } else {
+                enhanceMyCourses();
+            }
+
+            if (window.MutationObserver) {
+                new MutationObserver(scheduleEnhancement).observe(document.querySelector(pageSelector + ' [data-region="courses-view"]') || document.body, {
+                    childList: true,
+                    subtree: true
+                });
+            }
+
+            document.addEventListener('click', function(event) {
+                if (event.target.closest(pageSelector + ' [data-region="filter"], ' + pageSelector + ' [data-region="paging-control"]')) {
+                    window.setTimeout(scheduleEnhancement, 160);
+                }
+            });
+        })();
+JS
+    );
 }
 if ($iscourseindex) {
     $extraclasses[] = 'theme-boost-override-custom-courseindex';
