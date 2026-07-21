@@ -44,7 +44,7 @@ if [[ "${MOODLE_WWWROOT:-http://localhost:8080}" == http://* ]]; then
 fi
 
 docker compose exec -T moodle php admin/cli/cfg.php --name=forcelogin --set=0
-docker compose exec -T moodle php admin/cli/cfg.php --name=defaulthomepage --set=0
+docker compose exec -T moodle php admin/cli/cfg.php --name=defaulthomepage --set=1
 docker compose exec -T moodle php admin/cli/cfg.php --name=enablemyhome --set=1
 docker compose exec -T moodle php admin/cli/cfg.php --name=enablemycourses --set=1
 docker compose exec -T moodle php admin/cli/upgrade.php --non-interactive

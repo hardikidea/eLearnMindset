@@ -45,6 +45,7 @@ if (defined('BEHAT_SITE_RUNNING') && get_user_preferences('behat_keep_drawer_clo
 }
 
 $isfrontpage = $PAGE->pagelayout === 'frontpage';
+$isdashboard = $PAGE->pagelayout === 'mydashboard';
 $iscourseindex = ($PAGE->pagelayout === 'coursecategory' && $PAGE->pagetype === 'course-index-category') ||
         $PAGE->pagetype === 'course-search';
 $iscourseindexroot = $PAGE->pagetype === 'course-index-category' && optional_param('categoryid', 0, PARAM_INT) === 0;
@@ -52,6 +53,10 @@ $extraclasses = ['uses-drawers'];
 if ($isfrontpage) {
     $extraclasses[] = 'theme-boost-override-custom-frontpage';
     $PAGE->requires->css(new \moodle_url('/theme/boost_override_custom/style/frontpage.css'));
+}
+if ($isdashboard) {
+    $extraclasses[] = 'theme-boost-override-custom-dashboard-header';
+    $PAGE->requires->css(new \moodle_url('/theme/boost_override_custom/style/dashboardheader.css'));
 }
 if ($iscourseindex) {
     $extraclasses[] = 'theme-boost-override-custom-courseindex';
