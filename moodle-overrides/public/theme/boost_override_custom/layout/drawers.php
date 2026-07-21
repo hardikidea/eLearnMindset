@@ -52,6 +52,7 @@ $iscourseindexroot = $PAGE->pagetype === 'course-index-category' && optional_par
 $currentpath = $PAGE->url->get_path();
 $usesmodernheader = $isdashboard || in_array($currentpath, [
     '/user/profile.php',
+    '/my/courses.php',
     '/grade/report/overview/index.php',
     '/calendar/view.php',
     '/user/files.php',
