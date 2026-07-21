@@ -1,0 +1,317 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template core/login_layout
+
+    Login-flow layout override for theme_boost_override_custom.
+    The Moodle login form remains output.main_content.
+}}
+<div class="boc-login-shell">
+    <svg class="boc-login-svg-defs" aria-hidden="true" focusable="false">
+        <defs>
+            <filter id="bocSvgIconShadow" x="-30%" y="-30%" width="160%" height="170%">
+                <feDropShadow dx="0" dy="5" stdDeviation="4" flood-color="#0f172a" flood-opacity=".18"/>
+            </filter>
+            <linearGradient id="bocSvgIconGloss" x1="12" y1="7" x2="37" y2="40" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#fff" stop-opacity=".65"/>
+                <stop offset=".62" stop-color="#fff" stop-opacity=".18"/>
+                <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+            </linearGradient>
+            <symbol id="bocIconBase" viewBox="0 0 48 48">
+                <rect x="5" y="5" width="38" height="38" rx="12" fill="currentColor" filter="url(#bocSvgIconShadow)"/>
+                <path d="M9 17c4-7 12-10 23-8 6 1 9 4 11 9v-1C43 10 38 5 31 5H17C10 5 5 10 5 17v13c1-5 2-9 4-13Z" fill="url(#bocSvgIconGloss)"/>
+            </symbol>
+            <symbol id="bocIconHome" viewBox="0 0 48 48">
+                <use href="#bocIconBase"/>
+                <path d="m14 25 10-9 10 9v10a2 2 0 0 1-2 2H16a2 2 0 0 1-2-2V25Z" fill="#fff"/>
+                <path d="M20 37v-9h8v9" fill="none" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round"/>
+            </symbol>
+            <symbol id="bocIconDiscover" viewBox="0 0 48 48">
+                <use href="#bocIconBase"/>
+                <circle cx="24" cy="24" r="13" fill="#fff"/>
+                <path d="m20 28 4-11 5 5-11 4Z" fill="#0f172a"/>
+                <circle cx="24" cy="24" r="2.5" fill="currentColor"/>
+            </symbol>
+            <symbol id="bocIconProgrammes" viewBox="0 0 48 48">
+                <use href="#bocIconBase"/>
+                <path d="m10 20 14-7 14 7-14 7-14-7Z" fill="#fff"/>
+                <path d="M16 26v7c5 4 11 4 16 0v-7" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+                <path d="M37 22v8" stroke="#0f172a" stroke-width="3" stroke-linecap="round"/>
+            </symbol>
+            <symbol id="bocIconAdmissions" viewBox="0 0 48 48">
+                <use href="#bocIconBase"/>
+                <rect x="14" y="11" width="20" height="26" rx="4" fill="#fff"/>
+                <path d="M19 19h10M19 25h10M19 31h6" stroke="#0f172a" stroke-width="2.7" stroke-linecap="round"/>
+                <circle cx="34" cy="34" r="7" fill="#facc15"/>
+                <path d="m31 34 2 2 4-5" fill="none" stroke="#0f172a" stroke-width="2.4" stroke-linecap="round"/>
+            </symbol>
+            <symbol id="bocIconBoards" viewBox="0 0 48 48">
+                <use href="#bocIconBase"/>
+                <rect x="10" y="14" width="28" height="20" rx="5" fill="#fff"/>
+                <path d="M17 20h9M17 26h6M30 20c-2 4-4 8-7 11M28 25l5 6" stroke="#0f172a" stroke-width="2.4" stroke-linecap="round"/>
+            </symbol>
+            <symbol id="bocIconGrade" viewBox="0 0 48 48">
+                <use href="#bocIconBase"/>
+                <path d="M15 34V23M24 34V17M33 34V13" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
+                <path d="M13 18c6 6 13 7 23-5" fill="none" stroke="#facc15" stroke-width="3" stroke-linecap="round"/>
+            </symbol>
+            <symbol id="bocIconAbout" viewBox="0 0 48 48">
+                <use href="#bocIconBase"/>
+                <circle cx="24" cy="24" r="14" fill="#fff"/>
+                <path d="M24 22v10M24 16h.1" stroke="#0f172a" stroke-width="4" stroke-linecap="round"/>
+            </symbol>
+            <symbol id="bocIconContact" viewBox="0 0 48 48">
+                <use href="#bocIconBase"/>
+                <path d="M15 16h18a5 5 0 0 1 5 5v8a5 5 0 0 1-5 5H23l-8 6v-6h-1a5 5 0 0 1-5-5v-8a5 5 0 0 1 6-5Z" fill="#fff"/>
+                <path d="M17 24h14M17 29h9" stroke="#0f172a" stroke-width="2.8" stroke-linecap="round"/>
+            </symbol>
+            <symbol id="bocIconBolt" viewBox="0 0 48 48">
+                <use href="#bocIconBase"/>
+                <path d="M26 8 14 27h9l-2 13 13-20h-9l1-12Z" fill="#fff"/>
+            </symbol>
+            <symbol id="bocIconCourses" viewBox="0 0 48 48">
+                <use href="#bocIconBase"/>
+                <path d="M14 13h19a4 4 0 0 1 4 4v21H18a4 4 0 0 1-4-4V13Z" fill="#fff"/>
+                <path d="M18 18h13M18 24h13M18 30h9" stroke="#0f172a" stroke-width="2.7" stroke-linecap="round"/>
+            </symbol>
+            <symbol id="bocIconCatalogue" viewBox="0 0 48 48">
+                <use href="#bocIconBase"/>
+                <path d="M12 17h12l4 5h8a4 4 0 0 1 4 4v11H12V17Z" fill="#fff"/>
+                <path d="M12 24h28v10a4 4 0 0 1-4 4H16a4 4 0 0 1-4-4V24Z" fill="#e0f2fe"/>
+                <path d="M18 30h15" stroke="#0f172a" stroke-width="3" stroke-linecap="round"/>
+            </symbol>
+            <symbol id="bocIconActivity" viewBox="0 0 48 48">
+                <use href="#bocIconBase"/>
+                <path d="m14 18 4 4 8-9M14 31l4 4 8-9" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M31 20h5M31 33h5" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+            </symbol>
+            <symbol id="bocIconQuiz" viewBox="0 0 48 48">
+                <use href="#bocIconBase"/>
+                <circle cx="24" cy="24" r="14" fill="#fff"/>
+                <path d="M20 20a5 5 0 1 1 6 5c-2 1-2 2-2 4M24 35h.1" fill="none" stroke="#0f172a" stroke-width="3.4" stroke-linecap="round"/>
+            </symbol>
+            <symbol id="bocIconCertificate" viewBox="0 0 48 48">
+                <use href="#bocIconBase"/>
+                <rect x="11" y="14" width="25" height="18" rx="4" fill="#fff"/>
+                <path d="M16 21h14M16 26h9" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round"/>
+                <circle cx="33" cy="32" r="7" fill="#facc15"/>
+                <path d="M29 38v5l4-3 4 3v-5" fill="#fff"/>
+            </symbol>
+            <symbol id="bocIconAttendance" viewBox="0 0 48 48">
+                <use href="#bocIconBase"/>
+                <circle cx="23" cy="19" r="7" fill="#fff"/>
+                <path d="M12 36c3-9 18-9 22 0" fill="#fff"/>
+                <path d="m30 26 4 4 8-10" fill="none" stroke="#facc15" stroke-width="3.4" stroke-linecap="round"/>
+            </symbol>
+            <symbol id="bocIconParent" viewBox="0 0 48 48">
+                <use href="#bocIconBase"/>
+                <circle cx="19" cy="20" r="6" fill="#fff"/>
+                <circle cx="31" cy="21" r="5" fill="#fde68a"/>
+                <path d="M10 36c3-9 14-9 18 0M25 36c2-7 11-7 14 0" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+            </symbol>
+            <symbol id="bocIconNotice" viewBox="0 0 48 48">
+                <use href="#bocIconBase"/>
+                <path d="M13 27h7l14 8V13L20 21h-7v6Z" fill="#fff"/>
+                <path d="M20 27v8" stroke="#0f172a" stroke-width="3" stroke-linecap="round"/>
+                <path d="M37 19c3 3 3 8 0 11" fill="none" stroke="#facc15" stroke-width="3" stroke-linecap="round"/>
+            </symbol>
+            <symbol id="bocIconCalendar" viewBox="0 0 48 48">
+                <use href="#bocIconBase"/>
+                <rect x="12" y="14" width="24" height="22" rx="5" fill="#fff"/>
+                <path d="M17 11v7M31 11v7M12 22h24" stroke="#0f172a" stroke-width="2.6" stroke-linecap="round"/>
+                <path d="m18 30 4 4 8-9" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            </symbol>
+            <symbol id="bocIconSecure" viewBox="0 0 48 48">
+                <use href="#bocIconBase"/>
+                <path d="M24 10 36 15v9c0 9-5 16-12 20-7-4-12-11-12-20v-9l12-5Z" fill="#fff"/>
+                <path d="m19 26 4 4 8-11" fill="none" stroke="#0f172a" stroke-width="3.2" stroke-linecap="round"/>
+            </symbol>
+            <symbol id="bocIconUsers" viewBox="0 0 48 48">
+                <use href="#bocIconParent"/>
+            </symbol>
+            <symbol id="bocIconStudent" viewBox="0 0 48 48">
+                <use href="#bocIconProgrammes"/>
+            </symbol>
+            <symbol id="bocIconTeacher" viewBox="0 0 48 48">
+                <use href="#bocIconBase"/>
+                <rect x="10" y="14" width="28" height="18" rx="4" fill="#fff"/>
+                <circle cx="20" cy="37" r="5" fill="#facc15"/>
+                <path d="M17 22h14M17 27h9M31 37h7" stroke="#0f172a" stroke-width="2.6" stroke-linecap="round"/>
+            </symbol>
+        </defs>
+    </svg>
+    <header class="boc-login-header" aria-label="Public site navigation">
+        <a class="boc-login-brand" href="{{boclogin.homeurl}}">
+            <span class="boc-login-mark" aria-hidden="true">eM</span>
+            <span>{{boclogin.sitename}}</span>
+        </a>
+        <nav class="boc-login-nav" aria-label="Primary navigation">
+            {{#boclogin.navitems}}
+                <a href="{{url}}">
+                    <svg class="boc-login-svg-icon boc-login-nav-icon" aria-hidden="true" focusable="false"><use href="#{{svgid}}"></use></svg>
+                    <span>{{label}}</span>
+                </a>
+            {{/boclogin.navitems}}
+        </nav>
+    </header>
+    <div id="page-content" class="boc-login-main row g-0">
+        <aside class="login-layout-left col-lg-6 d-none d-lg-flex">
+            {{> core/login_panel }}
+        </aside>
+        <div id="region-main" class="login-layout-right col-12 col-lg-6">
+            <div id="region-main-box" class="login-layout-right-content">
+                <div class="login-container">
+                    {{{ output.main_content }}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <section class="boc-login-feature-rail" aria-label="LMS feature benefits">
+        <div class="boc-login-feature-head">
+            <span><svg class="boc-login-svg-icon boc-login-head-icon" aria-hidden="true" focusable="false"><use href="#bocIconBolt"></use></svg> LMS feature stack</span>
+            <strong>Everyday tools for learners, teachers, parents and coordinators.</strong>
+        </div>
+        <div class="boc-login-feature-viewport">
+            <div class="boc-login-feature-track">
+                <div class="boc-login-feature-group">
+                    <article class="boc-login-feature-card boc-feature-course">
+                        <svg class="boc-login-svg-icon boc-login-feature-svg" aria-hidden="true" focusable="false"><use href="#bocIconCourses"></use></svg>
+                        <h3>Course catalogue</h3>
+                        <p>Browse visible school, college and training courses.</p>
+                        <strong>{{boclogin.stats.courses.value}} courses</strong>
+                    </article>
+                    <article class="boc-login-feature-card boc-feature-activity">
+                        <svg class="boc-login-svg-icon boc-login-feature-svg" aria-hidden="true" focusable="false"><use href="#bocIconActivity"></use></svg>
+                        <h3>Activities</h3>
+                        <p>Continue assignments, lessons, resources and tasks.</p>
+                        <strong>{{boclogin.stats.activities.value}} live items</strong>
+                    </article>
+                    <article class="boc-login-feature-card boc-feature-quiz">
+                        <svg class="boc-login-svg-icon boc-login-feature-svg" aria-hidden="true" focusable="false"><use href="#bocIconQuiz"></use></svg>
+                        <h3>Quiz engine</h3>
+                        <p>Practice, test and review attempts from one login.</p>
+                        <strong>{{boclogin.stats.quizzes.value}} quizzes</strong>
+                    </article>
+                    <article class="boc-login-feature-card boc-feature-grade">
+                        <svg class="boc-login-svg-icon boc-login-feature-svg" aria-hidden="true" focusable="false"><use href="#bocIconGrade"></use></svg>
+                        <h3>Gradebook</h3>
+                        <p>Track progress, scores and term outcomes clearly.</p>
+                        <strong>Faster result review</strong>
+                    </article>
+                    <article class="boc-login-feature-card boc-feature-cert">
+                        <svg class="boc-login-svg-icon boc-login-feature-svg" aria-hidden="true" focusable="false"><use href="#bocIconCertificate"></use></svg>
+                        <h3>Certificates</h3>
+                        <p>Support completion evidence and achievement records.</p>
+                        <strong>{{boclogin.stats.certificates.value}} templates</strong>
+                    </article>
+                    <article class="boc-login-feature-card boc-feature-attendance">
+                        <svg class="boc-login-svg-icon boc-login-feature-svg" aria-hidden="true" focusable="false"><use href="#bocIconAttendance"></use></svg>
+                        <h3>Attendance</h3>
+                        <p>Keep classroom participation visible to permitted roles.</p>
+                        <strong>Daily visibility</strong>
+                    </article>
+                    <article class="boc-login-feature-card boc-feature-parent">
+                        <svg class="boc-login-svg-icon boc-login-feature-svg" aria-hidden="true" focusable="false"><use href="#bocIconParent"></use></svg>
+                        <h3>Parent view</h3>
+                        <p>Share progress snapshots without exposing admin tools.</p>
+                        <strong>{{boclogin.stats.parents.value}} parent users</strong>
+                    </article>
+                    <article class="boc-login-feature-card boc-feature-notice">
+                        <svg class="boc-login-svg-icon boc-login-feature-svg" aria-hidden="true" focusable="false"><use href="#bocIconNotice"></use></svg>
+                        <h3>Announcements</h3>
+                        <p>Keep notices, forums and course updates connected.</p>
+                        <strong>{{boclogin.stats.forums.value}} forums</strong>
+                    </article>
+                    <article class="boc-login-feature-card boc-feature-calendar">
+                        <svg class="boc-login-svg-icon boc-login-feature-svg" aria-hidden="true" focusable="false"><use href="#bocIconCalendar"></use></svg>
+                        <h3>Academic calendar</h3>
+                        <p>Plan terms, lessons, due dates and events together.</p>
+                        <strong>2026 session</strong>
+                    </article>
+                    <article class="boc-login-feature-card boc-feature-secure">
+                        <svg class="boc-login-svg-icon boc-login-feature-svg" aria-hidden="true" focusable="false"><use href="#bocIconSecure"></use></svg>
+                        <h3>Secure access</h3>
+                        <p>Use Moodle session protection and role permissions.</p>
+                        <strong>{{boclogin.stats.enrolments.value}} enrolments</strong>
+                    </article>
+                </div>
+                <div class="boc-login-feature-group" aria-hidden="true">
+                    <article class="boc-login-feature-card boc-feature-course">
+                        <svg class="boc-login-svg-icon boc-login-feature-svg" aria-hidden="true" focusable="false"><use href="#bocIconCourses"></use></svg>
+                        <h3>Course catalogue</h3>
+                        <p>Browse visible school, college and training courses.</p>
+                        <strong>{{boclogin.stats.courses.value}} courses</strong>
+                    </article>
+                    <article class="boc-login-feature-card boc-feature-activity">
+                        <svg class="boc-login-svg-icon boc-login-feature-svg" aria-hidden="true" focusable="false"><use href="#bocIconActivity"></use></svg>
+                        <h3>Activities</h3>
+                        <p>Continue assignments, lessons, resources and tasks.</p>
+                        <strong>{{boclogin.stats.activities.value}} live items</strong>
+                    </article>
+                    <article class="boc-login-feature-card boc-feature-quiz">
+                        <svg class="boc-login-svg-icon boc-login-feature-svg" aria-hidden="true" focusable="false"><use href="#bocIconQuiz"></use></svg>
+                        <h3>Quiz engine</h3>
+                        <p>Practice, test and review attempts from one login.</p>
+                        <strong>{{boclogin.stats.quizzes.value}} quizzes</strong>
+                    </article>
+                    <article class="boc-login-feature-card boc-feature-grade">
+                        <svg class="boc-login-svg-icon boc-login-feature-svg" aria-hidden="true" focusable="false"><use href="#bocIconGrade"></use></svg>
+                        <h3>Gradebook</h3>
+                        <p>Track progress, scores and term outcomes clearly.</p>
+                        <strong>Faster result review</strong>
+                    </article>
+                    <article class="boc-login-feature-card boc-feature-cert">
+                        <svg class="boc-login-svg-icon boc-login-feature-svg" aria-hidden="true" focusable="false"><use href="#bocIconCertificate"></use></svg>
+                        <h3>Certificates</h3>
+                        <p>Support completion evidence and achievement records.</p>
+                        <strong>{{boclogin.stats.certificates.value}} templates</strong>
+                    </article>
+                    <article class="boc-login-feature-card boc-feature-attendance">
+                        <svg class="boc-login-svg-icon boc-login-feature-svg" aria-hidden="true" focusable="false"><use href="#bocIconAttendance"></use></svg>
+                        <h3>Attendance</h3>
+                        <p>Keep classroom participation visible to permitted roles.</p>
+                        <strong>Daily visibility</strong>
+                    </article>
+                    <article class="boc-login-feature-card boc-feature-parent">
+                        <svg class="boc-login-svg-icon boc-login-feature-svg" aria-hidden="true" focusable="false"><use href="#bocIconParent"></use></svg>
+                        <h3>Parent view</h3>
+                        <p>Share progress snapshots without exposing admin tools.</p>
+                        <strong>{{boclogin.stats.parents.value}} parent users</strong>
+                    </article>
+                    <article class="boc-login-feature-card boc-feature-notice">
+                        <svg class="boc-login-svg-icon boc-login-feature-svg" aria-hidden="true" focusable="false"><use href="#bocIconNotice"></use></svg>
+                        <h3>Announcements</h3>
+                        <p>Keep notices, forums and course updates connected.</p>
+                        <strong>{{boclogin.stats.forums.value}} forums</strong>
+                    </article>
+                    <article class="boc-login-feature-card boc-feature-calendar">
+                        <svg class="boc-login-svg-icon boc-login-feature-svg" aria-hidden="true" focusable="false"><use href="#bocIconCalendar"></use></svg>
+                        <h3>Academic calendar</h3>
+                        <p>Plan terms, lessons, due dates and events together.</p>
+                        <strong>2026 session</strong>
+                    </article>
+                    <article class="boc-login-feature-card boc-feature-secure">
+                        <svg class="boc-login-svg-icon boc-login-feature-svg" aria-hidden="true" focusable="false"><use href="#bocIconSecure"></use></svg>
+                        <h3>Secure access</h3>
+                        <p>Use Moodle session protection and role permissions.</p>
+                        <strong>{{boclogin.stats.enrolments.value}} enrolments</strong>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

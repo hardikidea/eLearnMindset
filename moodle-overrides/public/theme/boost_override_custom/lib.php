@@ -25,6 +25,19 @@
 defined('MOODLE_INTERNAL') || die();
 
 /**
+ * Get the shared white-label palette SCSS.
+ *
+ * @return string
+ */
+function theme_boost_override_custom_get_palette_scss(): string {
+    global $CFG;
+
+    $palettefile = $CFG->dirroot . '/theme/boost_override_custom/scss/_palette.scss';
+
+    return file_exists($palettefile) ? file_get_contents($palettefile) : '';
+}
+
+/**
  * Returns Boost's main SCSS content.
  *
  * @param theme_config $theme The theme config object.
@@ -47,7 +60,7 @@ function theme_boost_override_custom_get_pre_scss($theme): string {
     global $CFG;
 
     require_once($CFG->dirroot . '/theme/boost/lib.php');
-    return theme_boost_get_pre_scss($theme);
+    return theme_boost_override_custom_get_palette_scss() . "\n" . theme_boost_get_pre_scss($theme);
 }
 
 /**

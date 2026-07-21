@@ -1,0 +1,67 @@
+// Common white-label palette for Boost Override Custom.
+// Change these Sass variables to rebrand the LMS for another school or university.
+
+$boc-palette-primary: #0f6cbf !default;
+$boc-palette-primary-strong: #0750ca !default;
+$boc-palette-secondary: #475569 !default;
+$boc-palette-accent: #0891b2 !default;
+$boc-palette-accent-soft: #e0f2fe !default;
+$boc-palette-success: #15803d !default;
+$boc-palette-success-accent: #65a30d !default;
+$boc-palette-warning: #d97706 !default;
+$boc-palette-warning-accent: #ea580c !default;
+$boc-palette-warning-bright: #f59e0b !default;
+$boc-palette-danger: #dc2626 !default;
+$boc-palette-info: #4f46e5 !default;
+$boc-palette-violet: #7c3aed !default;
+$boc-palette-rose: #e11d48 !default;
+$boc-palette-ink: #0f172a !default;
+$boc-palette-text: #334155 !default;
+$boc-palette-muted: #64748b !default;
+$boc-palette-surface: #ffffff !default;
+$boc-palette-surface-soft: #f8fafc !default;
+$boc-palette-border: #d8e0ea !default;
+$boc-palette-font-family: "Inter", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif !default;
+$boc-palette-icon-font-family: "Font Awesome 6 Free" !default;
+$boc-palette-icon-font-weight: 900 !default;
+
+$primary: $boc-palette-primary !default;
+$secondary: $boc-palette-secondary !default;
+$success: $boc-palette-success !default;
+$warning: $boc-palette-warning !default;
+$danger: $boc-palette-danger !default;
+$info: $boc-palette-info !default;
+$font-family-sans-serif: $boc-palette-font-family !default;
+
+:root {
+    --boc-theme-primary: #{$boc-palette-primary};
+    --boc-theme-primary-strong: #{$boc-palette-primary-strong};
+    --boc-theme-secondary: #{$boc-palette-secondary};
+    --boc-theme-accent: #{$boc-palette-accent};
+    --boc-theme-accent-soft: #{$boc-palette-accent-soft};
+    --boc-theme-success: #{$boc-palette-success};
+    --boc-theme-success-accent: #{$boc-palette-success-accent};
+    --boc-theme-warning: #{$boc-palette-warning};
+    --boc-theme-warning-accent: #{$boc-palette-warning-accent};
+    --boc-theme-warning-bright: #{$boc-palette-warning-bright};
+    --boc-theme-danger: #{$boc-palette-danger};
+    --boc-theme-info: #{$boc-palette-info};
+    --boc-theme-violet: #{$boc-palette-violet};
+    --boc-theme-rose: #{$boc-palette-rose};
+    --boc-theme-ink: #{$boc-palette-ink};
+    --boc-theme-text: #{$boc-palette-text};
+    --boc-theme-muted: #{$boc-palette-muted};
+    --boc-theme-surface: #{$boc-palette-surface};
+    --boc-theme-surface-soft: #{$boc-palette-surface-soft};
+    --boc-theme-border: #{$boc-palette-border};
+    --boc-theme-font-family: #{$boc-palette-font-family};
+    --boc-theme-icon-font-family: #{$boc-palette-icon-font-family};
+    --boc-theme-icon-font-weight: #{$boc-palette-icon-font-weight};
+    --boc-theme-border-soft: #{rgba($boc-palette-border, .62)};
+    --boc-theme-glass: #{rgba($boc-palette-surface, .78)};
+    --boc-theme-glass-strong: #{rgba($boc-palette-surface, .92)};
+    --boc-theme-shadow: 0 18px 50px #{rgba($boc-palette-ink, .12)};
+    --boc-theme-shadow-soft: 0 10px 28px #{rgba($boc-palette-ink, .08)};
+    --boc-theme-gradient-primary: linear-gradient(135deg, var(--boc-theme-primary), var(--boc-theme-accent));
+    --boc-theme-gradient-warm: linear-gradient(135deg, var(--boc-theme-warning), #f59e0b);
+}

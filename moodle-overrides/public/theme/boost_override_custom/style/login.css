@@ -1,0 +1,1691 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
+
+/* Login-only visual layer for theme_boost_override_custom. */
+body.theme-boost-override-custom-login {
+    --boc-login-primary: var(--boc-theme-primary, var(--bs-primary, #0f6cbf));
+    --boc-login-primary-strong: var(--boc-theme-primary-strong, #0750ca);
+    --boc-login-secondary: var(--boc-theme-secondary, var(--bs-secondary, #475569));
+    --boc-login-accent: var(--boc-theme-accent, #0891b2);
+    --boc-login-success: var(--boc-theme-success, #15803d);
+    --boc-login-warning: var(--boc-theme-warning, #d97706);
+    --boc-login-warning-bright: var(--boc-theme-warning-bright, #f59e0b);
+    --boc-login-info: var(--boc-theme-info, #4f46e5);
+    --boc-login-violet: var(--boc-theme-violet, #7c3aed);
+    --boc-login-rose: var(--boc-theme-rose, #e11d48);
+    --boc-login-ink: var(--boc-theme-ink, #0f172a);
+    --boc-login-text: var(--boc-theme-text, #334155);
+    --boc-login-muted: var(--boc-theme-muted, #64748b);
+    --boc-login-surface: var(--boc-theme-surface, #fff);
+    --boc-login-surface-soft: var(--boc-theme-surface-soft, #f8fafc);
+    --boc-login-border: var(--boc-theme-border, #d8e0ea);
+    --boc-login-glass: color-mix(in srgb, var(--boc-login-surface) 82%, transparent);
+    --boc-login-glass-strong: color-mix(in srgb, var(--boc-login-surface) 94%, transparent);
+    --boc-login-shadow: 0 26px 70px rgba(15, 23, 42, .16);
+    --boc-login-shadow-soft: 0 14px 34px rgba(15, 23, 42, .09);
+    --boc-login-card-height: 660px;
+    min-height: 100vh;
+    color: var(--boc-login-ink);
+    font-family: var(--boc-theme-font-family, "Inter", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif);
+    font-optical-sizing: auto;
+    text-rendering: optimizeLegibility;
+    background:
+        linear-gradient(110deg, rgba(248, 250, 252, .94), rgba(240, 249, 255, .84) 44%, rgba(255, 251, 235, .75)),
+        url("../pix/frontpage-bg.png"),
+        radial-gradient(circle at 12% 6%, rgba(8, 145, 178, .25), transparent 34%),
+        radial-gradient(circle at 88% 16%, rgba(245, 158, 11, .24), transparent 32%),
+        linear-gradient(180deg, #f8fbff, #eef6fb 52%, #f9fbff);
+    background-attachment: fixed, fixed, fixed, fixed, fixed;
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow-x: clip;
+}
+
+body.theme-boost-override-custom-login #page-wrapper {
+    min-height: 100vh;
+    overflow-x: clip;
+    font-family: inherit;
+}
+
+body.theme-boost-override-custom-login #page {
+    min-height: 100vh;
+    margin: 0;
+    padding: 14px 20px 20px;
+    background: transparent;
+    position: relative;
+}
+
+body.theme-boost-override-custom-login #page::before,
+body.theme-boost-override-custom-login #page::after {
+    content: "";
+    position: fixed;
+    pointer-events: none;
+    z-index: 0;
+}
+
+body.theme-boost-override-custom-login #page::before {
+    inset: 86px -12% auto;
+    height: 48vh;
+    background:
+        radial-gradient(circle at 18% 48%, rgba(4, 169, 216, .24), transparent 30%),
+        radial-gradient(circle at 58% 30%, rgba(124, 58, 237, .18), transparent 32%),
+        radial-gradient(circle at 86% 62%, rgba(245, 158, 11, .2), transparent 30%);
+    filter: blur(22px);
+    opacity: .76;
+    animation: bocLoginAurora 18s ease-in-out infinite alternate;
+}
+
+body.theme-boost-override-custom-login #page::after {
+    right: 7%;
+    bottom: 5%;
+    width: 220px;
+    height: 220px;
+    border-radius: 999px;
+    background: radial-gradient(circle, rgba(21, 128, 61, .16), rgba(15, 108, 191, .08) 48%, transparent 70%);
+    filter: blur(4px);
+    opacity: .8;
+    animation: bocLoginPulse 8s ease-in-out infinite;
+}
+
+body.theme-boost-override-custom-login .boc-login-shell {
+    position: relative;
+    z-index: 1;
+}
+
+body.theme-boost-override-custom-login .boc-login-svg-defs {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+body.theme-boost-override-custom-login .boc-login-svg-icon {
+    display: inline-block;
+    flex: 0 0 auto;
+    fill: currentColor;
+    overflow: visible;
+    vertical-align: middle;
+}
+
+body.theme-boost-override-custom-login.boc-login-paused *,
+body.theme-boost-override-custom-login.boc-login-paused *::before,
+body.theme-boost-override-custom-login.boc-login-paused *::after {
+    animation-play-state: paused !important;
+}
+
+body.theme-boost-override-custom-login .boc-login-header {
+    width: min(100%, 1540px);
+    min-height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    margin: 0 auto;
+    padding: 7px 10px 7px 12px;
+    border: 1px solid color-mix(in srgb, var(--boc-login-border) 78%, transparent);
+    border-radius: 8px;
+    background:
+        linear-gradient(135deg, color-mix(in srgb, var(--boc-login-surface) 94%, transparent), color-mix(in srgb, var(--boc-login-primary) 4%, var(--boc-login-surface))),
+        linear-gradient(90deg, rgba(255, 255, 255, .72), rgba(255, 255, 255, .42));
+    box-shadow: 0 18px 48px rgba(21, 43, 77, .12);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+}
+
+body.theme-boost-override-custom-login .boc-login-brand {
+    max-width: 270px;
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    flex: 0 0 auto;
+    padding: 4px 8px;
+    border-radius: 8px;
+    color: var(--boc-login-ink);
+    font-size: 21px;
+    font-weight: 850;
+    letter-spacing: 0;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+body.theme-boost-override-custom-login .boc-login-brand:hover,
+body.theme-boost-override-custom-login .boc-login-brand:focus {
+    color: var(--boc-login-ink);
+    text-decoration: none;
+}
+
+body.theme-boost-override-custom-login .boc-login-mark {
+    width: 34px;
+    height: 34px;
+    display: inline-grid;
+    place-items: center;
+    flex: 0 0 34px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--boc-login-primary) 0%, var(--boc-login-accent) 48%, var(--boc-login-warning-bright) 100%);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 900;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .5), 0 10px 22px rgba(15, 108, 191, .22);
+}
+
+body.theme-boost-override-custom-login .boc-login-nav {
+    min-width: 0;
+    max-width: 980px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex: 1 1 auto;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+body.theme-boost-override-custom-login .boc-login-nav::-webkit-scrollbar {
+    display: none;
+}
+
+body.theme-boost-override-custom-login .boc-login-nav a {
+    min-height: 36px;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    position: relative;
+    padding: 7px 8px 9px;
+    color: color-mix(in srgb, var(--boc-login-ink) 82%, var(--boc-login-secondary));
+    font-size: 13px;
+    font-weight: 760;
+    letter-spacing: 0;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color .18s ease, transform .18s ease;
+}
+
+body.theme-boost-override-custom-login .boc-login-nav a::after {
+    content: "";
+    position: absolute;
+    right: 8px;
+    bottom: 1px;
+    left: 8px;
+    height: 3px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--boc-login-primary), var(--boc-login-accent));
+    opacity: 0;
+    transform: scaleX(.28);
+    transition: opacity .18s ease, transform .18s ease;
+}
+
+body.theme-boost-override-custom-login .boc-login-nav a:hover,
+body.theme-boost-override-custom-login .boc-login-nav a:focus {
+    color: var(--boc-login-primary);
+    text-decoration: none;
+    transform: translateY(-1px);
+}
+
+body.theme-boost-override-custom-login .boc-login-nav a:hover::after,
+body.theme-boost-override-custom-login .boc-login-nav a:focus::after {
+    opacity: 1;
+    transform: scaleX(1);
+}
+
+body.theme-boost-override-custom-login .boc-login-nav a:nth-child(1) {
+    --boc-nav-tone: var(--boc-login-primary);
+}
+
+body.theme-boost-override-custom-login .boc-login-nav a:nth-child(2) {
+    --boc-nav-tone: var(--boc-login-accent);
+}
+
+body.theme-boost-override-custom-login .boc-login-nav a:nth-child(3) {
+    --boc-nav-tone: var(--boc-login-success);
+}
+
+body.theme-boost-override-custom-login .boc-login-nav a:nth-child(4) {
+    --boc-nav-tone: var(--boc-login-warning);
+}
+
+body.theme-boost-override-custom-login .boc-login-nav a:nth-child(5) {
+    --boc-nav-tone: var(--boc-login-info);
+}
+
+body.theme-boost-override-custom-login .boc-login-nav a:nth-child(6) {
+    --boc-nav-tone: var(--boc-login-violet);
+}
+
+body.theme-boost-override-custom-login .boc-login-nav a:nth-child(7) {
+    --boc-nav-tone: var(--boc-login-primary-strong);
+}
+
+body.theme-boost-override-custom-login .boc-login-nav a:nth-child(8) {
+    --boc-nav-tone: var(--boc-login-rose);
+}
+
+body.theme-boost-override-custom-login .boc-login-nav-icon {
+    width: 18px;
+    height: 18px;
+    color: var(--boc-nav-tone, var(--boc-login-primary));
+    filter: drop-shadow(0 6px 8px color-mix(in srgb, var(--boc-nav-tone, var(--boc-login-primary)) 18%, transparent));
+    transition: transform .18s ease;
+}
+
+body.theme-boost-override-custom-login .boc-login-nav a:hover .boc-login-nav-icon,
+body.theme-boost-override-custom-login .boc-login-nav a:focus .boc-login-nav-icon {
+    transform: translateY(-1px) scale(1.08);
+}
+
+body.theme-boost-override-custom-login .boc-login-entry {
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    padding: 9px 18px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--boc-login-primary), var(--boc-login-primary-strong));
+    color: #fff;
+    font-weight: 850;
+    text-decoration: none;
+    box-shadow: 0 14px 28px color-mix(in srgb, var(--boc-login-primary) 24%, transparent);
+}
+
+body.theme-boost-override-custom-login .boc-login-entry:hover,
+body.theme-boost-override-custom-login .boc-login-entry:focus {
+    color: #fff;
+    text-decoration: none;
+}
+
+body.theme-boost-override-custom-login .boc-login-main {
+    width: min(100%, 1320px);
+    min-height: auto !important;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1.08fr) minmax(420px, .72fr);
+    gap: 28px;
+    align-items: stretch;
+    margin: 18px auto 0;
+    perspective: 1400px;
+}
+
+body.theme-boost-override-custom-login .login-layout-left,
+body.theme-boost-override-custom-login .login-layout-right {
+    width: auto;
+    max-width: none;
+    min-height: 0;
+    display: flex !important;
+    padding: 0;
+}
+
+body.theme-boost-override-custom-login .login-layout-left {
+    align-items: stretch;
+    height: auto !important;
+    min-height: 0 !important;
+    background: transparent !important;
+}
+
+body.theme-boost-override-custom-login .login-layout-left::after {
+    content: none !important;
+}
+
+body.theme-boost-override-custom-login .login-layout-right {
+    align-items: stretch;
+    justify-content: center;
+}
+
+body.theme-boost-override-custom-login .boc-login-left-content {
+    width: 100%;
+    max-width: none !important;
+    min-height: var(--boc-login-card-height);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    margin: 0 !important;
+    padding: 28px;
+    text-align: left !important;
+    border: 1px solid color-mix(in srgb, var(--boc-login-border) 72%, transparent);
+    border-radius: 8px;
+    background:
+        radial-gradient(circle at 92% 8%, rgba(8, 145, 178, .16), transparent 28%),
+        linear-gradient(135deg, color-mix(in srgb, var(--boc-login-surface) 84%, transparent), color-mix(in srgb, var(--boc-login-primary) 8%, var(--boc-login-surface)));
+    box-shadow:
+        0 28px 70px rgba(15, 23, 42, .14),
+        0 8px 18px rgba(15, 108, 191, .08),
+        inset 0 1px 0 rgba(255, 255, 255, .72);
+    overflow: hidden;
+    transform-style: preserve-3d;
+    backdrop-filter: blur(22px) saturate(160%);
+    -webkit-backdrop-filter: blur(22px) saturate(160%);
+    animation: bocLoginCardIn .55s ease both;
+}
+
+body.theme-boost-override-custom-login .boc-login-left-content::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(118deg, transparent 0 54%, rgba(186, 230, 253, .52) 54% 75%, transparent 75%),
+        linear-gradient(28deg, rgba(255, 255, 255, .52), transparent 38%);
+    pointer-events: none;
+}
+
+body.theme-boost-override-custom-login .boc-login-left-content::after {
+    content: "";
+    position: absolute;
+    inset: 1px;
+    border-radius: inherit;
+    background:
+        linear-gradient(145deg, rgba(255, 255, 255, .45), transparent 36%),
+        radial-gradient(circle at 82% 16%, rgba(255, 255, 255, .45), transparent 18%);
+    pointer-events: none;
+    opacity: .9;
+    z-index: 0;
+}
+
+body.theme-boost-override-custom-login .boc-login-ambient {
+    position: absolute;
+    pointer-events: none;
+    z-index: 0;
+}
+
+body.theme-boost-override-custom-login .boc-login-ambient-one {
+    top: -70px;
+    right: -86px;
+    width: 280px;
+    height: 280px;
+    border-radius: 34px;
+    background: conic-gradient(from 120deg, rgba(15, 108, 191, .24), rgba(8, 145, 178, .12), rgba(217, 119, 6, .16), rgba(15, 108, 191, .24));
+    transform: rotate(18deg);
+    animation: bocLoginFloat 9s ease-in-out infinite alternate;
+}
+
+body.theme-boost-override-custom-login .boc-login-ambient-two {
+    left: -82px;
+    bottom: -96px;
+    width: 270px;
+    height: 270px;
+    border-radius: 999px;
+    background: radial-gradient(circle, rgba(124, 58, 237, .14), rgba(217, 119, 6, .12) 52%, transparent 70%);
+    animation: bocLoginPulse 8s ease-in-out infinite;
+}
+
+body.theme-boost-override-custom-login .boc-login-slider,
+body.theme-boost-override-custom-login .boc-login-role-grid,
+body.theme-boost-override-custom-login .boc-login-data-strip,
+body.theme-boost-override-custom-login .boc-login-instructions {
+    position: relative;
+    z-index: 1;
+}
+
+body.theme-boost-override-custom-login .boc-login-slider {
+    min-height: 326px;
+    display: grid;
+    position: relative;
+    align-items: stretch;
+    perspective: 1200px;
+}
+
+body.theme-boost-override-custom-login .boc-login-slide {
+    grid-area: 1 / 1;
+    align-self: center;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 174px;
+    gap: 18px;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(18px) rotateX(2deg) scale(.98);
+    transition: opacity .34s ease, transform .34s ease;
+}
+
+body.theme-boost-override-custom-login .boc-login-slide.is-active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
+}
+
+body.theme-boost-override-custom-login .boc-login-kicker {
+    width: max-content;
+    max-width: 100%;
+    min-height: 34px;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 14px;
+    padding: 8px 13px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--boc-login-primary) 10%, var(--boc-login-surface));
+    color: var(--boc-login-primary-strong);
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--boc-login-primary) 10%, transparent);
+}
+
+body.theme-boost-override-custom-login .boc-login-kicker-icon {
+    width: 22px;
+    height: 22px;
+    color: var(--boc-login-success);
+    filter: drop-shadow(0 7px 10px color-mix(in srgb, var(--boc-login-success) 18%, transparent));
+}
+
+body.theme-boost-override-custom-login .boc-login-slide h1 {
+    max-width: 600px;
+    margin: 0 0 12px;
+    color: var(--boc-login-ink);
+    font-size: 38px;
+    font-weight: 860;
+    line-height: 1.08;
+    letter-spacing: 0;
+}
+
+body.theme-boost-override-custom-login .boc-login-slide p {
+    max-width: 560px;
+    margin: 0;
+    color: var(--boc-login-text);
+    font-size: 15.5px;
+    font-weight: 520;
+    line-height: 1.5;
+}
+
+body.theme-boost-override-custom-login .boc-login-slide-copy,
+body.theme-boost-override-custom-login .boc-login-slide-visual {
+    position: relative;
+    z-index: 1;
+}
+
+body.theme-boost-override-custom-login .boc-login-slide-visual {
+    width: 164px;
+    height: 164px;
+    display: grid;
+    place-items: center;
+    justify-self: end;
+    border: 1px solid rgba(255, 255, 255, .72);
+    border-radius: 28px;
+    background:
+        linear-gradient(145deg, rgba(255, 255, 255, .72), rgba(255, 255, 255, .24)),
+        radial-gradient(circle at 28% 18%, rgba(255, 255, 255, .72), transparent 34%);
+    box-shadow:
+        0 28px 44px rgba(15, 23, 42, .13),
+        inset 0 1px 0 rgba(255, 255, 255, .78);
+    transform: translateZ(18px) rotateX(5deg) rotateY(-8deg);
+}
+
+body.theme-boost-override-custom-login .boc-login-slide-visual::before,
+body.theme-boost-override-custom-login .boc-login-slide-visual::after {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+    border-radius: 999px;
+}
+
+body.theme-boost-override-custom-login .boc-login-slide-visual::before {
+    inset: 18px;
+    background: radial-gradient(circle, rgba(255, 255, 255, .6), transparent 68%);
+}
+
+body.theme-boost-override-custom-login .boc-login-slide-visual::after {
+    right: 13px;
+    bottom: 13px;
+    width: 24px;
+    height: 24px;
+    background: color-mix(in srgb, var(--boc-login-warning-bright) 78%, #fff);
+    box-shadow: 0 12px 18px rgba(217, 119, 6, .18);
+}
+
+body.theme-boost-override-custom-login .boc-login-slide-visual svg {
+    width: 142px;
+    height: 142px;
+    position: relative;
+    z-index: 1;
+    overflow: visible;
+    animation: bocLoginSvgFloat 5.8s ease-in-out infinite alternate;
+}
+
+body.theme-boost-override-custom-login .boc-login-slide-visual .boc-login-secure-scene {
+    width: 156px;
+    height: 156px;
+}
+
+body.theme-boost-override-custom-login .boc-login-secure-scene .boc-svg-layer {
+    transform-box: fill-box;
+    transform-origin: center;
+}
+
+body.theme-boost-override-custom-login .boc-login-secure-scene .boc-svg-layer-back {
+    animation: bocLoginLayerBack 7s ease-in-out infinite alternate;
+}
+
+body.theme-boost-override-custom-login .boc-login-secure-scene .boc-svg-layer-mid {
+    animation: bocLoginLayerMid 6s ease-in-out infinite alternate;
+}
+
+body.theme-boost-override-custom-login .boc-login-secure-scene .boc-svg-layer-front {
+    animation: bocLoginLayerFront 5.4s ease-in-out infinite alternate;
+}
+
+body.theme-boost-override-custom-login .boc-login-slide-metrics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+body.theme-boost-override-custom-login .boc-login-slide-metrics span {
+    min-width: 132px;
+    display: grid;
+    gap: 3px;
+    padding: 10px 12px;
+    border: 1px solid color-mix(in srgb, var(--boc-login-primary) 13%, var(--boc-login-border));
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--boc-login-surface) 74%, transparent);
+    box-shadow: 0 12px 24px rgba(15, 23, 42, .07);
+}
+
+body.theme-boost-override-custom-login .boc-login-slide-metrics strong {
+    color: var(--boc-login-primary-strong);
+    font-size: 20px;
+    font-weight: 900;
+    line-height: 1;
+}
+
+body.theme-boost-override-custom-login .boc-login-slide-metrics small {
+    color: var(--boc-login-muted);
+    font-size: 10.5px;
+    font-weight: 820;
+    line-height: 1.1;
+    text-transform: uppercase;
+}
+
+body.theme-boost-override-custom-login .boc-login-flow {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 22px;
+}
+
+body.theme-boost-override-custom-login .boc-login-flow span {
+    min-height: 52px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border: 1px solid color-mix(in srgb, var(--boc-login-border) 82%, transparent);
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--boc-login-surface) 82%, transparent);
+    color: var(--boc-login-text);
+    font-size: 12px;
+    font-weight: 830;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, .06);
+}
+
+body.theme-boost-override-custom-login .boc-login-flow i {
+    width: 28px;
+    height: 28px;
+    display: inline-grid;
+    place-items: center;
+    flex: 0 0 28px;
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--boc-login-primary) 11%, var(--boc-login-surface));
+    color: var(--boc-login-primary);
+    font-size: 12px;
+}
+
+body.theme-boost-override-custom-login .boc-login-dots {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 18px;
+}
+
+body.theme-boost-override-custom-login .boc-login-dots button {
+    width: 22px;
+    height: 7px;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--boc-login-primary) 16%, var(--boc-login-surface));
+    box-shadow: none;
+    transition: width .18s ease, background .18s ease, transform .18s ease;
+}
+
+body.theme-boost-override-custom-login .boc-login-dots button.is-active {
+    width: 40px;
+    background: linear-gradient(90deg, var(--boc-login-primary), var(--boc-login-accent));
+    transform: translateY(-1px);
+}
+
+body.theme-boost-override-custom-login .boc-login-role-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 16px;
+}
+
+body.theme-boost-override-custom-login .boc-login-role-card {
+    min-height: 104px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 13px;
+    border: 1px solid color-mix(in srgb, var(--boc-login-border) 82%, transparent);
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--boc-login-surface) 82%, transparent);
+    box-shadow: 0 14px 30px rgba(15, 23, 42, .07);
+    transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+}
+
+body.theme-boost-override-custom-login .boc-login-role-card:hover {
+    border-color: color-mix(in srgb, var(--boc-role-tone, var(--boc-login-primary)) 28%, transparent);
+    box-shadow: 0 20px 42px color-mix(in srgb, var(--boc-role-tone, var(--boc-login-primary)) 16%, transparent);
+    transform: translateY(-4px) rotateX(1deg);
+}
+
+body.theme-boost-override-custom-login .boc-role-users {
+    --boc-role-tone: var(--boc-login-primary);
+    --boc-role-tone-end: var(--boc-login-accent);
+}
+
+body.theme-boost-override-custom-login .boc-role-students {
+    --boc-role-tone: var(--boc-login-success);
+    --boc-role-tone-end: var(--boc-login-warning-bright);
+}
+
+body.theme-boost-override-custom-login .boc-role-teachers {
+    --boc-role-tone: var(--boc-login-warning);
+    --boc-role-tone-end: var(--boc-login-warning-bright);
+}
+
+body.theme-boost-override-custom-login .boc-role-parents {
+    --boc-role-tone: var(--boc-login-violet);
+    --boc-role-tone-end: var(--boc-login-rose);
+}
+
+body.theme-boost-override-custom-login .boc-login-role-card span {
+    width: 40px;
+    height: 40px;
+    display: inline-grid;
+    place-items: center;
+    border-radius: 10px;
+    color: var(--boc-role-tone, var(--boc-login-primary));
+}
+
+body.theme-boost-override-custom-login .boc-login-role-icon {
+    width: 40px;
+    height: 40px;
+    filter: drop-shadow(0 12px 16px color-mix(in srgb, var(--boc-role-tone, var(--boc-login-primary)) 22%, transparent));
+    transition: transform .2s ease;
+}
+
+body.theme-boost-override-custom-login .boc-login-role-card:hover .boc-login-role-icon {
+    transform: translateY(-2px) rotate(-2deg) scale(1.05);
+}
+
+body.theme-boost-override-custom-login .boc-login-role-card strong {
+    display: block;
+    margin-top: 12px;
+    color: var(--boc-login-ink);
+    font-size: 23px;
+    font-weight: 900;
+    line-height: 1;
+}
+
+body.theme-boost-override-custom-login .boc-login-role-card small {
+    display: block;
+    margin-top: 5px;
+    color: var(--boc-login-muted);
+    font-size: 12px;
+    font-weight: 780;
+    line-height: 1.2;
+    text-transform: lowercase;
+}
+
+body.theme-boost-override-custom-login .boc-login-data-strip {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 12px;
+}
+
+body.theme-boost-override-custom-login .boc-login-data-strip span {
+    min-height: 58px;
+    display: grid;
+    grid-template-columns: 34px minmax(0, auto);
+    grid-template-rows: auto auto;
+    column-gap: 10px;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid color-mix(in srgb, var(--boc-login-border) 82%, transparent);
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--boc-login-surface) 78%, transparent);
+}
+
+body.theme-boost-override-custom-login .boc-login-data-strip .boc-login-data-icon {
+    width: 34px;
+    height: 34px;
+    grid-row: 1 / 3;
+    color: var(--boc-login-primary);
+    filter: drop-shadow(0 10px 14px color-mix(in srgb, var(--boc-login-primary) 18%, transparent));
+}
+
+body.theme-boost-override-custom-login .boc-login-data-strip strong {
+    color: var(--boc-login-primary-strong);
+    font-size: 21px;
+    font-weight: 900;
+    line-height: 1;
+}
+
+body.theme-boost-override-custom-login .boc-login-data-strip small {
+    color: var(--boc-login-muted);
+    font-size: 11px;
+    font-weight: 780;
+    line-height: 1.15;
+}
+
+body.theme-boost-override-custom-login .boc-login-instructions {
+    margin-top: 14px;
+    padding: 14px;
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--boc-login-warning-bright) 11%, var(--boc-login-surface));
+    color: var(--boc-login-text);
+}
+
+body.theme-boost-override-custom-login .login-layout-right-content,
+body.theme-boost-override-custom-login .login-container {
+    width: 100%;
+    max-width: 480px;
+    height: 100%;
+    display: flex;
+    align-items: stretch;
+    margin: 0;
+}
+
+body.theme-boost-override-custom-login .login-container > div {
+    width: 100%;
+    min-width: 0;
+    height: 100%;
+    display: flex;
+    align-items: stretch;
+}
+
+body.theme-boost-override-custom-login .loginform {
+    width: 100%;
+    flex: 1 1 100%;
+    min-height: var(--boc-login-card-height);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    padding: 34px 30px;
+    border: 1px solid color-mix(in srgb, var(--boc-login-border) 88%, transparent);
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--boc-login-surface) 94%, transparent);
+    box-shadow:
+        0 30px 76px rgba(15, 23, 42, .16),
+        0 8px 22px rgba(15, 108, 191, .08),
+        inset 0 1px 0 rgba(255, 255, 255, .82);
+    backdrop-filter: blur(22px) saturate(160%);
+    -webkit-backdrop-filter: blur(22px) saturate(160%);
+    animation: bocLoginCardIn .6s .08s ease both;
+}
+
+body.theme-boost-override-custom-login .loginform::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    padding: 1px;
+    border-radius: inherit;
+    background: linear-gradient(135deg, color-mix(in srgb, var(--boc-login-primary) 52%, transparent), color-mix(in srgb, var(--boc-login-accent) 16%, transparent), color-mix(in srgb, var(--boc-login-warning-bright) 24%, transparent));
+    pointer-events: none;
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+}
+
+body.theme-boost-override-custom-login .loginform::after {
+    content: "";
+    position: absolute;
+    right: -18px;
+    bottom: -26px;
+    width: 132px;
+    height: 132px;
+    border-radius: 22px;
+    background: linear-gradient(135deg, rgba(15, 108, 191, .14), rgba(245, 158, 11, .2));
+    transform: rotate(12deg);
+    z-index: -1;
+}
+
+body.theme-boost-override-custom-login .loginform h1 {
+    margin: 0 0 7px;
+    color: var(--boc-login-ink);
+    font-size: 32px;
+    font-weight: 860;
+    line-height: 1.08;
+    letter-spacing: 0;
+}
+
+body.theme-boost-override-custom-login .loginform .login-form-username .visually-hidden,
+body.theme-boost-override-custom-login .loginform .login-form-password .visually-hidden {
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    margin: 0 0 8px !important;
+    clip: auto !important;
+    clip-path: none !important;
+    display: inline-block;
+    overflow: visible !important;
+    color: var(--boc-login-ink);
+    font-size: 14px;
+    font-weight: 850;
+    line-height: 1.2;
+    white-space: normal !important;
+}
+
+body.theme-boost-override-custom-login .loginform > .text-muted {
+    margin-bottom: 22px !important;
+    color: var(--boc-login-muted) !important;
+    font-size: 15px;
+    font-weight: 720;
+}
+
+body.theme-boost-override-custom-login .login-form-username,
+body.theme-boost-override-custom-login .login-form-password {
+    width: 100%;
+    position: relative;
+    margin-bottom: 17px !important;
+}
+
+body.theme-boost-override-custom-login .login-form-username::before,
+body.theme-boost-override-custom-login .login-form-password::before {
+    content: "";
+    position: absolute;
+    top: 38px;
+    left: 14px;
+    z-index: 6;
+    pointer-events: none;
+    width: 34px;
+    height: 34px;
+    display: inline-grid;
+    place-items: center;
+    border-radius: 8px;
+    background-color: color-mix(in srgb, var(--boc-login-primary) 9%, var(--boc-login-surface));
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 21px 21px;
+    box-shadow:
+        0 8px 16px color-mix(in srgb, var(--boc-login-primary) 10%, transparent),
+        inset 0 1px 0 rgba(255, 255, 255, .82);
+}
+
+body.theme-boost-override-custom-login .login-form-username::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cdefs%3E%3ClinearGradient id='bocFormUserA' x1='5' y1='3' x2='20' y2='22'%3E%3Cstop stop-color='%230ea5e9'/%3E%3Cstop offset='1' stop-color='%232563eb'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='12' cy='8' r='4' fill='url(%23bocFormUserA)'/%3E%3Cpath d='M4.5 20c1.2-5 13.8-5 15 0' stroke='%230750ca' stroke-width='2.4' stroke-linecap='round'/%3E%3Ccircle cx='18.2' cy='7.2' r='2.6' fill='%2314b8a6'/%3E%3C/svg%3E");
+}
+
+body.theme-boost-override-custom-login .login-form-password::before {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cdefs%3E%3ClinearGradient id='bocFormLockA' x1='5' y1='4' x2='20' y2='22'%3E%3Cstop stop-color='%230ea5e9'/%3E%3Cstop offset='.58' stop-color='%232563eb'/%3E%3Cstop offset='1' stop-color='%2314b8a6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='5' y='10' width='14' height='10' rx='3' fill='url(%23bocFormLockA)'/%3E%3Cpath d='M8 10V8a4 4 0 0 1 8 0v2' stroke='%230f172a' stroke-width='2.3' stroke-linecap='round'/%3E%3Cpath d='M12 14v3' stroke='%23fff' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
+body.theme-boost-override-custom-login .loginform .form-label {
+    margin-bottom: 8px;
+    color: var(--boc-login-ink);
+    font-size: 14px;
+    font-weight: 850;
+    letter-spacing: 0;
+}
+
+body.theme-boost-override-custom-login .loginform .form-control {
+    width: 100% !important;
+    max-width: none !important;
+    min-height: 56px;
+    padding: 13px 14px 13px 58px;
+    border: 1px solid var(--boc-login-border);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, .94);
+    color: var(--boc-login-ink);
+    font-size: 15px;
+    font-weight: 520;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, .05);
+    transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
+}
+
+body.theme-boost-override-custom-login .loginform .form-control::placeholder {
+    color: #94a3b8;
+}
+
+body.theme-boost-override-custom-login .loginform .form-control:focus {
+    border-color: color-mix(in srgb, var(--boc-login-primary) 78%, var(--boc-login-border));
+    background: #fff;
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--boc-login-primary) 12%, transparent), 0 12px 26px rgba(15, 23, 42, .08);
+}
+
+body.theme-boost-override-custom-login .loginform .toggle-sensitive-wrapper {
+    min-height: 56px;
+    display: block !important;
+    position: relative;
+}
+
+body.theme-boost-override-custom-login .loginform .toggle-sensitive-wrapper .form-control {
+    display: block;
+    padding-right: 66px;
+    border-top-right-radius: 8px !important;
+    border-bottom-right-radius: 8px !important;
+}
+
+body.theme-boost-override-custom-login .loginform .toggle-sensitive-btn {
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    width: 42px;
+    height: 42px;
+    display: inline-grid;
+    place-items: center;
+    align-self: center;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 8px !important;
+    background: color-mix(in srgb, var(--boc-login-primary) 9%, var(--boc-login-surface));
+    color: var(--boc-login-primary);
+    box-shadow: none;
+    transform: translateY(-50%);
+    z-index: 5;
+    transition: transform .18s ease, background .18s ease, box-shadow .18s ease;
+}
+
+body.theme-boost-override-custom-login .loginform .toggle-sensitive-btn .icon,
+body.theme-boost-override-custom-login .loginform .toggle-sensitive-btn i {
+    display: none !important;
+}
+
+body.theme-boost-override-custom-login .loginform .toggle-sensitive-btn::before {
+    content: "";
+    width: 24px;
+    height: 24px;
+    display: block;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cdefs%3E%3ClinearGradient id='bocFormEyeA' x1='3' y1='4' x2='21' y2='20'%3E%3Cstop stop-color='%230ea5e9'/%3E%3Cstop offset='1' stop-color='%230750ca'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M3 12s3.2-6 9-6 9 6 9 6-3.2 6-9 6-9-6-9-6Z' fill='%23e0f2fe' stroke='url(%23bocFormEyeA)' stroke-width='2'/%3E%3Ccircle cx='12' cy='12' r='3.2' fill='url(%23bocFormEyeA)'/%3E%3Ccircle cx='13.2' cy='10.8' r='1' fill='%23fff'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+body.theme-boost-override-custom-login .loginform .toggle-sensitive-btn:hover,
+body.theme-boost-override-custom-login .loginform .toggle-sensitive-btn:focus {
+    background: color-mix(in srgb, var(--boc-login-primary) 14%, var(--boc-login-surface));
+    color: var(--boc-login-primary-strong);
+    outline: 0;
+    box-shadow: 0 10px 18px color-mix(in srgb, var(--boc-login-primary) 14%, transparent);
+    transform: translateY(-50%) scale(1.04);
+}
+
+body.theme-boost-override-custom-login .loginform .toggle-sensitive-btn:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--boc-login-primary) 42%, transparent);
+    outline-offset: 2px;
+}
+
+body.theme-boost-override-custom-login .loginform .text-end {
+    margin-top: -3px;
+    margin-bottom: 18px !important;
+}
+
+body.theme-boost-override-custom-login .loginform a,
+body.theme-boost-override-custom-login .login-cookiesnotice .btn-link {
+    color: var(--boc-login-primary-strong);
+    font-size: 14px;
+    font-weight: 850;
+    text-decoration: none;
+}
+
+body.theme-boost-override-custom-login .loginform a:hover,
+body.theme-boost-override-custom-login .loginform a:focus,
+body.theme-boost-override-custom-login .login-cookiesnotice .btn-link:hover,
+body.theme-boost-override-custom-login .login-cookiesnotice .btn-link:focus {
+    color: var(--boc-login-primary);
+    text-decoration: underline;
+}
+
+body.theme-boost-override-custom-login .login-form-submit {
+    margin-bottom: 16px !important;
+}
+
+body.theme-boost-override-custom-login .loginform .alert {
+    margin-bottom: 16px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 760;
+    line-height: 1.35;
+    box-shadow: 0 12px 24px rgba(15, 23, 42, .06);
+}
+
+body.theme-boost-override-custom-login .loginform .alert-danger {
+    border-color: color-mix(in srgb, var(--boc-login-rose) 28%, var(--boc-login-border));
+    background: linear-gradient(135deg, rgba(254, 242, 242, .98), rgba(255, 255, 255, .88));
+    color: color-mix(in srgb, var(--boc-login-rose) 82%, var(--boc-login-ink));
+}
+
+body.theme-boost-override-custom-login .loginform .alert-info {
+    border-color: color-mix(in srgb, var(--boc-login-primary) 28%, var(--boc-login-border));
+    background: linear-gradient(135deg, rgba(239, 246, 255, .98), rgba(255, 255, 255, .88));
+    color: color-mix(in srgb, var(--boc-login-primary) 82%, var(--boc-login-ink));
+}
+
+body.theme-boost-override-custom-login #loginbtn,
+body.theme-boost-override-custom-login #loginguestbtn {
+    width: 100%;
+    min-height: 56px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    position: relative;
+    border: 0;
+    border-radius: 8px;
+    background: linear-gradient(135deg, var(--boc-login-primary), var(--boc-login-accent));
+    color: #fff;
+    font-size: 17px;
+    font-weight: 880;
+    box-shadow: 0 18px 36px color-mix(in srgb, var(--boc-login-primary) 28%, transparent);
+    transition: transform .18s ease, box-shadow .18s ease;
+}
+
+body.theme-boost-override-custom-login #loginbtn::after {
+    content: "";
+    width: 21px;
+    height: 21px;
+    display: inline-block;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M5 12h13M13 7l5 5-5 5' stroke='%23fff' stroke-width='2.7' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='5' cy='12' r='2.2' fill='%23a7f3d0'/%3E%3C/svg%3E") center / contain no-repeat;
+    transition: transform .18s ease;
+}
+
+body.theme-boost-override-custom-login #loginbtn:hover,
+body.theme-boost-override-custom-login #loginbtn:focus,
+body.theme-boost-override-custom-login #loginguestbtn:hover,
+body.theme-boost-override-custom-login #loginguestbtn:focus {
+    transform: translateY(-1px);
+    box-shadow: 0 22px 42px color-mix(in srgb, var(--boc-login-primary) 34%, transparent);
+}
+
+body.theme-boost-override-custom-login #loginbtn:hover::after,
+body.theme-boost-override-custom-login #loginbtn:focus::after {
+    transform: translateX(2px);
+}
+
+body.theme-boost-override-custom-login .login-cookiesnotice {
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid var(--boc-login-border);
+}
+
+body.theme-boost-override-custom-login .loginform .login-divider {
+    margin: 18px 0 !important;
+    border-color: color-mix(in srgb, var(--boc-login-border) 88%, transparent) !important;
+}
+
+body.theme-boost-override-custom-login .loginform .login-identityprovider-btn,
+body.theme-boost-override-custom-login .loginform .login-signup .btn,
+body.theme-boost-override-custom-login .loginform .d-flex > .btn-secondary {
+    min-height: 46px;
+    border: 1px solid color-mix(in srgb, var(--boc-login-primary) 18%, var(--boc-login-border));
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--boc-login-surface) 88%, transparent);
+    color: var(--boc-login-ink);
+    font-size: 14px;
+    font-weight: 840;
+    box-shadow: 0 10px 22px rgba(15, 23, 42, .06);
+    transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+}
+
+body.theme-boost-override-custom-login .loginform .login-identityprovider-btn:hover,
+body.theme-boost-override-custom-login .loginform .login-signup .btn:hover,
+body.theme-boost-override-custom-login .loginform .d-flex > .btn-secondary:hover,
+body.theme-boost-override-custom-login .loginform .login-identityprovider-btn:focus,
+body.theme-boost-override-custom-login .loginform .login-signup .btn:focus,
+body.theme-boost-override-custom-login .loginform .d-flex > .btn-secondary:focus {
+    border-color: color-mix(in srgb, var(--boc-login-primary) 38%, var(--boc-login-border));
+    color: var(--boc-login-primary-strong);
+    box-shadow: 0 14px 28px color-mix(in srgb, var(--boc-login-primary) 11%, transparent);
+    transform: translateY(-1px);
+}
+
+body.theme-boost-override-custom-login .login-separator {
+    margin-top: 24px !important;
+    margin-bottom: 24px !important;
+    color: var(--boc-login-muted);
+    font-weight: 780;
+}
+
+body.theme-boost-override-custom-login .login-languagemenu {
+    margin-top: 22px !important;
+    margin-bottom: 18px !important;
+}
+
+body.theme-boost-override-custom-login .boc-login-feature-rail {
+    width: min(100%, 1320px);
+    display: block;
+    margin: 18px auto 0;
+    padding: 14px;
+    border: 1px solid color-mix(in srgb, var(--boc-login-border) 76%, transparent);
+    border-radius: 10px;
+    background:
+        linear-gradient(135deg, color-mix(in srgb, var(--boc-login-surface) 86%, transparent), color-mix(in srgb, var(--boc-login-primary) 4%, var(--boc-login-surface))),
+        rgba(255, 255, 255, .58);
+    box-shadow:
+        0 22px 52px rgba(15, 23, 42, .1),
+        inset 0 1px 0 rgba(255, 255, 255, .76);
+    backdrop-filter: blur(20px) saturate(150%);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    overflow: hidden;
+}
+
+body.theme-boost-override-custom-login .boc-login-feature-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 12px;
+}
+
+body.theme-boost-override-custom-login .boc-login-feature-head span {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 11px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--boc-login-primary) 10%, var(--boc-login-surface));
+    color: var(--boc-login-primary-strong);
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+body.theme-boost-override-custom-login .boc-login-head-icon {
+    width: 18px;
+    height: 18px;
+    color: var(--boc-login-warning);
+    filter: drop-shadow(0 8px 10px rgba(217, 119, 6, .18));
+}
+
+body.theme-boost-override-custom-login .boc-login-feature-head strong {
+    color: var(--boc-login-text);
+    font-size: 13px;
+    font-weight: 760;
+    text-align: right;
+}
+
+body.theme-boost-override-custom-login .boc-login-feature-viewport {
+    overflow: hidden;
+}
+
+body.theme-boost-override-custom-login .boc-login-feature-track {
+    width: max-content;
+    display: flex;
+    gap: 12px;
+    will-change: transform;
+    animation: bocLoginFeatureMarquee 58s linear 2s infinite;
+}
+
+body.theme-boost-override-custom-login .boc-login-feature-track:hover {
+    animation-play-state: paused;
+}
+
+body.theme-boost-override-custom-login .boc-login-feature-group {
+    display: flex;
+    gap: 12px;
+}
+
+body.theme-boost-override-custom-login .boc-login-feature-card {
+    --boc-feature-tone: var(--boc-login-primary);
+    width: 238px;
+    min-height: 112px;
+    display: grid;
+    grid-template-columns: 42px minmax(0, 1fr);
+    grid-template-rows: auto auto auto;
+    column-gap: 11px;
+    row-gap: 3px;
+    padding: 13px;
+    border: 1px solid color-mix(in srgb, var(--boc-feature-tone) 13%, var(--boc-login-border));
+    border-radius: 8px;
+    background:
+        linear-gradient(145deg, rgba(255, 255, 255, .9), rgba(255, 255, 255, .66)),
+        color-mix(in srgb, var(--boc-feature-tone) 5%, var(--boc-login-surface));
+    box-shadow: 0 14px 28px rgba(15, 23, 42, .07);
+    transform: translateZ(0);
+    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+
+body.theme-boost-override-custom-login .boc-login-feature-card:hover {
+    border-color: color-mix(in srgb, var(--boc-feature-tone) 34%, var(--boc-login-border));
+    box-shadow: 0 20px 36px color-mix(in srgb, var(--boc-feature-tone) 14%, transparent);
+    transform: translateY(-3px);
+}
+
+body.theme-boost-override-custom-login .boc-login-feature-card > .boc-login-feature-svg {
+    width: 42px;
+    height: 42px;
+    grid-row: 1 / 4;
+    color: var(--boc-feature-tone);
+    filter: drop-shadow(0 12px 16px color-mix(in srgb, var(--boc-feature-tone) 22%, transparent));
+    transform: translateZ(16px);
+    transition: transform .2s ease;
+}
+
+body.theme-boost-override-custom-login .boc-login-feature-card:hover > .boc-login-feature-svg {
+    transform: translateY(-2px) rotate(-2deg) scale(1.05);
+}
+
+body.theme-boost-override-custom-login .boc-login-feature-card h3 {
+    margin: 0;
+    color: var(--boc-login-ink);
+    font-size: 14px;
+    font-weight: 880;
+    line-height: 1.15;
+}
+
+body.theme-boost-override-custom-login .boc-login-feature-card p {
+    margin: 0;
+    color: var(--boc-login-muted);
+    font-size: 11.5px;
+    font-weight: 620;
+    line-height: 1.3;
+}
+
+body.theme-boost-override-custom-login .boc-login-feature-card strong {
+    margin-top: 3px;
+    color: color-mix(in srgb, var(--boc-feature-tone) 84%, var(--boc-login-ink));
+    font-size: 12px;
+    font-weight: 880;
+    line-height: 1.1;
+}
+
+body.theme-boost-override-custom-login .boc-feature-course,
+body.theme-boost-override-custom-login .boc-feature-grade {
+    --boc-feature-tone: var(--boc-login-primary);
+}
+
+body.theme-boost-override-custom-login .boc-feature-activity,
+body.theme-boost-override-custom-login .boc-feature-parent {
+    --boc-feature-tone: var(--boc-login-success);
+}
+
+body.theme-boost-override-custom-login .boc-feature-quiz,
+body.theme-boost-override-custom-login .boc-feature-secure {
+    --boc-feature-tone: var(--boc-login-info);
+}
+
+body.theme-boost-override-custom-login .boc-feature-cert,
+body.theme-boost-override-custom-login .boc-feature-calendar {
+    --boc-feature-tone: var(--boc-login-warning);
+}
+
+body.theme-boost-override-custom-login .boc-feature-attendance,
+body.theme-boost-override-custom-login .boc-feature-notice {
+    --boc-feature-tone: var(--boc-login-accent);
+}
+
+body.theme-boost-override-custom-login #page-footer {
+    width: min(100%, 1320px);
+    position: relative;
+    z-index: 10;
+    margin: 18px auto 0;
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--boc-login-surface) 80%, transparent);
+    box-shadow: 0 18px 44px rgba(15, 23, 42, .08);
+    backdrop-filter: blur(18px) saturate(150%);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+}
+
+body.theme-boost-override-custom-login .btn-footer-popover {
+    width: 44px;
+    height: 44px;
+    display: inline-grid;
+    place-items: center;
+    border: 1px solid color-mix(in srgb, var(--boc-login-primary) 22%, var(--boc-login-border));
+    background: color-mix(in srgb, var(--boc-login-surface) 86%, transparent) !important;
+    color: var(--boc-login-primary) !important;
+    box-shadow: 0 16px 30px color-mix(in srgb, var(--boc-login-primary) 16%, transparent);
+}
+
+body.theme-boost-override-custom-login .btn-footer-popover .fa-question {
+    display: none !important;
+}
+
+body.theme-boost-override-custom-login .btn-footer-popover::before {
+    content: "";
+    width: 24px;
+    height: 24px;
+    display: block;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none'%3E%3Cdefs%3E%3ClinearGradient id='bocFooterHelpA' x1='4' y1='3' x2='20' y2='21'%3E%3Cstop stop-color='%230ea5e9'/%3E%3Cstop offset='1' stop-color='%230750ca'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='12' cy='12' r='9' fill='url(%23bocFooterHelpA)'/%3E%3Cpath d='M9.6 9.2a2.8 2.8 0 1 1 4.7 2.1c-1.3 1-1.8 1.5-1.8 3.1M12.5 18h.1' stroke='%23fff' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+body.theme-boost-override-custom-login.boc-login-ready .boc-login-brand,
+body.theme-boost-override-custom-login.boc-login-ready .boc-login-nav a,
+body.theme-boost-override-custom-login.boc-login-ready .boc-login-entry {
+    animation: bocLoginNavIn .45s ease both;
+}
+
+body.theme-boost-override-custom-login.boc-login-ready .boc-login-role-card,
+body.theme-boost-override-custom-login.boc-login-ready .boc-login-data-strip span,
+body.theme-boost-override-custom-login.boc-login-ready .boc-login-feature-card {
+    animation: bocLoginTileIn .48s ease both;
+}
+
+body.theme-boost-override-custom-login.boc-login-ready .boc-login-role-card:nth-child(2) {
+    animation-delay: .06s;
+}
+
+body.theme-boost-override-custom-login.boc-login-ready .boc-login-role-card:nth-child(3) {
+    animation-delay: .12s;
+}
+
+body.theme-boost-override-custom-login.boc-login-ready .boc-login-role-card:nth-child(4) {
+    animation-delay: .18s;
+}
+
+@media (max-width: 1180px) {
+    body.theme-boost-override-custom-login {
+        --boc-login-card-height: 640px;
+    }
+
+    body.theme-boost-override-custom-login .boc-login-header {
+        gap: 12px;
+    }
+
+    body.theme-boost-override-custom-login .boc-login-brand {
+        max-width: 220px;
+        font-size: 18px;
+    }
+
+    body.theme-boost-override-custom-login .boc-login-nav a {
+        padding-right: 6px;
+        padding-left: 6px;
+        font-size: 12.5px;
+    }
+
+    body.theme-boost-override-custom-login .boc-login-main {
+        grid-template-columns: minmax(0, 1fr) 430px;
+        gap: 24px;
+    }
+
+    body.theme-boost-override-custom-login .boc-login-slide h1 {
+        font-size: 34px;
+    }
+
+    body.theme-boost-override-custom-login .boc-login-slide {
+        grid-template-columns: minmax(0, 1fr) 138px;
+    }
+
+    body.theme-boost-override-custom-login .boc-login-slide-visual {
+        width: 134px;
+        height: 134px;
+    }
+
+    body.theme-boost-override-custom-login .boc-login-slide-visual svg {
+        width: 118px;
+        height: 118px;
+    }
+
+    body.theme-boost-override-custom-login .boc-login-slide-visual .boc-login-secure-scene {
+        width: 128px;
+        height: 128px;
+    }
+
+    body.theme-boost-override-custom-login .boc-login-flow,
+    body.theme-boost-override-custom-login .boc-login-data-strip {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 920px) {
+    body.theme-boost-override-custom-login {
+        overflow-x: hidden;
+    }
+
+    body.theme-boost-override-custom-login #page {
+        padding: 12px;
+    }
+
+    body.theme-boost-override-custom-login .boc-login-header {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 10px;
+    }
+
+    body.theme-boost-override-custom-login .boc-login-nav {
+        grid-column: 1 / -1;
+        justify-content: flex-start;
+        order: 3;
+    }
+
+    body.theme-boost-override-custom-login .boc-login-main {
+        min-height: auto !important;
+        grid-template-columns: 1fr;
+        gap: 16px;
+        margin-top: 16px;
+    }
+
+    body.theme-boost-override-custom-login .login-layout-left,
+    body.theme-boost-override-custom-login .login-layout-right {
+        width: 100%;
+        flex: none;
+    }
+
+    body.theme-boost-override-custom-login .boc-login-left-content {
+        min-height: 0;
+        padding: 22px;
+    }
+
+    body.theme-boost-override-custom-login .loginform {
+        min-height: auto;
+    }
+
+    body.theme-boost-override-custom-login .boc-login-slide h1 {
+        font-size: 34px;
+    }
+
+    body.theme-boost-override-custom-login .boc-login-slide p {
+        font-size: 16px;
+    }
+
+    body.theme-boost-override-custom-login .boc-login-role-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    body.theme-boost-override-custom-login .login-layout-right-content,
+    body.theme-boost-override-custom-login .login-container {
+        max-width: none;
+        height: auto;
+        justify-content: center;
+    }
+
+    body.theme-boost-override-custom-login .boc-login-feature-rail {
+        margin-top: 16px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    body.theme-boost-override-custom-login .login-layout-left {
+        display: none !important;
+    }
+}
+
+@media (max-width: 767.98px) {
+    body.theme-boost-override-custom-login .boc-login-feature-rail {
+        display: none;
+    }
+}
+
+@media (max-width: 560px) {
+    body.theme-boost-override-custom-login .boc-login-brand {
+        max-width: 210px;
+        font-size: 17px;
+    }
+
+    body.theme-boost-override-custom-login .boc-login-entry {
+        min-height: 36px;
+        padding: 7px 12px;
+        font-size: 14px;
+    }
+
+    body.theme-boost-override-custom-login .boc-login-nav {
+        gap: 8px;
+    }
+
+    body.theme-boost-override-custom-login .boc-login-nav a {
+        font-size: 12px;
+    }
+
+    body.theme-boost-override-custom-login .boc-login-left-content,
+    body.theme-boost-override-custom-login .loginform {
+        padding: 18px;
+    }
+
+    body.theme-boost-override-custom-login .boc-login-slide {
+        grid-template-columns: 1fr;
+    }
+
+    body.theme-boost-override-custom-login .boc-login-slide-visual {
+        display: none;
+    }
+
+    body.theme-boost-override-custom-login .boc-login-slide h1 {
+        font-size: 30px;
+    }
+
+    body.theme-boost-override-custom-login .boc-login-flow,
+    body.theme-boost-override-custom-login .boc-login-data-strip {
+        grid-template-columns: 1fr;
+    }
+
+    body.theme-boost-override-custom-login .boc-login-role-grid {
+        gap: 10px;
+    }
+
+    body.theme-boost-override-custom-login .boc-login-role-card {
+        min-height: 112px;
+        padding: 13px;
+    }
+
+    body.theme-boost-override-custom-login .loginform h1 {
+        font-size: 29px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body.theme-boost-override-custom-login *,
+    body.theme-boost-override-custom-login *::before,
+    body.theme-boost-override-custom-login *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+    }
+}
+
+@keyframes bocLoginAurora {
+    0% {
+        transform: translate3d(-2%, 0, 0) scale(1);
+    }
+    100% {
+        transform: translate3d(2%, 3%, 0) scale(1.05);
+    }
+}
+
+@keyframes bocLoginPulse {
+    0%,
+    100% {
+        opacity: .68;
+        transform: scale(1);
+    }
+    50% {
+        opacity: .94;
+        transform: scale(1.06);
+    }
+}
+
+@keyframes bocLoginFloat {
+    0% {
+        transform: translate3d(0, 0, 0) rotate(18deg);
+    }
+    100% {
+        transform: translate3d(-18px, 18px, 0) rotate(24deg);
+    }
+}
+
+@keyframes bocLoginSvgFloat {
+    0% {
+        transform: translate3d(0, 0, 0) rotate(-2deg);
+    }
+    100% {
+        transform: translate3d(0, -8px, 0) rotate(3deg);
+    }
+}
+
+@keyframes bocLoginLayerBack {
+    0% {
+        transform: translate3d(-2px, 3px, 0) rotate(-1deg);
+    }
+    100% {
+        transform: translate3d(4px, -3px, 0) rotate(1deg);
+    }
+}
+
+@keyframes bocLoginLayerMid {
+    0% {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+    100% {
+        transform: translate3d(0, -7px, 0) scale(1.025);
+    }
+}
+
+@keyframes bocLoginLayerFront {
+    0% {
+        transform: translate3d(3px, 2px, 0) rotate(1deg);
+    }
+    100% {
+        transform: translate3d(-4px, -6px, 0) rotate(-1deg);
+    }
+}
+
+@keyframes bocLoginFeatureMarquee {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+    100% {
+        transform: translate3d(calc(-50% - 6px), 0, 0);
+    }
+}
+
+@keyframes bocLoginCardIn {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes bocLoginNavIn {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes bocLoginTileIn {
+    from {
+        opacity: 0;
+        transform: translateY(14px) scale(.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
