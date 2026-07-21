@@ -49,12 +49,21 @@ $isdashboard = $PAGE->pagelayout === 'mydashboard';
 $iscourseindex = ($PAGE->pagelayout === 'coursecategory' && $PAGE->pagetype === 'course-index-category') ||
         $PAGE->pagetype === 'course-search';
 $iscourseindexroot = $PAGE->pagetype === 'course-index-category' && optional_param('categoryid', 0, PARAM_INT) === 0;
+$currentpath = $PAGE->url->get_path();
+$usesmodernheader = $isdashboard || in_array($currentpath, [
+    '/user/profile.php',
+    '/grade/report/overview/index.php',
+    '/calendar/view.php',
+    '/user/files.php',
+    '/reportbuilder/index.php',
+    '/user/preferences.php',
+], true);
 $extraclasses = ['uses-drawers'];
 if ($isfrontpage) {
     $extraclasses[] = 'theme-boost-override-custom-frontpage';
     $PAGE->requires->css(new \moodle_url('/theme/boost_override_custom/style/frontpage.css'));
 }
-if ($isdashboard) {
+if ($usesmodernheader) {
     $extraclasses[] = 'theme-boost-override-custom-dashboard-header';
     $PAGE->requires->css(new \moodle_url('/theme/boost_override_custom/style/dashboardheader.css'));
 }
