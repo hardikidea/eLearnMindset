@@ -51,6 +51,7 @@ $iscourseindex = ($PAGE->pagelayout === 'coursecategory' && $PAGE->pagetype === 
 $iscourseindexroot = $PAGE->pagetype === 'course-index-category' && optional_param('categoryid', 0, PARAM_INT) === 0;
 $currentpath = $PAGE->url->get_path();
 $ismycourses = $currentpath === '/my/courses.php';
+$isgradeoverview = $currentpath === '/grade/report/overview/index.php';
 $usesmodernheader = $isdashboard || in_array($currentpath, [
     '/user/profile.php',
     '/my/courses.php',
@@ -369,6 +370,11 @@ if ($ismycourses) {
         })();
 JS
     );
+}
+if ($isgradeoverview) {
+    $extraclasses[] = 'theme-boost-override-custom-gradeoverview';
+    $PAGE->requires->css(new \moodle_url('/theme/boost_override_custom/style/gradeoverview.css'));
+    $PAGE->requires->js(new \moodle_url('/theme/boost_override_custom/javascript/gradeoverview.js'));
 }
 if ($iscourseindex) {
     $extraclasses[] = 'theme-boost-override-custom-courseindex';

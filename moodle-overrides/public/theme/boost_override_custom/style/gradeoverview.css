@@ -1,0 +1,800 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
+
+body.theme-boost-override-custom-gradeoverview {
+    --boc-go-primary: var(--boc-theme-primary, var(--bs-primary, #0f6cbf));
+    --boc-go-primary-strong: var(--boc-theme-primary-strong, #0750ca);
+    --boc-go-secondary: var(--boc-theme-accent, #0891b2);
+    --boc-go-success: var(--boc-theme-success, #16a34a);
+    --boc-go-warning: var(--boc-theme-warning-bright, #f59e0b);
+    --boc-go-violet: var(--boc-theme-violet, #7c3aed);
+    --boc-go-ink: var(--boc-theme-ink, var(--bs-body-color, #0f172a));
+    --boc-go-text: var(--boc-theme-text, #334155);
+    --boc-go-muted: var(--boc-theme-muted, #64748b);
+    --boc-go-border: var(--boc-theme-border, var(--bs-border-color, #d8e0ea));
+    --boc-go-surface: var(--boc-theme-surface, #fff);
+    --boc-go-glass: color-mix(in srgb, var(--boc-go-surface) 86%, transparent);
+    --boc-go-shadow: 0 24px 70px rgba(15, 23, 42, .12);
+    min-height: 100vh;
+    color: var(--boc-go-ink);
+    background:
+        radial-gradient(circle at 7% 16%, color-mix(in srgb, var(--boc-go-primary) 14%, transparent), transparent 30vw),
+        radial-gradient(circle at 92% 18%, color-mix(in srgb, var(--boc-go-warning) 18%, transparent), transparent 30vw),
+        radial-gradient(circle at 78% 88%, color-mix(in srgb, var(--boc-go-violet) 11%, transparent), transparent 34vw),
+        url("../pix/frontpage-bg.png"),
+        linear-gradient(135deg, #f7fbff 0%, #edf8fc 48%, #fff9ef 100%);
+    background-attachment: fixed, fixed, fixed, fixed, fixed;
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: var(--boc-theme-font-family, "Inter", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif);
+    text-rendering: optimizeLegibility;
+}
+
+body.theme-boost-override-custom-gradeoverview #page-wrapper,
+body.theme-boost-override-custom-gradeoverview #page {
+    background: transparent;
+}
+
+body.theme-boost-override-custom-gradeoverview #page.drawers .main-inner {
+    max-width: 1540px;
+    margin: 0 auto;
+    padding: 18px 22px 40px;
+    background: transparent;
+}
+
+body.theme-boost-override-custom-gradeoverview #page-header {
+    display: none;
+}
+
+body.theme-boost-override-custom-gradeoverview #region-main {
+    padding: 0;
+    border: 0;
+    background: transparent;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-original-hidden {
+    display: none !important;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-shell {
+    position: relative;
+    display: grid;
+    gap: 18px;
+    isolation: isolate;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-shell::before,
+body.theme-boost-override-custom-gradeoverview .boc-grade-shell::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    border-radius: 8px;
+    opacity: .72;
+    pointer-events: none;
+    transform: rotate(-9deg);
+    animation: bocGradeFloat 8s ease-in-out infinite;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-shell::before {
+    top: 42px;
+    right: 22px;
+    width: 172px;
+    height: 104px;
+    background: linear-gradient(135deg, color-mix(in srgb, var(--boc-go-primary) 16%, transparent), transparent);
+    border: 1px solid color-mix(in srgb, var(--boc-go-primary) 18%, transparent);
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-shell::after {
+    top: 214px;
+    left: -22px;
+    width: 126px;
+    height: 126px;
+    background: linear-gradient(135deg, color-mix(in srgb, var(--boc-go-warning) 18%, transparent), transparent);
+    animation-delay: -2.6s;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-hero {
+    display: grid;
+    grid-template-columns: minmax(300px, .82fr) minmax(0, 1.58fr);
+    gap: 18px;
+    padding: 22px;
+    border: 1px solid color-mix(in srgb, var(--boc-go-border) 62%, transparent);
+    border-radius: 8px;
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, .88), rgba(244, 249, 255, .78)),
+        color-mix(in srgb, var(--boc-go-surface) 88%, transparent);
+    box-shadow: var(--boc-go-shadow);
+    backdrop-filter: blur(18px) saturate(145%);
+    -webkit-backdrop-filter: blur(18px) saturate(145%);
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-profile {
+    display: grid;
+    grid-template-columns: 112px minmax(0, 1fr);
+    gap: 18px;
+    align-items: center;
+    min-width: 0;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-avatar {
+    position: relative;
+    width: 112px;
+    height: 112px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(255, 255, 255, .92);
+    border-radius: 999px;
+    background:
+        linear-gradient(145deg, #f8fafc, #e2e8f0);
+    color: var(--boc-go-ink);
+    font-size: 38px;
+    font-weight: 760;
+    box-shadow:
+        0 18px 42px rgba(15, 23, 42, .14),
+        inset 0 1px 0 rgba(255, 255, 255, .9);
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-avatar::after {
+    content: "";
+    position: absolute;
+    right: 7px;
+    bottom: 12px;
+    width: 18px;
+    height: 18px;
+    border: 4px solid #fff;
+    border-radius: 999px;
+    background: var(--boc-go-success);
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-profile-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 0;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-role {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 8px;
+    padding: 7px 12px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--boc-go-secondary) 13%, #fff);
+    color: color-mix(in srgb, var(--boc-go-secondary) 72%, #064e3b);
+    font-size: 12px;
+    font-weight: 830;
+    letter-spacing: .02em;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-profile h2 {
+    margin: 0;
+    color: var(--boc-go-ink);
+    font-size: clamp(26px, 2.1vw, 38px);
+    font-weight: 820;
+    line-height: 1.08;
+    letter-spacing: 0;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-message {
+    min-height: 38px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 14px;
+    padding: 0 14px;
+    border: 1px solid color-mix(in srgb, var(--boc-go-border) 70%, transparent);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, .84);
+    color: var(--boc-go-ink);
+    font-size: 13px;
+    font-weight: 720;
+    text-decoration: none;
+    box-shadow: 0 10px 22px rgba(15, 23, 42, .06);
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-metrics {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    align-items: stretch;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-metric {
+    min-width: 0;
+    display: grid;
+    grid-template-columns: 52px minmax(0, 1fr);
+    gap: 12px;
+    align-items: center;
+    padding: 16px;
+    border: 1px solid color-mix(in srgb, var(--boc-go-border) 70%, transparent);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, .86);
+    box-shadow: 0 16px 34px rgba(15, 23, 42, .08);
+    animation: bocGradeRise .45s ease both;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-metric:nth-child(2) {
+    animation-delay: .04s;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-metric:nth-child(3) {
+    animation-delay: .08s;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-metric:nth-child(4) {
+    animation-delay: .12s;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-metric-icon,
+body.theme-boost-override-custom-gradeoverview .boc-grade-widget-icon,
+body.theme-boost-override-custom-gradeoverview .boc-grade-course-icon {
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    border-radius: 8px;
+    transform: translateZ(0);
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-metric-icon {
+    width: 52px;
+    height: 52px;
+    box-shadow: 0 14px 28px rgba(37, 99, 235, .17);
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-metric-icon svg,
+body.theme-boost-override-custom-gradeoverview .boc-grade-widget-icon svg,
+body.theme-boost-override-custom-gradeoverview .boc-grade-course-icon svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-metric-body {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-metric-label {
+    color: var(--boc-go-text);
+    font-size: 12px;
+    font-weight: 650;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-metric strong {
+    color: var(--boc-go-ink);
+    font-size: 28px;
+    font-weight: 820;
+    line-height: 1;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-metric em {
+    color: var(--boc-go-muted);
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 620;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-widgets {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-widget {
+    position: relative;
+    min-height: 150px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 116px;
+    gap: 10px;
+    align-items: center;
+    padding: 18px;
+    border: 1px solid color-mix(in srgb, var(--boc-go-border) 64%, transparent);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, .84);
+    box-shadow: 0 18px 42px rgba(15, 23, 42, .08);
+    overflow: hidden;
+    transition: transform .22s ease, box-shadow .22s ease;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-widget:hover {
+    box-shadow: 0 26px 58px rgba(15, 23, 42, .14);
+    transform: translateY(-4px);
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-widget::before {
+    content: "";
+    position: absolute;
+    inset: auto -28px -36px auto;
+    width: 128px;
+    height: 128px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--boc-go-primary) 10%, transparent);
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-widget[data-tone="green"]::before {
+    background: color-mix(in srgb, var(--boc-go-success) 12%, transparent);
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-widget[data-tone="orange"]::before {
+    background: color-mix(in srgb, var(--boc-go-warning) 16%, transparent);
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-widget[data-tone="violet"]::before {
+    background: color-mix(in srgb, var(--boc-go-violet) 12%, transparent);
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-widget-content {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-widget strong {
+    color: var(--boc-go-ink);
+    font-size: 17px;
+    font-weight: 790;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-widget b {
+    color: var(--boc-go-primary-strong);
+    font-size: 26px;
+    font-weight: 850;
+    line-height: 1;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-widget span {
+    color: var(--boc-go-text);
+    font-size: 13px;
+    font-weight: 560;
+    line-height: 1.45;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-widget-icon {
+    position: relative;
+    z-index: 1;
+    width: 110px;
+    height: 110px;
+    justify-self: end;
+    animation: bocGradeIconFloat 5.8s ease-in-out infinite;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-course-section {
+    display: grid;
+    gap: 12px;
+    padding: 16px;
+    border: 1px solid color-mix(in srgb, var(--boc-go-border) 62%, transparent);
+    border-radius: 8px;
+    background: var(--boc-go-glass);
+    box-shadow: var(--boc-go-shadow);
+    backdrop-filter: blur(18px) saturate(150%);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-course-head {
+    display: grid;
+    grid-template-columns: minmax(260px, .8fr) minmax(0, 1.2fr);
+    gap: 18px;
+    align-items: center;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-section-title {
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr);
+    column-gap: 12px;
+    align-items: center;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-section-icon {
+    grid-row: span 2;
+    width: 48px;
+    height: 48px;
+    display: grid;
+    place-items: center;
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--boc-go-primary) 10%, #fff);
+    color: var(--boc-go-primary);
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-section-icon svg {
+    width: 34px;
+    height: 34px;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-section-title h2 {
+    margin: 0;
+    color: var(--boc-go-ink);
+    font-size: 25px;
+    font-weight: 820;
+    line-height: 1.15;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-section-title p {
+    grid-column: 2;
+    margin: 3px 0 0;
+    color: var(--boc-go-muted);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-toolbar {
+    display: grid;
+    grid-template-columns: minmax(240px, 1fr) minmax(160px, .45fr) minmax(160px, .45fr) minmax(210px, .52fr);
+    gap: 10px;
+    align-items: center;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-search {
+    position: relative;
+    min-width: 0;
+    margin: 0;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-search-icon {
+    position: absolute;
+    top: 50%;
+    left: 13px;
+    width: 20px;
+    height: 20px;
+    color: var(--boc-go-primary);
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-search-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-toolbar input,
+body.theme-boost-override-custom-gradeoverview .boc-grade-toolbar select {
+    width: 100%;
+    height: 42px;
+    min-width: 0;
+    border: 1px solid color-mix(in srgb, var(--boc-go-border) 74%, transparent);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, .9);
+    color: var(--boc-go-ink);
+    font-size: 13px;
+    font-weight: 650;
+    box-shadow: 0 10px 22px rgba(15, 23, 42, .05);
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-toolbar input {
+    padding: 0 12px 0 42px;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-toolbar select {
+    padding: 0 34px 0 12px;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-toolbar input:focus,
+body.theme-boost-override-custom-gradeoverview .boc-grade-toolbar select:focus {
+    border-color: color-mix(in srgb, var(--boc-go-primary) 42%, var(--boc-go-border));
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--boc-go-primary) 14%, transparent);
+    outline: 0;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-result-count {
+    justify-self: start;
+    padding: 7px 12px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--boc-go-primary) 9%, #fff);
+    color: var(--boc-go-primary-strong);
+    font-size: 12px;
+    font-weight: 790;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-course-list {
+    display: grid;
+    gap: 8px;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-course-card {
+    display: grid;
+    grid-template-columns: 58px minmax(0, 1fr) auto;
+    gap: 14px;
+    align-items: center;
+    min-height: 76px;
+    padding: 10px 14px;
+    border: 1px solid color-mix(in srgb, var(--boc-go-border) 68%, transparent);
+    border-radius: 8px;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, .96), rgba(255, 255, 255, .88)),
+        radial-gradient(circle at 0 0, color-mix(in srgb, var(--boc-go-primary) 8%, transparent), transparent 38%);
+    box-shadow: 0 12px 28px rgba(15, 23, 42, .06);
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-course-card:hover,
+body.theme-boost-override-custom-gradeoverview .boc-grade-course-card:focus-within {
+    border-color: color-mix(in srgb, var(--boc-go-primary) 30%, var(--boc-go-border));
+    box-shadow: 0 20px 44px rgba(15, 23, 42, .12);
+    transform: translateY(-2px);
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-course-card[data-tone="health"] {
+    --boc-go-row-a: #f97316;
+    --boc-go-row-b: #ef4444;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-course-card[data-tone="science"] {
+    --boc-go-row-a: #2563eb;
+    --boc-go-row-b: #7c3aed;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-course-card[data-tone="commerce"] {
+    --boc-go-row-a: #f59e0b;
+    --boc-go-row-b: #ea580c;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-course-card[data-tone="law"] {
+    --boc-go-row-a: #4f46e5;
+    --boc-go-row-b: #0ea5e9;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-course-card[data-tone="school"] {
+    --boc-go-row-a: var(--boc-go-primary);
+    --boc-go-row-b: var(--boc-go-secondary);
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-course-icon {
+    width: 52px;
+    height: 52px;
+    background: linear-gradient(135deg, var(--boc-go-row-a, var(--boc-go-primary)), var(--boc-go-row-b, var(--boc-go-secondary)));
+    box-shadow: 0 14px 30px color-mix(in srgb, var(--boc-go-row-a, var(--boc-go-primary)) 18%, transparent);
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-course-main {
+    min-width: 0;
+    display: grid;
+    gap: 7px;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-course-title {
+    color: var(--boc-go-ink);
+    font-size: 15px;
+    font-weight: 760;
+    line-height: 1.35;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-course-title:hover,
+body.theme-boost-override-custom-gradeoverview .boc-grade-course-title:focus {
+    color: var(--boc-go-primary-strong);
+    text-decoration: none;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-course-chips,
+body.theme-boost-override-custom-gradeoverview .boc-grade-course-grade {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-chip {
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
+    padding: 4px 9px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--boc-go-primary) 8%, #fff);
+    color: var(--boc-go-primary-strong);
+    font-size: 11px;
+    font-weight: 760;
+    line-height: 1;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-chip[data-chip="standard"],
+body.theme-boost-override-custom-gradeoverview .boc-grade-chip[data-chip="grade"] {
+    background: color-mix(in srgb, var(--boc-go-success) 10%, #fff);
+    color: color-mix(in srgb, var(--boc-go-success) 70%, #064e3b);
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-chip[data-chip="subject"],
+body.theme-boost-override-custom-gradeoverview .boc-grade-chip[data-chip="stream"] {
+    background: color-mix(in srgb, var(--boc-go-warning) 13%, #fff);
+    color: #b45309;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-chip[data-chip="year"],
+body.theme-boost-override-custom-gradeoverview .boc-grade-chip[data-chip="rank"] {
+    background: color-mix(in srgb, var(--boc-go-violet) 9%, #fff);
+    color: color-mix(in srgb, var(--boc-go-violet) 74%, #312e81);
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-course-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-btn {
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 14px;
+    border: 1px solid color-mix(in srgb, var(--boc-go-primary) 32%, var(--boc-go-border));
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 760;
+    line-height: 1;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: transform .18s ease, box-shadow .18s ease;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-btn svg {
+    width: 16px;
+    height: 16px;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-btn-outline {
+    background: rgba(255, 255, 255, .82);
+    color: var(--boc-go-primary-strong);
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-btn-primary {
+    border-color: transparent;
+    background: linear-gradient(135deg, var(--boc-go-primary), var(--boc-go-secondary));
+    color: #fff;
+    box-shadow: 0 13px 24px color-mix(in srgb, var(--boc-go-primary) 20%, transparent);
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-btn:hover,
+body.theme-boost-override-custom-gradeoverview .boc-grade-btn:focus {
+    text-decoration: none;
+    transform: translateY(-1px);
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-btn-primary:hover,
+body.theme-boost-override-custom-gradeoverview .boc-grade-btn-primary:focus {
+    color: #fff;
+}
+
+body.theme-boost-override-custom-gradeoverview .boc-grade-empty {
+    padding: 18px;
+    border: 1px dashed color-mix(in srgb, var(--boc-go-border) 80%, transparent);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, .7);
+    color: var(--boc-go-muted);
+    font-size: 14px;
+    font-weight: 680;
+    text-align: center;
+}
+
+@keyframes bocGradeFloat {
+    0%,
+    100% {
+        transform: translate3d(0, 0, 0) rotate(-9deg);
+    }
+
+    50% {
+        transform: translate3d(10px, -8px, 0) rotate(-5deg);
+    }
+}
+
+@keyframes bocGradeIconFloat {
+    0%,
+    100% {
+        transform: translate3d(0, 0, 0) rotate(0deg);
+    }
+
+    50% {
+        transform: translate3d(0, -6px, 0) rotate(2deg);
+    }
+}
+
+@keyframes bocGradeRise {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 1199.98px) {
+    body.theme-boost-override-custom-gradeoverview .boc-grade-hero,
+    body.theme-boost-override-custom-gradeoverview .boc-grade-course-head {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    body.theme-boost-override-custom-gradeoverview .boc-grade-metrics,
+    body.theme-boost-override-custom-gradeoverview .boc-grade-widgets {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 991.98px) {
+    body.theme-boost-override-custom-gradeoverview #page.drawers .main-inner {
+        padding: 14px 14px 34px;
+    }
+
+    body.theme-boost-override-custom-gradeoverview .boc-grade-toolbar {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    body.theme-boost-override-custom-gradeoverview .boc-grade-search {
+        grid-column: 1 / -1;
+    }
+
+    body.theme-boost-override-custom-gradeoverview .boc-grade-course-card {
+        grid-template-columns: 54px minmax(0, 1fr);
+    }
+
+    body.theme-boost-override-custom-gradeoverview .boc-grade-course-actions {
+        grid-column: 2;
+        justify-content: flex-start;
+    }
+}
+
+@media (max-width: 575.98px) {
+    body.theme-boost-override-custom-gradeoverview #page.drawers .main-inner {
+        padding: 10px 10px 28px;
+    }
+
+    body.theme-boost-override-custom-gradeoverview .boc-grade-hero,
+    body.theme-boost-override-custom-gradeoverview .boc-grade-course-section {
+        padding: 12px;
+    }
+
+    body.theme-boost-override-custom-gradeoverview .boc-grade-profile {
+        grid-template-columns: 76px minmax(0, 1fr);
+    }
+
+    body.theme-boost-override-custom-gradeoverview .boc-grade-avatar {
+        width: 76px;
+        height: 76px;
+        font-size: 26px;
+    }
+
+    body.theme-boost-override-custom-gradeoverview .boc-grade-metrics,
+    body.theme-boost-override-custom-gradeoverview .boc-grade-widgets,
+    body.theme-boost-override-custom-gradeoverview .boc-grade-toolbar {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    body.theme-boost-override-custom-gradeoverview .boc-grade-widget {
+        grid-template-columns: minmax(0, 1fr) 86px;
+    }
+
+    body.theme-boost-override-custom-gradeoverview .boc-grade-widget-icon {
+        width: 84px;
+        height: 84px;
+    }
+
+    body.theme-boost-override-custom-gradeoverview .boc-grade-course-card {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    body.theme-boost-override-custom-gradeoverview .boc-grade-course-icon {
+        width: 50px;
+        height: 50px;
+    }
+
+    body.theme-boost-override-custom-gradeoverview .boc-grade-course-actions {
+        grid-column: auto;
+        flex-wrap: wrap;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body.theme-boost-override-custom-gradeoverview *,
+    body.theme-boost-override-custom-gradeoverview *::before,
+    body.theme-boost-override-custom-gradeoverview *::after {
+        animation-duration: .001ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .001ms !important;
+    }
+}
