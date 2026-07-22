@@ -1,0 +1,853 @@
+/* Shared visual foundation for all standard Moodle pages rendered by this theme. */
+body.theme-boost-override-custom-platform {
+    --boc-platform-primary: var(--boc-theme-primary, #0f6cbf);
+    --boc-platform-primary-strong: var(--boc-theme-primary-strong, #0750ca);
+    --boc-platform-accent: var(--boc-theme-accent, #0891b2);
+    --boc-platform-ink: var(--boc-theme-ink, #0f172a);
+    --boc-platform-text: var(--boc-theme-text, #334155);
+    --boc-platform-muted: var(--boc-theme-muted, #64748b);
+    --boc-platform-border: var(--boc-theme-border, #d8e0ea);
+    --boc-platform-surface: var(--boc-theme-surface, #fff);
+    --boc-platform-surface-soft: var(--boc-theme-surface-soft, #f8fafc);
+    color: var(--boc-platform-text);
+    background-color: var(--boc-theme-page-bg, #f4f8fc);
+    font-family: var(--boc-theme-font-family, "Inter", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif);
+    font-size: 15px;
+    line-height: 1.5;
+    letter-spacing: 0;
+}
+
+body.theme-boost-override-custom-platform,
+body.theme-boost-override-custom-platform button,
+body.theme-boost-override-custom-platform input,
+body.theme-boost-override-custom-platform select,
+body.theme-boost-override-custom-platform textarea {
+    font-family: var(--boc-theme-font-family, "Inter", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif);
+    letter-spacing: 0;
+}
+
+body.theme-boost-override-custom-platform #page-wrapper,
+body.theme-boost-override-custom-platform #page.drawers {
+    background:
+        linear-gradient(135deg, color-mix(in srgb, var(--boc-platform-primary) 5%, transparent), transparent 34%),
+        linear-gradient(315deg, color-mix(in srgb, var(--boc-theme-warning-bright, #f59e0b) 4%, transparent), transparent 30%),
+        var(--boc-theme-page-bg, #f4f8fc);
+}
+
+body.theme-boost-override-custom-platform #page.drawers .main-inner,
+body.theme-boost-override-custom-platform.limitedwidth #page.drawers .main-inner {
+    width: var(--boc-theme-content-width, 100%);
+    max-width: none;
+    margin-inline: auto;
+    padding-inline: var(--boc-theme-content-gutter, clamp(14px, 2vw, 30px));
+}
+
+body.theme-boost-override-custom-platform #topofscroll.main-inner {
+    padding-top: 14px;
+}
+
+body.theme-boost-override-custom-platform #page-header {
+    min-width: 0;
+    margin: 0 0 14px;
+    padding: 4px 0 13px;
+    border-bottom: 1px solid color-mix(in srgb, var(--boc-platform-border) 82%, transparent);
+    background: transparent;
+}
+
+body.theme-boost-override-custom-platform #page-header .page-context-header,
+body.theme-boost-override-custom-platform #page-header .page-header-headings,
+body.theme-boost-override-custom-platform #page-header .d-flex {
+    min-width: 0;
+    align-items: center;
+}
+
+body.theme-boost-override-custom-platform #page-header .page-header-headings {
+    display: flex;
+    gap: 12px;
+}
+
+body.theme-boost-override-custom-platform .boc-platform-page-symbol {
+    width: 46px;
+    height: 46px;
+    display: inline-grid;
+    place-items: center;
+    flex: 0 0 46px;
+    perspective: 700px;
+}
+
+body.theme-boost-override-custom-platform .boc-platform-page-symbol svg {
+    width: 46px;
+    height: 46px;
+    overflow: visible;
+}
+
+body.theme-boost-override-custom-platform.boc-platform-ready:not(.boc-platform-paused) .boc-platform-symbol-depth {
+    animation: boc-platform-symbol-float 5.4s var(--boc-theme-ease, ease) infinite;
+    transform-origin: 50% 54%;
+}
+
+body.theme-boost-override-custom-platform #page-header h1,
+body.theme-boost-override-custom-platform #page-header .h2 {
+    margin: 0;
+    color: var(--boc-platform-ink);
+    font-size: clamp(1.55rem, 2.1vw, 2rem);
+    font-weight: 760;
+    line-height: 1.18;
+    letter-spacing: 0;
+    overflow-wrap: anywhere;
+}
+
+body.theme-boost-override-custom-platform .breadcrumb {
+    min-height: 32px;
+    align-items: center;
+    gap: 2px;
+    margin: 0 0 8px;
+    padding: 4px 0;
+    background: transparent;
+    font-size: .82rem;
+    line-height: 1.35;
+}
+
+body.theme-boost-override-custom-platform .breadcrumb-item,
+body.theme-boost-override-custom-platform .breadcrumb-item a {
+    color: var(--boc-platform-muted);
+    font-weight: 600;
+}
+
+body.theme-boost-override-custom-platform .breadcrumb-item a:hover,
+body.theme-boost-override-custom-platform .breadcrumb-item a:focus-visible,
+body.theme-boost-override-custom-platform .breadcrumb-item.active {
+    color: var(--boc-platform-primary);
+}
+
+body.theme-boost-override-custom-platform #page-content,
+body.theme-boost-override-custom-platform #region-main-box,
+body.theme-boost-override-custom-platform #region-main {
+    min-width: 0;
+}
+
+body.theme-boost-override-custom-platform #region-main {
+    padding: 0;
+    border: 0;
+    background: transparent;
+}
+
+body.theme-boost-override-custom-platform #region-main > div[role="main"] {
+    min-width: 0;
+}
+
+body.theme-boost-override-custom-platform #region-main h2,
+body.theme-boost-override-custom-platform #region-main .h2 {
+    color: var(--boc-platform-ink);
+    font-size: clamp(1.28rem, 1.7vw, 1.55rem);
+    font-weight: 740;
+    line-height: 1.25;
+}
+
+body.theme-boost-override-custom-platform #region-main h3,
+body.theme-boost-override-custom-platform #region-main .h3,
+body.theme-boost-override-custom-platform .card-title {
+    color: var(--boc-platform-ink);
+    font-size: 1.08rem;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+body.theme-boost-override-custom-platform p,
+body.theme-boost-override-custom-platform li,
+body.theme-boost-override-custom-platform td,
+body.theme-boost-override-custom-platform th,
+body.theme-boost-override-custom-platform label {
+    overflow-wrap: anywhere;
+}
+
+body.theme-boost-override-custom-platform a {
+    text-underline-offset: 3px;
+}
+
+body.theme-boost-override-custom-platform a:focus-visible,
+body.theme-boost-override-custom-platform button:focus-visible,
+body.theme-boost-override-custom-platform [tabindex]:focus-visible,
+body.theme-boost-override-custom-platform input:focus-visible,
+body.theme-boost-override-custom-platform select:focus-visible,
+body.theme-boost-override-custom-platform textarea:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--boc-theme-focus, #0b78e3) 34%, transparent);
+    outline-offset: 2px;
+}
+
+body.theme-boost-override-custom-platform .btn {
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 8px 14px;
+    border-radius: var(--boc-theme-radius-md, 8px);
+    font-size: .9rem;
+    font-weight: 680;
+    line-height: 1.2;
+    transition: transform var(--boc-theme-motion-fast, 140ms) var(--boc-theme-ease, ease),
+        box-shadow var(--boc-theme-motion-fast, 140ms) var(--boc-theme-ease, ease),
+        border-color var(--boc-theme-motion-fast, 140ms) ease,
+        background-color var(--boc-theme-motion-fast, 140ms) ease;
+}
+
+body.theme-boost-override-custom-platform .btn:hover {
+    transform: translateY(-1px);
+}
+
+body.theme-boost-override-custom-platform .btn:active {
+    transform: translateY(0);
+}
+
+body.theme-boost-override-custom-platform .btn-primary {
+    border-color: transparent;
+    background: var(--boc-theme-gradient-primary, linear-gradient(135deg, #0f6cbf, #0891b2));
+    color: #fff;
+    box-shadow: 0 8px 18px color-mix(in srgb, var(--boc-platform-primary) 24%, transparent);
+}
+
+body.theme-boost-override-custom-platform .btn-primary:hover,
+body.theme-boost-override-custom-platform .btn-primary:focus-visible {
+    border-color: transparent;
+    background: linear-gradient(135deg, var(--boc-platform-primary-strong), var(--boc-platform-accent));
+    color: #fff;
+    box-shadow: 0 11px 22px color-mix(in srgb, var(--boc-platform-primary) 30%, transparent);
+}
+
+body.theme-boost-override-custom-platform .btn-secondary,
+body.theme-boost-override-custom-platform .btn-outline-secondary {
+    border-color: var(--boc-platform-border);
+    background: color-mix(in srgb, var(--boc-platform-surface) 92%, var(--boc-platform-primary) 8%);
+    color: var(--boc-platform-text);
+}
+
+body.theme-boost-override-custom-platform .btn-icon,
+body.theme-boost-override-custom-platform .btn.btn-icon {
+    width: 40px;
+    min-width: 40px;
+    height: 40px;
+    min-height: 40px;
+    padding: 0;
+}
+
+body.theme-boost-override-custom-platform .form-control,
+body.theme-boost-override-custom-platform .form-select,
+body.theme-boost-override-custom-platform select.custom-select,
+body.theme-boost-override-custom-platform .custom-select,
+body.theme-boost-override-custom-platform .form-autocomplete-selection,
+body.theme-boost-override-custom-platform .form-autocomplete-input {
+    min-height: var(--boc-theme-control-height, 42px);
+    border: 1px solid var(--boc-platform-border);
+    border-radius: var(--boc-theme-radius-md, 8px);
+    background-color: color-mix(in srgb, var(--boc-platform-surface) 97%, var(--boc-platform-primary) 3%);
+    color: var(--boc-platform-ink);
+    font-size: .93rem;
+    box-shadow: inset 0 1px 2px rgba(15, 23, 42, .03);
+    transition: border-color var(--boc-theme-motion-fast, 140ms) ease,
+        box-shadow var(--boc-theme-motion-fast, 140ms) ease,
+        background-color var(--boc-theme-motion-fast, 140ms) ease;
+}
+
+body.theme-boost-override-custom-platform textarea.form-control {
+    min-height: 116px;
+    resize: vertical;
+}
+
+body.theme-boost-override-custom-platform .form-control:focus,
+body.theme-boost-override-custom-platform .form-select:focus,
+body.theme-boost-override-custom-platform select.custom-select:focus,
+body.theme-boost-override-custom-platform .custom-select:focus {
+    border-color: color-mix(in srgb, var(--boc-platform-primary) 72%, #fff);
+    background-color: var(--boc-platform-surface);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--boc-platform-primary) 16%, transparent),
+        0 7px 18px rgba(15, 23, 42, .06);
+}
+
+body.theme-boost-override-custom-platform .form-control::placeholder {
+    color: color-mix(in srgb, var(--boc-platform-muted) 74%, #fff);
+    opacity: 1;
+}
+
+body.theme-boost-override-custom-platform .form-label,
+body.theme-boost-override-custom-platform .col-form-label,
+body.theme-boost-override-custom-platform .fitemtitle label,
+body.theme-boost-override-custom-platform .form-group > label {
+    margin-bottom: 6px;
+    color: var(--boc-platform-ink);
+    font-size: .88rem;
+    font-weight: 680;
+    line-height: 1.35;
+}
+
+body.theme-boost-override-custom-platform .form-text,
+body.theme-boost-override-custom-platform .form-description,
+body.theme-boost-override-custom-platform .form-defaultinfo,
+body.theme-boost-override-custom-platform .text-muted {
+    color: var(--boc-platform-muted) !important;
+    font-size: .82rem;
+    line-height: 1.45;
+}
+
+body.theme-boost-override-custom-platform .mform .fitem,
+body.theme-boost-override-custom-platform .mform .form-group {
+    margin-bottom: 14px;
+}
+
+body.theme-boost-override-custom-platform .mform fieldset {
+    margin: 0 0 16px;
+    padding: 16px;
+    border: 1px solid color-mix(in srgb, var(--boc-platform-border) 84%, transparent);
+    border-radius: var(--boc-theme-radius-md, 8px);
+    background: color-mix(in srgb, var(--boc-platform-surface) 94%, transparent);
+    box-shadow: var(--boc-theme-shadow-soft, 0 10px 28px rgba(15, 23, 42, .08));
+}
+
+body.theme-boost-override-custom-platform .mform fieldset legend {
+    width: auto;
+    max-width: 100%;
+    margin: 0 0 12px;
+    padding: 0 8px;
+    color: var(--boc-platform-ink);
+    font-size: 1rem;
+    font-weight: 720;
+}
+
+body.theme-boost-override-custom-platform .form-check-input {
+    width: 1.15rem;
+    height: 1.15rem;
+    border-color: color-mix(in srgb, var(--boc-platform-border) 80%, var(--boc-platform-muted));
+}
+
+body.theme-boost-override-custom-platform .form-switch .form-check-input {
+    width: 2.3rem;
+    min-width: 2.3rem;
+    border-radius: 999px;
+}
+
+body.theme-boost-override-custom-platform .form-check-input:checked {
+    border-color: var(--boc-platform-primary);
+    background-color: var(--boc-platform-primary);
+}
+
+body.theme-boost-override-custom-platform .card,
+body.theme-boost-override-custom-platform .block.card {
+    border: 1px solid color-mix(in srgb, var(--boc-platform-border) 82%, transparent);
+    border-radius: var(--boc-theme-radius-md, 8px);
+    background: color-mix(in srgb, var(--boc-platform-surface) 96%, transparent);
+    box-shadow: var(--boc-theme-shadow-soft, 0 10px 28px rgba(15, 23, 42, .08));
+}
+
+body.theme-boost-override-custom-platform .card-header,
+body.theme-boost-override-custom-platform .block .card-header {
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    padding: 11px 14px;
+    border-bottom: 1px solid color-mix(in srgb, var(--boc-platform-border) 75%, transparent);
+    background: color-mix(in srgb, var(--boc-platform-surface-soft) 82%, var(--boc-platform-primary) 4%);
+}
+
+body.theme-boost-override-custom-platform .card-body,
+body.theme-boost-override-custom-platform .block .card-body {
+    padding: 15px;
+}
+
+body.theme-boost-override-custom-platform .card-footer {
+    padding: 10px 15px;
+    border-top-color: color-mix(in srgb, var(--boc-platform-border) 72%, transparent);
+    background: var(--boc-platform-surface-soft);
+}
+
+body.theme-boost-override-custom-platform .table-responsive,
+body.theme-boost-override-custom-platform .boc-learningtools-table-scroll,
+body.theme-boost-override-custom-platform .reportbuilder-table-container {
+    border: 1px solid color-mix(in srgb, var(--boc-platform-border) 82%, transparent);
+    border-radius: var(--boc-theme-radius-md, 8px);
+    background: var(--boc-platform-surface);
+    box-shadow: var(--boc-theme-shadow-soft, 0 10px 28px rgba(15, 23, 42, .08));
+    overflow: auto;
+}
+
+body.theme-boost-override-custom-platform table.boc-platform-table,
+body.theme-boost-override-custom-platform table.generaltable {
+    width: 100%;
+    margin-bottom: 0;
+    border-color: color-mix(in srgb, var(--boc-platform-border) 78%, transparent);
+    background: var(--boc-platform-surface);
+    color: var(--boc-platform-text);
+    font-size: .88rem;
+}
+
+body.theme-boost-override-custom-platform table.boc-platform-table thead th,
+body.theme-boost-override-custom-platform table.generaltable thead th {
+    padding: 11px 12px;
+    border-bottom-width: 1px;
+    background: color-mix(in srgb, var(--boc-platform-surface-soft) 82%, var(--boc-platform-primary) 7%);
+    color: var(--boc-platform-ink);
+    font-size: .78rem;
+    font-weight: 740;
+    line-height: 1.3;
+    text-transform: none;
+    vertical-align: middle;
+}
+
+body.theme-boost-override-custom-platform table.boc-platform-table tbody td,
+body.theme-boost-override-custom-platform table.generaltable tbody td,
+body.theme-boost-override-custom-platform table.generaltable tbody th {
+    padding: 10px 12px;
+    border-color: color-mix(in srgb, var(--boc-platform-border) 68%, transparent);
+    vertical-align: middle;
+}
+
+body.theme-boost-override-custom-platform table.boc-platform-table tbody tr,
+body.theme-boost-override-custom-platform table.generaltable tbody tr {
+    transition: background-color var(--boc-theme-motion-fast, 140ms) ease;
+}
+
+body.theme-boost-override-custom-platform table.boc-platform-table tbody tr:hover,
+body.theme-boost-override-custom-platform table.generaltable tbody tr:hover {
+    background: color-mix(in srgb, var(--boc-platform-primary) 5%, var(--boc-platform-surface));
+}
+
+body.theme-boost-override-custom-platform .secondary-navigation,
+body.theme-boost-override-custom-platform .tertiary-navigation {
+    min-width: 0;
+    margin-bottom: 14px;
+    border-bottom: 1px solid color-mix(in srgb, var(--boc-platform-border) 82%, transparent);
+    background: transparent;
+}
+
+body.theme-boost-override-custom-platform .secondary-navigation .moremenu,
+body.theme-boost-override-custom-platform .tertiary-navigation {
+    min-height: 44px;
+}
+
+body.theme-boost-override-custom-platform .nav-tabs {
+    gap: 5px;
+    border-bottom: 0;
+}
+
+body.theme-boost-override-custom-platform .nav-tabs .nav-link {
+    min-height: 40px;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 11px 10px;
+    border: 0;
+    border-radius: 0;
+    color: var(--boc-platform-muted);
+    font-size: .86rem;
+    font-weight: 660;
+}
+
+body.theme-boost-override-custom-platform .nav-tabs .nav-link::after {
+    content: "";
+    position: absolute;
+    right: 10px;
+    bottom: 2px;
+    left: 10px;
+    height: 3px;
+    border-radius: 999px;
+    background: var(--boc-theme-gradient-primary, linear-gradient(90deg, #0f6cbf, #0891b2));
+    opacity: 0;
+    transform: scaleX(.45);
+    transition: opacity var(--boc-theme-motion-fast, 140ms) ease, transform var(--boc-theme-motion-fast, 140ms) ease;
+}
+
+body.theme-boost-override-custom-platform .nav-tabs .nav-link.active,
+body.theme-boost-override-custom-platform .nav-tabs .nav-link:hover,
+body.theme-boost-override-custom-platform .nav-tabs .nav-link:focus-visible {
+    background: transparent;
+    color: var(--boc-platform-primary);
+}
+
+body.theme-boost-override-custom-platform .nav-tabs .nav-link.active::after,
+body.theme-boost-override-custom-platform .nav-tabs .nav-link:hover::after,
+body.theme-boost-override-custom-platform .nav-tabs .nav-link:focus-visible::after {
+    opacity: 1;
+    transform: scaleX(1);
+}
+
+body.theme-boost-override-custom-platform .dropdown-menu,
+body.theme-boost-override-custom-platform .boc-platform-dropdown,
+body.theme-boost-override-custom-platform .popover {
+    z-index: var(--boc-theme-z-dropdown, 1060);
+    max-width: min(92vw, 420px);
+    max-height: min(70vh, 540px);
+    padding: 6px;
+    border: 1px solid color-mix(in srgb, var(--boc-platform-border) 84%, transparent);
+    border-radius: var(--boc-theme-radius-md, 8px);
+    background: color-mix(in srgb, var(--boc-platform-surface) 96%, transparent);
+    box-shadow: var(--boc-theme-shadow-overlay, 0 22px 52px rgba(15, 23, 42, .18));
+    backdrop-filter: blur(16px) saturate(145%);
+    -webkit-backdrop-filter: blur(16px) saturate(145%);
+    overflow: auto;
+}
+
+body.theme-boost-override-custom-platform .dropdown-item {
+    min-height: 38px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    border-radius: var(--boc-theme-radius-sm, 6px);
+    color: var(--boc-platform-text);
+    font-size: .88rem;
+    line-height: 1.35;
+    white-space: normal;
+}
+
+body.theme-boost-override-custom-platform .dropdown-item:hover,
+body.theme-boost-override-custom-platform .dropdown-item:focus,
+body.theme-boost-override-custom-platform .dropdown-item.active {
+    background: color-mix(in srgb, var(--boc-platform-primary) 10%, var(--boc-platform-surface));
+    color: var(--boc-platform-primary-strong);
+}
+
+body.theme-boost-override-custom-platform .reportbuilder-wrapper,
+body.theme-boost-override-custom-platform [data-region="report-list-wrapper"],
+body.theme-boost-override-custom-platform [data-region="report-filters"] {
+    overflow: visible;
+}
+
+body#page-admin-reportbuilder-index.theme-boost-override-custom-platform .boc-learningtools-workspace,
+body#page-admin-reportbuilder-index.theme-boost-override-custom-platform .boc-learningtools-content {
+    overflow: visible !important;
+}
+
+body#page-admin-reportbuilder-index.theme-boost-override-custom-platform .boc-learningtools-workspace {
+    z-index: 2;
+}
+
+body#page-admin-reportbuilder-index.theme-boost-override-custom-platform #page-content {
+    position: relative;
+    z-index: 2;
+    overflow: visible;
+}
+
+body.theme-boost-override-custom-platform .reportbuilder-wrapper .dropdown-menu,
+body.theme-boost-override-custom-platform [data-region="report-filters"] .dropdown-menu {
+    z-index: calc(var(--boc-theme-z-dropdown, 1060) + 5);
+    min-width: min(360px, 88vw);
+}
+
+body.theme-boost-override-custom-platform .modal {
+    z-index: var(--boc-theme-z-modal, 1080);
+}
+
+body.theme-boost-override-custom-platform .modal-content {
+    border: 1px solid color-mix(in srgb, var(--boc-platform-border) 78%, transparent);
+    border-radius: var(--boc-theme-radius-md, 8px);
+    background: color-mix(in srgb, var(--boc-platform-surface) 98%, transparent);
+    box-shadow: var(--boc-theme-shadow-overlay, 0 22px 52px rgba(15, 23, 42, .18));
+    overflow: hidden;
+}
+
+body.theme-boost-override-custom-platform .modal-header,
+body.theme-boost-override-custom-platform .modal-footer {
+    padding: 12px 16px;
+    border-color: color-mix(in srgb, var(--boc-platform-border) 75%, transparent);
+}
+
+body.theme-boost-override-custom-platform .modal-body {
+    padding: 16px;
+}
+
+body.theme-boost-override-custom-platform .alert {
+    min-height: 46px;
+    padding: 11px 13px;
+    border-width: 1px;
+    border-radius: var(--boc-theme-radius-md, 8px);
+    font-size: .88rem;
+    line-height: 1.45;
+    box-shadow: 0 7px 18px rgba(15, 23, 42, .05);
+}
+
+body.theme-boost-override-custom-platform .badge {
+    padding: .38em .62em;
+    border-radius: 999px;
+    font-size: .72rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+body.theme-boost-override-custom-platform .pagination {
+    gap: 5px;
+    margin-block: 14px;
+}
+
+body.theme-boost-override-custom-platform .pagination .page-link {
+    min-width: 38px;
+    min-height: 38px;
+    display: inline-grid;
+    place-items: center;
+    padding: 7px 10px;
+    border: 1px solid var(--boc-platform-border);
+    border-radius: var(--boc-theme-radius-md, 8px);
+    background: var(--boc-platform-surface);
+    color: var(--boc-platform-text);
+    font-size: .84rem;
+    font-weight: 680;
+    box-shadow: 0 5px 12px rgba(15, 23, 42, .05);
+}
+
+body.theme-boost-override-custom-platform .pagination .page-item.active .page-link,
+body.theme-boost-override-custom-platform .pagination .page-link:hover,
+body.theme-boost-override-custom-platform .pagination .page-link:focus-visible {
+    border-color: transparent;
+    background: var(--boc-theme-gradient-primary, linear-gradient(135deg, #0f6cbf, #0891b2));
+    color: #fff;
+}
+
+body.theme-boost-override-custom-platform .drawer {
+    border-color: color-mix(in srgb, var(--boc-platform-border) 82%, transparent);
+    background: color-mix(in srgb, var(--boc-platform-surface) 94%, transparent);
+    box-shadow: var(--boc-theme-shadow-raised, 0 12px 28px rgba(15, 23, 42, .1));
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+}
+
+body.theme-boost-override-custom-platform .drawer .list-group-item,
+body.theme-boost-override-custom-platform .drawer .courseindex-item {
+    min-height: 38px;
+    border-radius: var(--boc-theme-radius-sm, 6px);
+}
+
+body.theme-boost-override-custom-platform .filemanager,
+body.theme-boost-override-custom-platform .filepicker-filelist,
+body.theme-boost-override-custom-platform .boc-platform-file-area {
+    border: 1px dashed color-mix(in srgb, var(--boc-platform-primary) 38%, var(--boc-platform-border));
+    border-radius: var(--boc-theme-radius-md, 8px);
+    background: color-mix(in srgb, var(--boc-platform-surface-soft) 90%, var(--boc-platform-primary) 4%);
+    overflow: hidden;
+}
+
+body.theme-boost-override-custom-platform .tox.tox-tinymce,
+body.theme-boost-override-custom-platform .editor_atto_wrap {
+    border-color: var(--boc-platform-border);
+    border-radius: var(--boc-theme-radius-md, 8px);
+    box-shadow: 0 8px 20px rgba(15, 23, 42, .06);
+    overflow: hidden;
+}
+
+body.theme-boost-override-custom-platform .activity-header,
+body.theme-boost-override-custom-platform .course-header {
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid color-mix(in srgb, var(--boc-platform-border) 78%, transparent);
+}
+
+body.theme-boost-override-custom-platform #page-footer {
+    min-height: 0;
+    position: relative;
+    z-index: 0;
+    margin-top: 20px;
+    padding: 16px var(--boc-theme-content-gutter, clamp(14px, 2vw, 30px));
+    border-top: 1px solid color-mix(in srgb, var(--boc-platform-border) 78%, transparent);
+    background: color-mix(in srgb, var(--boc-platform-surface) 90%, transparent);
+    color: var(--boc-platform-muted);
+    font-size: .8rem;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
+
+body.theme-boost-override-custom-platform #page-footer a {
+    color: var(--boc-platform-primary);
+    font-weight: 620;
+}
+
+body.theme-boost-override-custom-platform .btn-footer-popover {
+    width: 42px;
+    height: 42px;
+    border: 1px solid color-mix(in srgb, var(--boc-platform-border) 80%, transparent);
+    border-radius: 50%;
+    background: var(--boc-platform-surface);
+    color: var(--boc-platform-primary);
+    box-shadow: var(--boc-theme-shadow-raised, 0 12px 28px rgba(15, 23, 42, .1));
+}
+
+body.theme-boost-override-custom-platform .progress {
+    height: 8px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--boc-platform-border) 55%, #fff);
+    overflow: hidden;
+}
+
+body.theme-boost-override-custom-platform .progress-bar {
+    border-radius: inherit;
+    background: var(--boc-theme-gradient-primary, linear-gradient(90deg, #0f6cbf, #0891b2));
+    transition: width var(--boc-theme-motion-slow, 480ms) var(--boc-theme-ease, ease);
+}
+
+body.theme-boost-override-custom-platform .initialbar .initialbargroup {
+    gap: 4px;
+}
+
+body.theme-boost-override-custom-platform .initialbar .page-link {
+    min-width: 34px;
+    min-height: 34px;
+    border-radius: var(--boc-theme-radius-sm, 6px);
+}
+
+body#page-message-index.theme-boost-override-custom-platform #page-header,
+body#page-message-index.theme-boost-override-custom-platform .secondary-navigation {
+    display: none;
+}
+
+body#page-message-index.theme-boost-override-custom-platform #page-content {
+    padding-top: 0;
+}
+
+body#page-message-index.theme-boost-override-custom-platform .message-app.main {
+    height: clamp(560px, calc(100dvh - 132px), 860px) !important;
+    border: 1px solid color-mix(in srgb, var(--boc-platform-border) 82%, transparent) !important;
+    border-radius: var(--boc-theme-radius-md, 8px);
+    background: color-mix(in srgb, var(--boc-platform-surface) 96%, transparent) !important;
+    box-shadow: var(--boc-theme-shadow-raised, 0 12px 28px rgba(15, 23, 42, .1));
+    overflow: hidden;
+}
+
+body#page-message-index.theme-boost-override-custom-platform .message-app .list-group-item,
+body#page-message-index.theme-boost-override-custom-platform .message-app [data-region="content-message-container"] {
+    border-color: color-mix(in srgb, var(--boc-platform-border) 72%, transparent);
+}
+
+body#page-message-index.theme-boost-override-custom-platform .message-app.main .conversationcontainer,
+body#page-message-index.theme-boost-override-custom-platform .message-app.main > .container-fluid > .row > .col-8 {
+    min-width: 0;
+}
+
+@keyframes boc-platform-symbol-float {
+    0%, 100% { transform: translate3d(0, 0, 0) rotateX(0) rotateY(0); }
+    50% { transform: translate3d(0, -2px, 0) rotateX(3deg) rotateY(-4deg); }
+}
+
+@media (max-width: 991.98px) {
+    body.theme-boost-override-custom-platform #topofscroll.main-inner {
+        padding-top: 10px;
+    }
+
+    body.theme-boost-override-custom-platform .mform fieldset {
+        padding: 14px;
+    }
+
+    body.theme-boost-override-custom-platform .card-body,
+    body.theme-boost-override-custom-platform .block .card-body {
+        padding: 13px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    body.theme-boost-override-custom-platform {
+        font-size: 14px;
+    }
+
+    body.theme-boost-override-custom-platform #page.drawers .main-inner,
+    body.theme-boost-override-custom-platform.limitedwidth #page.drawers .main-inner {
+        padding-inline: 10px;
+    }
+
+    body.theme-boost-override-custom-platform #page-header {
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+    }
+
+    body.theme-boost-override-custom-platform #page-header h1,
+    body.theme-boost-override-custom-platform #page-header .h2 {
+        font-size: 1.45rem;
+    }
+
+    body.theme-boost-override-custom-platform .boc-platform-page-symbol,
+    body.theme-boost-override-custom-platform .boc-platform-page-symbol svg {
+        width: 40px;
+        height: 40px;
+    }
+
+    body.theme-boost-override-custom-platform .boc-platform-page-symbol {
+        flex-basis: 40px;
+    }
+
+    body.theme-boost-override-custom-platform .btn {
+        min-height: 42px;
+    }
+
+    body.theme-boost-override-custom-platform .mform fieldset {
+        padding: 12px;
+    }
+
+    body.theme-boost-override-custom-platform .table-responsive,
+    body.theme-boost-override-custom-platform .reportbuilder-table-container {
+        margin-inline: -2px;
+    }
+
+    body.theme-boost-override-custom-platform .dropdown-menu,
+    body.theme-boost-override-custom-platform .boc-platform-dropdown {
+        max-width: calc(100vw - 20px);
+    }
+
+    body#page-message-index.theme-boost-override-custom-platform .message-app.main {
+        height: calc(100dvh - 92px) !important;
+        min-height: 540px;
+        border-radius: var(--boc-theme-radius-sm, 6px);
+    }
+
+    body#page-message-index.theme-boost-override-custom-platform .message-app.main > .container-fluid {
+        padding-inline: 0;
+    }
+
+    body#page-message-index.theme-boost-override-custom-platform .message-app.main > .container-fluid > .row {
+        width: 100%;
+        margin-inline: 0;
+    }
+
+    body#page-message-index.theme-boost-override-custom-platform .message-app.main .conversationcontainer,
+    body#page-message-index.theme-boost-override-custom-platform .message-app.main > .container-fluid > .row > .col-8 {
+        width: 100%;
+        max-width: 100%;
+        flex: 0 0 100%;
+    }
+
+    body#page-message-index.theme-boost-override-custom-platform:not(.boc-message-detail-active) .message-app.main > .container-fluid > .row > .col-8,
+    body#page-message-index.theme-boost-override-custom-platform.boc-message-detail-active .message-app.main .conversationcontainer {
+        display: none !important;
+    }
+
+    body#page-message-index.theme-boost-override-custom-platform:not(.boc-message-detail-active) .message-app.main .conversationcontainer,
+    body#page-message-index.theme-boost-override-custom-platform.boc-message-detail-active .message-app.main > .container-fluid > .row > .col-8 {
+        display: flex !important;
+    }
+
+    body#page-message-index.theme-boost-override-custom-platform .message-app.main [data-region="header-container"] strong,
+    body#page-message-index.theme-boost-override-custom-platform .message-app.main [data-region="header-container"] p {
+        max-width: min(62vw, 250px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body.theme-boost-override-custom-platform *,
+    body.theme-boost-override-custom-platform *::before,
+    body.theme-boost-override-custom-platform *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .001ms !important;
+    }
+}
+
+@media print {
+    body.theme-boost-override-custom-platform #page-wrapper,
+    body.theme-boost-override-custom-platform #page.drawers {
+        background: #fff !important;
+    }
+
+    body.theme-boost-override-custom-platform .boc-platform-page-symbol {
+        display: none;
+    }
+
+    body.theme-boost-override-custom-platform .card,
+    body.theme-boost-override-custom-platform .block.card,
+    body.theme-boost-override-custom-platform .table-responsive {
+        box-shadow: none;
+    }
+}

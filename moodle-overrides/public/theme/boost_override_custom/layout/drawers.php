@@ -83,20 +83,15 @@ $learningtoolpaths = [
     '/admin/tool/lp/plans.php',
     '/report/usersessions/user.php',
     '/admin/tool/dataprivacy/summary.php',
+    '/admin/tool/lp/user_evidence_list.php',
 ];
 $isaccountpreferences = in_array($currentpath, $accountpreferencepaths, true);
 $islearningtoolpage = in_array($currentpath, $learningtoolpaths, true);
-$usesmodernheader = $isdashboard || in_array($currentpath, [
-    '/user/profile.php',
-    '/my/courses.php',
-    '/grade/report/overview/index.php',
-    '/calendar/view.php',
-    '/user/files.php',
-    '/reportbuilder/index.php',
-    '/user/preferences.php',
-    '/message/notificationpreferences.php',
-], true) || $isaccountpreferences || $islearningtoolpage;
-$extraclasses = ['uses-drawers'];
+$usesmodernheader = true;
+$extraclasses = ['uses-drawers', 'theme-boost-override-custom-platform'];
+$PAGE->requires->css(new \moodle_url('/theme/boost_override_custom/style/platform.css'));
+$PAGE->requires->js(new \moodle_url('/theme/boost_override_custom/javascript/platform.js'));
+$PAGE->requires->string_for_js('moreactions', 'theme_boost_override_custom');
 if ($isfrontpage) {
     $extraclasses[] = 'theme-boost-override-custom-frontpage';
     $PAGE->requires->css(new \moodle_url('/theme/boost_override_custom/style/frontpage.css'));

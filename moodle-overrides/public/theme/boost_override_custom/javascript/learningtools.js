@@ -85,8 +85,8 @@
         var map = {
             '/blog/preferences.php': ['blog', 'Blog preferences', 'Publishing settings', 'Control how many blog entries appear per page and keep your Moodle journal easier to scan.'],
             '/blog/external_blogs.php': ['blog', 'External blogs', 'Connected journals', 'Manage external learning journal feeds registered with this Moodle account.'],
-            '/blog/external_blog_edit.php': ['blog', 'Register external blog', 'RSS connection', "Add a real RSS feed, name, description and tags using Moodle's original form controls."],
-            '/blog/edit.php': ['blog', 'Add blog entry', 'Learning journal editor', "Write a Moodle blog post using the original title, editor, attachment, publish and tag controls."],
+            '/blog/external_blog_edit.php': ['blog', 'Register external blog', 'RSS connection', 'Connect a journal feed with its name, description and searchable tags.'],
+            '/blog/edit.php': ['blog', 'Add blog entry', 'Learning journal editor', 'Write, format and publish a learning journal entry with attachments and tags.'],
             '/badges/mybadges.php': ['badges', 'My badges', 'Achievements', 'Review earned badges, backpack connection status and badge search tools.'],
             '/badges/preferences.php': ['badges', 'Badge preferences', 'Achievement privacy', 'Choose how earned badges appear on your public Moodle profile.'],
             '/badges/mybackpack.php': ['backpack', 'Backpack settings', 'External badge wallet', "Connect your badge backpack provider using Moodle's secure backpack form."],
@@ -95,7 +95,8 @@
             '/mod/customcert/my_certificates.php': ['certificate', 'My certificates', 'Issued records', 'Review certificates issued by download or email for this Moodle user.'],
             '/admin/tool/lp/plans.php': ['plans', 'Learning plans', 'Competency planning', 'Track learning plans and evidence available for this user.'],
             '/report/usersessions/user.php': ['sessions', 'Browser sessions', 'Security activity', 'Review active browser sessions and sign out sessions when needed.'],
-            '/admin/tool/dataprivacy/summary.php': ['privacy', 'Data retention summary', 'Privacy registry', 'Review Moodle retention categories and purposes configured for the site.']
+            '/admin/tool/dataprivacy/summary.php': ['privacy', 'Data retention summary', 'Privacy registry', 'Review Moodle retention categories and purposes configured for the site.'],
+            '/admin/tool/lp/user_evidence_list.php': ['plans', 'Evidence of prior learning', 'Competency evidence', 'Review this user\'s real competency evidence, status and Moodle actions.']
         };
 
         if (path === '/mod/forum/user.php') {
@@ -108,7 +109,7 @@
             };
         }
 
-        var item = map[path] || ['tools', 'Learning tools', 'Moodle workspace', 'Review this Moodle area using the original live data and controls.'];
+        var item = map[path] || ['tools', 'Learning tools', 'Moodle workspace', 'Review the information and actions available in this learning area.'];
         return {
             icon: item[0],
             title: item[1],
@@ -179,9 +180,9 @@
         var lead = create('p', '', meta.lead);
         var metrics = create('div', 'boc-learningtools-metrics');
 
-        metrics.appendChild(metric(meta.icon, 'actions', String(stats.actions), 'real controls'));
-        metrics.appendChild(metric('reports', 'records', String(stats.records), stats.tables ? stats.tables + ' tables' : 'live page'));
-        metrics.appendChild(metric('privacy', 'notices', String(stats.alerts), stats.alerts ? 'needs review' : 'clear'));
+        metrics.appendChild(metric(meta.icon, 'actions', String(stats.actions), 'available here'));
+        metrics.appendChild(metric('reports', 'records', String(stats.records), stats.tables ? stats.tables + ' data views' : 'visible now'));
+        metrics.appendChild(metric('privacy', 'notices', String(stats.alerts), stats.alerts ? 'need review' : 'all clear'));
 
         copy.appendChild(badge);
         copy.appendChild(heading);
@@ -191,58 +192,6 @@
         hero.appendChild(copy);
         hero.appendChild(visual);
         return hero;
-    };
-
-    var buildGuide = function(meta, stats, content) {
-        var guide = create('aside', 'boc-learningtools-guide');
-        var title = create('h2', '', 'Page controls');
-        var list = create('div', 'boc-learningtools-guide-list');
-        var primaryLinks = Array.prototype.slice.call(content.querySelectorAll('a[href]')).filter(function(link) {
-            var text = clean(link.textContent);
-            if (!text || link.classList.contains('icons-collapse-expand') || link.classList.contains('collapseexpand')) {
-                return false;
-            }
-            if (link.closest('.filemanager, .fp-navbar, .tox-statusbar, .tox-toolbar, .editor_atto_toolbar')) {
-                return false;
-            }
-            if (/Build with TinyMCE/i.test(text)) {
-                return false;
-            }
-            if (link.getAttribute('href') === '#') {
-                return false;
-            }
-            return true;
-        }).slice(0, 4);
-
-        guide.appendChild(title);
-        [
-            ['tools', stats.forms ? stats.forms + ' form area' + (stats.forms > 1 ? 's' : '') : 'No form required', 'Moodle submission logic is unchanged.'],
-            ['reports', stats.tables ? stats.tables + ' data table' + (stats.tables > 1 ? 's' : '') : stats.records + ' records', 'Tables keep sorting, links and actions.'],
-            [meta.icon, stats.links + ' live link' + (stats.links === 1 ? '' : 's'), 'Existing destinations are preserved.']
-        ].forEach(function(row) {
-            var item = create('div', 'boc-learningtools-guide-item');
-            var icon = create('span', 'boc-learningtools-guide-icon');
-            var copy = create('span', 'boc-learningtools-guide-copy');
-            icon.innerHTML = iconSvg(row[0]);
-            copy.appendChild(create('strong', '', row[1]));
-            copy.appendChild(create('span', '', row[2]));
-            item.appendChild(icon);
-            item.appendChild(copy);
-            list.appendChild(item);
-        });
-
-        if (primaryLinks.length) {
-            var actions = create('div', 'boc-learningtools-guide-actions');
-            primaryLinks.forEach(function(link) {
-                var clone = link.cloneNode(true);
-                clone.classList.add('boc-learningtools-primary-link');
-                actions.appendChild(clone);
-            });
-            guide.appendChild(actions);
-        }
-
-        guide.appendChild(list);
-        return guide;
     };
 
     var decorateForms = function(content) {
@@ -289,15 +238,8 @@
         });
     };
 
-    var buildWorkspace = function(meta, content, stats) {
+    var buildWorkspace = function(meta, content) {
         var workspace = create('section', 'boc-learningtools-workspace');
-        var header = create('div', 'boc-learningtools-workspace-header');
-        var title = create('h2', '', 'Live Moodle content');
-        var count = create('span', 'boc-learningtools-count', stats.actions + ' actions');
-
-        header.appendChild(title);
-        header.appendChild(count);
-        workspace.appendChild(header);
         workspace.appendChild(content);
 
         if (!clean(content.textContent)) {
@@ -306,7 +248,7 @@
             icon.innerHTML = iconSvg(meta.icon);
             empty.appendChild(icon);
             empty.appendChild(create('strong', '', 'Nothing to display'));
-            empty.appendChild(create('span', '', 'Moodle did not return visible content for this page.'));
+            empty.appendChild(create('span', '', 'There is no content available in this view.'));
             content.appendChild(empty);
         }
 
@@ -345,8 +287,7 @@
 
         shell = create('div', 'boc-learningtools-shell');
         layout = create('div', 'boc-learningtools-layout');
-        layout.appendChild(buildWorkspace(meta, content, stats));
-        layout.appendChild(buildGuide(meta, stats, content));
+        layout.appendChild(buildWorkspace(meta, content));
         shell.appendChild(buildHero(meta, title, stats));
         shell.appendChild(layout);
         main.appendChild(shell);

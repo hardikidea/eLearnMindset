@@ -4,8 +4,6 @@
     var bodySelector = 'body.theme-boost-override-custom-accountprefs';
     var state = {
         shell: null,
-        metrics: {},
-        guide: {},
         scheduled: false,
         observer: null
     };
@@ -209,113 +207,6 @@
             '</svg>';
     };
 
-    var textWithoutHidden = function(node) {
-        var clone;
-
-        if (!node) {
-            return '';
-        }
-
-        clone = node.cloneNode(true);
-        clone.querySelectorAll('.visually-hidden, .sr-only, .accesshide').forEach(function(hidden) {
-            hidden.remove();
-        });
-        return cleanText(clone.textContent);
-    };
-
-    var collectData = function() {
-        var region = document.querySelector('#region-main');
-        var drawer = pagePath() === '/message/edit.php' ? document.querySelector('.message-app') : null;
-        var roots = [region, drawer].filter(Boolean);
-        var findAll = function(selector) {
-            var seen = [];
-
-            roots.forEach(function(root) {
-                Array.prototype.slice.call(root.querySelectorAll(selector)).forEach(function(item) {
-                    if (seen.indexOf(item) === -1) {
-                        seen.push(item);
-                    }
-                });
-            });
-            return seen;
-        };
-        var forms = findAll('form');
-        var fields = findAll('input:not([type="hidden"]), select, textarea');
-        var buttons = findAll(
-            'input[type="submit"], button[type="submit"], input[type="button"], button.btn-primary, button.btn-secondary'
-        );
-        var fieldsets = findAll('fieldset');
-        var tables = findAll('table');
-        var selects = findAll('select');
-        var values = selects.map(function(select) {
-            var labelNode = select.id ? document.querySelector('label[for="' + select.id + '"]') : null;
-            var label = textWithoutHidden(labelNode) || cleanText(select.name || select.id);
-            var selected = select.options[select.selectedIndex] ? cleanText(select.options[select.selectedIndex].textContent) : cleanText(select.value);
-            return {
-                label: label,
-                value: selected
-            };
-        }).filter(function(item) {
-            return item.label || item.value;
-        }).slice(0, 5);
-
-        return {
-            forms: forms.length,
-            fields: fields.length,
-            actions: buttons.map(function(button) {
-                return cleanText(button.value || button.getAttribute('title') || button.getAttribute('aria-label') || button.textContent);
-            }).filter(Boolean),
-            sections: fieldsets.length || Math.max(0, Array.prototype.slice.call(region ? region.querySelectorAll('.fcontainer, .clearfix.fitem') : []).length - fields.length),
-            tables: tables.length,
-            rows: tables.reduce(function(total, table) {
-                return total + table.querySelectorAll('tr').length;
-            }, 0),
-            selects: selects.length,
-            checkboxes: findAll('input[type="checkbox"]').length,
-            values: values,
-            alerts: findAll('.alert, .notifyproblem, .error').map(function(alert) {
-                return cleanText(alert.textContent);
-            }).filter(Boolean).slice(0, 3)
-        };
-    };
-
-    var metric = function(key, label, value, meta, icon) {
-        var item = createNode('article', 'boc-accountprefs-metric');
-        var iconNode = createNode('span', 'boc-accountprefs-metric-icon');
-        var copy = createNode('span', 'boc-accountprefs-metric-copy');
-        var valueNode = createNode('strong', '', value);
-        var labelNode = createNode('span', 'boc-accountprefs-metric-label', label);
-        var metaNode = createNode('span', 'boc-accountprefs-metric-meta', meta);
-
-        iconNode.innerHTML = iconSvg(icon);
-        copy.appendChild(valueNode);
-        copy.appendChild(labelNode);
-        copy.appendChild(metaNode);
-        item.appendChild(iconNode);
-        item.appendChild(copy);
-        state.metrics[key] = {
-            value: valueNode,
-            meta: metaNode
-        };
-        return item;
-    };
-
-    var guideItem = function(key, icon, title, text) {
-        var item = createNode('article', 'boc-accountprefs-guide-item');
-        var iconNode = createNode('span', 'boc-accountprefs-guide-icon');
-        var copy = createNode('span', 'boc-accountprefs-guide-copy');
-        var titleNode = createNode('strong', '', title);
-        var textNode = createNode('span', '', text);
-
-        iconNode.innerHTML = iconSvg(icon);
-        copy.appendChild(titleNode);
-        copy.appendChild(textNode);
-        item.appendChild(iconNode);
-        item.appendChild(copy);
-        state.guide[key] = textNode;
-        return item;
-    };
-
     var preferenceNav = function() {
         var nav = createNode('nav', 'boc-accountprefs-nav');
         var title = createNode('span', 'boc-accountprefs-nav-title', 'User account');
@@ -356,22 +247,16 @@
         var body = document.querySelector(bodySelector);
         var region = document.querySelector('#region-main');
         var meta = currentMeta();
-        var data;
         var heading;
         var pageHeader;
         var contentNodes;
         var shell;
         var hero;
         var heroCopy;
-        var metrics;
         var visual;
         var layout;
         var workspace;
-        var workspaceHeader;
-        var workspaceTitle;
         var aside;
-        var guideList;
-        var empty;
 
         if (!body || !region) {
             return false;
@@ -389,8 +274,6 @@
 
         heading = region.querySelector('h2');
         pageHeader = document.querySelector('#page-header h1, .page-header-headings h1, h1');
-        data = collectData();
-
         if (heading) {
             heading.classList.add('boc-accountprefs-source-heading');
         }
@@ -407,14 +290,10 @@
         }
         hero = createNode('section', 'boc-accountprefs-hero boc-accountprefs-accent-' + meta.accent);
         heroCopy = createNode('div', 'boc-accountprefs-hero-copy');
-        metrics = createNode('div', 'boc-accountprefs-metrics');
         visual = createNode('div', 'boc-accountprefs-visual');
         layout = createNode('div', 'boc-accountprefs-layout');
         workspace = createNode('section', 'boc-accountprefs-workspace');
-        workspaceHeader = createNode('div', 'boc-accountprefs-workspace-header');
-        workspaceTitle = createNode('div', 'boc-accountprefs-workspace-title');
         aside = createNode('aside', 'boc-accountprefs-guide');
-        guideList = createNode('div', 'boc-accountprefs-guide-list');
 
         heroCopy.appendChild(createNode('span', 'boc-accountprefs-eyebrow', meta.eyebrow));
         heroCopy.appendChild(createNode('h1', '', meta.title));
@@ -422,51 +301,15 @@
         if (pageHeader) {
             heroCopy.appendChild(createNode('span', 'boc-accountprefs-user-pill', cleanText(pageHeader.textContent)));
         }
-        metrics.appendChild(metric('fields', 'Live fields', String(data.fields), 'Controls rendered by Moodle', 'fields'));
-        metrics.appendChild(metric('sections', 'Sections', String(data.sections || data.tables), 'Collapsible groups or tables', 'sections'));
-        metrics.appendChild(metric('actions', 'Actions', String(data.actions.length), 'Available page actions', 'actions'));
-        metrics.appendChild(metric('status', 'Status', data.alerts.length ? String(data.alerts.length) : 'Ready', data.alerts.length ? 'Messages need review' : 'No warnings detected', 'status'));
-        heroCopy.appendChild(metrics);
         visual.innerHTML = heroSvg(meta);
         hero.appendChild(heroCopy);
         hero.appendChild(visual);
-
-        workspaceHeader.appendChild(createNode('span', 'boc-accountprefs-workspace-icon'));
-        workspaceHeader.querySelector('.boc-accountprefs-workspace-icon').innerHTML = iconSvg(meta.visual);
-        workspaceTitle.appendChild(createNode('h2', '', meta.title + ' controls'));
-        workspaceTitle.appendChild(createNode('p', '', meta.key === 'message' ?
-            'Use Moodle\'s original message settings panel. Privacy, notification and delivery controls remain handled by core messaging.' :
-            (data.forms ? 'Use the original Moodle form below. Field names, validation, tokens, editor widgets and submit actions are unchanged.' : 'Moodle has not rendered editable controls for this preference route.')));
-        workspaceHeader.appendChild(workspaceTitle);
-        workspace.appendChild(workspaceHeader);
 
         contentNodes.forEach(function(node) {
             workspace.appendChild(node);
         });
 
-        if (meta.key === 'message') {
-            empty = createNode('div', 'boc-accountprefs-empty');
-            empty.innerHTML = '<span class="boc-accountprefs-empty-icon">' + iconSvg(meta.visual) + '</span>' +
-                '<strong>Message settings panel is active</strong>' +
-                '<span>Use the Moodle settings drawer on the right. The page background is styled only as visual context.</span>';
-            workspace.appendChild(empty);
-        } else if (!data.forms && !data.tables && !data.fields) {
-            empty = createNode('div', 'boc-accountprefs-empty');
-            empty.innerHTML = '<span class="boc-accountprefs-empty-icon">' + iconSvg(meta.visual) + '</span>' +
-                '<strong>No editable controls on this page</strong>' +
-                '<span>Moodle rendered this preference page without a form for the current user and configuration.</span>';
-            workspace.appendChild(empty);
-        }
-
         aside.appendChild(preferenceNav());
-        aside.appendChild(createNode('span', 'boc-accountprefs-guide-kicker', 'Live preference guide'));
-        aside.appendChild(createNode('h2', '', 'Current page summary'));
-        aside.appendChild(createNode('p', 'boc-accountprefs-guide-lede', 'These values are read from the actual Moodle controls visible on this page.'));
-        guideList.appendChild(guideItem('fields', 'fields', 'Rendered controls', 'Reading fields...'));
-        guideList.appendChild(guideItem('actions', 'actions', 'Page actions', 'Reading actions...'));
-        guideList.appendChild(guideItem('values', 'status', 'Selected values', 'Reading current selections...'));
-        guideList.appendChild(guideItem('validation', 'lock', 'Functional safety', 'Moodle form submission and validation remain unchanged.'));
-        aside.appendChild(guideList);
 
         layout.appendChild(workspace);
         layout.appendChild(aside);
@@ -504,35 +347,6 @@
     };
 
     var updateLiveData = function() {
-        var data = collectData();
-        var actions = Array.from(new Set(data.actions)).slice(0, 6);
-        var valueSummary = data.values.map(function(item) {
-            return item.label + ': ' + item.value;
-        }).join(' | ');
-
-        if (!state.metrics.fields) {
-            return;
-        }
-
-        state.metrics.fields.value.textContent = String(data.fields);
-        state.metrics.sections.value.textContent = String(data.sections || data.tables || 0);
-        state.metrics.actions.value.textContent = String(actions.length);
-        state.metrics.status.value.textContent = data.alerts.length ? String(data.alerts.length) : 'Ready';
-        state.metrics.status.meta.textContent = data.alerts.length ? 'Messages need review' : 'No warnings detected';
-
-        if (state.guide.fields) {
-            state.guide.fields.textContent = data.fields + ' input controls, ' + data.selects + ' dropdowns and ' + data.checkboxes + ' checkboxes are currently rendered.';
-        }
-        if (state.guide.actions) {
-            state.guide.actions.textContent = actions.length ? actions.join(', ') : 'No submit actions are available on this route.';
-        }
-        if (state.guide.values) {
-            state.guide.values.textContent = valueSummary || 'No dropdown selections are visible on this page.';
-        }
-        if (state.guide.validation && data.alerts.length) {
-            state.guide.validation.textContent = data.alerts[0];
-        }
-
         decorateControls();
     };
 

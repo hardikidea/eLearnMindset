@@ -25,4 +25,5 @@
 defined('MOODLE_INTERNAL') || die();
 
 $string['pluginname'] = 'Boost Override Custom';
+$string['moreactions'] = 'More actions';
 $string['privacy:metadata'] = 'The Boost Override Custom theme does not store any personal data.';

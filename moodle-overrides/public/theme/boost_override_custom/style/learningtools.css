@@ -304,7 +304,7 @@ body.theme-boost-override-custom-learningtools .boc-lt-hero-icon svg {
 
 body.theme-boost-override-custom-learningtools .boc-learningtools-layout {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(286px, 340px);
+    grid-template-columns: minmax(0, 1fr);
     gap: 18px;
     align-items: start;
 }
@@ -726,7 +726,42 @@ body.theme-boost-override-custom-learningtools .boc-lt-svg-line {
     }
 
     body.theme-boost-override-custom-learningtools .boc-learningtools-metrics {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 7px;
+        margin-top: 14px;
+    }
+
+    body.theme-boost-override-custom-learningtools .boc-learningtools-metric {
+        min-height: 86px;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 6px;
+        padding: 9px;
+        border-radius: 13px;
+    }
+
+    body.theme-boost-override-custom-learningtools .boc-learningtools-metric-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 11px;
+    }
+
+    body.theme-boost-override-custom-learningtools .boc-learningtools-metric-icon svg {
+        width: 24px;
+        height: 24px;
+    }
+
+    body.theme-boost-override-custom-learningtools .boc-learningtools-metric-copy strong {
+        font-size: 1rem;
+    }
+
+    body.theme-boost-override-custom-learningtools .boc-learningtools-metric-copy span {
+        font-size: .66rem;
+        line-height: 1.1;
+    }
+
+    body.theme-boost-override-custom-learningtools .boc-learningtools-metric-copy small {
+        display: none;
     }
 
     body.theme-boost-override-custom-learningtools .boc-learningtools-content,

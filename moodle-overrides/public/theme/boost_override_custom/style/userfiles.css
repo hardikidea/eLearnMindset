@@ -718,16 +718,21 @@ body.theme-boost-override-custom-userfiles .boc-userfiles-guide-copy span {
     }
 
     body.theme-boost-override-custom-userfiles .boc-userfiles-visual {
-        min-height: 180px;
+        display: none;
     }
 
-    body.theme-boost-override-custom-userfiles .boc-userfiles-metrics,
+    body.theme-boost-override-custom-userfiles .boc-userfiles-metrics {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+    }
+
     body.theme-boost-override-custom-userfiles .boc-userfiles-guide-list {
         grid-template-columns: 1fr;
     }
 
     body.theme-boost-override-custom-userfiles .boc-userfiles-metric {
-        min-height: 78px;
+        min-height: 72px;
+        padding: 9px;
     }
 
     body.theme-boost-override-custom-userfiles .boc-userfiles-workspace-header {
