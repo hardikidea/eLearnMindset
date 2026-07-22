@@ -52,6 +52,10 @@ $iscourseindexroot = $PAGE->pagetype === 'course-index-category' && optional_par
 $currentpath = $PAGE->url->get_path();
 $ismycourses = $currentpath === '/my/courses.php';
 $isgradeoverview = $currentpath === '/grade/report/overview/index.php';
+$isnotificationpreferences = $currentpath === '/message/notificationpreferences.php';
+$iscalendarview = $currentpath === '/calendar/view.php';
+$isuserpreferences = $currentpath === '/user/preferences.php';
+$isuserfiles = $currentpath === '/user/files.php';
 $usesmodernheader = $isdashboard || in_array($currentpath, [
     '/user/profile.php',
     '/my/courses.php',
@@ -60,6 +64,7 @@ $usesmodernheader = $isdashboard || in_array($currentpath, [
     '/user/files.php',
     '/reportbuilder/index.php',
     '/user/preferences.php',
+    '/message/notificationpreferences.php',
 ], true);
 $extraclasses = ['uses-drawers'];
 if ($isfrontpage) {
@@ -375,6 +380,26 @@ if ($isgradeoverview) {
     $extraclasses[] = 'theme-boost-override-custom-gradeoverview';
     $PAGE->requires->css(new \moodle_url('/theme/boost_override_custom/style/gradeoverview.css'));
     $PAGE->requires->js(new \moodle_url('/theme/boost_override_custom/javascript/gradeoverview.js'));
+}
+if ($isnotificationpreferences) {
+    $extraclasses[] = 'theme-boost-override-custom-notificationprefs';
+    $PAGE->requires->css(new \moodle_url('/theme/boost_override_custom/style/notificationprefs.css'));
+    $PAGE->requires->js(new \moodle_url('/theme/boost_override_custom/javascript/notificationprefs.js'));
+}
+if ($iscalendarview) {
+    $extraclasses[] = 'theme-boost-override-custom-calendarview';
+    $PAGE->requires->css(new \moodle_url('/theme/boost_override_custom/style/calendarview.css'));
+    $PAGE->requires->js(new \moodle_url('/theme/boost_override_custom/javascript/calendarview.js'));
+}
+if ($isuserpreferences) {
+    $extraclasses[] = 'theme-boost-override-custom-userpreferences';
+    $PAGE->requires->css(new \moodle_url('/theme/boost_override_custom/style/userpreferences.css'));
+    $PAGE->requires->js(new \moodle_url('/theme/boost_override_custom/javascript/userpreferences.js'));
+}
+if ($isuserfiles) {
+    $extraclasses[] = 'theme-boost-override-custom-userfiles';
+    $PAGE->requires->css(new \moodle_url('/theme/boost_override_custom/style/userfiles.css'));
+    $PAGE->requires->js(new \moodle_url('/theme/boost_override_custom/javascript/userfiles.js'));
 }
 if ($iscourseindex) {
     $extraclasses[] = 'theme-boost-override-custom-courseindex';

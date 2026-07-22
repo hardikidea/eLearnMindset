@@ -1,0 +1,773 @@
+body.theme-boost-override-custom-userfiles {
+    --boc-uf-primary: var(--boc-theme-primary, var(--bs-primary, #0f6cbf));
+    --boc-uf-primary-strong: var(--boc-theme-primary-strong, #0750ca);
+    --boc-uf-accent: var(--boc-theme-accent, #0891b2);
+    --boc-uf-success: var(--boc-theme-success, #15803d);
+    --boc-uf-warning: var(--boc-theme-warning-bright, #f59e0b);
+    --boc-uf-violet: var(--boc-theme-violet, #7c3aed);
+    --boc-uf-ink: var(--boc-theme-ink, #0f172a);
+    --boc-uf-text: var(--boc-theme-text, #334155);
+    --boc-uf-muted: var(--boc-theme-muted, #64748b);
+    --boc-uf-border: var(--boc-theme-border, #d8e0ea);
+    --boc-uf-surface: var(--boc-theme-surface, #fff);
+    --boc-uf-glass: color-mix(in srgb, var(--boc-uf-surface) 86%, transparent);
+    --boc-uf-soft: color-mix(in srgb, var(--boc-uf-primary) 8%, #f8fbff);
+    --boc-uf-shadow: 0 26px 70px rgba(15, 23, 42, .13);
+    --boc-uf-shadow-soft: 0 14px 34px rgba(15, 23, 42, .09);
+    --boc-uf-radius-lg: 24px;
+    --boc-uf-radius-md: 18px;
+    color: var(--boc-uf-ink);
+    background:
+        linear-gradient(115deg, rgba(15, 108, 191, .09) 0 16%, transparent 16% 100%),
+        linear-gradient(290deg, rgba(245, 158, 11, .12) 0 13%, transparent 13% 100%),
+        radial-gradient(circle at 12% 18%, color-mix(in srgb, var(--boc-uf-primary) 13%, transparent), transparent 30vw),
+        radial-gradient(circle at 86% 76%, color-mix(in srgb, var(--boc-uf-accent) 12%, transparent), transparent 33vw),
+        #f7fbff;
+}
+
+body.theme-boost-override-custom-userfiles,
+body.theme-boost-override-custom-userfiles input,
+body.theme-boost-override-custom-userfiles button,
+body.theme-boost-override-custom-userfiles select,
+body.theme-boost-override-custom-userfiles textarea {
+    font-family: var(--boc-theme-font-family, "Inter", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif);
+}
+
+body.theme-boost-override-custom-userfiles #page-wrapper,
+body.theme-boost-override-custom-userfiles #page {
+    background: transparent;
+}
+
+body.theme-boost-override-custom-userfiles #page.drawers .main-inner {
+    width: min(100% - 32px, 1560px);
+    max-width: 1560px;
+    margin: 18px auto 48px;
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+body.theme-boost-override-custom-userfiles #region-main {
+    padding: 0;
+    overflow: visible;
+    background: transparent;
+    border: 0;
+}
+
+body.theme-boost-override-custom-userfiles.boc-userfiles-ready #page-header {
+    display: none;
+}
+
+body.theme-boost-override-custom-userfiles .boc-userfiles-source-heading {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+body.theme-boost-override-custom-userfiles .boc-userfiles-shell {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    gap: 20px;
+    animation: boc-userfiles-fade-up .58s ease both;
+}
+
+body.theme-boost-override-custom-userfiles .boc-userfiles-shell::before,
+body.theme-boost-override-custom-userfiles .boc-userfiles-shell::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    pointer-events: none;
+    border: 1px solid color-mix(in srgb, var(--boc-uf-border) 65%, transparent);
+    background:
+        linear-gradient(135deg, color-mix(in srgb, var(--boc-uf-primary) 10%, transparent), transparent),
+        repeating-linear-gradient(90deg, rgba(255, 255, 255, .22) 0 1px, transparent 1px 40px);
+    transform: rotate(-8deg);
+}
+
+body.theme-boost-override-custom-userfiles .boc-userfiles-shell::before {
+    top: 36px;
+    right: 8%;
+    width: 210px;
+    height: 132px;
+    border-radius: 34px;
+}
+
+body.theme-boost-override-custom-userfiles .boc-userfiles-shell::after {
+    bottom: 28px;
+    left: 5%;
+    width: 250px;
+    height: 124px;
+    border-radius: 34px;
+    transform: rotate(7deg);
+    background:
+        linear-gradient(135deg, color-mix(in srgb, var(--boc-uf-warning) 12%, transparent), transparent),
+        repeating-linear-gradient(0deg, rgba(255, 255, 255, .2) 0 1px, transparent 1px 36px);
+}
+
+body.theme-boost-override-custom-userfiles .boc-userfiles-hero,
+body.theme-boost-override-custom-userfiles .boc-userfiles-workspace,
+body.theme-boost-override-custom-userfiles .boc-userfiles-guide {
+    position: relative;
+    border: 1px solid color-mix(in srgb, var(--boc-uf-border) 72%, transparent);
+    border-radius: var(--boc-uf-radius-lg);
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, .92), rgba(255, 255, 255, .68)),
+        var(--boc-uf-glass);
+    box-shadow: var(--boc-uf-shadow-soft);
+    backdrop-filter: blur(18px);
+}
+
+body.theme-boost-override-custom-userfiles .boc-userfiles-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 430px);
+    gap: 22px;
+    align-items: stretch;
+    min-height: 290px;
+    padding: clamp(22px, 3vw, 34px);
+    overflow: hidden;
+}
+
+body.theme-boost-override-custom-userfiles .boc-userfiles-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(120deg, transparent 0 52%, color-mix(in srgb, var(--boc-uf-primary) 8%, transparent) 52% 68%, transparent 68%),
+        linear-gradient(0deg, transparent, rgba(255, 255, 255, .26));
+    pointer-events: none;
+}
+
+body.theme-boost-override-custom-userfiles .boc-userfiles-hero-copy,
+body.theme-boost-override-custom-userfiles .boc-userfiles-visual {
+    position: relative;
+    z-index: 1;
+}
+
+body.theme-boost-override-custom-userfiles .boc-userfiles-eyebrow,
+body.theme-boost-override-custom-userfiles .boc-userfiles-guide-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    width: fit-content;
+    min-height: 30px;
+    padding: 7px 13px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--boc-uf-success) 11%, #fff);
+    color: color-mix(in srgb, var(--boc-uf-success) 78%, #052e16);
+    font-size: .78rem;
+    font-weight: 800;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+}
+
+body.theme-boost-override-custom-userfiles .boc-userfiles-eyebrow::before,
+body.theme-boost-override-custom-userfiles .boc-userfiles-guide-kicker::before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--boc-uf-success);
+    box-shadow: 0 0 0 6px color-mix(in srgb, var(--boc-uf-success) 13%, transparent);
+}
+
+body.theme-boost-override-custom-userfiles .boc-userfiles-hero h1 {
+    max-width: 850px;
+    margin: 18px 0 12px;
+    color: var(--boc-uf-ink);
+    font-size: clamp(2rem, 3.2vw, 3.9rem);
+    font-weight: 850;
+    line-height: 1.04;
+}
+
+body.theme-boost-override-custom-userfiles .boc-userfiles-hero p,
+body.theme-boost-override-custom-userfiles .boc-userfiles-guide-lede,
+body.theme-boost-override-custom-userfiles .boc-userfiles-workspace-title p {
+    max-width: 760px;
+    margin: 0;
+    color: var(--boc-uf-text);
+    font-size: clamp(1rem, 1.2vw, 1.17rem);
+    line-height: 1.58;
+}
+
+body.theme-boost-override-custom-userfiles .boc-userfiles-metrics {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(130px, 1fr));
+    gap: 12px;
+    margin-top: 24px;
+}
+
+body.theme-boost-override-custom-userfiles .boc-userfiles-metric {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+    min-height: 94px;
+    padding: 14px;
+    border: 1px solid color-mix(in srgb, var(--boc-uf-border) 68%, transparent);
+    border-radius: var(--boc-uf-radius-md);
+    background: rgba(255, 255, 255, .72);
+    box-shadow: 0 16px 32px rgba(15, 23, 42, .07);
+    transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+}
+
+body.theme-boost-override-custom-userfiles .boc-userfiles-metric:hover {
+    transform: translateY(-3px);
+    border-color: color-mix(in srgb, var(--boc-uf-primary) 38%, var(--boc-uf-border));
+    box-shadow: 0 20px 42px rgba(15, 23, 42, .12);
+}
+
+body.theme-boost-override-custom-userfiles .boc-userfiles-metric-icon,
+body.theme-boost-override-custom-userfiles .boc-userfiles-workspace-icon,
+body.theme-boost-override-custom-userfiles .boc-userfiles-guide-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    border-radius: 16px;
+    background: color-mix(in srgb, var(--boc-uf-primary) 10%, #fff);
+}
+
+body.theme-boost-override-custom-userfiles .boc-userfiles-metric-icon {
+    width: 48px;
+    height: 48px;
+}
+
+body.theme-boost-override-custom-userfiles .boc-userfiles-metric-icon svg,
+body.theme-boost-override-custom-userfiles .boc-userfiles-workspace-icon svg,
+body.theme-boost-override-custom-userfiles .boc-userfiles-guide-icon svg {
+    width: 28px;
+    height: 28px;
+}
+
+body.theme-boost-override-custom-userfiles .boc-userfiles-metric-copy {
+    display: grid;
+    gap: 1px;
+    min-width: 0;
+}
+
+body.theme-boost-override-custom-userfiles .boc-userfiles-metric-copy strong {
+    color: var(--boc-uf-ink);
+    font-size: clamp(1.15rem, 1.7vw, 1.55rem);
+    font-weight: 850;
+    line-height: 1.05;
+}
+
+body.theme-boost-override-custom-userfiles .boc-userfiles-metric-label {
+    color: var(--boc-uf-text);
+    font-size: .82rem;
+    font-weight: 800;
+}
+
+body.theme-boost-override-custom-userfiles .boc-userfiles-metric-meta {
+    overflow: hidden;
+    color: var(--boc-uf-muted);
+    font-size: .76rem;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+body.theme-boost-override-custom-userfiles .boc-userfiles-visual {
+    display: grid;
+    place-items: center;
+    min-height: 230px;
+    border: 1px solid color-mix(in srgb, var(--boc-uf-border) 54%, transparent);
+    border-radius: 28px;
+    background:
+        linear-gradient(145deg, rgba(255, 255, 255, .6), rgba(224, 242, 254, .58)),
+        repeating-linear-gradient(90deg, rgba(255, 255, 255, .28) 0 1px, transparent 1px 36px);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .72), 0 24px 64px rgba(14, 165, 233, .16);
+    overflow: hidden;
+}
+
+body.theme-boost-override-custom-userfiles .boc-userfiles-visual svg {
+    width: min(100%, 410px);
+    height: auto;
+}
+
+body.theme-boost-override-custom-userfiles .boc-userfiles-svg-float {
+    animation: boc-userfiles-float 6.5s ease-in-out infinite;
+    transform-origin: center;
+}
+
+body.theme-boost-override-custom-userfiles .boc-userfiles-svg-orbit {
+    animation: boc-userfiles-float 8s ease-in-out infinite reverse;
+}
+
+body.theme-boost-override-custom-userfiles .boc-userfiles-svg-line {
+    animation: boc-userfiles-slide 5.5s ease-in-out infinite;
+}
+
+body.theme-boost-override-custom-userfiles .boc-userfiles-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 380px;
+    gap: 20px;
+    align-items: start;
+}
+
+body.theme-boost-override-custom-userfiles .boc-userfiles-workspace,
+body.theme-boost-override-custom-userfiles .boc-userfiles-guide {
+    padding: 20px;
+}
+
+body.theme-boost-override-custom-userfiles .boc-userfiles-workspace-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin-bottom: 16px;
+    padding: 14px;
+    border: 1px solid color-mix(in srgb, var(--boc-uf-border) 62%, transparent);
+    border-radius: var(--boc-uf-radius-md);
+    background:
+        linear-gradient(120deg, rgba(255, 255, 255, .84), rgba(239, 246, 255, .72));
+}
+
+body.theme-boost-override-custom-userfiles .boc-userfiles-workspace-icon {
+    width: 54px;
+    height: 54px;
+    color: var(--boc-uf-primary);
+}
+
+body.theme-boost-override-custom-userfiles .boc-userfiles-workspace-title {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+body.theme-boost-override-custom-userfiles .boc-userfiles-workspace-title h2,
+body.theme-boost-override-custom-userfiles .boc-userfiles-guide h2 {
+    margin: 0 0 4px;
+    color: var(--boc-uf-ink);
+    font-size: clamp(1.25rem, 1.8vw, 1.7rem);
+    font-weight: 820;
+    line-height: 1.12;
+}
+
+body.theme-boost-override-custom-userfiles .boc-userfiles-workspace > .generalbox {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+}
+
+body.theme-boost-override-custom-userfiles #userfilesform {
+    width: 100%;
+}
+
+body.theme-boost-override-custom-userfiles #userfilesform form.mform {
+    display: grid;
+    gap: 16px;
+    margin: 0;
+}
+
+body.theme-boost-override-custom-userfiles #userfilesform .form-group.row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-right: 0;
+    margin-left: 0;
+}
+
+body.theme-boost-override-custom-userfiles #userfilesform .col-md-3,
+body.theme-boost-override-custom-userfiles #userfilesform .col-md-9 {
+    flex: 0 0 100%;
+    width: 100%;
+    max-width: 100%;
+    padding-right: 0;
+    padding-left: 0;
+}
+
+body.theme-boost-override-custom-userfiles #userfilesform .col-form-label {
+    display: flex;
+    align-items: center;
+    min-height: 0;
+    padding: 0;
+    color: var(--boc-uf-ink);
+    font-size: .96rem;
+    font-weight: 850;
+}
+
+body.theme-boost-override-custom-userfiles #userfilesform .col-form-label label {
+    margin: 0;
+}
+
+body.theme-boost-override-custom-userfiles #userfilesform .felement {
+    width: 100%;
+    margin: 0;
+}
+
+body.theme-boost-override-custom-userfiles #userfilesform .filemanager {
+    width: 100% !important;
+    max-width: none;
+    min-height: 330px;
+    border: 1px solid color-mix(in srgb, var(--boc-uf-border) 80%, transparent);
+    border-radius: 22px;
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, .96), rgba(248, 251, 255, .78)),
+        var(--boc-uf-surface);
+    box-shadow: 0 18px 46px rgba(15, 23, 42, .1);
+    overflow: hidden;
+}
+
+body.theme-boost-override-custom-userfiles #userfilesform .fp-restrictions {
+    padding: 14px 18px;
+    border-bottom: 1px solid color-mix(in srgb, var(--boc-uf-border) 76%, transparent);
+    background:
+        linear-gradient(90deg, color-mix(in srgb, var(--boc-uf-primary) 8%, #fff), color-mix(in srgb, var(--boc-uf-accent) 7%, #fff));
+    color: var(--boc-uf-text);
+    font-size: .9rem;
+    font-weight: 750;
+    line-height: 1.35;
+}
+
+body.theme-boost-override-custom-userfiles #userfilesform .fp-navbar {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 12px;
+    border-bottom: 1px solid color-mix(in srgb, var(--boc-uf-border) 70%, transparent);
+    background: rgba(255, 255, 255, .75);
+}
+
+body.theme-boost-override-custom-userfiles #userfilesform .fp-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+body.theme-boost-override-custom-userfiles #userfilesform .fp-viewbar {
+    display: flex;
+    gap: 8px;
+    margin-left: auto;
+}
+
+body.theme-boost-override-custom-userfiles #userfilesform .filemanager .btn,
+body.theme-boost-override-custom-userfiles #userfilesform input[type="submit"] {
+    min-height: 42px;
+    border: 1px solid color-mix(in srgb, var(--boc-uf-border) 76%, transparent);
+    border-radius: 13px;
+    background: rgba(255, 255, 255, .84);
+    color: var(--boc-uf-ink);
+    font-weight: 800;
+    box-shadow: 0 12px 24px rgba(15, 23, 42, .08);
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease, background .18s ease;
+}
+
+body.theme-boost-override-custom-userfiles #userfilesform .filemanager .btn:hover,
+body.theme-boost-override-custom-userfiles #userfilesform .filemanager .btn:focus-visible,
+body.theme-boost-override-custom-userfiles #userfilesform input[type="submit"]:hover,
+body.theme-boost-override-custom-userfiles #userfilesform input[type="submit"]:focus-visible {
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--boc-uf-primary) 45%, var(--boc-uf-border));
+    box-shadow: 0 16px 34px rgba(15, 23, 42, .14);
+    outline: 3px solid color-mix(in srgb, var(--boc-uf-primary) 18%, transparent);
+    outline-offset: 2px;
+}
+
+body.theme-boost-override-custom-userfiles #userfilesform .filemanager .fp-btn-add,
+body.theme-boost-override-custom-userfiles #userfilesform .filemanager .fp-btn-mkdir,
+body.theme-boost-override-custom-userfiles #userfilesform .filemanager .boc-userfiles-control-primary,
+body.theme-boost-override-custom-userfiles #userfilesform input[name="submitbutton"] {
+    border-color: transparent;
+    background: linear-gradient(135deg, var(--boc-uf-primary), var(--boc-uf-accent));
+    color: #fff;
+}
+
+body.theme-boost-override-custom-userfiles #userfilesform .filemanager .fp-btn-add .icon,
+body.theme-boost-override-custom-userfiles #userfilesform .filemanager .fp-btn-mkdir .icon {
+    color: inherit;
+}
+
+body.theme-boost-override-custom-userfiles #userfilesform .fp-viewbar .checked,
+body.theme-boost-override-custom-userfiles #userfilesform .fp-viewbar .btn[aria-pressed="true"] {
+    border-color: color-mix(in srgb, var(--boc-uf-primary) 38%, var(--boc-uf-border));
+    background: color-mix(in srgb, var(--boc-uf-primary) 12%, #fff);
+    color: var(--boc-uf-primary-strong);
+}
+
+body.theme-boost-override-custom-userfiles #userfilesform .filemanager-container {
+    min-height: 230px;
+    border: 0;
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, .78), rgba(240, 249, 255, .68)),
+        repeating-linear-gradient(0deg, rgba(15, 108, 191, .05) 0 1px, transparent 1px 34px);
+}
+
+body.theme-boost-override-custom-userfiles #userfilesform .fp-content {
+    min-height: 228px;
+    padding: 16px;
+}
+
+body.theme-boost-override-custom-userfiles #userfilesform .fm-empty-container,
+body.theme-boost-override-custom-userfiles #userfilesform .dndupload-target {
+    border: 2px dashed color-mix(in srgb, var(--boc-uf-primary) 28%, var(--boc-uf-border));
+    border-radius: 20px;
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, .88), rgba(224, 242, 254, .5));
+}
+
+body.theme-boost-override-custom-userfiles #userfilesform .dndupload-arrow,
+body.theme-boost-override-custom-userfiles #userfilesform .dndupload-message,
+body.theme-boost-override-custom-userfiles #userfilesform .fp-empty-msg {
+    color: var(--boc-uf-text);
+    font-weight: 760;
+}
+
+body.theme-boost-override-custom-userfiles #userfilesform .fp-pathbar {
+    color: var(--boc-uf-primary-strong);
+    font-weight: 800;
+}
+
+body.theme-boost-override-custom-userfiles #userfilesform .fp-iconview .fp-file {
+    border-radius: 16px;
+    transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+}
+
+body.theme-boost-override-custom-userfiles #userfilesform .fp-iconview .fp-file:hover,
+body.theme-boost-override-custom-userfiles #userfilesform .fp-iconview .fp-file:focus-within {
+    transform: translateY(-3px);
+    background: rgba(255, 255, 255, .86);
+    box-shadow: 0 16px 30px rgba(15, 23, 42, .12);
+}
+
+body.theme-boost-override-custom-userfiles #userfilesform .fdescription,
+body.theme-boost-override-custom-userfiles #userfilesform .form-description {
+    color: var(--boc-uf-muted);
+    font-weight: 650;
+}
+
+body.theme-boost-override-custom-userfiles #userfilesform #fgroup_id_buttonar,
+body.theme-boost-override-custom-userfiles #userfilesform .fitem_fsubmit {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 0;
+}
+
+body.theme-boost-override-custom-userfiles #userfilesform #fgroup_id_buttonar .felement {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+body.theme-boost-override-custom-userfiles #userfilesform input[type="submit"] {
+    min-width: 150px;
+    padding: 11px 18px;
+}
+
+body.theme-boost-override-custom-userfiles #userfilesform input[name="cancel"] {
+    background: #fff;
+    color: var(--boc-uf-text);
+}
+
+body.theme-boost-override-custom-userfiles .boc-userfiles-guide {
+    display: grid;
+    gap: 14px;
+    overflow: hidden;
+}
+
+body.theme-boost-override-custom-userfiles .boc-userfiles-guide::before {
+    content: "";
+    position: absolute;
+    top: -30px;
+    right: -48px;
+    width: 170px;
+    height: 170px;
+    border-radius: 42px;
+    background:
+        linear-gradient(135deg, color-mix(in srgb, var(--boc-uf-accent) 16%, transparent), transparent);
+    transform: rotate(18deg);
+}
+
+body.theme-boost-override-custom-userfiles .boc-userfiles-guide > * {
+    position: relative;
+    z-index: 1;
+}
+
+body.theme-boost-override-custom-userfiles .boc-userfiles-guide-list {
+    display: grid;
+    gap: 12px;
+}
+
+body.theme-boost-override-custom-userfiles .boc-userfiles-guide-item {
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr);
+    gap: 12px;
+    align-items: start;
+    padding: 13px;
+    border: 1px solid color-mix(in srgb, var(--boc-uf-border) 70%, transparent);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, .74);
+    box-shadow: 0 12px 24px rgba(15, 23, 42, .07);
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+body.theme-boost-override-custom-userfiles .boc-userfiles-guide-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 32px rgba(15, 23, 42, .11);
+}
+
+body.theme-boost-override-custom-userfiles .boc-userfiles-guide-icon {
+    width: 48px;
+    height: 48px;
+}
+
+body.theme-boost-override-custom-userfiles .boc-userfiles-guide-copy {
+    display: grid;
+    gap: 4px;
+    min-width: 0;
+}
+
+body.theme-boost-override-custom-userfiles .boc-userfiles-guide-copy strong {
+    color: var(--boc-uf-ink);
+    font-size: .96rem;
+    font-weight: 850;
+}
+
+body.theme-boost-override-custom-userfiles .boc-userfiles-guide-copy span {
+    color: var(--boc-uf-muted);
+    font-size: .85rem;
+    font-weight: 650;
+    line-height: 1.38;
+}
+
+@keyframes boc-userfiles-fade-up {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes boc-userfiles-float {
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-8px) rotate(-1deg);
+    }
+}
+
+@keyframes boc-userfiles-slide {
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(12px);
+    }
+}
+
+@media (max-width: 1199.98px) {
+    body.theme-boost-override-custom-userfiles #page.drawers .main-inner {
+        width: min(100% - 24px, 1120px);
+    }
+
+    body.theme-boost-override-custom-userfiles .boc-userfiles-hero,
+    body.theme-boost-override-custom-userfiles .boc-userfiles-layout {
+        grid-template-columns: 1fr;
+    }
+
+    body.theme-boost-override-custom-userfiles .boc-userfiles-metrics {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    body.theme-boost-override-custom-userfiles .boc-userfiles-guide {
+        grid-template-columns: 1fr;
+    }
+
+    body.theme-boost-override-custom-userfiles .boc-userfiles-guide-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 767.98px) {
+    body.theme-boost-override-custom-userfiles #page.drawers .main-inner {
+        width: min(100% - 18px, 100%);
+        margin-top: 12px;
+        margin-bottom: 28px;
+    }
+
+    body.theme-boost-override-custom-userfiles .boc-userfiles-shell {
+        gap: 14px;
+    }
+
+    body.theme-boost-override-custom-userfiles .boc-userfiles-hero,
+    body.theme-boost-override-custom-userfiles .boc-userfiles-workspace,
+    body.theme-boost-override-custom-userfiles .boc-userfiles-guide {
+        border-radius: 18px;
+        padding: 14px;
+    }
+
+    body.theme-boost-override-custom-userfiles .boc-userfiles-hero {
+        min-height: 0;
+    }
+
+    body.theme-boost-override-custom-userfiles .boc-userfiles-visual {
+        min-height: 180px;
+    }
+
+    body.theme-boost-override-custom-userfiles .boc-userfiles-metrics,
+    body.theme-boost-override-custom-userfiles .boc-userfiles-guide-list {
+        grid-template-columns: 1fr;
+    }
+
+    body.theme-boost-override-custom-userfiles .boc-userfiles-metric {
+        min-height: 78px;
+    }
+
+    body.theme-boost-override-custom-userfiles .boc-userfiles-workspace-header {
+        align-items: flex-start;
+    }
+
+    body.theme-boost-override-custom-userfiles #userfilesform .fp-navbar {
+        align-items: stretch;
+    }
+
+    body.theme-boost-override-custom-userfiles #userfilesform .fp-toolbar,
+    body.theme-boost-override-custom-userfiles #userfilesform .fp-viewbar {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    body.theme-boost-override-custom-userfiles #userfilesform .filemanager .btn {
+        flex: 1 1 auto;
+    }
+
+    body.theme-boost-override-custom-userfiles #userfilesform .filemanager-container {
+        overflow-x: auto;
+    }
+
+    body.theme-boost-override-custom-userfiles #userfilesform input[type="submit"] {
+        width: 100%;
+    }
+
+    body.theme-boost-override-custom-userfiles #userfilesform #fgroup_id_buttonar .felement {
+        justify-content: stretch;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body.theme-boost-override-custom-userfiles *,
+    body.theme-boost-override-custom-userfiles *::before,
+    body.theme-boost-override-custom-userfiles *::after {
+        animation-duration: .001ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .001ms !important;
+    }
+}
