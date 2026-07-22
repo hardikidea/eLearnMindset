@@ -1,0 +1,5691 @@
+==================================================
+SHARED MOODLE IMPLEMENTATION PROMPT
+==================================================
+
+Build a production-ready Moodle extension or theme component for the module described below.
+
+Follow Moodle plugin conventions and avoid modifying Moodle core code. Use role- and capability-aware permissions, Moodle forms and APIs where applicable, language strings for all interface copy, Mustache templates for presentation, secure input validation, privacy-aware data handling, responsive layouts, keyboard accessibility, and automated tests.
+
+Maintain compatibility with Boost-based themes unless the module is itself a theme.
+
+Include:
+
+1. Installation and upgrade process
+2. Administrator settings
+3. Roles, permissions, and capabilities
+4. Primary user workflows
+5. Empty, loading, success, and error states
+6. Moodle plugin type and directory structure
+7. Database and API requirements
+8. Security and privacy controls
+9. Acceptance criteria
+10. Automated and manual test plans
+
+Clearly separate must-have functionality from optional enhancements.
+
+Flag requirements that would normally require a Moodle core modification and propose a plugin-safe alternative.
+
+
+==================================================
+PROMPT 1: MANAGED MOODLE HOSTING LANDING PAGE
+==================================================
+
+Create a responsive marketing and plan-details page for a fully managed Moodle hosting service.
+
+Present the following benefits in an accessible accordion, feature grid, or comparison layout:
+
+- Fully managed Moodle hosting
+- Free website migration
+- Near-zero downtime during migration
+- On-demand backups
+- High-security infrastructure
+- Scalable cloud performance
+- Expert support from Moodle specialists
+- Included premium Moodle plugins
+- Dedicated support and ongoing updates
+- Flexible drag-and-drop page builder
+
+Add concise benefit descriptions, trust indicators, a migration process section, call-to-action buttons, frequently asked questions, and responsive mobile behavior.
+
+The migration process should explain:
+
+1. Initial Moodle site assessment
+2. Backup and migration preparation
+3. Test migration
+4. Data and functionality validation
+5. Domain or DNS transition
+6. Production launch
+7. Post-migration monitoring
+
+Include editable content fields so administrators can update:
+
+- Feature names
+- Feature descriptions
+- Support details
+- Backup policies
+- Security claims
+- Migration steps
+- Call-to-action text
+- Frequently asked questions
+
+Do not present uptime, security, performance, or migration claims as guarantees unless evidence and service-level terms are supplied.
+
+Deliver:
+
+- Semantic HTML
+- Accessible accordion behavior
+- Reusable interface components
+- Responsive layouts
+- Keyboard navigation
+- Screen-reader labels
+- Analytics events for accordion interactions
+- Analytics events for call-to-action clicks
+- Configurable trust badges
+- Configurable customer testimonials
+- Empty and fallback states
+
+
+==================================================
+PROMPT 2: MOODLE AI COURSE CREATOR
+==================================================
+
+Build a Moodle course-creation assistant that uses a credit-based AI workflow.
+
+The tool must allow authorized users to create, edit, preview, and publish Moodle learning content.
+
+Required capabilities:
+
+- Generate a complete course outline
+- Generate Moodle course sections
+- Generate lesson content
+- Generate learning objectives
+- Generate lesson summaries
+- Generate H5P-compatible activity plans
+- Edit course sections with AI
+- Rewrite existing content with AI
+- Expand or shorten lesson content
+- Adjust content difficulty
+- Change content tone
+- Generate quizzes
+- Edit existing quizzes
+- Generate quiz questions
+- Generate quiz feedback
+- Generate Moodle activities
+- Generate Moodle resources
+- Publish generated content directly to Moodle
+- Export generated courses as SCORM packages
+
+Use 300 credits as sample plan data rather than a hard-coded business rule.
+
+Support configurable credit costs for operations such as:
+
+- Course-outline generation
+- Lesson generation
+- Quiz generation
+- Activity generation
+- Resource generation
+- Content rewriting
+- Translation
+- SCORM export
+
+Map generated content to native Moodle structures, including:
+
+- Course sections
+- Labels
+- Pages
+- Books
+- Files
+- URLs
+- Assignments
+- Forums
+- Lessons
+- Quizzes
+- Question-bank categories
+- Question-bank questions
+- Completion conditions
+- Availability restrictions
+
+Include:
+
+- Prompt history
+- Generation history
+- Credit-usage history
+- Preview before publishing
+- Draft and published states
+- Undo
+- Version history
+- Content comparison
+- Role-based permissions
+- Usage metering
+- Administrator usage limits
+- User-level quotas
+- Course-level quotas
+- Content-safety checks
+- Failed-generation handling
+- Partial-generation recovery
+- Retry workflows
+- Duplicate-content detection
+- Generated-content attribution
+- Audit logs
+
+Allow users to choose:
+
+- Course topic
+- Target audience
+- Learner level
+- Course duration
+- Number of sections
+- Lesson length
+- Teaching style
+- Assessment difficulty
+- Preferred Moodle activities
+- Language
+- Tone
+- Accessibility level
+
+Before publishing, show a structured preview containing:
+
+- Course title
+- Course summary
+- Learning objectives
+- Section names
+- Lesson content
+- Activities
+- Resources
+- Assessments
+- Completion settings
+
+Publishing must never overwrite existing Moodle content without explicit confirmation.
+
+Include administrator settings for:
+
+- AI provider configuration
+- API credentials
+- Model selection
+- Credit rules
+- User quotas
+- Allowed roles
+- Content moderation
+- Logging
+- Data retention
+- Export permissions
+- Default generation settings
+
+
+==================================================
+PROMPT 3: VIDEO-FIRST MOODLE COURSE FORMAT
+==================================================
+
+Build a Moodle course-format plugin optimized for video-led learning.
+
+Required capabilities:
+
+- Large responsive video player
+- Automatically generated video playlist
+- Playlist generated from Moodle course structure
+- Support for course sections and activities
+- YouTube embedding
+- Vimeo embedding
+- Self-hosted Moodle media
+- External video URL support
+- Mobile-responsive layouts
+- Collapsible sidebar navigation
+- Course-progress tracking
+- Activity-completion integration
+- Video-completion tracking
+- Transcript support
+- Caption support
+- Keyboard controls
+- Accessible player controls
+
+The plugin must require zero modifications to Moodle core database tables.
+
+Generate the playlist using:
+
+- Course section order
+- Activity order
+- Teacher-defined ordering
+- Activity visibility
+- Availability restrictions
+- Completion status
+
+Allow teachers to configure:
+
+- Playlist order
+- Video thumbnails
+- Video titles
+- Video descriptions
+- Transcript links
+- Caption files
+- Completion rules
+- Minimum watch percentage
+- Whether seeking is allowed
+- Whether autoplay is enabled
+- Whether the next item opens automatically
+- Whether completed items remain visible
+- Sidebar default state
+- Player aspect ratio
+
+Autoplay behavior must respect browser restrictions and accessibility preferences.
+
+Include:
+
+- Previous-video navigation
+- Next-video navigation
+- Resume watching
+- Last-watched position
+- Completed-item indicators
+- Locked-item indicators
+- Estimated duration
+- Course-progress percentage
+- Section-progress percentage
+- Full-screen mode
+- Picture-in-picture support where available
+- Playback-speed controls
+
+Support non-video activities in the playlist, including:
+
+- Quizzes
+- Assignments
+- Pages
+- Books
+- Forums
+- Files
+- URLs
+
+Display suitable activity icons and open non-video activities in an accessible content panel or standard Moodle page.
+
+Include empty states for:
+
+- No videos available
+- No course activities
+- Restricted activities
+- Unsupported video provider
+- Missing media
+- Failed media loading
+
+
+==================================================
+PROMPT 4: DRAG-AND-DROP MOODLE PAGE BUILDER
+==================================================
+
+Build a Moodle-native page builder for administrators, managers, teachers, and authorized course creators.
+
+Required capabilities:
+
+- Drag-and-drop editing canvas
+- Keyboard-accessible editing alternative
+- Reusable Moodle block library
+- At least 139 seedable block and design patterns
+- At least 15 seedable page templates
+- Custom homepage composition
+- Dynamic dashboard blocks
+- Course-page layout customization
+- Block export
+- Block import
+- Template export
+- Template import
+- Draft and published states
+- Revision history
+- Responsive previews
+
+The block library should include patterns for:
+
+- Hero sections
+- Course grids
+- Course-category grids
+- Featured courses
+- Recently accessed courses
+- Course-progress cards
+- Learning-statistic cards
+- Announcements
+- Testimonials
+- Instructor profiles
+- Call-to-action sections
+- Frequently asked questions
+- Image and text sections
+- Video sections
+- Logo grids
+- Contact sections
+- Forms
+- Counters
+- Timelines
+- Tabs
+- Accordions
+- Pricing or plan tables
+- Navigation shortcuts
+- Calendar summaries
+- Upcoming deadlines
+- Completion summaries
+- User-profile summaries
+- Custom HTML
+- Moodle activity lists
+
+Allow blocks to use Moodle data sources such as:
+
+- Current user
+- Enrolled courses
+- Course categories
+- Course completion
+- Activity completion
+- Grades
+- Calendar events
+- Deadlines
+- Site announcements
+- Recently accessed courses
+- User profile fields
+- Cohorts
+- Groups
+
+Provide:
+
+- Block search
+- Block categories
+- Favorites
+- Recently used blocks
+- Duplicate block
+- Copy and paste
+- Undo and redo
+- Responsive visibility rules
+- Role visibility rules
+- Cohort visibility rules
+- Group visibility rules
+- Date-based visibility rules
+- Logged-in and logged-out visibility
+- Custom CSS classes with validation
+- Theme-variable support
+- Moodle language-string support
+
+Include responsive preview modes for:
+
+- Desktop
+- Tablet
+- Mobile
+
+All imported content must be sanitized.
+
+Do not permit executable JavaScript or unsafe HTML unless explicitly allowed through secure administrator-only controls.
+
+Include role-based editing permissions and separate capabilities for:
+
+- Creating pages
+- Editing pages
+- Publishing pages
+- Deleting pages
+- Importing layouts
+- Exporting layouts
+- Managing the global block library
+- Managing templates
+
+Preserve compatibility with Boost-based themes and avoid direct Moodle core modifications.
+
+
+==================================================
+PROMPT 5: MODERN MOODLE THEME AND LEARNER EXPERIENCE
+==================================================
+
+Build a modern Boost-derived Moodle theme focused on learner engagement, readability, accessibility, and simplified navigation.
+
+Required capabilities:
+
+- Modern professional layouts
+- Clean and learner-friendly design
+- Simplified navigation
+- Fast navigation
+- Responsive layouts
+- Custom all-courses page
+- Custom course-category pages
+- Focus mode
+- Compatibility with multiple Moodle course formats
+- Quick-login modal
+- Quick-access menu
+- Analytics integration hooks
+- Site-wide announcements
+- In-context glossary or dictionary lookup
+- Last-accessed-course information
+- Fast-loading layouts
+- Collapsible sidebars
+- Course-level learner-progress views
+- Right-to-left language support
+- Translation readiness
+- Optional course ratings and reviews
+
+Optimize the theme for:
+
+- Phones
+- Tablets
+- Laptops
+- Desktop screens
+- Touch input
+- Keyboard input
+- Screen readers
+- Reduced-motion preferences
+- High zoom levels
+
+Create a visual design system containing:
+
+- Typography scale
+- Spacing scale
+- Border-radius tokens
+- Elevation tokens
+- Interactive states
+- Accessible focus states
+- Theme color variables
+- Light and dark-compatible components
+- Success, warning, error, and information states
+
+The custom all-courses and category pages should support:
+
+- Course search
+- Category search
+- Category reordering
+- Featured categories
+- Featured courses
+- Course filters
+- Course cards
+- Grid and list views
+- Enrollment status
+- Completion status
+- Course ratings
+- Course descriptions
+- Instructor information
+
+Focus mode should:
+
+- Hide distracting navigation
+- Preserve essential course controls
+- Show course progress
+- Show previous and next navigation
+- Allow learners to exit focus mode
+- Remember the learner’s preference
+- Remain accessible to keyboard and screen-reader users
+
+The quick-access menu should provide configurable shortcuts to:
+
+- Dashboard
+- My courses
+- Calendar
+- Grades
+- Messages
+- Profile
+- Recently accessed courses
+- Upcoming activities
+- Course progress
+- Saved reports
+
+The announcement system should support:
+
+- Site-wide announcements
+- Role-targeted announcements
+- Cohort-targeted announcements
+- Course-targeted announcements
+- Start and end dates
+- Dismissible notices
+- Priority levels
+- Links and calls to action
+
+The dictionary lookup should allow students to select or search a term without leaving Moodle.
+
+Include administrator controls for enabling or disabling every major feature.
+
+Course ratings and reviews must support:
+
+- Configurable rating scale
+- Written reviews
+- Moderation
+- Reporting
+- Editing rules
+- Eligibility rules
+- Spam prevention
+- Course-level summaries
+- Privacy controls
+
+
+==================================================
+PROMPT 6: MOODLE FORMS PLUGIN
+==================================================
+
+Build a Moodle forms plugin with reusable form templates and flexible placement options.
+
+Include prebuilt templates for:
+
+- Contact forms
+- Surveys
+- Feedback forms
+- Course-evaluation forms
+- Registration-interest forms
+- Support-request forms
+
+Required capabilities:
+
+- Configurable email notifications
+- Branding and personalization
+- Forms as Moodle course activities
+- Forms embedded on the site homepage
+- Forms embedded on dashboards
+- Forms embedded on course pages
+- Responsive cross-browser behavior
+- Centralized form-entry management
+- Entry export
+- Conditional field logic
+- Multi-page forms
+- Draft submissions
+- Submission confirmation
+- Form analytics
+
+Supported fields should include:
+
+- Short text
+- Long text
+- Email
+- Telephone
+- Number
+- Date
+- Date and time
+- Dropdown
+- Radio buttons
+- Checkboxes
+- File upload
+- Moodle user selector
+- Course selector
+- Rating scale
+- Consent checkbox
+- Hidden field
+- Section heading
+- Instructional text
+
+Conditional logic should support:
+
+- Show field
+- Hide field
+- Require field
+- Skip page
+- Redirect after submission
+- Change notification recipient
+
+Conditions may use:
+
+- Previous field values
+- Moodle role
+- Course
+- Cohort
+- Group
+- User profile fields
+- Submission date
+
+Include:
+
+- Drag-and-drop form builder
+- Keyboard-accessible form builder
+- Form preview
+- Draft and published states
+- Form duplication
+- Template library
+- Version history
+- Submission status
+- Internal notes
+- Entry search
+- Entry filtering
+- Bulk actions
+- CSV export
+- Spreadsheet export
+- Configurable data retention
+
+Email notification settings should support:
+
+- Administrator notifications
+- Teacher notifications
+- Custom recipient addresses
+- Submitter confirmation emails
+- Conditional recipients
+- Configurable subject lines
+- Configurable email bodies
+- Submission-data placeholders
+
+Use Moodle:
+
+- Capabilities
+- Sesskey protection
+- Forms APIs where appropriate
+- Input validation
+- Privacy metadata
+- Scheduled tasks
+- Events
+- Language strings
+
+Include consent fields, privacy notices, configurable retention periods, and deletion workflows.
+
+Provide reports for:
+
+- Total submissions
+- Completed submissions
+- Incomplete attempts
+- Response trends
+- Common answers
+- Submission dates
+- Course-level submissions
+- User-level submissions
+
+
+==================================================
+PROMPT 7: RAPID MOODLE GRADING WORKSPACE
+==================================================
+
+Build a Moodle grading plugin that consolidates grading into a single-screen workspace.
+
+Allow authorized graders to switch among:
+
+- Students
+- Courses
+- Assignments
+- Quizzes
+- Questions
+- Submission attempts
+
+The grader should not need to open multiple browser windows or pop-ups.
+
+Required capabilities:
+
+- Single-screen grading interface
+- User-based grading mode
+- Course-based grading mode
+- Activity-based grading mode
+- Downloadable user reports
+- Graphical grade summaries
+- Language-pack support
+- Compatibility with Boost-based themes
+- Rubric support
+- Marking-guide support
+- Written feedback
+- File feedback
+- Autosave
+- Moderation status
+- Bulk navigation
+- Keyboard shortcuts
+- Audit history
+- Concurrent-edit protection
+
+The layout should include:
+
+- Course selector
+- Activity selector
+- Student list
+- Submission viewer
+- Grading panel
+- Feedback panel
+- Rubric or marking-guide panel
+- Previous and next controls
+- Grade summary
+- Submission status
+- Completion status
+- Save status
+
+Support grading of:
+
+- Assignments
+- Essay quiz questions
+- Manually graded quiz questions
+- Forum grading where Moodle APIs allow
+- Supported third-party activities through extension points
+
+Include:
+
+- Filter by ungraded submissions
+- Filter by graded submissions
+- Filter by late submissions
+- Filter by submission status
+- Search by learner name
+- Search by course
+- Search by activity
+- Sort by submission date
+- Sort by grade
+- Sort by learner name
+
+Graphical summaries may include:
+
+- Grade distribution
+- Average grade
+- Median grade
+- Completion rate
+- Ungraded count
+- Late-submission count
+
+Downloaded reports should support:
+
+- Individual learner report
+- Course grading report
+- Activity grading report
+- CSV format
+- Spreadsheet format
+- Printable format
+
+Implement:
+
+- Permission checks
+- Grade-lock handling
+- Blind-marking support
+- Workflow-state support
+- Save conflict warnings
+- Audit logging
+- Error recovery
+- Unsaved-change warnings
+- Accessible keyboard navigation
+
+
+==================================================
+PROMPT 8: MOODLE SITE UTILITIES BUNDLE
+==================================================
+
+Build a Moodle utility suite containing three independently installable plugins with shared design conventions.
+
+--------------------------------------------------
+UTILITY A: COURSE FORMAT PACK
+--------------------------------------------------
+
+Create two polished Moodle course-format options.
+
+The formats should provide:
+
+- Clear course-section navigation
+- Responsive layouts
+- Completion indicators
+- Section progress
+- Collapsible sections
+- Accessible keyboard controls
+- Teacher configuration
+- Activity icons
+- Availability indicators
+- Estimated durations
+- Mobile-friendly navigation
+
+--------------------------------------------------
+UTILITY B: MOODLE SITE-HEALTH MONITOR
+--------------------------------------------------
+
+Create a Moodle site-health monitor that checks:
+
+- Cron status
+- Scheduled-task status
+- Failed scheduled tasks
+- Delayed scheduled tasks
+- Disk-storage availability
+- Moodle data-directory usage
+- Database health indicators
+- Cache configuration
+- Email configuration
+- Background-processing queues
+- SSL and HTTPS configuration
+- PHP configuration warnings
+- Moodle version status
+- Plugin version status
+- Configuration warnings
+- Backup status
+
+Include:
+
+- Administrator dashboard
+- Status indicators
+- Configurable thresholds
+- Warning levels
+- Critical alerts
+- Email notifications
+- Scheduled checks
+- Historical status records
+- Exportable health summaries
+- Recommended corrective actions
+
+Do not expose sensitive server information to unauthorized users.
+
+--------------------------------------------------
+UTILITY C: LIGHTWEIGHT REPORTING DASHBOARD
+--------------------------------------------------
+
+Create a reporting dashboard for:
+
+- Learner progress
+- Course effectiveness
+- Daily Moodle activity
+- Enrollment counts
+- Completion rates
+- Active users
+- Course visits
+- Upcoming deadlines
+- Overdue activities
+
+Include:
+
+- Role-aware dashboard cards
+- Date filters
+- Course filters
+- Cohort filters
+- Group filters
+- Exportable summaries
+- Configurable dashboard blocks
+- Privacy declarations
+- Data-retention settings
+
+Keep all three utilities independently installable while maintaining shared:
+
+- Visual conventions
+- Coding conventions
+- Language-string patterns
+- Permission structure
+- Testing strategy
+
+
+==================================================
+PROMPT 9: MOODLE-WORDPRESS COMMERCE BRIDGE
+==================================================
+
+Build a secure integration between Moodle and WordPress for selling Moodle courses.
+
+Required capabilities:
+
+- Guided connection setup
+- Validated Moodle web-service token
+- Moodle course synchronization
+- Moodle category synchronization
+- Moodle user synchronization
+- WordPress course shopfront
+- Payment workflow integration
+- Refund workflow integration
+- WooCommerce support
+- Bulk course purchases
+- Bulk learner enrollment
+- Selective synchronization
+- Single sign-on
+- Synchronized login and logout
+
+Connection setup should include:
+
+1. Moodle URL
+2. WordPress URL
+3. Moodle web-service token
+4. Connection test
+5. Permission validation
+6. Synchronization settings
+7. Initial synchronization
+8. Health check
+
+The WordPress shopfront should support:
+
+- Individual courses
+- Course bundles
+- Membership products
+- Subscription products
+- Digital supporting materials
+- Physical supporting materials
+- Course categories
+- Course descriptions
+- Course images
+- Enrollment limits
+
+WooCommerce integration should support:
+
+- Product-to-course mapping
+- Order status handling
+- Completed-order enrollment
+- Refunded-order handling
+- Cancelled-order handling
+- Subscription-state changes
+- Membership-state changes
+- Coupon compatibility
+- Tax compatibility through WooCommerce
+- Transaction logs
+
+Bulk purchase should support:
+
+- Multiple seats for one course
+- Multiple seats for course bundles
+- Seat assignment
+- Invitation links
+- Bulk enrollment
+- Remaining-seat tracking
+- Seat expiration
+- Manager dashboard
+
+Selective synchronization should allow administrators to choose:
+
+- Specific courses
+- Specific categories
+- Specific users
+- User profile fields
+- Enrollment data
+- Completion data
+
+Single sign-on should support:
+
+- Secure identity mapping
+- Simultaneous login
+- Simultaneous logout
+- Account-linking rules
+- Conflict resolution
+- Session expiration
+- Error recovery
+
+Define:
+
+- Source-of-truth rules
+- Retry queues
+- Conflict-handling rules
+- Audit logs
+- Webhook verification
+- Least-privilege scopes
+- Recovery steps
+- Synchronization schedules
+
+Never store tokens or secrets in client-side code.
+
+Encrypt sensitive configuration and restrict access using administrator capabilities.
+
+
+==================================================
+PROMPT 10: MOODLE ENGAGEMENT AND TIME REPORTING
+==================================================
+
+Build a Moodle reporting plugin for administrators, managers, teachers, and learners.
+
+Required reports:
+
+- Course-engagement report
+- Student-engagement report
+- Learner-progress report
+- LMS time report
+- Course time report
+- Activity time report
+- LMS visit report
+- Course visit report
+- Completion report
+- Cohort report
+- Group report
+
+Course-engagement reports should show:
+
+- Enrolled users
+- Active users
+- Course visits
+- Activity interactions
+- Completion rate
+- Average progress
+- Last-access date
+- Engagement trends
+
+Student-engagement reports should show:
+
+- Course access
+- Activity access
+- Activity completion
+- Course completion
+- Grades
+- Time-on-task estimates
+- Last-access date
+- Inactivity periods
+
+Learner reports should allow learners to see:
+
+- Enrolled courses
+- Course progress
+- Completed activities
+- Outstanding activities
+- Time estimates
+- Grades
+- Upcoming deadlines
+- Recent activity
+
+Support exports to:
+
+- PDF
+- CSV
+- Spreadsheet formats
+- Printable reports
+
+Support scheduled report delivery through email.
+
+Scheduled reports should allow configuration of:
+
+- Report type
+- Recipients
+- Frequency
+- Date range
+- Course filters
+- Cohort filters
+- Group filters
+- File format
+- Email subject
+- Email message
+- Delivery time
+
+Include time tracking at:
+
+- Site level
+- Course level
+- Activity level
+
+Define active time using configurable rules such as:
+
+- Session timeout
+- Maximum inactivity period
+- Consecutive event windows
+- Activity-event rules
+
+Clearly explain that time-on-task values are inferred estimates rather than exact attendance measurements.
+
+Include:
+
+- Date-range filters
+- Course filters
+- User filters
+- Role filters
+- Cohort filters
+- Group filters
+- Saved filters
+- Drill-down views
+- Dashboard cards
+- Charts
+- Comparison periods
+- Scheduled delivery
+- Privacy controls
+- Retention controls
+- Data-export controls
+
+Role-aware data access must ensure:
+
+- Learners see only their own records
+- Teachers see permitted course records
+- Managers see assigned organizational records
+- Administrators see authorized site-wide records
+
+Include charts for:
+
+- Engagement over time
+- Completion trends
+- Course visits
+- Active users
+- Time estimates
+- Grade distribution
+- Cohort comparisons
+- Group comparisons
+
+Document:
+
+- Metric definitions
+- Active-time methodology
+- Data limitations
+- Privacy implications
+- Report refresh frequency
+- Moodle events used
+- Scheduled tasks used
+
+
+==================================================
+IMPLEMENTATION-READY OUTPUT INSTRUCTION
+==================================================
+
+Append the following instruction to any module prompt:
+
+Return the solution in this exact structure:
+
+1. Scope and assumptions
+2. Must-have requirements
+3. Optional enhancements
+4. User roles and permissions
+5. User stories
+6. Primary user workflows
+7. Database and data model
+8. Moodle plugin type
+9. Moodle plugin directory structure
+10. Pages and interface components
+11. Administrator settings
+12. Moodle API integrations
+13. Events and observers
+14. Scheduled tasks
+15. External API integrations
+16. Security controls
+17. Privacy controls
+18. Accessibility requirements
+19. Empty, loading, success, and error states
+20. Acceptance criteria
+21. Unit-test plan
+22. Integration-test plan
+23. Behat acceptance-test plan
+24. Manual quality-assurance checklist
+25. Phased implementation steps
+
+For every proposed file, explain its purpose.
+
+For every capability, provide:
+
+- Capability name
+- Default archetypes
+- Permission purpose
+
+For every database table, provide:
+
+- Table name
+- Field names
+- Field types
+- Keys
+- Indexes
+- Relationships
+- Retention considerations
+
+Use Moodle coding standards.
+
+Use language strings rather than hard-coded interface text.
+
+Use Mustache templates for presentation where appropriate.
+
+Use Moodle output renderers and APIs rather than duplicating core behavior.
+
+Use Moodle forms and validation APIs where appropriate.
+
+Do not modify Moodle core code.
+
+Flag any requirement that cannot be implemented safely without a Moodle core change and propose a plugin-safe alternative.
+
+Never place secrets in client-side JavaScript, HTML, templates, browser storage, or version-controlled configuration.
+
+Include secure installation, upgrade, rollback, and uninstall behavior.
+
+
+==================
+
+==================================================
+MASTER MOODLE IMPLEMENTATION REQUIREMENTS
+=========================================
+
+Build a complete, production-ready Moodle solution for the selected module.
+
+Every feature listed in the relevant prompt is mandatory.
+
+Do not classify any feature as optional, recommended, future work, an enhancement, or a stretch goal.
+
+Do not use placeholder implementations, simulated buttons, incomplete workflows, static mock data, or interface-only demonstrations.
+
+When a requirement needs a Moodle plugin, design and implement that plugin.
+
+When a requirement needs multiple Moodle plugins, design and implement all required plugins and their integration points.
+
+When a requirement needs a companion plugin for another platform, design and implement both the Moodle plugin and the companion plugin.
+
+Do not modify Moodle core files.
+
+Use Moodle-supported extension mechanisms, including:
+
+* Local plugins
+* Activity modules
+* Blocks
+* Course-format plugins
+* Report plugins
+* Admin tools
+* Themes
+* Authentication plugins
+* Enrollment plugins
+* Repository plugins
+* Web-service functions
+* Scheduled tasks
+* Events and observers
+* Message providers
+* Privacy APIs
+* Moodle forms
+* Mustache templates
+* Output renderers
+* External functions
+* Moodle database APIs
+
+All plugins must follow Moodle coding standards.
+
+All interface text must use Moodle language strings.
+
+All plugins must support installation, upgrades, rollback planning, and clean uninstallation.
+
+All plugins must include:
+
+* version.php
+* db/install.xml when database tables are required
+* db/upgrade.php
+* db/access.php
+* db/services.php when web services are required
+* db/tasks.php when scheduled tasks are required
+* db/events.php when event observers are required
+* db/messages.php when notifications are required
+* settings.php
+* classes directory
+* lang directory
+* templates directory
+* AMD JavaScript modules where needed
+* SCSS or theme-compatible styles
+* PHPUnit tests
+* Behat tests
+* Privacy metadata
+* Documentation
+* Installation instructions
+* Upgrade instructions
+* Administrator configuration instructions
+
+All plugins must be compatible with current supported Moodle releases.
+
+All user interfaces must be:
+
+* Responsive
+* Keyboard accessible
+* Screen-reader compatible
+* Compatible with browser zoom
+* Compatible with reduced-motion preferences
+* Usable on phones, tablets, laptops, and desktops
+* Compatible with Boost-based themes unless the component is itself a theme
+
+All features must include:
+
+* Permission checks
+* Capability definitions
+* Input validation
+* Output escaping
+* Sesskey protection
+* CSRF protection
+* Access control
+* Audit logging
+* Error handling
+* Empty states
+* Loading states
+* Success states
+* Failure states
+* Retry handling
+* Privacy controls
+* Data-retention controls
+* Accessibility testing
+* Automated testing
+
+No secrets, API credentials, tokens, passwords, or private configuration may be stored in:
+
+* JavaScript
+* HTML
+* Mustache templates
+* Browser storage
+* Public files
+* Source-controlled configuration
+
+Every implementation must include exact plugin names, plugin types, directory structures, database schemas, capabilities, APIs, workflows, tests, and acceptance criteria.
+
+==================================================
+PROMPT 1: MANAGED MOODLE PLATFORM AND MIGRATION
+===============================================
+
+Build a complete Moodle-based managed-platform information and administration solution.
+
+Create the following Moodle plugin:
+
+Plugin type:
+local
+
+Plugin component:
+local_managedplatform
+
+Plugin directory:
+local/managedplatform
+
+The plugin must provide a configurable public information page and an administrator management interface.
+
+All of the following features are mandatory:
+
+* Fully managed Moodle platform information
+* Moodle site migration workflow
+* Near-zero interruption migration planning
+* On-demand backups
+* Security configuration information
+* Scalable infrastructure information
+* Moodle specialist support information
+* Included Moodle extension information
+* Maintenance and update information
+* Drag-and-drop page management
+* Migration-status tracking
+* Migration checklists
+* Migration audit history
+* Post-migration validation
+* Configurable service information
+* Configurable support contacts
+
+The public page must include:
+
+* Hero section
+* Feature overview
+* Migration process
+* Backup information
+* Security information
+* Performance information
+* Support information
+* Maintenance information
+* Frequently asked questions
+* Contact or request form
+* Status indicators
+* Trust information
+* Call-to-action sections
+
+The migration workflow must include:
+
+1. Source Moodle assessment
+2. Moodle version assessment
+3. Plugin compatibility assessment
+4. Theme compatibility assessment
+5. Database assessment
+6. File-storage assessment
+7. Backup preparation
+8. Test migration
+9. Data validation
+10. Plugin validation
+11. Theme validation
+12. User-account validation
+13. Course validation
+14. Activity validation
+15. Authentication validation
+16. Email validation
+17. Scheduled-task validation
+18. Production migration
+19. Domain transition
+20. Post-launch monitoring
+21. Final migration report
+
+Create migration records with:
+
+* Migration name
+* Source site
+* Destination site
+* Moodle version
+* Database type
+* Storage size
+* Course count
+* User count
+* Plugin count
+* Theme name
+* Migration owner
+* Migration status
+* Planned date
+* Started date
+* Completed date
+* Validation status
+* Notes
+* Error log
+* Checklist progress
+
+Required migration statuses:
+
+* Draft
+* Assessment
+* Preparing
+* Test migration
+* Validation
+* Scheduled
+* In progress
+* Monitoring
+* Completed
+* Failed
+* Cancelled
+
+Required Moodle capabilities:
+
+* local/managedplatform:view
+* local/managedplatform:requestmigration
+* local/managedplatform:viewownmigration
+* local/managedplatform:viewallmigrations
+* local/managedplatform:createmigration
+* local/managedplatform:editmigration
+* local/managedplatform:updatestatus
+* local/managedplatform:managecontent
+* local/managedplatform:managefaqs
+* local/managedplatform:viewlogs
+* local/managedplatform:exportreport
+* local/managedplatform:manageconfiguration
+
+The plugin must include:
+
+* Public page renderer
+* Administrator dashboard
+* Migration-request form
+* Migration-management form
+* Migration checklist
+* Status timeline
+* Notification system
+* Email and Moodle message notifications
+* Scheduled reminder task
+* Migration report export
+* Accessible accordion component
+* Responsive feature grid
+* Editable page sections
+* Configurable contact details
+* Configurable FAQ entries
+* Configurable support information
+
+All security, uptime, performance, and interruption claims must be administrator-editable and must not be presented as guarantees unless supporting terms are configured.
+
+==================================================
+PROMPT 2: MOODLE AI COURSE CREATOR
+==================================
+
+Build a complete Moodle AI-assisted course-creation system without usage credits, purchase restrictions, or monetization logic.
+
+Create the following Moodle plugin:
+
+Plugin type:
+local
+
+Plugin component:
+local_aicoursecreator
+
+Plugin directory:
+local/aicoursecreator
+
+The plugin must allow authorized users to generate, review, edit, approve, and publish Moodle course content.
+
+All of the following features are mandatory:
+
+* Complete course-outline generation
+* Course-section generation
+* Lesson generation
+* Learning-objective generation
+* Lesson-summary generation
+* H5P activity planning
+* Moodle activity generation
+* Moodle resource generation
+* Quiz generation
+* Question generation
+* Answer generation
+* Feedback generation
+* Existing-content rewriting
+* Existing-content expansion
+* Existing-content shortening
+* Reading-level adjustment
+* Difficulty adjustment
+* Tone adjustment
+* Language adjustment
+* Course preview
+* Draft management
+* Version history
+* Change comparison
+* Approval workflow
+* Direct Moodle publishing
+* SCORM export
+* Generation history
+* Prompt history
+* Audit logs
+* Error recovery
+* Retry handling
+* Duplicate-content detection
+* Content-safety validation
+* Accessibility checks
+
+The system must not include:
+
+* Credit balances
+* Usage credits
+* Credit deductions
+* Purchase prompts
+* Upgrade prompts
+* Plan restrictions
+* Feature locking
+* Monetization workflows
+
+Authorized users must be able to specify:
+
+* Course topic
+* Course title
+* Course summary
+* Target audience
+* Learner level
+* Course duration
+* Number of sections
+* Lesson duration
+* Teaching style
+* Assessment difficulty
+* Preferred Moodle activities
+* Course language
+* Content tone
+* Accessibility requirements
+* Completion expectations
+* Prerequisites
+
+Generated content must map to native Moodle components:
+
+* Courses
+* Course sections
+* Labels
+* Pages
+* Books
+* Files
+* URLs
+* Assignments
+* Forums
+* Lessons
+* Quizzes
+* Question categories
+* Multiple-choice questions
+* True-or-false questions
+* Matching questions
+* Short-answer questions
+* Essay questions
+* Completion conditions
+* Availability restrictions
+* Gradebook items
+
+The publishing workflow must include:
+
+1. Enter course requirements
+2. Generate course structure
+3. Review course structure
+4. Generate section content
+5. Review generated content
+6. Generate activities
+7. Generate assessments
+8. Validate accessibility
+9. Validate Moodle compatibility
+10. Preview complete course
+11. Approve content
+12. Select destination course
+13. Confirm publishing
+14. Publish content
+15. Generate publishing report
+
+Publishing must never overwrite existing content without explicit confirmation.
+
+Required Moodle capabilities:
+
+* local/aicoursecreator:view
+* local/aicoursecreator:generate
+* local/aicoursecreator:editgeneratedcontent
+* local/aicoursecreator:review
+* local/aicoursecreator:approve
+* local/aicoursecreator:publish
+* local/aicoursecreator:exportscorm
+* local/aicoursecreator:viewhistory
+* local/aicoursecreator:restoreversion
+* local/aicoursecreator:manageproviders
+* local/aicoursecreator:manageconfiguration
+* local/aicoursecreator:viewlogs
+
+Administrator settings must include:
+
+* AI provider
+* API endpoint
+* Encrypted API credentials
+* Model selection
+* Request timeout
+* Retry limit
+* Allowed roles
+* Allowed course categories
+* Content moderation rules
+* Logging level
+* Data-retention period
+* Default course settings
+* Default language
+* Default accessibility requirements
+* Publishing permissions
+* SCORM export permissions
+
+The plugin must include:
+
+* Provider abstraction interface
+* Secure server-side API client
+* Queue processing
+* Scheduled cleanup tasks
+* Generation-status tracking
+* Failed-request recovery
+* Draft repository
+* Content-version repository
+* Approval interface
+* Course preview renderer
+* Moodle publishing service
+* SCORM packaging service
+* Audit service
+* Privacy provider
+* PHPUnit tests
+* Behat publishing tests
+
+==================================================
+PROMPT 3: VIDEO-FIRST MOODLE COURSE FORMAT
+==========================================
+
+Build a complete Moodle course-format plugin for video-led learning.
+
+Create the following Moodle plugin:
+
+Plugin type:
+format
+
+Plugin component:
+format_videolearning
+
+Plugin directory:
+course/format/videolearning
+
+All of the following features are mandatory:
+
+* Large responsive video player
+* Automatically generated playlist
+* Course-section playlist structure
+* Activity-level playlist structure
+* YouTube support
+* Vimeo support
+* Moodle-hosted media support
+* External video support
+* Responsive mobile layout
+* Collapsible sidebar
+* Course-progress tracking
+* Section-progress tracking
+* Activity-completion integration
+* Video-completion tracking
+* Resume watching
+* Last-watched position
+* Transcript support
+* Caption support
+* Keyboard controls
+* Accessible player controls
+* Previous-item navigation
+* Next-item navigation
+* Completed-item indicators
+* Locked-item indicators
+* Estimated duration
+* Full-screen support
+* Picture-in-picture support
+* Playback-speed controls
+* Non-video activity support
+
+The plugin must use Moodle course-format APIs and must not modify Moodle core database tables.
+
+The playlist must be generated from:
+
+* Course section order
+* Activity order
+* Visibility settings
+* Availability restrictions
+* Completion settings
+* Teacher-defined ordering
+* Supported media metadata
+
+Teachers must be able to configure:
+
+* Playlist order
+* Video source
+* Video thumbnail
+* Video title
+* Video description
+* Transcript
+* Caption file
+* Completion rule
+* Required watch percentage
+* Seeking permissions
+* Autoplay behavior
+* Automatic next-item behavior
+* Completed-item visibility
+* Sidebar default state
+* Player aspect ratio
+* Estimated duration
+* Section display mode
+
+Non-video activities must include:
+
+* Quizzes
+* Assignments
+* Pages
+* Books
+* Forums
+* Files
+* URLs
+* Lessons
+* Feedback activities
+
+The plugin must include database storage for:
+
+* Last playback position
+* Watched duration
+* Completion percentage
+* Player preferences
+* Playlist preferences
+
+Required Moodle capabilities:
+
+* format/videolearning:view
+* format/videolearning:configure
+* format/videolearning:manageplaylist
+* format/videolearning:managecompletion
+* format/videolearning:viewanalytics
+* format/videolearning:resetprogress
+
+The plugin must include:
+
+* Course-format class
+* Output renderer
+* Mustache templates
+* Video-provider abstraction
+* Completion service
+* Playback-progress endpoint
+* Accessible playlist component
+* Responsive player layout
+* AJAX progress updates
+* Fallback standard Moodle links
+* Unsupported-provider state
+* Missing-media state
+* Restricted-activity state
+* Failed-media state
+* PHPUnit completion tests
+* Behat navigation tests
+
+==================================================
+PROMPT 4: DRAG-AND-DROP MOODLE PAGE BUILDER
+===========================================
+
+Build a complete Moodle-native page-building system.
+
+Create the following Moodle plugins:
+
+Primary plugin:
+
+Plugin type:
+local
+
+Plugin component:
+local_pagebuilder
+
+Plugin directory:
+local/pagebuilder
+
+Supporting block plugin:
+
+Plugin type:
+block
+
+Plugin component:
+block_pagebuildercontent
+
+Plugin directory:
+blocks/pagebuildercontent
+
+All of the following features are mandatory:
+
+* Drag-and-drop editing
+* Keyboard-accessible editing
+* Reusable block library
+* At least 139 installable layout patterns
+* At least 15 installable page templates
+* Custom homepage creation
+* Dashboard-page creation
+* Course-page layout creation
+* Block export
+* Block import
+* Template export
+* Template import
+* Draft state
+* Review state
+* Published state
+* Revision history
+* Responsive preview
+* Role-based visibility
+* Cohort-based visibility
+* Group-based visibility
+* Date-based visibility
+* Logged-in visibility
+* Logged-out visibility
+
+Required block patterns must include:
+
+* Hero
+* Course grid
+* Course-category grid
+* Featured courses
+* Recently accessed courses
+* Course-progress cards
+* Learning-statistic cards
+* Announcements
+* Testimonials
+* Instructor profiles
+* Call-to-action sections
+* Frequently asked questions
+* Image-and-text sections
+* Video sections
+* Logo grids
+* Contact sections
+* Forms
+* Counters
+* Timelines
+* Tabs
+* Accordions
+* Comparison tables
+* Navigation shortcuts
+* Calendar summaries
+* Upcoming deadlines
+* Completion summaries
+* User-profile summaries
+* Moodle activity lists
+* Custom HTML with sanitization
+
+Supported Moodle data sources must include:
+
+* Current user
+* Enrolled courses
+* Course categories
+* Course completion
+* Activity completion
+* Grades
+* Calendar events
+* Deadlines
+* Site announcements
+* Recently accessed courses
+* User profile fields
+* Cohorts
+* Groups
+* Course teachers
+
+The editor must include:
+
+* Block search
+* Block categories
+* Block favorites
+* Recently used blocks
+* Block duplication
+* Copy and paste
+* Undo
+* Redo
+* Revision comparison
+* Responsive visibility
+* Custom CSS classes with validation
+* Theme variables
+* Moodle language strings
+* Desktop preview
+* Tablet preview
+* Mobile preview
+
+Required Moodle capabilities:
+
+* local/pagebuilder:view
+* local/pagebuilder:createpage
+* local/pagebuilder:editpage
+* local/pagebuilder:reviewpage
+* local/pagebuilder:publishpage
+* local/pagebuilder:deletepage
+* local/pagebuilder:importlayout
+* local/pagebuilder:exportlayout
+* local/pagebuilder:manageblocks
+* local/pagebuilder:managetemplates
+* local/pagebuilder:manageglobalcontent
+* block/pagebuildercontent:addinstance
+* block/pagebuildercontent:myaddinstance
+
+Imported content must be sanitized.
+
+Executable JavaScript must not be accepted through imported content.
+
+Unsafe HTML must not be accepted.
+
+The plugins must include:
+
+* Page repository
+* Block repository
+* Template repository
+* Revision repository
+* Publishing service
+* Import service
+* Export service
+* Content sanitizer
+* Visibility engine
+* Data-source providers
+* Responsive editor
+* Accessible sortable controls
+* Rendering block plugin
+* PHPUnit import tests
+* Behat editor tests
+
+==================================================
+PROMPT 5: MODERN MOODLE THEME AND LEARNER EXPERIENCE
+====================================================
+
+Build a complete Boost-derived Moodle theme and supporting learner-experience plugins.
+
+Create the following Moodle theme:
+
+Plugin type:
+theme
+
+Plugin component:
+theme_modernlearning
+
+Plugin directory:
+theme/modernlearning
+
+Create the following supporting plugin:
+
+Plugin type:
+local
+
+Plugin component:
+local_courseratings
+
+Plugin directory:
+local/courseratings
+
+All of the following features are mandatory:
+
+* Modern professional layouts
+* Clean learner-friendly design
+* Simplified navigation
+* Responsive layouts
+* Custom all-courses page
+* Custom category pages
+* Focus mode
+* Multiple Moodle course-format compatibility
+* Quick-login interface
+* Quick-access menu
+* Analytics integration hooks
+* Site-wide announcements
+* In-context dictionary lookup
+* Last-accessed-course display
+* Fast-loading layouts
+* Collapsible sidebars
+* Course-level learner progress
+* Right-to-left support
+* Translation support
+* Course ratings
+* Course reviews
+* Review moderation
+
+The theme must include a design system with:
+
+* Typography scale
+* Spacing scale
+* Border-radius tokens
+* Elevation tokens
+* Color tokens
+* Focus states
+* Hover states
+* Active states
+* Disabled states
+* Loading states
+* Success states
+* Warning states
+* Error states
+* Information states
+* Reduced-motion behavior
+* High-contrast compatibility
+
+The custom course pages must support:
+
+* Search
+* Category search
+* Course filters
+* Featured categories
+* Featured courses
+* Course cards
+* Grid view
+* List view
+* Enrollment status
+* Completion status
+* Course ratings
+* Course summaries
+* Teacher information
+* Pagination
+* Sorting
+
+Focus mode must:
+
+* Hide distracting elements
+* Preserve required course controls
+* Show course progress
+* Show previous and next navigation
+* Allow exit at any time
+* Remember user preference
+* Support keyboard navigation
+* Support screen readers
+* Support reduced motion
+
+The quick-access menu must include configurable links to:
+
+* Dashboard
+* My courses
+* Calendar
+* Grades
+* Messages
+* Profile
+* Recently accessed courses
+* Upcoming activities
+* Course progress
+* Reports
+
+The announcement system must support:
+
+* Site-wide announcements
+* Role targeting
+* Cohort targeting
+* Course targeting
+* Start date
+* End date
+* Priority
+* Dismissal
+* Links
+* Call-to-action buttons
+
+The dictionary tool must allow learners to search or select terms without leaving the current course page.
+
+The rating and review plugin must support:
+
+* Configurable rating scale
+* Written reviews
+* Review editing
+* Review moderation
+* Review reporting
+* Review eligibility
+* Duplicate-review prevention
+* Course-level rating summaries
+* Privacy controls
+* Audit logs
+
+Required theme and plugin capabilities:
+
+* theme/modernlearning:manageannouncements
+* theme/modernlearning:managequicklinks
+* theme/modernlearning:manageconfiguration
+* local/courseratings:view
+* local/courseratings:submit
+* local/courseratings:editown
+* local/courseratings:deleteown
+* local/courseratings:moderate
+* local/courseratings:viewreports
+* local/courseratings:manageconfiguration
+
+==================================================
+PROMPT 6: MOODLE FORMS SYSTEM
+=============================
+
+Build a complete Moodle forms system with reusable forms and Moodle course activities.
+
+Create the following Moodle plugins:
+
+Form-management plugin:
+
+Plugin type:
+local
+
+Plugin component:
+local_formbuilder
+
+Plugin directory:
+local/formbuilder
+
+Course activity plugin:
+
+Plugin type:
+mod
+
+Plugin component:
+mod_customform
+
+Plugin directory:
+mod/customform
+
+All of the following features are mandatory:
+
+* Contact forms
+* Surveys
+* Feedback forms
+* Course evaluations
+* Registration-interest forms
+* Support-request forms
+* Configurable notifications
+* Branding
+* Personalization
+* Course activity placement
+* Homepage placement
+* Dashboard placement
+* Course-page placement
+* Cross-browser compatibility
+* Entry management
+* Conditional logic
+* Multi-page forms
+* Draft submissions
+* Confirmation messages
+* Form analytics
+* Entry export
+* Data retention
+* Privacy controls
+
+Supported field types must include:
+
+* Short text
+* Long text
+* Email
+* Telephone
+* Number
+* Date
+* Date and time
+* Dropdown
+* Radio buttons
+* Checkboxes
+* File upload
+* Moodle user selector
+* Course selector
+* Rating scale
+* Consent checkbox
+* Hidden field
+* Section heading
+* Instructional text
+
+Conditional logic must support:
+
+* Show field
+* Hide field
+* Require field
+* Skip page
+* Redirect after submission
+* Change notification recipient
+
+Conditions must support:
+
+* Previous answers
+* Moodle role
+* Course
+* Cohort
+* Group
+* User profile field
+* Submission date
+
+The form builder must include:
+
+* Drag-and-drop editing
+* Keyboard-accessible editing
+* Form preview
+* Draft state
+* Review state
+* Published state
+* Form duplication
+* Template library
+* Version history
+* Submission status
+* Internal notes
+* Search
+* Filters
+* Bulk actions
+* CSV export
+* Spreadsheet export
+
+Notification settings must support:
+
+* Administrator notifications
+* Teacher notifications
+* Custom recipients
+* Submitter confirmations
+* Conditional recipients
+* Configurable subjects
+* Configurable message bodies
+* Submission placeholders
+
+Required Moodle capabilities:
+
+* local/formbuilder:view
+* local/formbuilder:create
+* local/formbuilder:edit
+* local/formbuilder:publish
+* local/formbuilder:delete
+* local/formbuilder:viewentries
+* local/formbuilder:manageentries
+* local/formbuilder:exportentries
+* local/formbuilder:managetemplates
+* local/formbuilder:manageconfiguration
+* mod/customform:addinstance
+* mod/customform:view
+* mod/customform:submit
+* mod/customform:viewownsubmission
+* mod/customform:viewsubmissions
+* mod/customform:manageentries
+
+The plugins must include:
+
+* Form definition repository
+* Field repository
+* Page repository
+* Rule engine
+* Submission repository
+* Draft repository
+* Notification service
+* Export service
+* Analytics service
+* Data-retention task
+* Privacy provider
+* Activity completion integration
+* Gradebook integration when scoring is configured
+* PHPUnit rule tests
+* Behat submission tests
+
+==================================================
+PROMPT 7: RAPID MOODLE GRADING WORKSPACE
+========================================
+
+Build a complete Moodle grading workspace.
+
+Create the following Moodle plugin:
+
+Plugin type:
+local
+
+Plugin component:
+local_gradingworkspace
+
+Plugin directory:
+local/gradingworkspace
+
+All of the following features are mandatory:
+
+* Single-screen grading
+* User-based grading
+* Course-based grading
+* Activity-based grading
+* Downloadable learner reports
+* Graphical grade summaries
+* Translation support
+* Boost-theme compatibility
+* Rubric support
+* Marking-guide support
+* Written feedback
+* File feedback
+* Autosave
+* Moderation status
+* Bulk navigation
+* Keyboard shortcuts
+* Audit history
+* Concurrent-edit protection
+
+The interface must include:
+
+* Course selector
+* Activity selector
+* Student list
+* Submission viewer
+* Grading panel
+* Feedback panel
+* Rubric panel
+* Marking-guide panel
+* Previous control
+* Next control
+* Grade summary
+* Submission status
+* Completion status
+* Save status
+
+Supported grading targets must include:
+
+* Assignments
+* Essay quiz questions
+* Manually graded quiz questions
+* Forum grading where Moodle APIs permit
+* Supported third-party activities through defined extension interfaces
+
+Required filters must include:
+
+* Ungraded
+* Graded
+* Late
+* Submitted
+* Draft
+* Reopened
+* Learner name
+* Course
+* Activity
+* Submission date
+* Grade
+
+Required graphical summaries:
+
+* Grade distribution
+* Average grade
+* Median grade
+* Completion rate
+* Ungraded count
+* Late-submission count
+
+Required exports:
+
+* Individual learner report
+* Course grading report
+* Activity grading report
+* CSV
+* Spreadsheet
+* Printable report
+
+Required Moodle capabilities:
+
+* local/gradingworkspace:view
+* local/gradingworkspace:grade
+* local/gradingworkspace:manageworkflow
+* local/gradingworkspace:viewreports
+* local/gradingworkspace:exportreports
+* local/gradingworkspace:viewallcourses
+* local/gradingworkspace:viewlogs
+* local/gradingworkspace:manageconfiguration
+
+The plugin must implement:
+
+* Grade-lock handling
+* Blind marking
+* Marking workflow states
+* Save conflict warnings
+* Record locking
+* Audit logging
+* Error recovery
+* Unsaved-change warnings
+* Accessible keyboard navigation
+* Autosave queue
+* PHPUnit grading tests
+* Behat grading-workflow tests
+
+==================================================
+PROMPT 8: MOODLE SITE UTILITIES
+===============================
+
+Build a complete suite of independently installable Moodle utility plugins.
+
+---
+
+## PLUGIN A: COURSE FORMAT ONE
+
+Plugin type:
+format
+
+Plugin component:
+format_structuredsections
+
+Plugin directory:
+course/format/structuredsections
+
+Mandatory features:
+
+* Clear section navigation
+* Responsive layout
+* Completion indicators
+* Section progress
+* Collapsible sections
+* Keyboard controls
+* Teacher configuration
+* Activity icons
+* Availability indicators
+* Estimated durations
+* Mobile navigation
+
+---
+
+## PLUGIN B: COURSE FORMAT TWO
+
+Plugin type:
+format
+
+Plugin component:
+format_learningpath
+
+Plugin directory:
+course/format/learningpath
+
+Mandatory features:
+
+* Sequential learning path
+* Dependency visualization
+* Locked activities
+* Completion tracking
+* Progress timeline
+* Section milestones
+* Responsive layout
+* Keyboard navigation
+* Teacher configuration
+* Mobile navigation
+
+---
+
+## PLUGIN C: SITE-HEALTH MONITOR
+
+Plugin type:
+tool
+
+Plugin component:
+tool_sitehealthmonitor
+
+Plugin directory:
+admin/tool/sitehealthmonitor
+
+Mandatory checks:
+
+* Cron status
+* Scheduled-task status
+* Failed tasks
+* Delayed tasks
+* Disk availability
+* Moodle data-directory usage
+* Database indicators
+* Cache configuration
+* Email configuration
+* Background queues
+* HTTPS configuration
+* PHP configuration
+* Moodle version
+* Plugin versions
+* Configuration warnings
+* Backup status
+
+Mandatory features:
+
+* Administrator dashboard
+* Status indicators
+* Configurable thresholds
+* Warning levels
+* Critical alerts
+* Moodle notifications
+* Email notifications
+* Scheduled checks
+* Historical records
+* Exportable summaries
+* Corrective-action guidance
+* Permission-based access
+* Sensitive-data masking
+
+Required capabilities:
+
+* tool/sitehealthmonitor:view
+* tool/sitehealthmonitor:runchecks
+* tool/sitehealthmonitor:viewdetails
+* tool/sitehealthmonitor:managealerts
+* tool/sitehealthmonitor:export
+* tool/sitehealthmonitor:manageconfiguration
+
+---
+
+## PLUGIN D: REPORTING DASHBOARD
+
+Plugin type:
+report
+
+Plugin component:
+report_learningdashboard
+
+Plugin directory:
+report/learningdashboard
+
+Mandatory reports:
+
+* Learner progress
+* Course effectiveness
+* Daily activity
+* Enrollment counts
+* Completion rates
+* Active users
+* Course visits
+* Upcoming deadlines
+* Overdue activities
+
+Mandatory features:
+
+* Role-aware cards
+* Date filters
+* Course filters
+* Cohort filters
+* Group filters
+* Export
+* Configurable dashboard blocks
+* Privacy controls
+* Data-retention settings
+
+Required capabilities:
+
+* report/learningdashboard:view
+* report/learningdashboard:viewown
+* report/learningdashboard:viewcourse
+* report/learningdashboard:viewall
+* report/learningdashboard:export
+* report/learningdashboard:manageconfiguration
+
+All four plugins must share:
+
+* Visual conventions
+* Coding conventions
+* Language-string patterns
+* Permission patterns
+* Testing conventions
+* Documentation structure
+
+==================================================
+PROMPT 9: MOODLE-WORDPRESS INTEGRATION
+======================================
+
+Build a secure Moodle and WordPress integration without sales, checkout, transactions, subscriptions, or monetization features.
+
+Create the following Moodle plugin:
+
+Plugin type:
+local
+
+Plugin component:
+local_wordpressbridge
+
+Plugin directory:
+local/wordpressbridge
+
+Create a companion WordPress plugin:
+
+Plugin name:
+Moodle Integration Bridge
+
+WordPress directory:
+moodle-integration-bridge
+
+All of the following features are mandatory:
+
+* Guided connection setup
+* Moodle web-service token validation
+* WordPress authentication validation
+* Course synchronization
+* Category synchronization
+* User synchronization
+* Course-catalog display
+* Selective synchronization
+* Single sign-on
+* Synchronized logout
+* Enrollment synchronization
+* Completion synchronization
+* Profile-field synchronization
+* Audit logging
+* Retry queues
+* Conflict handling
+* Health monitoring
+
+The integration must not include:
+
+* Course sales
+* Checkout
+* Orders
+* Transactions
+* Refunds
+* Product mapping
+* Subscriptions
+* Membership sales
+* Seat purchases
+* Monetization
+
+Connection setup must include:
+
+1. Moodle URL
+2. WordPress URL
+3. Moodle web-service token
+4. WordPress authentication credentials
+5. Connection test
+6. Permission validation
+7. Synchronization settings
+8. Initial synchronization
+9. Health check
+
+The WordPress course catalog must display:
+
+* Course title
+* Course description
+* Course image
+* Course category
+* Teacher information
+* Course availability
+* Enrollment status
+* Completion status for signed-in users
+* Link to open the Moodle course
+
+Selective synchronization must support:
+
+* Specific courses
+* Specific categories
+* Specific users
+* User profile fields
+* Enrollment data
+* Completion data
+
+Single sign-on must support:
+
+* Secure identity mapping
+* Simultaneous login
+* Simultaneous logout
+* Account linking
+* Conflict resolution
+* Session expiration
+* Error recovery
+* Signed requests
+* Replay protection
+
+Required Moodle capabilities:
+
+* local/wordpressbridge:view
+* local/wordpressbridge:manageconnection
+* local/wordpressbridge:managesync
+* local/wordpressbridge:viewlogs
+* local/wordpressbridge:retryfailed
+* local/wordpressbridge:manageconfiguration
+
+The Moodle plugin and WordPress plugin must define:
+
+* Source-of-truth rules
+* Synchronization direction
+* Synchronization schedule
+* Retry rules
+* Conflict rules
+* Audit records
+* Webhook verification
+* Least-privilege permissions
+* Recovery procedures
+* Data deletion procedures
+* Privacy documentation
+
+Tokens and credentials must be encrypted and stored only on the server.
+
+==================================================
+PROMPT 10: MOODLE ENGAGEMENT AND TIME REPORTING
+===============================================
+
+Build a complete Moodle engagement and reporting system.
+
+Create the following Moodle plugins:
+
+Primary report plugin:
+
+Plugin type:
+report
+
+Plugin component:
+report_engagementanalytics
+
+Plugin directory:
+report/engagementanalytics
+
+Dashboard block:
+
+Plugin type:
+block
+
+Plugin component:
+block_engagementanalytics
+
+Plugin directory:
+blocks/engagementanalytics
+
+All of the following reports are mandatory:
+
+* Course-engagement report
+* Student-engagement report
+* Learner-progress report
+* Site-time report
+* Course-time report
+* Activity-time report
+* Site-visit report
+* Course-visit report
+* Completion report
+* Cohort report
+* Group report
+
+Course-engagement reports must show:
+
+* Enrolled users
+* Active users
+* Course visits
+* Activity interactions
+* Completion rate
+* Average progress
+* Last-access date
+* Engagement trends
+
+Student-engagement reports must show:
+
+* Course access
+* Activity access
+* Activity completion
+* Course completion
+* Grades
+* Estimated active time
+* Last-access date
+* Inactivity periods
+
+Learner reports must show:
+
+* Enrolled courses
+* Course progress
+* Completed activities
+* Outstanding activities
+* Estimated active time
+* Grades
+* Upcoming deadlines
+* Recent activity
+
+Required export formats:
+
+* PDF
+* CSV
+* Spreadsheet
+* Printable report
+
+Scheduled report delivery must support:
+
+* Report type
+* Recipients
+* Frequency
+* Date range
+* Course filters
+* Cohort filters
+* Group filters
+* Export format
+* Email subject
+* Email message
+* Delivery time
+
+Time estimation must support:
+
+* Site-level calculation
+* Course-level calculation
+* Activity-level calculation
+* Configurable session timeout
+* Maximum inactivity period
+* Consecutive event windows
+* Activity-event rules
+
+The interface must clearly explain that active-time values are inferred estimates.
+
+Required filters:
+
+* Date range
+* Course
+* User
+* Role
+* Cohort
+* Group
+* Saved filter
+* Comparison period
+
+Required charts:
+
+* Engagement over time
+* Completion trends
+* Course visits
+* Active users
+* Estimated active time
+* Grade distribution
+* Cohort comparisons
+* Group comparisons
+
+Required Moodle capabilities:
+
+* report/engagementanalytics:viewown
+* report/engagementanalytics:viewcourse
+* report/engagementanalytics:viewcohort
+* report/engagementanalytics:viewgroup
+* report/engagementanalytics:viewall
+* report/engagementanalytics:export
+* report/engagementanalytics:schedule
+* report/engagementanalytics:manageconfiguration
+* block/engagementanalytics:addinstance
+* block/engagementanalytics:myaddinstance
+
+Role-aware access must enforce:
+
+* Learners can view only their own records
+* Teachers can view only permitted course records
+* Managers can view assigned records
+* Administrators can view authorized site-wide records
+
+The plugins must include:
+
+* Event aggregation
+* Scheduled aggregation tasks
+* Report cache
+* Retention task
+* Export service
+* Scheduled-delivery service
+* Chart data service
+* Privacy provider
+* Audit logging
+* PHPUnit metric tests
+* Behat report-access tests
+
+==================================================
+MANDATORY OUTPUT FORMAT FOR EVERY BUILD
+=======================================
+
+Return the implementation in this exact structure:
+
+1. Scope and assumptions
+2. Complete mandatory requirements
+3. Moodle plugin inventory
+4. Companion plugin inventory
+5. User roles
+6. Capabilities and default permissions
+7. User stories
+8. Administrator workflows
+9. Teacher workflows
+10. Learner workflows
+11. Manager workflows
+12. Plugin directory structure
+13. Complete file inventory
+14. Database tables
+15. Database relationships
+16. Indexes and constraints
+17. Moodle forms
+18. Pages and routes
+19. Mustache templates
+20. Renderers
+21. AMD JavaScript modules
+22. External functions
+23. Web-service definitions
+24. Events and observers
+25. Scheduled tasks
+26. Message providers
+27. Notification workflows
+28. Moodle API integrations
+29. Companion-platform integrations
+30. Security controls
+31. Privacy controls
+32. Accessibility controls
+33. Data-retention rules
+34. Error handling
+35. Empty states
+36. Loading states
+37. Success states
+38. Failure states
+39. Retry handling
+40. Audit logging
+41. Installation process
+42. Upgrade process
+43. Rollback plan
+44. Uninstallation process
+45. PHPUnit test plan
+46. Behat test plan
+47. Integration test plan
+48. Manual quality-assurance checklist
+49. Acceptance criteria
+50. Complete phased implementation sequence
+
+For every plugin, provide:
+
+* Plugin type
+* Plugin component name
+* Plugin directory
+* Purpose
+* Dependencies
+* Supported Moodle versions
+* Installation order
+* Upgrade dependencies
+* Uninstallation behavior
+
+For every file, provide:
+
+* Full file path
+* File purpose
+* Main classes or functions
+* Dependencies
+* Security responsibilities
+
+For every capability, provide:
+
+* Capability name
+* Capability type
+* Context level
+* Default archetypes
+* Permission purpose
+* Risk bitmask where applicable
+
+For every database table, provide:
+
+* Table name
+* Field name
+* Field type
+* Length
+* Nullability
+* Default value
+* Primary key
+* Foreign keys
+* Unique keys
+* Indexes
+* Relationships
+* Retention rules
+* Deletion behavior
+
+For every page, provide:
+
+* Page URL
+* Required capability
+* Page context
+* Navigation location
+* Form class
+* Renderer
+* Template
+* JavaScript modules
+* Error states
+
+For every scheduled task, provide:
+
+* Class name
+* Schedule
+* Purpose
+* Locking strategy
+* Retry strategy
+* Logging
+* Failure notification
+
+For every event observer, provide:
+
+* Moodle event
+* Observer class
+* Purpose
+* Data stored
+* Privacy implications
+* Failure behavior
+
+All code must:
+
+* Follow Moodle coding standards
+* Use Moodle APIs
+* Use Moodle language strings
+* Use Mustache templates
+* Use Moodle output renderers
+* Use Moodle forms
+* Use Moodle database APIs
+* Use Moodle privacy APIs
+* Avoid Moodle core modifications
+* Validate all inputs
+* Escape all outputs
+* Enforce capabilities
+* Use sesskeys for state-changing actions
+* Include automated tests
+
+No listed requirement may be omitted.
+
+
+====================
+
+# MASTER CODEX PROMPT
+# Moodle 5.0.2 Theme_2026 — Complete LMS Product Design, White-Label Theme, Role Dashboards, Real Data, Font Awesome, Animation, and Repository-Wide Visual Modernization
+
+## 1. Project Context
+
+You are working inside an existing customized Moodle Learning Management System repository used by schools, colleges, universities, coaching institutes, preschool organizations, teachers, students, parents, principals, trustees, managers, and site administrators.
+
+The application already contains working Moodle functionality, custom PHP pages, plugins, dashboards, reports, forms, tables, course views, messaging, calendars, content banks, user profiles, grade reports, and administrative workflows.
+
+Your task is to create a completely new custom Moodle theme named:
+
+`theme_2026`
+
+The new theme must inherit from and visually override Moodle Boost.
+
+Target Moodle version:
+
+`Moodle 5.0.2`
+
+Before making changes:
+
+1. Inspect the repository root `version.php`.
+2. Confirm the installed Moodle release and build.
+3. Confirm the actual Git branch containing Moodle 5.0.2.
+4. Create a new feature branch from the verified repository branch.
+5. Do not assume a branch name that does not exist.
+6. Do not modify the Boost theme directly.
+7. Do not modify Moodle core files when a theme override, renderer, template override, SCSS rule, layout, or custom theme component can achieve the result.
+
+The custom theme directory must be:
+
+`theme/theme_2026`
+
+The component name and namespace must be:
+
+`theme_2026`
+
+The theme should inherit from Boost using the appropriate Moodle theme configuration.
+
+The complete application should look like a new premium education platform while preserving Moodle’s existing functionality and familiar workflows.
+
+---
+
+# 2. Primary Product Goal
+
+Create a modern, polished, compact, responsive, accessible, interactive, white-label-ready Learning Management System interface for schools and universities.
+
+The design must feel:
+
+- Modern
+- Clean
+- Academic
+- Trustworthy
+- Friendly
+- Professional
+- Compact
+- Structured
+- Interactive
+- Accessible
+- Responsive
+- Performance-conscious
+- Easy to scan
+- Easy to navigate
+- Suitable for daily academic use
+- Suitable for young learners and university students
+- Suitable for teachers, administrators, parents, and management users
+- Easy to customize without editing code
+
+Use current product-design patterns, but keep the interface plain, practical, and durable.
+
+Do not make the design dependent on temporary visual trends.
+
+Avoid:
+
+- Excessive glassmorphism
+- Excessive gradients
+- Excessively rounded components
+- Heavy shadows
+- Distracting animation
+- Oversized empty spaces
+- Oversized hero sections
+- Low-contrast text
+- Decorative components without purpose
+- Inconsistent card styles
+- Random icon styles
+- Page-specific visual hacks
+- Designs that make Moodle functionality harder to understand
+
+The final interface should look like one unified product rather than separate Moodle pages and plugins.
+
+---
+
+# 3. Critical Non-Negotiable Rule: Preserve All Functionality
+
+This is a visual, layout, accessibility, interaction-presentation, and theme architecture project.
+
+Do not break, replace, bypass, remove, or redesign existing business functionality.
+
+Preserve all existing:
+
+- PHP functionality
+- Moodle core functionality
+- Plugin functionality
+- Custom plugin functionality
+- Database behavior
+- Data models
+- Database records
+- Moodle APIs
+- Web services
+- AJAX requests
+- AJAX response formats
+- Forms
+- Input names
+- Form IDs
+- Form submission behavior
+- Validation behavior
+- Hidden fields
+- Sesskeys
+- CSRF protection
+- Authentication
+- Authorization
+- User capabilities
+- Role permissions
+- Enrollment logic
+- Course logic
+- Assignment logic
+- Quiz logic
+- Grade calculations
+- Gradebook behavior
+- Forum behavior
+- Messaging behavior
+- Calendar behavior
+- File-manager behavior
+- Content-bank behavior
+- Report-builder behavior
+- Competency behavior
+- Completion tracking
+- Attendance behavior
+- Notification behavior
+- Search behavior
+- Sorting
+- Filtering
+- Pagination
+- Export behavior
+- Import behavior
+- Navigation destinations
+- URLs
+- Routes
+- Query parameters
+- Event observers
+- Scheduled tasks
+- Cron behavior
+- JavaScript callbacks
+- AMD module behavior
+- Mustache template variables
+- DOM attributes used by JavaScript
+- Data attributes
+- Accessibility hooks
+- Analytics hooks
+- Localization
+- Language packs
+- Security checks
+- Permission-based visibility
+- Third-party integrations
+
+Do not rename or remove an existing ID, class, input name, data attribute, selector, event hook, template key, renderer method, or DOM structure when it may be required by Moodle, a plugin, JavaScript, automated testing, or an integration.
+
+Any PHP created or changed for this project must be limited to safe theme functionality such as:
+
+- Theme configuration
+- Theme settings
+- Renderer overrides
+- Theme callbacks
+- Layout rendering
+- Safe presentation helpers
+- Brand configuration
+- Template context preparation
+
+Do not alter Moodle processing logic.
+
+Do not mass-edit Moodle core PHP pages.
+
+When a core Moodle page needs a visual improvement, solve it through:
+
+- Theme layouts
+- Boost inheritance
+- SCSS
+- CSS custom properties
+- Mustache overrides
+- Theme renderers
+- Safe JavaScript presentation modules
+- Accessible markup wrappers
+- Theme image and icon overrides
+
+Modify custom plugin templates only when a shared theme solution is not sufficient.
+
+---
+
+# 4. Repository-Wide Scope
+
+Review and visually modernize the complete Moodle repository, not only a small set of pages.
+
+Audit all applicable:
+
+- PHP-rendered pages
+- Moodle layouts
+- Theme templates
+- Mustache templates
+- Header components
+- Footer components
+- Top navigation
+- Navigation drawers
+- Sidebars
+- Course pages
+- Activity pages
+- Dashboard pages
+- User pages
+- Profile pages
+- Authentication pages
+- Administrative pages
+- Report pages
+- Grade pages
+- Forms
+- Tables
+- Cards
+- Moodle blocks
+- Widgets
+- Modals
+- Drawers
+- Dropdowns
+- Context menus
+- Tooltips
+- Popovers
+- Notifications
+- Alerts
+- Empty states
+- Loading states
+- Search pages
+- Listing pages
+- Editing pages
+- Creation pages
+- Plugin pages
+- Error pages
+- Maintenance pages
+- Mobile layouts
+- Print layouts where relevant
+
+Use shared design tokens and shared components so repository-wide improvements remain consistent and maintainable.
+
+Do not redesign every PHP page independently.
+
+---
+
+# 5. Priority Pages
+
+Begin with the following pages and use them as representative validation pages:
+
+1. `http://localhost:8080/blog/edit.php?action=add&userid=20`
+2. `http://localhost:8080/user/edit.php?id=20&course=1`
+3. `http://localhost:8080/user/editor.php?id=20&course=1`
+4. `http://localhost:8080/user/contentbank.php?id=20`
+5. `http://localhost:8080/user/forum.php?id=1&course=1`
+6. `http://localhost:8080/user/calendar.php?id=1`
+7. `http://localhost:8080/reportbuilder/index.php`
+8. `http://localhost:8080/user/files.php`
+9. `http://localhost:8080/grade/report/overview/index.php`
+10. `http://localhost:8080/user/edit.php?id=20&returnto=profile`
+11. `http://localhost:8080/admin/tool/lp/user_evidence_list.php?userid=20`
+12. `http://localhost:8080/message/index.php?id=20`
+
+After these pages are validated, continue through all applicable repository pages.
+
+Do not mark a page complete after reviewing only the initial viewport.
+
+Inspect:
+
+- The entire page
+- Content below the fold
+- Open dropdowns
+- Menus
+- Modals
+- Popovers
+- Tabs
+- Collapsed and expanded states
+- Empty states
+- Loading states
+- Validation states
+- Responsive layouts
+- Keyboard behavior
+
+---
+
+# 6. Attached Institutional Logo Context
+
+The supplied logo reference includes institutional marks for organizations such as:
+
+- Drona Public School
+- Asian Global School
+- H3 Pre-School
+- Shanti Asiatic School
+- IIMA
+- United Public School
+- Narayana Ahmedabad
+- Gujarat Technological University
+- Gujarat University
+- Karnavati University
+- Adani University
+- Nirma University
+
+Treat these logos as examples of institutions that may use this white-label Moodle theme.
+
+The supplied composite image is a brand reference. Prefer original individual transparent PNG or SVG files when they are available.
+
+Do not redraw, reinterpret, animate, recolor, distort, or convert an institutional logo into a 3D illustration.
+
+Preserve:
+
+- Original proportions
+- Original colors
+- Legibility
+- Clear space
+- Trademark symbols
+- Wordmarks
+- Crests
+- Institutional identity
+
+Do not stretch logos to fit fixed boxes.
+
+Use:
+
+- `object-fit: contain`
+- Defined maximum dimensions
+- Responsive wrappers
+- Light and dark logo variants where supplied
+- Compact logo variants where supplied
+
+If only the composite logo sheet is available:
+
+- Use it for design reference.
+- Do not pretend that low-resolution crops are production-ready.
+- Create temporary local preview crops only when necessary.
+- Clearly document that original source logos are required for production.
+- Do not trace or regenerate logos using AI.
+
+If an institutional logo ZIP is supplied, organize its contents into a safe theme asset structure and create a brand manifest.
+
+Recommended organization:
+
+`theme/theme_2026/pix/brands/`
+
+Each brand preset may contain:
+
+- Main logo
+- Compact logo
+- Light logo
+- Dark logo
+- Favicon
+- Login-page artwork
+- Optional hero illustration
+- Brand configuration metadata
+
+Do not embed large logo assets as base64 strings in CSS or PHP.
+
+Use Moodle’s file APIs and theme settings for uploaded branding assets.
+
+---
+
+# 7. Theme Architecture
+
+Create a complete installable Moodle theme plugin.
+
+Recommended structure:
+
+theme/theme_2026/
+├── amd/
+│   ├── build/
+│   └── src/
+├── classes/
+│   ├── output/
+│   └── privacy/
+├── lang/
+│   └── en/
+│       └── theme_2026.php
+├── layout/
+├── pix/
+│   ├── brands/
+│   ├── illustrations/
+│   └── icons/
+├── scss/
+│   ├── preset/
+│   ├── components/
+│   ├── layouts/
+│   ├── pages/
+│   ├── roles/
+│   ├── utilities/
+│   ├── pre.scss
+│   └── post.scss
+├── templates/
+├── config.php
+├── lib.php
+├── settings.php
+├── version.php
+├── renderer.php where required
+├── README.md
+└── thirdpartylibs.xml when required
+
+Use the exact structure that is compatible with the verified Moodle 5.0.2 repository.
+
+The theme must:
+
+- Inherit from Boost.
+- Keep Boost functionality.
+- Use Moodle-supported layouts.
+- Use Moodle-supported renderers.
+- Use Mustache templates.
+- Use AMD JavaScript modules.
+- Use Moodle’s SCSS compilation pipeline.
+- Avoid unsupported frontend frameworks.
+- Avoid unnecessary dependencies.
+- Avoid CDN dependencies.
+- Avoid loading external fonts or scripts without an explicit project requirement.
+- Remain compatible with Moodle cache behavior.
+- Remain compatible with Moodle upgrade behavior.
+- Remain installable through standard Moodle theme installation.
+
+Create appropriate layouts for contexts such as:
+
+- Standard pages
+- Dashboard
+- Login
+- Course
+- Reports
+- Administration
+- Maintenance
+- Embedded pages
+- Secure pages
+- Popup or minimal layouts where Moodle requires them
+
+Do not duplicate layout markup unnecessarily.
+
+---
+
+# 8. Design-System Foundation
+
+Build the redesign around a reusable theme design system.
+
+## 8.1 Design Tokens
+
+Create centralized CSS custom properties and SCSS variables for:
+
+- Primary brand color
+- Secondary brand color
+- Accent color
+- Neutral palette
+- Background color
+- Elevated surface color
+- Card surface
+- Header surface
+- Footer surface
+- Sidebar surface
+- Text primary
+- Text secondary
+- Text muted
+- Link color
+- Border color
+- Divider color
+- Focus color
+- Success color
+- Warning color
+- Error color
+- Information color
+- Grade status colors
+- Attendance status colors
+- Course status colors
+- Role accents
+- Disabled state
+- Hover state
+- Selected state
+- Typography
+- Font families
+- Font sizes
+- Font weights
+- Line heights
+- Letter spacing
+- Spacing scale
+- Component gaps
+- Container widths
+- Header height
+- Footer spacing
+- Sidebar width
+- Control heights
+- Icon sizes
+- Border widths
+- Border radii
+- Shadows
+- Z-index layers
+- Animation durations
+- Easing curves
+- Breakpoints
+- Illustration dimensions
+
+Do not scatter arbitrary values throughout individual page styles.
+
+Use a consistent spacing scale such as:
+
+- 4px
+- 8px
+- 12px
+- 16px
+- 20px
+- 24px
+- 32px
+- 40px
+- 48px
+
+Use denser values for data-heavy interfaces and comfortable values for reading content.
+
+## 8.2 Shared Components
+
+Create or standardize reusable visual patterns for:
+
+- Primary buttons
+- Secondary buttons
+- Tertiary buttons
+- Destructive buttons
+- Icon buttons
+- Split buttons
+- Form inputs
+- Select fields
+- Textareas
+- Checkboxes
+- Radio buttons
+- Switches
+- Search fields
+- Autocomplete controls
+- Date pickers
+- File upload areas
+- Cards
+- Course cards
+- User cards
+- Metric cards
+- Dashboard widgets
+- Alerts
+- Notifications
+- Badges
+- Status indicators
+- Tabs
+- Breadcrumbs
+- Pagination
+- Tables
+- Menus
+- Dropdowns
+- Tooltips
+- Popovers
+- Modals
+- Drawers
+- Accordions
+- Empty states
+- Skeletons
+- Loading indicators
+- Toast messages
+- Avatars
+- Progress indicators
+- Sliders
+- Carousels
+- Page headers
+- Section headers
+- Header navigation
+- Footer navigation
+- Sidebar navigation
+- Activity icons
+- Course-progress components
+
+---
+
+# 9. Typography
+
+Typography is a critical design requirement.
+
+Create one unified typography system across the full LMS.
+
+Standardize:
+
+- Font family
+- Font fallback stack
+- Page titles
+- Section titles
+- Card titles
+- Modal titles
+- Widget titles
+- Course titles
+- Activity titles
+- User names
+- Body text
+- Form labels
+- Help text
+- Placeholder text
+- Table headers
+- Table values
+- Navigation labels
+- Breadcrumb labels
+- Button labels
+- Badge text
+- Tooltip text
+- Error messages
+- Success messages
+- Dates
+- Metadata
+- Grade values
+- Statistics
+- Footer text
+- Empty-state text
+
+Requirements:
+
+- Maintain a logical heading hierarchy.
+- Use semantic heading elements.
+- Keep page titles consistent.
+- Keep headings compact.
+- Keep body text readable.
+- Use predictable line heights.
+- Avoid text clipping.
+- Avoid unrelated font families.
+- Avoid excessive font weights.
+- Avoid excessive uppercase text.
+- Maintain sufficient color contrast.
+- Allow long course and institution names to wrap safely.
+- Support long translations.
+- Support browser zoom.
+- Support text scaling.
+- Keep breadcrumbs visually secondary to page titles.
+- Make key statistics prominent without becoming oversized.
+- Keep forms readable in compact layouts.
+- Align text and icons vertically.
+
+Use a reliable system font stack unless the project already contains an approved licensed font.
+
+Do not load fonts from a public CDN.
+
+---
+
+# 10. HTML5 and Semantic Structure
+
+Use semantic HTML5 elements wherever safe and appropriate:
+
+- `header`
+- `nav`
+- `main`
+- `aside`
+- `section`
+- `article`
+- `footer`
+- `form`
+- `fieldset`
+- `legend`
+- `button`
+- `table`
+- `caption`
+- `thead`
+- `tbody`
+- `details`
+- `summary`
+- `time`
+- `progress`
+
+Do not replace native interactive controls with inaccessible generic elements.
+
+Use real buttons for actions.
+
+Use links only for navigation.
+
+Preserve Moodle-required attributes and JavaScript hooks.
+
+Add ARIA only when native semantics are not sufficient.
+
+Do not use ARIA to compensate for incorrect HTML.
+
+---
+
+# 11. Color and White-Label Visual System
+
+Create an accessible color system that can adapt to different institutions.
+
+The default theme should use calm, modern educational colors.
+
+Requirements:
+
+- Accessible text contrast
+- Accessible button contrast
+- Accessible focus indicators
+- Consistent semantic colors
+- Consistent status colors
+- Controlled use of gradients
+- No random card colors
+- No color-only meaning
+- Brand colors must not replace warning, success, or error meanings
+- Charts must remain understandable when brand colors change
+- Hover and selected states must remain visible
+- Disabled states must remain readable
+- Dark logos must work on light backgrounds
+- Light logos must work on dark backgrounds
+
+Create white-label settings for:
+
+- Institution name
+- Product name
+- Main logo
+- Compact logo
+- Light logo
+- Dark logo
+- Favicon
+- Primary color
+- Secondary color
+- Accent color
+- Header background
+- Header foreground
+- Footer background
+- Footer foreground
+- Sidebar background
+- Link color
+- Button color
+- Focus color
+- Border radius
+- Shadow intensity
+- Card density
+- Typography option
+- Login hero image
+- Login illustration
+- Default dashboard illustration
+- Footer text
+- Support URL
+- Privacy URL
+- Terms URL
+- Accessibility URL
+- Help URL
+- Contact information
+- Social links
+- Mobile application links
+- Copyright text
+- Optional powered-by text
+- Custom CSS where safely supported
+
+Settings must update through normal Moodle theme configuration.
+
+Do not require source-code edits for a brand change.
+
+Validate settings values.
+
+Sanitize text settings.
+
+Use Moodle file settings for image uploads.
+
+Do not produce unsafe raw CSS or HTML injection.
+
+Use normal Moodle cache invalidation after settings changes.
+
+Do not query configuration files repeatedly on every component render when Moodle’s theme configuration already provides cached values.
+
+---
+
+# 12. Brand Presets
+
+Create an optional brand-preset system.
+
+Brand presets may provide:
+
+- Logo references
+- Primary color
+- Secondary color
+- Accent color
+- Header color
+- Footer color
+- Login visual
+- Default illustration palette
+
+Include a neutral default preset named:
+
+`Theme 2026 Default`
+
+When source assets are available, optional institutional presets may be created for the supplied logo brands.
+
+A preset must not change:
+
+- User permissions
+- Course visibility
+- Functionality
+- Routes
+- Database behavior
+- Role behavior
+
+A preset is visual configuration only.
+
+Do not hardcode one institution as the permanent theme identity.
+
+---
+
+# 13. Role-Specific Design
+
+The LMS contains these important roles:
+
+- Learner
+- Teacher
+- Parent
+- Principal
+- Trustee Manager
+- Site Administrator
+
+Create role-aware dashboard presentation while preserving Moodle capabilities and permissions.
+
+Role-specific design must not create new authorization rules.
+
+The dashboard may change:
+
+- Accent color
+- Welcome content
+- Widget priority
+- Dashboard layout
+- Quick-action visibility when the action is already permitted
+- Relevant navigation emphasis
+- Illustration context
+- Metric labels
+- Summary ordering
+
+Do not expose data that the current user cannot already access.
+
+Do not add permission checks based only on visual role labels.
+
+Use Moodle’s existing role and capability APIs.
+
+Moodle users can have different roles in different contexts.
+
+Do not assume every user has one permanent global role.
+
+Role presentation rules:
+
+1. Use an existing active persona or role-selection mechanism when the custom system already provides one.
+2. When several roles exist, use the current context or a neutral dashboard fallback.
+3. Do not treat a course-level teacher role as a system-wide administrator role.
+4. Do not expose course data from contexts where the user lacks access.
+5. Keep all capability checks in place.
+6. If the user’s role cannot be safely resolved, use the default visual style.
+
+Provide configurable default role accents.
+
+Suggested defaults:
+
+- Learner: blue or teal
+- Teacher: indigo
+- Parent: warm amber or green
+- Principal: purple
+- Trustee Manager: navy with a restrained gold accent
+- Site Administrator: slate with a controlled red accent
+
+These colors must be configurable in theme settings.
+
+Do not use role accent colors for error, success, or warning statuses.
+
+---
+
+# 14. Real Data Binding
+
+All redesigned dashboards, cards, tables, widgets, sliders, hero summaries, badges, counts, and status indicators must use real Moodle data.
+
+Do not introduce:
+
+- Fake users
+- Fake teachers
+- Fake parents
+- Fake students
+- Fake courses
+- Fake grades
+- Fake attendance
+- Fake assignments
+- Fake events
+- Fake messages
+- Fake notifications
+- Fake statistics
+- Fake charts
+- Fake progress values
+- Fake submission counts
+- Fake institution data
+- Fake role data
+- Fake deadlines
+- Placeholder links
+- Demo-only content presented as real data
+
+Use:
+
+- Existing Moodle APIs
+- Existing renderers
+- Existing template context
+- Existing page context
+- Existing custom plugin APIs
+- Existing service classes
+- Existing cached calculations
+- Existing permission-filtered data
+
+Do not query the database directly from Mustache templates or browser JavaScript.
+
+Avoid unnecessary new database queries.
+
+Avoid N+1 query patterns.
+
+Do not add decorative statistics that require expensive database aggregation.
+
+Cache aggregate data through Moodle-supported mechanisms when necessary.
+
+Preserve:
+
+- Escaping
+- Sanitization
+- Capability checks
+- Context restrictions
+- Data privacy
+- Role visibility
+- Localization
+- Null states
+- Empty states
+
+When real data is unavailable:
+
+- Show a meaningful empty state.
+- Do not invent values.
+- Do not display `0` when the value is actually unknown.
+- Do not expose technical errors to the end user.
+
+For local testing, use approved existing test accounts or provided fixtures.
+
+Do not extract, reveal, reset, or bypass user passwords.
+
+Do not weaken authentication to access role-specific screens.
+
+---
+
+# 15. Role-Specific Dashboard Requirements
+
+## 15.1 Learner Dashboard
+
+Use real permission-filtered data for:
+
+- Enrolled courses
+- Recently accessed courses
+- Course progress
+- Upcoming assignments
+- Overdue activities
+- Upcoming quizzes
+- Calendar events
+- Latest grades
+- Teacher feedback
+- Messages
+- Announcements
+- Certificates where supported
+- Attendance where supported
+- Completion status
+
+Recommended layout:
+
+- Compact role-aware hero
+- Continue-learning section
+- Upcoming deadlines
+- Course-progress cards
+- Calendar summary
+- Recent grades
+- Announcements slider
+- Quick links
+
+Do not hide required tasks inside a carousel.
+
+## 15.2 Teacher Dashboard
+
+Use real data for:
+
+- Courses taught
+- Pending grading
+- Recent submissions
+- Draft activities
+- Upcoming classes
+- Attendance actions
+- Student alerts
+- Forum activity
+- Messages
+- Course announcements
+- Calendar events
+- Completion summaries where permitted
+
+Recommended layout:
+
+- Teaching summary
+- Grading queue
+- Upcoming sessions
+- Course management shortcuts
+- Recent learner activity
+- Announcement panel
+- Message summary
+
+## 15.3 Parent Dashboard
+
+Only show data supported by existing parent or guardian relationships and permissions.
+
+Possible real data:
+
+- Linked learners
+- Attendance summaries
+- Grade summaries
+- Upcoming deadlines
+- School announcements
+- Calendar events
+- Teacher messages
+- Course progress
+- Academic notices
+
+Never expose another student’s data.
+
+Do not infer family relationships from names or email addresses.
+
+## 15.4 Principal Dashboard
+
+Use real authorized school-level data for:
+
+- Enrollment summaries
+- Attendance summaries
+- Course activity
+- Teacher activity
+- Assessment status
+- Academic alerts
+- School announcements
+- Calendar
+- User trends
+- Completion summaries
+- Department summaries where supported
+
+Avoid excessively complex charts.
+
+Provide clear filters and time ranges where the existing data supports them.
+
+## 15.5 Trustee Manager Dashboard
+
+Use real authorized organization-level data for:
+
+- Institution or campus summaries
+- Enrollment trends
+- Attendance trends
+- Learning activity
+- Course usage
+- Institution comparison
+- Alerts
+- Management reports
+- Scheduled reports
+- Announcements
+
+Do not create unsupported multi-tenancy.
+
+If the repository already contains tenant, campus, school, or institution context, use it.
+
+If it does not, use a safe neutral dashboard and document the limitation.
+
+## 15.6 Site Administrator Dashboard
+
+Use real administrative data for:
+
+- User totals
+- Course totals
+- Site notifications
+- Scheduled task status
+- Plugin information
+- System warnings
+- Report shortcuts
+- Cache status where available
+- Theme configuration
+- Recent administrative activity where permitted
+
+Do not expose security-sensitive configuration to unauthorized roles.
+
+Do not reveal private system details in public-facing widgets.
+
+---
+
+# 16. Standard Dashboard Design
+
+Create one consistent dashboard framework.
+
+The framework should include:
+
+- Role-aware page header
+- Real-data summary widgets
+- Responsive card grid
+- Clear primary actions
+- Recently accessed content
+- Upcoming tasks
+- Announcements
+- Calendar summary
+- Notification context
+- Empty states
+- Skeleton states
+- Error states
+- Personalization where existing Moodle settings permit it
+
+Dashboard requirements:
+
+- Compact layout
+- Clear hierarchy
+- No excessive blank areas
+- Balanced card heights
+- Consistent widget headers
+- Consistent action menus
+- Real data only
+- No layout shift during loading
+- Keyboard accessible
+- Mobile friendly
+- Supports block editing where Moodle enables it
+- Preserves Moodle block drag-and-drop behavior
+- Preserves block visibility controls
+- Preserves dashboard reset behavior
+- Preserves user customization
+
+Do not replace Moodle dashboard block functionality with a static page.
+
+---
+
+# 17. Hero Design
+
+Create modern but compact hero components for:
+
+- Login page
+- Site home
+- Default dashboard
+- Course overview when appropriate
+- Empty states
+- Onboarding states
+
+The dashboard hero may include:
+
+- Real user name
+- Current role or persona
+- Current date context
+- One useful summary
+- Primary action
+- Compact illustration
+
+Do not make the hero occupy most of the first viewport.
+
+Do not place critical academic data below an oversized illustration.
+
+Do not put fake statistics in the hero.
+
+Hero illustrations must be:
+
+- Lightweight
+- Responsive
+- Brand-adaptive
+- Optional
+- Easy to disable
+- Hidden or simplified on small screens where necessary
+- Compatible with reduced motion
+
+---
+
+# 18. Header Redesign
+
+Create a modern, compact, accessible top header.
+
+The header may contain:
+
+- Institution logo
+- Compact institution logo
+- Institution name
+- Product name
+- Dashboard navigation
+- Course navigation
+- Global search
+- Quick-create action where existing permissions permit it
+- Calendar shortcut
+- Messages
+- Notifications
+- Language selector
+- Help
+- User avatar
+- User menu
+- Existing role switcher
+- Mobile menu button
+
+Requirements:
+
+- Keep header height compact.
+- Vertically align all controls.
+- Use consistent icon sizes.
+- Keep logo proportions correct.
+- Support long institution names.
+- Support translated labels.
+- Preserve all Moodle navigation behavior.
+- Preserve user-menu behavior.
+- Preserve logout behavior.
+- Preserve notification behavior.
+- Preserve messaging behavior.
+- Preserve global-search behavior.
+- Keep notification counters readable.
+- Make icon-only actions accessible.
+- Provide visible focus states.
+- Make dropdowns keyboard accessible.
+- Close menus on outside click.
+- Close menus with Escape.
+- Restore focus after closing.
+- Prevent menus from leaving the viewport.
+- Maintain correct stacking order.
+- Prevent the header from covering page content.
+- Support desktop, tablet, and mobile.
+- Do not overcrowd the mobile header.
+- Move secondary actions into an accessible overflow menu when necessary.
+
+Use sticky behavior only when it improves usability and does not obstruct content.
+
+---
+
+# 19. Footer Redesign
+
+Create a compact, professional, responsive, white-label-ready footer.
+
+The footer may include:
+
+- Institution logo
+- Institution name
+- Product name
+- Contact information
+- Support link
+- Help center
+- Privacy policy
+- Terms
+- Accessibility statement
+- Documentation
+- Social links
+- Mobile app links
+- Language selector
+- Copyright
+- Required Moodle information
+- Required powered-by attribution
+
+Requirements:
+
+- Use real configured content.
+- Do not create fake links.
+- Do not remove required legal links.
+- Do not remove accessibility information.
+- Do not remove required attribution.
+- Keep footer height controlled.
+- Avoid oversized visual decoration.
+- Use a clear link hierarchy.
+- Align footer columns consistently.
+- Stack footer sections correctly on mobile.
+- Provide visible keyboard focus.
+- Maintain accessible contrast.
+- Keep all content configurable through theme settings where appropriate.
+- Preserve Moodle’s required footer hooks and output.
+
+---
+
+# 20. Breadcrumb Navigation
+
+Add or improve breadcrumbs on every page where they help users understand context.
+
+Breadcrumbs must use real context such as:
+
+- Dashboard
+- Course
+- Course category
+- Activity
+- User
+- Report
+- Folder
+- Conversation
+- Forum
+- Calendar
+- Competency
+- Administration area
+
+Examples:
+
+- `Dashboard / Blog / Add New Post`
+- `Dashboard / Users / Student Name / Edit Profile`
+- `Dashboard / Courses / Mathematics / Forum`
+- `Dashboard / Courses / Mathematics / Grades / Overview`
+- `Dashboard / Content Bank / Current Category`
+- `Dashboard / Reports / Report Builder`
+- `Dashboard / Messages / Participant Name`
+- `Dashboard / Competencies / Student Name / Evidence`
+
+Requirements:
+
+- Use meaningful labels.
+- Use dynamic names.
+- Do not display raw IDs.
+- Do not display PHP filenames.
+- Do not display query parameters.
+- Keep parent items clickable.
+- Keep the current page non-clickable.
+- Use `aria-current="page"`.
+- Use semantic `nav` markup.
+- Provide an accessible breadcrumb label.
+- Keep breadcrumbs compact.
+- Use consistent separators.
+- Align icons and text.
+- Support keyboard navigation.
+- Collapse long paths intelligently on mobile.
+- Keep the immediate parent and current page visible.
+- Do not overlap page actions.
+- Do not create fake parent links.
+- Preserve Moodle navigation context.
+
+---
+
+# 21. Contextual Page Header
+
+Create a reusable contextual page-header component.
+
+It may include:
+
+- Breadcrumb
+- Page title
+- Short description
+- User context
+- Course context
+- Academic term
+- Department
+- Current folder
+- Current report
+- Current conversation
+- Status
+- Primary action
+- Secondary actions
+- Help action
+
+Requirements:
+
+- Use real data.
+- Do not repeat the same text unnecessarily.
+- Keep it compact.
+- Align title and actions.
+- Wrap actions correctly on small screens.
+- Preserve existing page actions.
+- Keep primary and secondary action hierarchy clear.
+- Do not hide important actions in an unclear menu.
+- Prevent overlap with breadcrumbs.
+- Support long course and user names.
+- Use consistent typography on all pages.
+
+---
+
+# 22. Font Awesome Icon System
+
+Replace visible standard interface icons with a consistent Font Awesome icon system.
+
+Use the Font Awesome version already bundled or supported by the target Moodle installation.
+
+Do not load Font Awesome from a CDN.
+
+Do not edit Moodle core files only to replace icons.
+
+Implement icon replacement through safe methods such as:
+
+- Theme renderer overrides
+- Mustache overrides
+- Theme icon mapping
+- Moodle icon APIs
+- Safe template changes
+- Theme SCSS where appropriate
+- Custom theme helper functions
+
+Goal:
+
+Replace existing inconsistent standard icons with suitable Font Awesome icons while preserving all functionality.
+
+Icon requirements:
+
+- Use consistent icon style.
+- Use consistent visual weight.
+- Use consistent sizes.
+- Align icons with text.
+- Align icons inside buttons.
+- Maintain adequate hit areas.
+- Keep icon-only controls accessible.
+- Add accessible names to icon-only buttons.
+- Use `aria-hidden="true"` for decorative icon glyphs.
+- Do not use CSS-generated icons as the only accessible label.
+- Do not replace meaningful text with an unexplained icon.
+- Do not alter existing button behavior.
+- Do not remove IDs or data attributes.
+- Preserve plugin event bindings.
+- Preserve draggable handles.
+- Preserve sorting controls.
+- Preserve activity completion controls.
+- Preserve editor toolbar behavior.
+- Preserve Moodle action-menu behavior.
+
+Create a documented icon mapping for common actions such as:
+
+- Add
+- Edit
+- Delete
+- Save
+- Cancel
+- Search
+- Filter
+- Sort
+- Settings
+- User
+- Users
+- Course
+- Grade
+- Calendar
+- Message
+- Notification
+- File
+- Folder
+- Download
+- Upload
+- View
+- Hide
+- Show
+- Expand
+- Collapse
+- Previous
+- Next
+- Home
+- Dashboard
+- Help
+- Information
+- Warning
+- Error
+- Success
+- Lock
+- Unlock
+- Print
+- Export
+- More actions
+- Drag handle
+- External link
+
+Some Moodle-specific or plugin-specific icons may not have a safe Font Awesome equivalent.
+
+For these cases:
+
+1. Preserve the existing icon.
+2. Match its size and alignment to the new icon system.
+3. Document the exception.
+4. Do not break functionality merely to achieve 100% icon replacement.
+
+Do not modify institutional logos.
+
+Do not convert logos into Font Awesome symbols.
+
+---
+
+# 23. SVG and 3D Illustration System
+
+Create a consistent library of lightweight modern SVG illustrations.
+
+Use 3D-style SVGs selectively for:
+
+- Login hero
+- Dashboard welcome area
+- Course discovery
+- Empty course list
+- Empty messages
+- Empty calendar
+- Empty content bank
+- Empty files
+- Empty reports
+- Successful submission
+- Quiz completion
+- Assignment completion
+- Onboarding
+- Error recovery
+- Upload states
+
+Requirements:
+
+- Keep a consistent illustration style.
+- Keep colors configurable.
+- Use brand colors carefully.
+- Maintain contrast.
+- Optimize SVG markup.
+- Avoid unsafe embedded scripts.
+- Avoid oversized assets.
+- Define dimensions or aspect ratios.
+- Prevent layout shifts.
+- Hide decorative SVGs from assistive technology.
+- Provide alternative text for meaningful visuals.
+- Provide static fallbacks.
+- Lazy-load noncritical visuals.
+- Avoid excessive DOM complexity.
+- Do not place distracting visuals in exam, quiz, grading, or reading workflows.
+- Do not turn institutional logos into 3D illustrations.
+- Do not use unrelated stock illustration styles across pages.
+
+---
+
+# 24. Animation and Micro-Interactions
+
+Add subtle, modern, purposeful motion.
+
+Possible animated behaviors:
+
+- Button hover and active feedback
+- Icon hover feedback
+- Card hover feedback
+- Dropdown opening and closing
+- Tab transitions
+- Accordion transitions
+- Modal transitions
+- Drawer transitions
+- Toast notifications
+- Skeleton loading
+- Upload progress
+- Form validation feedback
+- Success feedback
+- Message-send feedback
+- Calendar selection feedback
+- Progress-bar transitions
+- Progress-ring transitions
+- Filter activation
+- Course completion
+- Counter transitions
+- Chart transitions
+- Empty-state illustration motion
+- Hero illustration motion
+
+Requirements:
+
+- Keep animation subtle.
+- Keep animation fast.
+- Keep behavior predictable.
+- Use shared duration and easing tokens.
+- Prefer `transform` and `opacity`.
+- Avoid layout-shifting animation.
+- Avoid blocking interaction.
+- Avoid delaying navigation.
+- Avoid aggressive bounce effects.
+- Avoid flashing.
+- Avoid continuous decorative movement.
+- Avoid animation in critical assessment workflows.
+- Pause nonessential animations when the page is hidden.
+- Respect `prefers-reduced-motion`.
+- Provide static alternatives.
+- Keep lower-powered devices responsive.
+- Do not add a large animation dependency without strong justification.
+- Use CSS animation or lightweight SVG animation where practical.
+
+Create shared motion tokens for:
+
+- Fast hover
+- Standard transition
+- Dropdown
+- Modal
+- Drawer
+- Slider
+- Success feedback
+- Loading feedback
+- Page-section entrance
+
+---
+
+# 25. Slider and Carousel Design
+
+Add modern sliders only where they improve usability.
+
+Suitable real-data uses:
+
+- Announcements
+- Featured courses
+- Upcoming school events
+- Recent achievements
+- Institutional notices
+- Learning recommendations
+- Recently accessed courses
+- Onboarding steps
+- Academic tips
+
+Do not use a slider for:
+
+- Required assignments
+- Grades
+- Critical warnings
+- Mandatory notices
+- Data tables
+- Important actions
+- Content users must compare simultaneously
+
+Slider requirements:
+
+- Use real data.
+- Provide previous and next controls.
+- Provide keyboard navigation.
+- Support touch and swipe.
+- Provide accessible labels.
+- Provide visible focus states.
+- Show the active slide.
+- Use pagination indicators only when useful.
+- Keep navigation hit areas large enough.
+- Do not rely on autoplay.
+- Pause autoplay on hover.
+- Pause autoplay on focus.
+- Pause autoplay during user interaction.
+- Pause autoplay when the browser tab is hidden.
+- Provide a pause control when autoplay is enabled.
+- Keep transition timing readable.
+- Keep slide height stable.
+- Prevent layout shifts.
+- Preserve the current slide during responsive resize where practical.
+- Do not hide critical information.
+- Respect reduced-motion preferences.
+- Keep all content available when JavaScript fails where practical.
+
+Provide theme settings for:
+
+- Enable or disable dashboard slider
+- Enable or disable autoplay
+- Autoplay interval
+- Transition style
+- Reduced-motion fallback
+
+---
+
+# 26. Course View Redesign
+
+Create a polished, modern Moodle course experience without changing course behavior.
+
+Review and improve:
+
+- Course header
+- Course title
+- Course image
+- Teacher information
+- Course progress
+- Course navigation
+- Course index
+- Section navigation
+- Topic cards
+- Weekly format
+- Activity rows
+- Activity icons
+- Completion indicators
+- Availability information
+- Restriction information
+- Edit-mode controls
+- Action menus
+- Course announcements
+- Participants
+- Grades
+- Competencies
+- Reports
+- Course footer
+- Mobile course navigation
+
+Requirements:
+
+- Preserve all course formats.
+- Preserve editing mode.
+- Preserve activity completion.
+- Preserve drag-and-drop.
+- Preserve section movement.
+- Preserve indentation behavior.
+- Preserve availability conditions.
+- Preserve hidden activities.
+- Preserve teacher-only controls.
+- Preserve group behavior.
+- Preserve course-index behavior.
+- Preserve completion tracking.
+- Preserve action menus.
+- Preserve Moodle activity links.
+
+Use Font Awesome icons where safe, but do not break activity-module semantics.
+
+Keep the course page compact and readable.
+
+Do not turn every activity into an oversized card.
+
+Use clear visual grouping for sections and activities.
+
+---
+
+# 27. Forms
+
+Review all Moodle forms.
+
+Improve:
+
+- Label alignment
+- Input alignment
+- Help icons
+- Required markers
+- Validation messages
+- Error placement
+- Success states
+- Select controls
+- Autocomplete
+- Date and time controls
+- File pickers
+- Rich-text editors
+- Textareas
+- Checkboxes
+- Radio buttons
+- Switches
+- Disabled fields
+- Read-only fields
+- Repeated fields
+- Collapsible advanced sections
+- Submit actions
+- Cancel actions
+- Destructive actions
+- Mobile behavior
+
+Requirements:
+
+- Preserve input names.
+- Preserve form IDs.
+- Preserve hidden values.
+- Preserve validation.
+- Preserve sesskeys.
+- Preserve editor integrations.
+- Preserve file-picker behavior.
+- Preserve autocomplete behavior.
+- Keep labels visible.
+- Keep errors close to fields.
+- Do not rely only on color.
+- Keep control heights consistent.
+- Keep related fields grouped.
+- Avoid excessive vertical spacing.
+- Preserve entered values after validation errors.
+- Make destructive actions clear.
+- Keep buttons aligned.
+- Support long labels and translations.
+- Maintain keyboard navigation.
+
+---
+
+# 28. Tables, Grades, Reports, and Data Views
+
+Review every data-heavy interface.
+
+Improve:
+
+- Header alignment
+- Row density
+- Numeric alignment
+- Grade alignment
+- Column widths
+- Sorting indicators
+- Filter controls
+- Search
+- Pagination
+- Bulk actions
+- Selection states
+- Status badges
+- Empty states
+- Loading states
+- Action menus
+- Sticky headers where useful
+- Horizontal scrolling
+- Mobile behavior
+- Hover states
+- Focus states
+- Truncated text
+- Tooltips
+- Captions
+- Screen-reader context
+
+Requirements:
+
+- Do not remove columns to simplify visuals.
+- Do not hide important academic information.
+- Preserve sorting.
+- Preserve filtering.
+- Preserve export actions.
+- Preserve pagination.
+- Preserve bulk actions.
+- Preserve permission-based columns.
+- Align numbers consistently.
+- Keep grade values readable.
+- Avoid excessively tall rows.
+- Prevent action menus from being clipped.
+- Use horizontal scrolling only when needed.
+- Keep important columns visible where practical.
+- Do not communicate status by color alone.
+- Keep table controls accessible.
+
+---
+
+# 29. Report Builder Filter Dropdown
+
+For:
+
+`http://localhost:8080/reportbuilder/index.php`
+
+Inspect and fix the filter dropdown presentation and interaction.
+
+The dropdown must:
+
+- Appear above surrounding content
+- Avoid clipping
+- Avoid appearing behind tables
+- Remain inside the viewport
+- Close on outside click
+- Close on Escape
+- Restore focus
+- Close after selection when appropriate
+- Stay positioned during scroll
+- Stay positioned during resize
+- Support keyboard navigation
+- Show clear hover states
+- Show selected states
+- Show active filters
+- Allow removing filters
+- Allow resetting filters
+- Avoid horizontal overflow
+- Avoid remaining visible unexpectedly
+- Work with multiple filters
+- Work inside nested scroll containers
+- Work on mobile
+
+Safely inspect:
+
+- `z-index`
+- Stacking contexts
+- Overflow
+- Portal placement
+- Absolute positioning
+- Focus handling
+- Click-outside handling
+- Event propagation
+- Escape-key handling
+- Scroll behavior
+- Resize behavior
+- Dropdown width
+- Long labels
+
+Do not change report query logic.
+
+Do not change filter meanings.
+
+Do not change report permissions.
+
+---
+
+# 30. Cards, Widgets, and Moodle Blocks
+
+Standardize cards, Moodle blocks, course cards, dashboard widgets, and summary panels.
+
+Requirements:
+
+- Consistent padding
+- Consistent borders
+- Consistent radii
+- Consistent shadows
+- Aligned titles
+- Aligned icons
+- Aligned action menus
+- Balanced heights
+- Compact density
+- Clear metric typography
+- Readable supporting text
+- Real data only
+- Loading states
+- Empty states
+- No layout shifts
+- Clear interactive state
+- Clear noninteractive state
+- Responsive card grids
+- Accessible controls
+
+Preserve:
+
+- Block editing
+- Block movement
+- Block configuration
+- Block deletion
+- Block visibility
+- User dashboard customization
+- Course card actions
+- Completion indicators
+
+---
+
+# 31. Navigation
+
+Review and standardize:
+
+- Top navigation
+- Main navigation
+- Sidebar
+- Navigation drawer
+- Course navigation
+- Administration navigation
+- User-profile navigation
+- Tabs
+- Breadcrumbs
+- Mobile menus
+- Context menus
+- Footer navigation
+
+Requirements:
+
+- Correct active state
+- Consistent icon alignment
+- Consistent item height
+- Readable labels
+- Keyboard navigation
+- Visible focus
+- Mobile compatibility
+- Correct nesting
+- Correct expanded state
+- Permission-filtered items
+- No duplicate navigation
+- No unnecessary back buttons
+- No covered content
+- Accessible drawer overlays
+- Alignment between breadcrumbs and active navigation
+
+Preserve Moodle’s navigation tree and permission logic.
+
+---
+
+# 32. Modals, Drawers, Menus, Dropdowns, and Tooltips
+
+Validate every overlay component.
+
+Requirements:
+
+- Correct stacking order
+- Correct viewport placement
+- Focus trapping
+- Escape-key support
+- Outside-click support
+- Focus restoration
+- Accessible names
+- Responsive sizing
+- Correct internal scrolling
+- Visible close controls
+- No clipping
+- No hidden actions
+- No horizontal overflow
+- Keyboard navigation
+- Mobile compatibility
+
+Do not put essential information only inside a tooltip.
+
+Do not replace Moodle modal APIs with an incompatible custom implementation.
+
+---
+
+# 33. Search Experience
+
+Visually modernize:
+
+- Global search
+- Course search
+- User search
+- Forum search
+- Content-bank search
+- File search
+- Report search
+- Message search
+- Administration search
+
+Requirements:
+
+- Clear input design
+- Proper icon alignment
+- Clear placeholder
+- Accessible label
+- Reset action
+- Loading feedback
+- No-result state
+- Keyboard access
+- Mobile usability
+- Result grouping where already supported
+- Real data only
+- Existing permission filtering
+- Existing request behavior
+- Existing search routes
+
+Do not create fake search suggestions.
+
+---
+
+# 34. Priority Page Requirements
+
+## 34.1 Blog Editor
+
+Validate:
+
+- Real user context
+- Breadcrumbs
+- Page header
+- Editor toolbar
+- Title field
+- Media controls
+- Publishing controls
+- Form grouping
+- Save and cancel hierarchy
+- Validation
+- Responsive editor behavior
+
+## 34.2 User Edit and Profile Pages
+
+Validate:
+
+- Real user name
+- Avatar
+- Profile sections
+- Tabs
+- Field grouping
+- Breadcrumbs
+- Save and cancel hierarchy
+- Return-to-profile behavior
+- Long-form layout
+- Help text
+- Mobile behavior
+
+## 34.3 User Editor
+
+Validate:
+
+- Toolbar alignment
+- Font Awesome mapping
+- Tooltips
+- Content spacing
+- Keyboard behavior
+- Save behavior
+- Responsive toolbar
+- Existing editor integration
+
+## 34.4 Content Bank
+
+Validate:
+
+- Real category and folder context
+- Breadcrumbs
+- Search
+- Filters
+- Content cards
+- Tables
+- Upload actions
+- Empty states
+- Action menus
+- Responsive behavior
+- Optional animated illustration
+- Existing repository functionality
+
+## 34.5 Forum
+
+Validate:
+
+- Real course context
+- Real forum context
+- Discussion hierarchy
+- Participant identity
+- Reply actions
+- Status
+- Breadcrumbs
+- Empty states
+- Responsive discussion layout
+- Readability
+
+## 34.6 Calendar
+
+Validate:
+
+- Real calendar scope
+- Date navigation
+- Event data
+- View controls
+- Event cards
+- Event modals
+- Selected dates
+- Empty states
+- Responsive layout
+- Breadcrumbs
+- Subtle interaction feedback
+
+## 34.7 Report Builder
+
+Validate:
+
+- Real report data
+- Search
+- Filters
+- Dropdown behavior
+- Sorting
+- Tables
+- Export actions
+- Report actions
+- Empty state
+- Responsive filters
+- Breadcrumbs
+
+## 34.8 Files
+
+Validate:
+
+- Real folder context
+- Upload controls
+- File list
+- File grid
+- Action menus
+- File icons
+- Breadcrumbs
+- Empty states
+- Responsive behavior
+- Existing file-manager behavior
+
+## 34.9 Grade Overview
+
+Validate:
+
+- Real course context
+- Real user context
+- Grade readability
+- Numeric alignment
+- Status indicators
+- Tables
+- Filters
+- Responsive behavior
+- Breadcrumbs
+- Accessibility
+
+## 34.10 User Evidence
+
+Validate:
+
+- Real user context
+- Real competency context
+- Evidence status
+- Actions
+- Empty state
+- Breadcrumbs
+- Responsive design
+
+## 34.11 Messages
+
+Validate:
+
+- Real participant identity
+- Conversation list
+- Message bubbles
+- Timestamps
+- Composer
+- Attachments
+- Empty states
+- Loading states
+- Scrolling
+- Responsive split view
+- Send feedback
+- Breadcrumbs
+- Existing messaging behavior
+
+---
+
+# 35. Responsive Design
+
+Test:
+
+- Large desktop
+- Standard desktop
+- Laptop
+- Tablet landscape
+- Tablet portrait
+- Mobile landscape
+- Mobile portrait
+- Browser zoom
+- Large text
+- Narrow split-screen windows
+
+Verify:
+
+- No unintended horizontal overflow
+- Header remains usable
+- Footer stacks correctly
+- Sidebar works
+- Navigation drawer works
+- Breadcrumbs collapse intelligently
+- Cards resize correctly
+- Forms stack correctly
+- Buttons wrap correctly
+- Tables remain accessible
+- Modals fit
+- Dropdowns remain visible
+- Sliders remain usable
+- SVGs scale correctly
+- Logos remain proportional
+- Touch targets remain usable
+- Fixed elements do not cover content
+- Long institution names work
+- Long course names work
+- Long translated labels work
+
+---
+
+# 36. Accessibility
+
+Target WCAG 2.2 AA-quality implementation where technically possible.
+
+Requirements:
+
+- Semantic HTML
+- Logical headings
+- Visible focus indicators
+- Keyboard navigation
+- Screen-reader labels
+- Accessible form errors
+- Accessible modals
+- Accessible dropdowns
+- Accessible sliders
+- Accessible tables
+- Accessible breadcrumbs
+- Sufficient contrast
+- Adequate touch targets
+- Reduced-motion support
+- Alternative text
+- Decorative-image hiding
+- Live regions for important dynamic updates
+- No color-only meaning
+- Focus restoration
+- Logical tab order
+- Browser zoom support
+- Text scaling support
+- Accessible charts
+- Accessible status indicators
+
+Do not remove existing accessibility attributes.
+
+Do not replace native controls with inaccessible custom controls.
+
+---
+
+# 37. Performance
+
+Do not significantly reduce performance.
+
+Requirements:
+
+- Optimize SVG files.
+- Compress raster images.
+- Prefer modern image formats where compatible.
+- Lazy-load noncritical images.
+- Avoid large animation libraries.
+- Reuse Moodle dependencies.
+- Avoid video backgrounds.
+- Avoid unnecessary JavaScript.
+- Avoid excessive DOM nodes.
+- Avoid duplicate listeners.
+- Use event delegation when appropriate.
+- Avoid expensive scroll handlers.
+- Avoid layout thrashing.
+- Define image dimensions.
+- Prevent cumulative layout shifts.
+- Minimize render-blocking assets.
+- Keep SCSS modular.
+- Remove unused styles introduced by the redesign.
+- Avoid loading assets on pages where they are not used.
+- Preserve Moodle caching.
+- Avoid extra database work for decorative widgets.
+- Test lower-powered devices.
+- Test slow-network behavior where practical.
+
+---
+
+# 38. Security and Privacy
+
+Do not weaken security to support visual changes.
+
+Preserve:
+
+- Authentication
+- Authorization
+- Capabilities
+- Context checks
+- Sesskeys
+- CSRF protection
+- Output escaping
+- Input sanitization
+- File-access controls
+- Privacy controls
+- Role restrictions
+
+Do not:
+
+- Reveal hidden data
+- Bypass login
+- Extract passwords
+- Display private information in public widgets
+- Trust unvalidated theme settings
+- Load unsafe external scripts
+- Insert unescaped HTML
+- Create public access to protected files
+
+---
+
+# 39. Implementation Sequence
+
+Use this order:
+
+## Phase 1: Repository and Behavior Audit
+
+1. Confirm Moodle version.
+2. Confirm Git branch.
+3. Inventory themes and custom plugins.
+4. Identify existing Boost overrides.
+5. Identify existing JavaScript hooks.
+6. Identify custom dashboards.
+7. Identify role APIs.
+8. Identify institution or tenant APIs.
+9. Inventory current icons.
+10. Inventory branding assets.
+11. Capture baseline screenshots.
+12. Record console and PHP errors before changes.
+
+## Phase 2: Theme Foundation
+
+1. Create `theme_2026`.
+2. Configure Boost inheritance.
+3. Add version and language files.
+4. Add layout structure.
+5. Add SCSS pipeline.
+6. Add settings.
+7. Add theme callbacks.
+8. Add CSS variables.
+9. Add typography.
+10. Add spacing and color tokens.
+11. Add icon mapping.
+12. Add motion tokens.
+
+## Phase 3: Shared Layouts
+
+1. Header
+2. Footer
+3. Main content container
+4. Sidebar
+5. Navigation drawer
+6. Breadcrumb
+7. Page header
+8. Alerts
+9. Modals
+10. Dropdown layers
+11. Responsive behavior
+
+## Phase 4: Shared Components
+
+1. Buttons
+2. Forms
+3. Tables
+4. Cards
+5. Blocks
+6. Tabs
+7. Pagination
+8. Search
+9. Empty states
+10. Loading states
+11. Progress components
+12. Sliders
+13. SVG illustrations
+
+## Phase 5: Role Dashboards
+
+1. Learner
+2. Teacher
+3. Parent
+4. Principal
+5. Trustee Manager
+6. Site Administrator
+7. Multi-role fallback
+8. Permission validation
+9. Real-data validation
+
+## Phase 6: Course and Activity Views
+
+1. Course header
+2. Course index
+3. Sections
+4. Activities
+5. Completion states
+6. Editing mode
+7. Activity-module pages
+8. Grade views
+
+## Phase 7: Priority Pages
+
+Complete and validate every listed priority URL.
+
+## Phase 8: Repository-Wide Rollout
+
+Apply shared theme improvements to remaining applicable pages.
+
+## Phase 9: Validation
+
+1. Role testing
+2. Responsive testing
+3. Accessibility testing
+4. Keyboard testing
+5. Reduced-motion testing
+6. Browser-console testing
+7. PHP warning testing
+8. Performance review
+9. Functional regression review
+10. Security review
+
+---
+
+# 40. Coding Standards
+
+Follow Moodle coding standards.
+
+Requirements:
+
+- Use Moodle APIs.
+- Use Moodle renderers.
+- Use Mustache templates.
+- Use AMD modules.
+- Use Moodle localization.
+- Use Moodle file APIs.
+- Use Moodle configuration APIs.
+- Escape output correctly.
+- Validate settings.
+- Use semantic class names.
+- Avoid excessive `!important`.
+- Avoid fragile selectors.
+- Avoid duplicated CSS.
+- Avoid duplicated JavaScript.
+- Avoid duplicated SVG markup.
+- Avoid inline scripts.
+- Avoid unnecessary inline styles.
+- Document non-obvious rendering behavior.
+- Keep white-label settings centralized.
+- Prefer theme overrides to core changes.
+- Keep every change reviewable.
+
+Run available project checks such as:
+
+- PHP syntax checks
+- Moodle code checker where installed
+- SCSS compilation
+- JavaScript build checks
+- Relevant automated tests
+- Relevant Behat tests where available
+
+Do not claim a test passed unless it was actually run successfully.
+
+---
+
+# 41. Theme Settings Requirements
+
+Create an organized administration settings page for `theme_2026`.
+
+Recommended sections:
+
+## General Branding
+
+- Institution name
+- Product name
+- Main logo
+- Compact logo
+- Light logo
+- Dark logo
+- Favicon
+- Brand preset
+
+## Colors
+
+- Primary
+- Secondary
+- Accent
+- Header background
+- Header foreground
+- Footer background
+- Footer foreground
+- Sidebar background
+- Link color
+- Focus color
+
+## Typography
+
+- Font stack option
+- Base font size
+- Density option
+- Heading weight
+
+## Layout
+
+- Content width
+- Card radius
+- Shadow level
+- Header behavior
+- Sidebar density
+- Dashboard density
+
+## Role Styling
+
+- Learner accent
+- Teacher accent
+- Parent accent
+- Principal accent
+- Trustee Manager accent
+- Site Administrator accent
+
+## Login and Hero
+
+- Login background
+- Login illustration
+- Hero illustration
+- Welcome text
+- Hero enable or disable
+
+## Dashboard
+
+- Slider enable
+- Autoplay enable
+- Autoplay interval
+- Announcement source where existing APIs support it
+- Illustration enable
+- Animation intensity
+
+## Footer
+
+- Contact details
+- Support URL
+- Privacy URL
+- Terms URL
+- Accessibility URL
+- Documentation URL
+- Social links
+- Copyright
+- Powered-by text
+
+## Accessibility and Motion
+
+- Animation enable
+- Reduced-motion default
+- Focus indicator option
+- High-contrast enhancement where appropriate
+
+## Advanced
+
+- Validated custom SCSS or CSS where safely supported
+- Additional body classes
+- Debug display only for administrators
+
+Settings must work dynamically through normal Moodle theme configuration and cache behavior.
+
+Do not require a code change after updating a setting.
+
+---
+
+# 42. Required Deliverables
+
+At completion, provide:
+
+1. Complete `theme_2026` plugin.
+2. Installable package named `theme_2026.zip`.
+3. Theme installation instructions.
+4. Theme upgrade instructions.
+5. List of files created.
+6. List of files changed.
+7. Confirmation that Boost was not edited directly.
+8. Confirmation of Moodle version and source branch.
+9. Design-token documentation.
+10. Typography documentation.
+11. Color-system documentation.
+12. Role-accent documentation.
+13. Font Awesome icon mapping.
+14. Icon exceptions that could not be replaced safely.
+15. Header redesign summary.
+16. Footer redesign summary.
+17. Breadcrumb summary.
+18. Contextual page-header summary.
+19. Dashboard redesign summary for every role.
+20. Course-view redesign summary.
+21. Slider and carousel summary.
+22. Animation and SVG summary.
+23. White-label configuration guide.
+24. Real-data binding validation.
+25. Page-by-page priority URL report.
+26. Repository-wide visual audit summary.
+27. Responsive test results.
+28. Accessibility test results.
+29. Browser-console results.
+30. PHP warning and error results.
+31. Performance observations.
+32. Security and permission validation.
+33. Before-and-after screenshots.
+34. Known limitations.
+35. Any required original logo assets that remain missing.
+
+When original individual logo files are supplied, also provide an organized optimized brand-assets package and manifest.
+
+Do not package low-resolution temporary logo crops as final production assets without clearly identifying them.
+
+---
+
+# 43. Acceptance Criteria
+
+The work is complete only when:
+
+- `theme_2026` exists as a valid Moodle theme.
+- It inherits from Boost.
+- Boost core files were not modified.
+- Moodle core behavior remains intact.
+- Existing custom behavior remains intact.
+- All priority pages were reviewed.
+- The repository-wide visual system was audited.
+- Header design is modern and compact.
+- Footer design is modern and configurable.
+- Breadcrumbs use real context.
+- Page headers use real context.
+- Typography is consistent.
+- Spacing is consistent.
+- Negative space is reduced carefully.
+- Font Awesome is used consistently for safe standard icon replacements.
+- Icon alignment is corrected.
+- Icon-only actions remain accessible.
+- Moodle-specific icon exceptions are documented.
+- Institutional logos remain accurate and undistorted.
+- Role dashboards use real data.
+- Role dashboards respect permissions.
+- Multi-role users have a safe fallback.
+- Learner dashboard is validated.
+- Teacher dashboard is validated.
+- Parent dashboard is validated where supported.
+- Principal dashboard is validated where supported.
+- Trustee Manager dashboard is validated where supported.
+- Site Administrator dashboard is validated.
+- No fake data was introduced.
+- Dashboard widgets are compact and responsive.
+- Sliders are used only where helpful.
+- Slider content uses real data.
+- Sliders are keyboard and touch accessible.
+- Critical content is not hidden in sliders.
+- Animations are subtle.
+- Reduced-motion preferences are respected.
+- SVG illustrations are lightweight.
+- 3D illustrations do not alter institutional logos.
+- Course pages preserve editing and completion behavior.
+- Forms still submit correctly.
+- Tables still sort and filter correctly.
+- Grade calculations remain unchanged.
+- Reports remain unchanged functionally.
+- Report Builder dropdown behavior is fixed visually and interactively.
+- Messaging behavior remains unchanged.
+- Calendar behavior remains unchanged.
+- File behavior remains unchanged.
+- Content Bank behavior remains unchanged.
+- No permissions were weakened.
+- No authentication behavior was changed.
+- No security checks were removed.
+- No new browser-console errors were introduced.
+- No new PHP warnings were introduced.
+- No significant performance regression was introduced.
+- White-label settings work without code changes.
+- Brand colors remain accessible.
+- Logos can be updated through theme settings.
+- The complete application feels like one consistent school and university LMS.
+
+---
+
+# 44. Final Execution Instruction
+
+Work autonomously through the repository.
+
+Do not stop after producing a design audit.
+
+Implement the theme, apply the visual system, test it, validate it, and document it.
+
+Start with:
+
+1. Theme architecture
+2. Design tokens
+3. White-label settings
+4. Typography
+5. Header
+6. Footer
+7. Navigation
+8. Breadcrumbs
+9. Page headers
+10. Font Awesome icon mapping
+11. Shared components
+12. Role dashboards
+13. Course layouts
+14. Priority pages
+15. Repository-wide rollout
+16. Responsive and accessibility validation
+
+Use real application data at all times.
+
+Never convert the Moodle application into a static mockup.
+
+Never bypass Moodle APIs or permissions for design convenience.
+
+Never modify working business logic merely to improve appearance.
+
+The final result must be a polished, modern, interactive, accessible, responsive, maintainable, configurable, and white-label-ready Moodle Learning Management System for schools, colleges, universities, preschool organizations, teachers, students, parents, principals, trustees, managers, and administrators.
