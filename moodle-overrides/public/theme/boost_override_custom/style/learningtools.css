@@ -1,0 +1,756 @@
+body.theme-boost-override-custom-learningtools {
+    --boc-lt-primary: var(--boc-theme-primary, var(--bs-primary, #0f6cbf));
+    --boc-lt-primary-strong: var(--boc-theme-primary-strong, #0750ca);
+    --boc-lt-accent: var(--boc-theme-accent, #0891b2);
+    --boc-lt-success: var(--boc-theme-success, #15803d);
+    --boc-lt-warning: var(--boc-theme-warning-bright, #f59e0b);
+    --boc-lt-violet: var(--boc-theme-violet, #7c3aed);
+    --boc-lt-danger: var(--boc-theme-danger, #dc2626);
+    --boc-lt-ink: var(--boc-theme-ink, #0f172a);
+    --boc-lt-text: var(--boc-theme-text, #334155);
+    --boc-lt-muted: var(--boc-theme-muted, #64748b);
+    --boc-lt-border: var(--boc-theme-border, #d8e0ea);
+    --boc-lt-surface: var(--boc-theme-surface, #fff);
+    --boc-lt-radius-lg: 24px;
+    --boc-lt-radius-md: 18px;
+    --boc-lt-shadow: 0 24px 64px rgba(15, 23, 42, .12);
+    --boc-lt-shadow-soft: 0 14px 34px rgba(15, 23, 42, .08);
+    min-height: 100vh;
+    color: var(--boc-lt-ink);
+    background:
+        linear-gradient(116deg, rgba(15, 108, 191, .08) 0 16%, transparent 16% 100%),
+        linear-gradient(293deg, rgba(245, 158, 11, .11) 0 13%, transparent 13% 100%),
+        radial-gradient(circle at 9% 14%, color-mix(in srgb, var(--boc-lt-primary) 13%, transparent), transparent 30vw),
+        radial-gradient(circle at 90% 80%, color-mix(in srgb, var(--boc-lt-violet) 10%, transparent), transparent 31vw),
+        #f7fbff;
+}
+
+body.theme-boost-override-custom-learningtools,
+body.theme-boost-override-custom-learningtools input,
+body.theme-boost-override-custom-learningtools button,
+body.theme-boost-override-custom-learningtools select,
+body.theme-boost-override-custom-learningtools textarea {
+    font-family: var(--boc-theme-font-family, "Inter", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif);
+}
+
+body.theme-boost-override-custom-learningtools #page-wrapper,
+body.theme-boost-override-custom-learningtools #page {
+    background: transparent;
+}
+
+body.theme-boost-override-custom-learningtools #page.drawers .main-inner,
+body.theme-boost-override-custom-learningtools.limitedwidth #page.drawers #topofscroll.main-inner {
+    width: min(100% - 32px, 1480px);
+    max-width: 1480px;
+    margin: 16px auto 46px;
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+body.theme-boost-override-custom-learningtools #region-main {
+    padding: 0;
+    overflow: visible;
+    border: 0;
+    background: transparent;
+}
+
+body.theme-boost-override-custom-learningtools.boc-learningtools-ready #page-header {
+    display: none;
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-source-heading {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-shell {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    gap: 18px;
+    animation: boc-learningtools-rise .48s ease both;
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-shell::before,
+body.theme-boost-override-custom-learningtools .boc-learningtools-shell::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    pointer-events: none;
+    border: 1px solid color-mix(in srgb, var(--boc-lt-border) 60%, transparent);
+    border-radius: 34px;
+    background:
+        linear-gradient(135deg, color-mix(in srgb, var(--boc-lt-primary) 10%, transparent), transparent),
+        repeating-linear-gradient(90deg, rgba(255, 255, 255, .24) 0 1px, transparent 1px 40px);
+    opacity: .72;
+    transform: rotate(-8deg);
+    animation: boc-learningtools-float 8s ease-in-out infinite;
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-shell::before {
+    top: 58px;
+    right: 8%;
+    width: 210px;
+    height: 128px;
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-shell::after {
+    bottom: 54px;
+    left: 5%;
+    width: 236px;
+    height: 116px;
+    background:
+        linear-gradient(135deg, color-mix(in srgb, var(--boc-lt-warning) 13%, transparent), transparent),
+        repeating-linear-gradient(0deg, rgba(255, 255, 255, .22) 0 1px, transparent 1px 38px);
+    transform: rotate(7deg);
+    animation-delay: -2.4s;
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-hero,
+body.theme-boost-override-custom-learningtools .boc-learningtools-workspace,
+body.theme-boost-override-custom-learningtools .boc-learningtools-guide {
+    position: relative;
+    border: 1px solid color-mix(in srgb, var(--boc-lt-border) 72%, transparent);
+    border-radius: var(--boc-lt-radius-lg);
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, .95), rgba(255, 255, 255, .72)),
+        color-mix(in srgb, var(--boc-lt-surface) 86%, transparent);
+    box-shadow: var(--boc-lt-shadow-soft);
+    backdrop-filter: blur(18px) saturate(150%);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(250px, 330px);
+    gap: 18px;
+    align-items: center;
+    min-height: 238px;
+    padding: clamp(18px, 2.3vw, 30px);
+    overflow: hidden;
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background:
+        linear-gradient(120deg, transparent 0 49%, color-mix(in srgb, var(--boc-lt-primary) 8%, transparent) 49% 64%, transparent 64%),
+        repeating-linear-gradient(90deg, rgba(255, 255, 255, .24) 0 1px, transparent 1px 42px);
+    pointer-events: none;
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-hero-copy,
+body.theme-boost-override-custom-learningtools .boc-learningtools-visual {
+    position: relative;
+    z-index: 1;
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 30px;
+    width: fit-content;
+    padding: 7px 13px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--boc-lt-success) 11%, #fff);
+    color: color-mix(in srgb, var(--boc-lt-success) 78%, #052e16);
+    font-size: .78rem;
+    font-weight: 850;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-eyebrow::before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--boc-lt-success);
+    box-shadow: 0 0 0 6px color-mix(in srgb, var(--boc-lt-success) 13%, transparent);
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-hero h1 {
+    max-width: 840px;
+    margin: 14px 0 10px;
+    color: var(--boc-lt-ink);
+    font-size: clamp(2rem, 3.4vw, 3.65rem);
+    font-weight: 850;
+    line-height: 1.03;
+    letter-spacing: 0;
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-hero p {
+    max-width: 760px;
+    margin: 0;
+    color: var(--boc-lt-text);
+    font-size: clamp(.98rem, 1.12vw, 1.12rem);
+    font-weight: 560;
+    line-height: 1.54;
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(140px, 1fr));
+    gap: 10px;
+    margin-top: 18px;
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-metric,
+body.theme-boost-override-custom-learningtools .boc-learningtools-guide-item {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    min-width: 0;
+    padding: 11px;
+    border: 1px solid color-mix(in srgb, var(--boc-lt-border) 68%, transparent);
+    border-radius: var(--boc-lt-radius-md);
+    background: rgba(255, 255, 255, .76);
+    box-shadow: 0 12px 26px rgba(15, 23, 42, .06);
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-metric-icon,
+body.theme-boost-override-custom-learningtools .boc-learningtools-guide-icon,
+body.theme-boost-override-custom-learningtools .boc-learningtools-alert-icon,
+body.theme-boost-override-custom-learningtools .boc-learningtools-empty-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    border-radius: 15px;
+    background: color-mix(in srgb, var(--boc-lt-primary) 10%, #fff);
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-metric-icon,
+body.theme-boost-override-custom-learningtools .boc-learningtools-guide-icon {
+    width: 44px;
+    height: 44px;
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-metric-icon svg,
+body.theme-boost-override-custom-learningtools .boc-learningtools-guide-icon svg,
+body.theme-boost-override-custom-learningtools .boc-learningtools-alert-icon svg,
+body.theme-boost-override-custom-learningtools .boc-learningtools-empty-icon svg {
+    width: 28px;
+    height: 28px;
+    filter: drop-shadow(0 8px 10px rgba(15, 23, 42, .14));
+    transform-origin: center;
+    animation: boc-learningtools-icon 5.8s ease-in-out infinite;
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-metric-copy,
+body.theme-boost-override-custom-learningtools .boc-learningtools-guide-copy {
+    display: grid;
+    gap: 1px;
+    min-width: 0;
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-metric-copy strong,
+body.theme-boost-override-custom-learningtools .boc-learningtools-guide-copy strong {
+    overflow: hidden;
+    color: var(--boc-lt-ink);
+    font-size: 1.08rem;
+    font-weight: 820;
+    line-height: 1.08;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-metric-copy span,
+body.theme-boost-override-custom-learningtools .boc-learningtools-metric-copy small,
+body.theme-boost-override-custom-learningtools .boc-learningtools-guide-copy span {
+    color: var(--boc-lt-muted);
+    font-size: .76rem;
+    font-weight: 720;
+    line-height: 1.18;
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-metric-copy span {
+    text-transform: uppercase;
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-visual {
+    display: grid;
+    place-items: center;
+    min-height: 174px;
+    border: 1px solid color-mix(in srgb, var(--boc-lt-border) 58%, transparent);
+    border-radius: 22px;
+    background:
+        linear-gradient(145deg, rgba(255, 255, 255, .62), rgba(224, 242, 254, .58)),
+        repeating-linear-gradient(90deg, rgba(255, 255, 255, .28) 0 1px, transparent 1px 36px);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .74), 0 20px 48px rgba(14, 165, 233, .14);
+    overflow: hidden;
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-visual > svg {
+    width: min(100%, 300px);
+    max-height: 188px;
+}
+
+body.theme-boost-override-custom-learningtools .boc-lt-hero-icon svg {
+    width: 56px;
+    height: 56px;
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(286px, 340px);
+    gap: 18px;
+    align-items: start;
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-workspace {
+    min-width: 0;
+    overflow: hidden;
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-workspace-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 16px 18px;
+    border-bottom: 1px solid color-mix(in srgb, var(--boc-lt-border) 70%, transparent);
+    background: linear-gradient(90deg, color-mix(in srgb, var(--boc-lt-primary) 7%, transparent), transparent);
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-workspace-header h2,
+body.theme-boost-override-custom-learningtools .boc-learningtools-guide h2 {
+    margin: 0;
+    color: var(--boc-lt-ink);
+    font-size: clamp(1.15rem, 1.55vw, 1.55rem);
+    font-weight: 820;
+    line-height: 1.16;
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-count {
+    display: inline-flex;
+    align-items: center;
+    min-height: 30px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--boc-lt-primary) 9%, #fff);
+    color: var(--boc-lt-primary-strong);
+    font-size: .78rem;
+    font-weight: 830;
+    white-space: nowrap;
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-content {
+    display: grid;
+    gap: 16px;
+    min-width: 0;
+    padding: 18px;
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-content > :not(script):not(style) {
+    min-width: 0;
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-content h2,
+body.theme-boost-override-custom-learningtools .boc-learningtools-content h3,
+body.theme-boost-override-custom-learningtools .boc-learningtools-content h4 {
+    margin: 0;
+    color: var(--boc-lt-ink);
+    font-size: clamp(1.14rem, 1.48vw, 1.48rem);
+    font-weight: 820;
+    letter-spacing: 0;
+    line-height: 1.16;
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-content p,
+body.theme-boost-override-custom-learningtools .boc-learningtools-content li,
+body.theme-boost-override-custom-learningtools .boc-learningtools-content dd,
+body.theme-boost-override-custom-learningtools .boc-learningtools-content td {
+    color: var(--boc-lt-text);
+    font-size: .96rem;
+    font-weight: 560;
+    line-height: 1.48;
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-content .card,
+body.theme-boost-override-custom-learningtools .boc-learningtools-content .box,
+body.theme-boost-override-custom-learningtools .boc-learningtools-content .criteria-description,
+body.theme-boost-override-custom-learningtools .boc-learningtools-content .generalbox {
+    padding: 16px;
+    border: 1px solid color-mix(in srgb, var(--boc-lt-border) 72%, transparent);
+    border-radius: 18px;
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, .9), rgba(239, 246, 255, .72));
+    box-shadow: 0 12px 28px rgba(15, 23, 42, .06);
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-content .generalbox + .generalbox,
+body.theme-boost-override-custom-learningtools .boc-learningtools-content .generalbox + .box,
+body.theme-boost-override-custom-learningtools .boc-learningtools-content .box + .generalbox,
+body.theme-boost-override-custom-learningtools .boc-learningtools-content .box + .box {
+    margin-top: 14px;
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-content .box.row {
+    margin-right: 0;
+    margin-left: 0 !important;
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-content .generalbox > h2:first-child,
+body.theme-boost-override-custom-learningtools .boc-learningtools-content .generalbox > h3:first-child,
+body.theme-boost-override-custom-learningtools .boc-learningtools-content .box > h2:first-child,
+body.theme-boost-override-custom-learningtools .boc-learningtools-content .box > h3:first-child {
+    margin-bottom: 10px;
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-content .generalbox p:last-child,
+body.theme-boost-override-custom-learningtools .boc-learningtools-content .box p:last-child {
+    margin-bottom: 0;
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-form {
+    display: grid;
+    gap: 14px;
+    margin: 0;
+    padding: 16px;
+    border: 1px solid color-mix(in srgb, var(--boc-lt-border) 72%, transparent);
+    border-radius: 20px;
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, .92), rgba(239, 246, 255, .76));
+    box-shadow: 0 14px 34px rgba(15, 23, 42, .07);
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-form fieldset,
+body.theme-boost-override-custom-learningtools .boc-learningtools-form .fcontainer,
+body.theme-boost-override-custom-learningtools .boc-learningtools-form .form-group,
+body.theme-boost-override-custom-learningtools .boc-learningtools-form .fitem {
+    min-width: 0;
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-form legend,
+body.theme-boost-override-custom-learningtools .boc-learningtools-form label,
+body.theme-boost-override-custom-learningtools .boc-learningtools-form .col-form-label {
+    color: var(--boc-lt-ink);
+    font-weight: 800;
+    letter-spacing: 0;
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-form .form-control,
+body.theme-boost-override-custom-learningtools .boc-learningtools-form .custom-select,
+body.theme-boost-override-custom-learningtools .boc-learningtools-form select,
+body.theme-boost-override-custom-learningtools .boc-learningtools-form textarea,
+body.theme-boost-override-custom-learningtools .boc-learningtools-form input[type="text"],
+body.theme-boost-override-custom-learningtools .boc-learningtools-form input[type="password"],
+body.theme-boost-override-custom-learningtools .boc-learningtools-form input[type="url"],
+body.theme-boost-override-custom-learningtools .boc-learningtools-form input[type="email"] {
+    min-height: 44px;
+    border: 1px solid color-mix(in srgb, var(--boc-lt-border) 78%, transparent);
+    border-radius: 13px;
+    background: rgba(255, 255, 255, .92);
+    color: var(--boc-lt-ink);
+    font-weight: 650;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .7);
+    transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-form .form-control:focus,
+body.theme-boost-override-custom-learningtools .boc-learningtools-form select:focus,
+body.theme-boost-override-custom-learningtools .boc-learningtools-form textarea:focus,
+body.theme-boost-override-custom-learningtools .boc-learningtools-form input:focus {
+    border-color: color-mix(in srgb, var(--boc-lt-primary) 52%, var(--boc-lt-border));
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--boc-lt-primary) 13%, transparent);
+}
+
+body.theme-boost-override-custom-learningtools .btn-primary,
+body.theme-boost-override-custom-learningtools .boc-learningtools-form .btn-primary,
+body.theme-boost-override-custom-learningtools .boc-learningtools-form input[type="submit"] {
+    border: 0;
+    border-radius: 13px;
+    background: linear-gradient(135deg, var(--boc-lt-primary), var(--boc-lt-accent));
+    color: #fff;
+    font-weight: 820;
+    box-shadow: 0 14px 30px color-mix(in srgb, var(--boc-lt-primary) 24%, transparent);
+    transition: transform .18s ease, box-shadow .18s ease;
+}
+
+body.theme-boost-override-custom-learningtools .btn-primary:hover,
+body.theme-boost-override-custom-learningtools .btn-primary:focus-visible,
+body.theme-boost-override-custom-learningtools .boc-learningtools-form input[type="submit"]:hover,
+body.theme-boost-override-custom-learningtools .boc-learningtools-form input[type="submit"]:focus-visible {
+    transform: translateY(-1px);
+    box-shadow: 0 18px 38px color-mix(in srgb, var(--boc-lt-primary) 30%, transparent);
+}
+
+body.theme-boost-override-custom-learningtools .btn-secondary,
+body.theme-boost-override-custom-learningtools .btn-outline-secondary {
+    border: 1px solid color-mix(in srgb, var(--boc-lt-primary) 22%, var(--boc-lt-border));
+    border-radius: 13px;
+    background: rgba(255, 255, 255, .9);
+    color: var(--boc-lt-primary-strong);
+    font-weight: 820;
+    box-shadow: 0 10px 22px rgba(15, 23, 42, .06);
+    transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+}
+
+body.theme-boost-override-custom-learningtools .btn-secondary:hover,
+body.theme-boost-override-custom-learningtools .btn-secondary:focus-visible,
+body.theme-boost-override-custom-learningtools .btn-outline-secondary:hover,
+body.theme-boost-override-custom-learningtools .btn-outline-secondary:focus-visible {
+    border-color: color-mix(in srgb, var(--boc-lt-primary) 42%, var(--boc-lt-border));
+    background: color-mix(in srgb, var(--boc-lt-primary) 8%, #fff);
+    color: var(--boc-lt-primary-strong);
+    transform: translateY(-1px);
+    box-shadow: 0 14px 28px rgba(15, 23, 42, .08);
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-link,
+body.theme-boost-override-custom-learningtools .boc-learningtools-primary-link {
+    color: var(--boc-lt-primary-strong);
+    font-weight: 780;
+    text-decoration: none;
+    text-underline-offset: 4px;
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-link:hover,
+body.theme-boost-override-custom-learningtools .boc-learningtools-link:focus-visible,
+body.theme-boost-override-custom-learningtools .boc-learningtools-primary-link:hover,
+body.theme-boost-override-custom-learningtools .boc-learningtools-primary-link:focus-visible {
+    color: var(--boc-lt-accent);
+    text-decoration: underline;
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-table-scroll {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid color-mix(in srgb, var(--boc-lt-border) 72%, transparent);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, .84);
+    box-shadow: 0 14px 34px rgba(15, 23, 42, .07);
+}
+
+body.theme-boost-override-custom-learningtools.boc-learningtools-page-sessions .boc-learningtools-table-scroll {
+    max-height: 760px;
+    overflow: auto;
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-table {
+    width: 100%;
+    min-width: 720px;
+    margin: 0;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-table th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    border-bottom: 1px solid color-mix(in srgb, var(--boc-lt-border) 78%, transparent);
+    background: linear-gradient(135deg, #fff, #eff6ff);
+    color: var(--boc-lt-ink);
+    font-size: .82rem;
+    font-weight: 850;
+    letter-spacing: .01em;
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-table td,
+body.theme-boost-override-custom-learningtools .boc-learningtools-table th {
+    padding: 13px 14px;
+    vertical-align: middle;
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-table tbody tr {
+    transition: background .18s ease, transform .18s ease;
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-table tbody tr:hover {
+    background: color-mix(in srgb, var(--boc-lt-primary) 6%, #fff);
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-alert,
+body.theme-boost-override-custom-learningtools .boc-learningtools-empty {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+    padding: 14px;
+    border: 1px solid color-mix(in srgb, var(--boc-lt-primary) 18%, var(--boc-lt-border));
+    border-radius: 18px;
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, .94), rgba(239, 246, 255, .78));
+    color: var(--boc-lt-text);
+    box-shadow: 0 12px 26px rgba(15, 23, 42, .06);
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-alert-icon,
+body.theme-boost-override-custom-learningtools .boc-learningtools-empty-icon {
+    width: 46px;
+    height: 46px;
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-empty {
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-empty strong {
+    color: var(--boc-lt-ink);
+    font-size: 1.08rem;
+    font-weight: 820;
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-guide {
+    display: grid;
+    gap: 14px;
+    padding: 16px;
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-guide-list {
+    display: grid;
+    gap: 10px;
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-guide-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+body.theme-boost-override-custom-learningtools .boc-learningtools-primary-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 36px;
+    padding: 8px 11px;
+    border: 1px solid color-mix(in srgb, var(--boc-lt-primary) 20%, var(--boc-lt-border));
+    border-radius: 13px;
+    background: color-mix(in srgb, var(--boc-lt-primary) 7%, #fff);
+    box-shadow: 0 10px 20px rgba(15, 23, 42, .05);
+}
+
+body.theme-boost-override-custom-learningtools .boc-lt-svg-float,
+body.theme-boost-override-custom-learningtools .boc-lt-svg-card {
+    animation: boc-learningtools-float 6.8s ease-in-out infinite;
+    transform-origin: center;
+}
+
+body.theme-boost-override-custom-learningtools .boc-lt-svg-card {
+    animation-delay: -1.6s;
+}
+
+body.theme-boost-override-custom-learningtools .boc-lt-svg-line {
+    animation: boc-learningtools-slide 5.6s ease-in-out infinite;
+}
+
+@keyframes boc-learningtools-rise {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes boc-learningtools-float {
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-7px) rotate(-1deg);
+    }
+}
+
+@keyframes boc-learningtools-slide {
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(10px);
+    }
+}
+
+@keyframes boc-learningtools-icon {
+    0%,
+    100% {
+        transform: translateY(0) scale(1);
+    }
+    50% {
+        transform: translateY(-3px) scale(1.04);
+    }
+}
+
+@media (max-width: 1199.98px) {
+    body.theme-boost-override-custom-learningtools .boc-learningtools-hero,
+    body.theme-boost-override-custom-learningtools .boc-learningtools-layout {
+        grid-template-columns: 1fr;
+    }
+
+    body.theme-boost-override-custom-learningtools .boc-learningtools-metrics {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    body.theme-boost-override-custom-learningtools .boc-learningtools-guide {
+        grid-row: auto;
+    }
+}
+
+@media (max-width: 767.98px) {
+    body.theme-boost-override-custom-learningtools #page.drawers .main-inner,
+    body.theme-boost-override-custom-learningtools.limitedwidth #page.drawers #topofscroll.main-inner {
+        width: min(100% - 18px, 100%);
+        margin-top: 12px;
+        margin-bottom: 28px;
+    }
+
+    body.theme-boost-override-custom-learningtools .boc-learningtools-hero {
+        min-height: 0;
+        padding: 16px;
+        border-radius: 18px;
+    }
+
+    body.theme-boost-override-custom-learningtools .boc-learningtools-visual {
+        display: none;
+    }
+
+    body.theme-boost-override-custom-learningtools .boc-learningtools-hero h1 {
+        font-size: clamp(1.85rem, 9vw, 2.6rem);
+    }
+
+    body.theme-boost-override-custom-learningtools .boc-learningtools-metrics {
+        grid-template-columns: 1fr;
+    }
+
+    body.theme-boost-override-custom-learningtools .boc-learningtools-content,
+    body.theme-boost-override-custom-learningtools .boc-learningtools-guide {
+        padding: 14px;
+    }
+
+    body.theme-boost-override-custom-learningtools.boc-learningtools-page-sessions .boc-learningtools-table-scroll {
+        max-height: 560px;
+    }
+
+    body.theme-boost-override-custom-learningtools .boc-learningtools-workspace-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body.theme-boost-override-custom-learningtools *,
+    body.theme-boost-override-custom-learningtools *::before,
+    body.theme-boost-override-custom-learningtools *::after {
+        animation-duration: .001ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .001ms !important;
+    }
+}

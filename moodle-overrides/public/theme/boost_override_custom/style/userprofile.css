@@ -1,0 +1,630 @@
+body.theme-boost-override-custom-userprofile {
+    --boc-up-primary: var(--boc-theme-primary, var(--bs-primary, #0f6cbf));
+    --boc-up-primary-strong: var(--boc-theme-primary-strong, #0750ca);
+    --boc-up-accent: var(--boc-theme-accent, #0891b2);
+    --boc-up-ink: var(--boc-theme-ink, #0f172a);
+    --boc-up-text: var(--boc-theme-text, #334155);
+    --boc-up-muted: var(--boc-theme-muted, #64748b);
+    --boc-up-border: var(--boc-theme-border, #d8e0ea);
+    --boc-up-surface: var(--boc-theme-surface, #fff);
+    --boc-up-radius-lg: 24px;
+    --boc-up-radius-md: 18px;
+    --boc-up-shadow: 0 22px 60px rgba(15, 23, 42, .12);
+    --boc-up-shadow-soft: 0 14px 34px rgba(15, 23, 42, .08);
+    color: var(--boc-up-ink);
+    background:
+        linear-gradient(118deg, rgba(15, 108, 191, .08) 0 15%, transparent 15% 100%),
+        linear-gradient(292deg, rgba(245, 158, 11, .11) 0 12%, transparent 12% 100%),
+        radial-gradient(circle at 10% 12%, color-mix(in srgb, var(--boc-up-primary) 13%, transparent), transparent 30vw),
+        radial-gradient(circle at 92% 72%, rgba(124, 58, 237, .1), transparent 31vw),
+        #f7fbff;
+}
+
+body.theme-boost-override-custom-userprofile,
+body.theme-boost-override-custom-userprofile input,
+body.theme-boost-override-custom-userprofile button,
+body.theme-boost-override-custom-userprofile select,
+body.theme-boost-override-custom-userprofile textarea {
+    font-family: var(--boc-theme-font-family, "Inter", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif);
+}
+
+body.theme-boost-override-custom-userprofile #page-wrapper,
+body.theme-boost-override-custom-userprofile #page {
+    background: transparent;
+}
+
+body.theme-boost-override-custom-userprofile #page.drawers .main-inner,
+body.theme-boost-override-custom-userprofile.limitedwidth #page.drawers #topofscroll.main-inner {
+    width: min(100% - 32px, 1440px);
+    max-width: 1440px;
+    margin: 16px auto 48px;
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+body.theme-boost-override-custom-userprofile #region-main {
+    padding: 0;
+    overflow: visible;
+    background: transparent;
+    border: 0;
+}
+
+body.theme-boost-override-custom-userprofile #page-header {
+    position: relative;
+    isolation: isolate;
+    max-width: none;
+    margin: 0 0 18px;
+    padding: clamp(16px, 2vw, 22px);
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--boc-up-border) 72%, transparent);
+    border-radius: var(--boc-up-radius-lg);
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, .95), rgba(255, 255, 255, .72)),
+        color-mix(in srgb, var(--boc-up-surface) 86%, transparent);
+    box-shadow: var(--boc-up-shadow-soft);
+    backdrop-filter: blur(18px);
+}
+
+body.theme-boost-override-custom-userprofile #page-header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+        linear-gradient(120deg, transparent 0 48%, color-mix(in srgb, var(--boc-up-primary) 8%, transparent) 48% 63%, transparent 63%),
+        repeating-linear-gradient(90deg, rgba(255, 255, 255, .22) 0 1px, transparent 1px 42px);
+}
+
+body.theme-boost-override-custom-userprofile #page-header .w-100 {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(260px, 360px);
+    gap: 14px;
+    align-items: center;
+}
+
+body.theme-boost-override-custom-userprofile #page-header .w-100 > .d-flex:first-child {
+    grid-row: 1;
+    grid-column: 1 / -1;
+    min-height: 0;
+    height: 0;
+}
+
+body.theme-boost-override-custom-userprofile #page-header .singlebutton {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    z-index: 3;
+}
+
+body.theme-boost-override-custom-userprofile #page-header .singlebutton .btn {
+    min-height: 42px;
+    padding: 9px 14px;
+    border: 1px solid color-mix(in srgb, var(--boc-up-border) 76%, transparent);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, .86);
+    color: var(--boc-up-ink);
+    font-weight: 820;
+    box-shadow: 0 12px 24px rgba(15, 23, 42, .08);
+}
+
+body.theme-boost-override-custom-userprofile #page-header .w-100 > .d-flex.align-items-center {
+    position: relative;
+    z-index: 1;
+    grid-row: 1;
+    grid-column: 1;
+    align-self: stretch;
+}
+
+body.theme-boost-override-custom-userprofile #page-header .header-extras-container:empty {
+    display: none;
+}
+
+body.theme-boost-override-custom-userprofile #page-header .page-context-header {
+    align-items: center !important;
+    gap: 16px;
+    margin: 0 !important;
+    padding-right: 144px;
+}
+
+body.theme-boost-override-custom-userprofile #page-header .userinitials {
+    width: 82px;
+    height: 82px;
+    border: 1px solid color-mix(in srgb, var(--boc-up-primary) 22%, var(--boc-up-border));
+    background:
+        radial-gradient(circle at 35% 24%, rgba(255, 255, 255, .9), transparent 26px),
+        linear-gradient(135deg, #e0f2fe, #dbeafe 55%, #eef2ff);
+    color: var(--boc-up-ink);
+    font-size: 1.75rem;
+    font-weight: 760;
+    box-shadow: 0 18px 38px rgba(15, 23, 42, .12);
+}
+
+body.theme-boost-override-custom-userprofile #page-header h1 {
+    margin: 0;
+    color: var(--boc-up-ink);
+    font-size: clamp(1.85rem, 2.4vw, 2.7rem);
+    font-weight: 820;
+    letter-spacing: 0;
+    line-height: 1.06;
+}
+
+body.theme-boost-override-custom-userprofile #message-user-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 42px;
+    padding: 9px 14px;
+    border: 1px solid color-mix(in srgb, var(--boc-up-primary) 24%, var(--boc-up-border));
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--boc-up-primary) 8%, #fff);
+    color: var(--boc-up-primary-strong);
+    font-weight: 820;
+    box-shadow: 0 12px 24px color-mix(in srgb, var(--boc-up-primary) 10%, transparent);
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+
+body.theme-boost-override-custom-userprofile #message-user-button:hover,
+body.theme-boost-override-custom-userprofile #message-user-button:focus-visible {
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--boc-up-primary) 44%, var(--boc-up-border));
+    box-shadow: 0 18px 34px color-mix(in srgb, var(--boc-up-primary) 16%, transparent);
+}
+
+body.theme-boost-override-custom-userprofile .boc-userprofile-hero-art {
+    position: relative;
+    z-index: 1;
+    grid-row: 1;
+    grid-column: 2;
+    display: grid;
+    place-items: center;
+    min-height: 154px;
+    border: 1px solid color-mix(in srgb, var(--boc-up-border) 58%, transparent);
+    border-radius: 24px;
+    background:
+        linear-gradient(145deg, rgba(255, 255, 255, .62), rgba(224, 242, 254, .58)),
+        repeating-linear-gradient(90deg, rgba(255, 255, 255, .28) 0 1px, transparent 1px 36px);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .74), 0 22px 58px rgba(14, 165, 233, .16);
+    overflow: hidden;
+}
+
+body.theme-boost-override-custom-userprofile .boc-userprofile-hero-art svg {
+    width: min(100%, 300px);
+    max-height: 154px;
+    height: auto;
+}
+
+body.theme-boost-override-custom-userprofile .boc-userprofile-metrics {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+}
+
+body.theme-boost-override-custom-userprofile .boc-userprofile-metric {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    min-width: 0;
+    min-height: 66px;
+    padding: 10px;
+    border: 1px solid color-mix(in srgb, var(--boc-up-border) 68%, transparent);
+    border-radius: var(--boc-up-radius-md);
+    background: rgba(255, 255, 255, .76);
+    box-shadow: 0 14px 30px rgba(15, 23, 42, .07);
+}
+
+body.theme-boost-override-custom-userprofile .boc-userprofile-metric-icon,
+body.theme-boost-override-custom-userprofile .boc-userprofile-card-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    border-radius: 15px;
+    background: color-mix(in srgb, var(--boc-up-primary) 10%, #fff);
+}
+
+body.theme-boost-override-custom-userprofile .boc-userprofile-metric-icon {
+    width: 44px;
+    height: 44px;
+}
+
+body.theme-boost-override-custom-userprofile .boc-userprofile-card-icon {
+    width: 42px;
+    height: 42px;
+}
+
+body.theme-boost-override-custom-userprofile .boc-userprofile-metric-icon svg,
+body.theme-boost-override-custom-userprofile .boc-userprofile-card-icon svg {
+    width: 27px;
+    height: 27px;
+    filter: drop-shadow(0 8px 10px rgba(15, 23, 42, .14));
+    transform-origin: center;
+    animation: boc-userprofile-icon-float 5.8s ease-in-out infinite;
+}
+
+body.theme-boost-override-custom-userprofile .boc-userprofile-metric-copy {
+    display: grid;
+    gap: 1px;
+    min-width: 0;
+}
+
+body.theme-boost-override-custom-userprofile .boc-userprofile-metric-copy strong {
+    overflow: hidden;
+    color: var(--boc-up-ink);
+    font-size: clamp(1.05rem, 1.45vw, 1.34rem);
+    font-weight: 820;
+    line-height: 1.05;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+body.theme-boost-override-custom-userprofile .boc-userprofile-metric-copy span {
+    color: var(--boc-up-muted);
+    font-size: .76rem;
+    font-weight: 760;
+    line-height: 1.15;
+    text-transform: uppercase;
+}
+
+body.theme-boost-override-custom-userprofile .profile_tree {
+    display: grid !important;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    align-items: start;
+    gap: 16px;
+    width: 100%;
+    column-count: auto !important;
+}
+
+body.theme-boost-override-custom-userprofile .boc-userprofile-card {
+    position: relative;
+    display: block !important;
+    width: auto !important;
+    min-width: 0;
+    margin: 0 !important;
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--boc-up-border) 72%, transparent);
+    border-radius: var(--boc-up-radius-lg);
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, .94), rgba(255, 255, 255, .75));
+    box-shadow: var(--boc-up-shadow-soft);
+    align-self: start;
+    animation: boc-userprofile-fade-up .45s ease both;
+    animation-delay: var(--boc-userprofile-delay, 0ms);
+}
+
+body.theme-boost-override-custom-userprofile .boc-userprofile-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 4px;
+    background: linear-gradient(90deg, var(--boc-up-primary), var(--boc-up-accent), #f59e0b);
+    opacity: .82;
+}
+
+body.theme-boost-override-custom-userprofile .boc-userprofile-card-user,
+body.theme-boost-override-custom-userprofile .boc-userprofile-card-misc,
+body.theme-boost-override-custom-userprofile .boc-userprofile-card-reports,
+body.theme-boost-override-custom-userprofile .boc-userprofile-card-privacy,
+body.theme-boost-override-custom-userprofile .boc-userprofile-card-login {
+    grid-column: span 4;
+}
+
+body.theme-boost-override-custom-userprofile .boc-userprofile-card-user {
+    order: 1;
+}
+
+body.theme-boost-override-custom-userprofile .boc-userprofile-card-misc {
+    order: 2;
+}
+
+body.theme-boost-override-custom-userprofile .boc-userprofile-card-reports {
+    order: 3;
+}
+
+body.theme-boost-override-custom-userprofile .boc-userprofile-card-courses {
+    order: 4;
+    grid-column: 1 / span 8;
+    grid-row: 2 / span 3;
+}
+
+body.theme-boost-override-custom-userprofile .boc-userprofile-card-login {
+    order: 5;
+    grid-column: 9 / span 4;
+    grid-row: 2;
+}
+
+body.theme-boost-override-custom-userprofile .boc-userprofile-card-privacy {
+    order: 6;
+    grid-column: 9 / span 4;
+    grid-row: 3;
+}
+
+body.theme-boost-override-custom-userprofile .boc-userprofile-card .card-body {
+    padding: 18px;
+}
+
+body.theme-boost-override-custom-userprofile .boc-userprofile-card h3.lead {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 0 14px;
+    color: var(--boc-up-ink);
+    font-size: clamp(1.1rem, 1.45vw, 1.45rem);
+    font-weight: 820;
+    line-height: 1.14;
+}
+
+body.theme-boost-override-custom-userprofile .profile_tree ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+body.theme-boost-override-custom-userprofile .profile_tree li + li {
+    margin-top: 10px;
+}
+
+body.theme-boost-override-custom-userprofile .profile_tree dl {
+    display: grid;
+    gap: 4px;
+    margin: 0;
+}
+
+body.theme-boost-override-custom-userprofile .profile_tree dt {
+    color: var(--boc-up-ink);
+    font-size: .82rem;
+    font-weight: 850;
+    letter-spacing: .01em;
+}
+
+body.theme-boost-override-custom-userprofile .profile_tree dd {
+    margin: 0;
+    color: var(--boc-up-text);
+    font-size: .94rem;
+    font-weight: 660;
+    line-height: 1.42;
+    overflow-wrap: anywhere;
+}
+
+body.theme-boost-override-custom-userprofile .profile_tree a {
+    color: var(--boc-up-primary-strong);
+    font-weight: 760;
+    text-decoration: none;
+}
+
+body.theme-boost-override-custom-userprofile .profile_tree a:hover,
+body.theme-boost-override-custom-userprofile .profile_tree a:focus-visible {
+    color: var(--boc-up-accent);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+body.theme-boost-override-custom-userprofile .profile_tree .editprofile a,
+body.theme-boost-override-custom-userprofile .profile_tree .viewmore a,
+body.theme-boost-override-custom-userprofile .boc-userprofile-card-misc li a,
+body.theme-boost-override-custom-userprofile .boc-userprofile-card-reports li a,
+body.theme-boost-override-custom-userprofile .boc-userprofile-card-privacy li a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 36px;
+    padding: 8px 11px;
+    border: 1px solid color-mix(in srgb, var(--boc-up-primary) 18%, var(--boc-up-border));
+    border-radius: 13px;
+    background: color-mix(in srgb, var(--boc-up-primary) 6%, #fff);
+    box-shadow: 0 10px 20px rgba(15, 23, 42, .05);
+}
+
+body.theme-boost-override-custom-userprofile .boc-userprofile-card-courses dd > ul {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    max-height: 590px;
+    padding-right: 4px;
+    overflow: auto;
+}
+
+body.theme-boost-override-custom-userprofile .boc-userprofile-card-courses dd > ul::-webkit-scrollbar {
+    width: 8px;
+}
+
+body.theme-boost-override-custom-userprofile .boc-userprofile-card-courses dd > ul::-webkit-scrollbar-thumb {
+    border-radius: 99px;
+    background: color-mix(in srgb, var(--boc-up-primary) 32%, transparent);
+}
+
+body.theme-boost-override-custom-userprofile .boc-userprofile-card-courses dd > ul > li {
+    margin: 0;
+}
+
+body.theme-boost-override-custom-userprofile .boc-userprofile-card-courses dd > ul > li > a {
+    display: grid;
+    gap: 10px;
+    min-height: 112px;
+    padding: 13px;
+    border: 1px solid color-mix(in srgb, var(--boc-up-border) 72%, transparent);
+    border-radius: 17px;
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, .92), rgba(239, 246, 255, .78));
+    box-shadow: 0 12px 24px rgba(15, 23, 42, .06);
+    color: var(--boc-up-ink);
+    text-decoration: none;
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+
+body.theme-boost-override-custom-userprofile .boc-userprofile-card-courses dd > ul > li > a:hover,
+body.theme-boost-override-custom-userprofile .boc-userprofile-card-courses dd > ul > li > a:focus-visible {
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--boc-up-primary) 38%, var(--boc-up-border));
+    box-shadow: 0 18px 34px rgba(15, 23, 42, .11);
+    text-decoration: none;
+}
+
+body.theme-boost-override-custom-userprofile .boc-userprofile-course-title {
+    display: -webkit-box;
+    overflow: hidden;
+    color: var(--boc-up-ink);
+    font-size: .95rem;
+    font-weight: 770;
+    line-height: 1.32;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+body.theme-boost-override-custom-userprofile .boc-userprofile-course-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+body.theme-boost-override-custom-userprofile .boc-userprofile-course-tag {
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--boc-up-primary) 9%, #fff);
+    color: var(--boc-up-primary-strong);
+    font-size: .72rem;
+    font-weight: 820;
+    line-height: 1;
+}
+
+body.theme-boost-override-custom-userprofile .boc-userprofile-svg-float,
+body.theme-boost-override-custom-userprofile .boc-userprofile-svg-card {
+    animation: boc-userprofile-float 6.5s ease-in-out infinite;
+    transform-origin: center;
+}
+
+body.theme-boost-override-custom-userprofile .boc-userprofile-svg-card {
+    animation-delay: -1.4s;
+}
+
+body.theme-boost-override-custom-userprofile .boc-userprofile-svg-line {
+    animation: boc-userprofile-slide 5.5s ease-in-out infinite;
+}
+
+@keyframes boc-userprofile-fade-up {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes boc-userprofile-float {
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-7px) rotate(-1deg);
+    }
+}
+
+@keyframes boc-userprofile-slide {
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(12px);
+    }
+}
+
+@keyframes boc-userprofile-icon-float {
+    0%,
+    100% {
+        transform: translateY(0) scale(1);
+    }
+    50% {
+        transform: translateY(-3px) scale(1.04);
+    }
+}
+
+@media (max-width: 1199.98px) {
+    body.theme-boost-override-custom-userprofile #page-header .w-100 {
+        grid-template-columns: 1fr;
+    }
+
+    body.theme-boost-override-custom-userprofile #page-header .page-context-header {
+        padding-right: 0;
+    }
+
+    body.theme-boost-override-custom-userprofile .boc-userprofile-metrics {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    body.theme-boost-override-custom-userprofile .boc-userprofile-card-user,
+    body.theme-boost-override-custom-userprofile .boc-userprofile-card-misc,
+    body.theme-boost-override-custom-userprofile .boc-userprofile-card-reports,
+    body.theme-boost-override-custom-userprofile .boc-userprofile-card-privacy,
+    body.theme-boost-override-custom-userprofile .boc-userprofile-card-login,
+    body.theme-boost-override-custom-userprofile .boc-userprofile-card-courses {
+        grid-column: span 6;
+        grid-row: auto;
+    }
+}
+
+@media (max-width: 767.98px) {
+    body.theme-boost-override-custom-userprofile #page.drawers .main-inner,
+    body.theme-boost-override-custom-userprofile.limitedwidth #page.drawers #topofscroll.main-inner {
+        width: min(100% - 18px, 100%);
+        margin-top: 12px;
+        margin-bottom: 28px;
+    }
+
+    body.theme-boost-override-custom-userprofile #page-header {
+        padding: 14px;
+        border-radius: 18px;
+    }
+
+    body.theme-boost-override-custom-userprofile #page-header .singlebutton {
+        position: static;
+        margin-left: auto;
+    }
+
+    body.theme-boost-override-custom-userprofile #page-header .page-context-header {
+        gap: 12px;
+    }
+
+    body.theme-boost-override-custom-userprofile #page-header .userinitials {
+        width: 62px;
+        height: 62px;
+        font-size: 1.25rem;
+    }
+
+    body.theme-boost-override-custom-userprofile .boc-userprofile-hero-art {
+        display: none;
+    }
+
+    body.theme-boost-override-custom-userprofile .boc-userprofile-metrics,
+    body.theme-boost-override-custom-userprofile .profile_tree,
+    body.theme-boost-override-custom-userprofile .boc-userprofile-card-courses dd > ul {
+        grid-template-columns: 1fr;
+    }
+
+    body.theme-boost-override-custom-userprofile .boc-userprofile-card-user,
+    body.theme-boost-override-custom-userprofile .boc-userprofile-card-misc,
+    body.theme-boost-override-custom-userprofile .boc-userprofile-card-reports,
+    body.theme-boost-override-custom-userprofile .boc-userprofile-card-privacy,
+    body.theme-boost-override-custom-userprofile .boc-userprofile-card-login,
+    body.theme-boost-override-custom-userprofile .boc-userprofile-card-courses {
+        grid-column: 1;
+        grid-row: auto;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body.theme-boost-override-custom-userprofile *,
+    body.theme-boost-override-custom-userprofile *::before,
+    body.theme-boost-override-custom-userprofile *::after {
+        animation-duration: .001ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .001ms !important;
+    }
+}

@@ -1,0 +1,914 @@
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) {
+    --boc-ap-primary: var(--boc-theme-primary, var(--bs-primary, #0f6cbf));
+    --boc-ap-primary-strong: var(--boc-theme-primary-strong, #0750ca);
+    --boc-ap-accent: var(--boc-theme-accent, #0891b2);
+    --boc-ap-success: var(--boc-theme-success, #15803d);
+    --boc-ap-warning: var(--boc-theme-warning-bright, #f59e0b);
+    --boc-ap-violet: var(--boc-theme-violet, #7c3aed);
+    --boc-ap-danger: var(--boc-theme-danger, #dc2626);
+    --boc-ap-ink: var(--boc-theme-ink, #0f172a);
+    --boc-ap-text: var(--boc-theme-text, #334155);
+    --boc-ap-muted: var(--boc-theme-muted, #64748b);
+    --boc-ap-border: var(--boc-theme-border, #d8e0ea);
+    --boc-ap-surface: var(--boc-theme-surface, #fff);
+    --boc-ap-glass: color-mix(in srgb, var(--boc-ap-surface) 86%, transparent);
+    --boc-ap-shadow: 0 26px 70px rgba(15, 23, 42, .13);
+    --boc-ap-shadow-soft: 0 14px 34px rgba(15, 23, 42, .09);
+    --boc-ap-radius-lg: 24px;
+    --boc-ap-radius-md: 18px;
+    color: var(--boc-ap-ink);
+    background:
+        linear-gradient(118deg, rgba(15, 108, 191, .08) 0 15%, transparent 15% 100%),
+        linear-gradient(292deg, rgba(245, 158, 11, .12) 0 12%, transparent 12% 100%),
+        radial-gradient(circle at 12% 18%, color-mix(in srgb, var(--boc-ap-primary) 13%, transparent), transparent 30vw),
+        radial-gradient(circle at 88% 78%, color-mix(in srgb, var(--boc-ap-violet) 10%, transparent), transparent 31vw),
+        #f7fbff;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs),
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) input,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) button,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) select,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) textarea {
+    font-family: var(--boc-theme-font-family, "Inter", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif);
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) #page-wrapper,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) #page {
+    background: transparent;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) #page.drawers .main-inner {
+    width: min(100% - 32px, 1560px);
+    max-width: 1560px;
+    margin: 18px auto 48px;
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) #region-main {
+    padding: 0;
+    overflow: visible;
+    background: transparent;
+    border: 0;
+}
+
+body.theme-boost-override-custom-accountprefs.boc-accountprefs-ready:not(.theme-boost-override-custom-notificationprefs) #page-header {
+    display: none;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-source-heading {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-shell {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    gap: 20px;
+    animation: boc-accountprefs-fade-up .58s ease both;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-shell::before,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-shell::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    pointer-events: none;
+    border: 1px solid color-mix(in srgb, var(--boc-ap-border) 65%, transparent);
+    background:
+        linear-gradient(135deg, color-mix(in srgb, var(--boc-ap-primary) 10%, transparent), transparent),
+        repeating-linear-gradient(90deg, rgba(255, 255, 255, .22) 0 1px, transparent 1px 40px);
+    transform: rotate(-8deg);
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-shell::before {
+    top: 42px;
+    right: 7%;
+    width: 214px;
+    height: 132px;
+    border-radius: 34px;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-shell::after {
+    bottom: 42px;
+    left: 5%;
+    width: 254px;
+    height: 122px;
+    border-radius: 34px;
+    transform: rotate(7deg);
+    background:
+        linear-gradient(135deg, color-mix(in srgb, var(--boc-ap-warning) 12%, transparent), transparent),
+        repeating-linear-gradient(0deg, rgba(255, 255, 255, .2) 0 1px, transparent 1px 36px);
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-hero,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-workspace,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-guide {
+    position: relative;
+    border: 1px solid color-mix(in srgb, var(--boc-ap-border) 72%, transparent);
+    border-radius: var(--boc-ap-radius-lg);
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, .94), rgba(255, 255, 255, .7)),
+        var(--boc-ap-glass);
+    box-shadow: var(--boc-ap-shadow-soft);
+    backdrop-filter: blur(18px);
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 430px);
+    gap: 22px;
+    align-items: stretch;
+    min-height: 292px;
+    padding: clamp(22px, 3vw, 34px);
+    overflow: hidden;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(120deg, transparent 0 52%, color-mix(in srgb, var(--boc-ap-primary) 8%, transparent) 52% 68%, transparent 68%),
+        linear-gradient(0deg, transparent, rgba(255, 255, 255, .26));
+    pointer-events: none;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-hero-copy,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-visual {
+    position: relative;
+    z-index: 1;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-eyebrow,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-guide-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    width: fit-content;
+    min-height: 30px;
+    padding: 7px 13px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--boc-ap-success) 11%, #fff);
+    color: color-mix(in srgb, var(--boc-ap-success) 78%, #052e16);
+    font-size: .78rem;
+    font-weight: 850;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-eyebrow::before,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-guide-kicker::before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--boc-ap-success);
+    box-shadow: 0 0 0 6px color-mix(in srgb, var(--boc-ap-success) 13%, transparent);
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-hero h1 {
+    max-width: 850px;
+    margin: 18px 0 12px;
+    color: var(--boc-ap-ink);
+    font-size: clamp(2rem, 3.2vw, 3.75rem);
+    font-weight: 850;
+    line-height: 1.04;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-hero p,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-guide-lede,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-workspace-title p {
+    max-width: 760px;
+    margin: 0;
+    color: var(--boc-ap-text);
+    font-size: clamp(1rem, 1.2vw, 1.16rem);
+    line-height: 1.58;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-user-pill {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    margin-top: 15px;
+    padding: 9px 13px;
+    border: 1px solid color-mix(in srgb, var(--boc-ap-primary) 22%, var(--boc-ap-border));
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--boc-ap-primary) 8%, #fff);
+    color: var(--boc-ap-primary-strong);
+    font-size: .88rem;
+    font-weight: 820;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-metrics {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(130px, 1fr));
+    gap: 12px;
+    margin-top: 24px;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-metric {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+    min-height: 94px;
+    padding: 14px;
+    border: 1px solid color-mix(in srgb, var(--boc-ap-border) 68%, transparent);
+    border-radius: var(--boc-ap-radius-md);
+    background: rgba(255, 255, 255, .72);
+    box-shadow: 0 16px 32px rgba(15, 23, 42, .07);
+    transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-metric:hover {
+    transform: translateY(-3px);
+    border-color: color-mix(in srgb, var(--boc-ap-primary) 38%, var(--boc-ap-border));
+    box-shadow: 0 20px 42px rgba(15, 23, 42, .12);
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-metric-icon,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-workspace-icon,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-guide-icon,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-nav-icon,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-empty-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    border-radius: 16px;
+    background: color-mix(in srgb, var(--boc-ap-primary) 10%, #fff);
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-metric-icon {
+    width: 48px;
+    height: 48px;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-metric-icon svg,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-workspace-icon svg,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-guide-icon svg,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-nav-icon svg,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-empty-icon svg {
+    width: 28px;
+    height: 28px;
+    filter: drop-shadow(0 8px 10px rgba(15, 23, 42, .14));
+    transform-origin: center;
+    transition: transform .24s ease, filter .24s ease;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-metric:nth-child(2n + 1) .boc-accountprefs-metric-icon svg,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-guide-item:nth-child(2n) .boc-accountprefs-guide-icon svg,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-nav-link[aria-current="page"] .boc-accountprefs-nav-icon svg {
+    animation: boc-accountprefs-icon-pop 5.8s ease-in-out infinite;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-metric:hover .boc-accountprefs-metric-icon svg,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-guide-item:hover .boc-accountprefs-guide-icon svg,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-nav-link:hover .boc-accountprefs-nav-icon svg,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-nav-link:focus-visible .boc-accountprefs-nav-icon svg {
+    filter: drop-shadow(0 12px 14px rgba(15, 23, 42, .18));
+    transform: translateY(-2px) scale(1.05) rotate(-2deg);
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-metric-copy {
+    display: grid;
+    gap: 1px;
+    min-width: 0;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-metric-copy strong {
+    color: var(--boc-ap-ink);
+    font-size: clamp(1.15rem, 1.7vw, 1.55rem);
+    font-weight: 850;
+    line-height: 1.05;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-metric-label {
+    color: var(--boc-ap-text);
+    font-size: .82rem;
+    font-weight: 820;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-metric-meta {
+    overflow: hidden;
+    color: var(--boc-ap-muted);
+    font-size: .76rem;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-visual {
+    display: grid;
+    place-items: center;
+    min-height: 230px;
+    border: 1px solid color-mix(in srgb, var(--boc-ap-border) 54%, transparent);
+    border-radius: 28px;
+    background:
+        linear-gradient(145deg, rgba(255, 255, 255, .6), rgba(224, 242, 254, .58)),
+        repeating-linear-gradient(90deg, rgba(255, 255, 255, .28) 0 1px, transparent 1px 36px);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .72), 0 24px 64px rgba(14, 165, 233, .16);
+    overflow: hidden;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-visual svg {
+    width: min(100%, 420px);
+    height: auto;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-foreign-icon {
+    width: 74px;
+    height: 74px;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-foreign-icon svg {
+    width: 74px;
+    height: 74px;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-svg-float {
+    animation: boc-accountprefs-float 6.5s ease-in-out infinite;
+    transform-origin: center;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-svg-orbit {
+    animation: boc-accountprefs-float 8s ease-in-out infinite reverse;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-svg-line {
+    animation: boc-accountprefs-slide 5.5s ease-in-out infinite;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 390px;
+    gap: 20px;
+    align-items: start;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-shell-compact .boc-accountprefs-layout {
+    grid-template-columns: minmax(0, 1fr);
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-shell-compact .boc-accountprefs-guide {
+    gap: 12px;
+    padding: 16px;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-shell-compact .boc-accountprefs-nav {
+    gap: 12px;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-shell-compact .boc-accountprefs-nav-list {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-shell-compact .boc-accountprefs-guide-list {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-workspace,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-guide {
+    padding: 20px;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-workspace-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 16px;
+    padding: 14px;
+    border: 1px solid color-mix(in srgb, var(--boc-ap-border) 62%, transparent);
+    border-radius: var(--boc-ap-radius-md);
+    background:
+        linear-gradient(120deg, rgba(255, 255, 255, .84), rgba(239, 246, 255, .72));
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-workspace-icon {
+    width: 54px;
+    height: 54px;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-workspace-title h2,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-guide h2 {
+    margin: 0 0 4px;
+    color: var(--boc-ap-ink);
+    font-size: clamp(1.25rem, 1.8vw, 1.7rem);
+    font-weight: 820;
+    line-height: 1.12;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-form {
+    display: grid;
+    gap: 16px;
+    margin: 0;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .collapsible-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin: 0 0 12px;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .collapsible-actions .btn {
+    border: 1px solid color-mix(in srgb, var(--boc-ap-border) 70%, transparent);
+    border-radius: 13px;
+    background: rgba(255, 255, 255, .82);
+    color: var(--boc-ap-primary-strong);
+    font-weight: 800;
+    text-decoration: none;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-fieldset {
+    margin: 0 0 16px;
+    padding: 0;
+    border: 1px solid color-mix(in srgb, var(--boc-ap-border) 72%, transparent);
+    border-radius: 20px;
+    background: rgba(255, 255, 255, .78);
+    box-shadow: 0 14px 32px rgba(15, 23, 42, .08);
+    overflow: hidden;
+    animation: boc-accountprefs-fade-up .46s ease both;
+    animation-delay: var(--boc-accountprefs-delay, 0ms);
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-fieldset.collapsed {
+    padding-bottom: 0;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-fieldset legend,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-fieldset .ftoggler {
+    width: 100%;
+    margin: 0;
+    padding: 16px 18px;
+    border-bottom: 1px solid color-mix(in srgb, var(--boc-ap-border) 66%, transparent);
+    background:
+        linear-gradient(120deg, color-mix(in srgb, var(--boc-ap-primary) 8%, #fff), rgba(255, 255, 255, .76));
+    color: var(--boc-ap-ink);
+    font-size: 1.04rem;
+    font-weight: 850;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-fieldset .fcontainer {
+    padding: 16px 18px 18px;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .mform > .form-group.row,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-fieldset .form-group.row,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .mform .fitem.row {
+    display: grid;
+    grid-template-columns: minmax(180px, 250px) minmax(0, 1fr);
+    gap: 14px;
+    align-items: start;
+    margin-right: 0;
+    margin-left: 0;
+    padding: 10px 0;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .mform .col-md-3,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .mform .col-md-9 {
+    flex: none;
+    width: auto;
+    max-width: none;
+    padding-right: 0;
+    padding-left: 0;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .mform .col-form-label,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .mform .fitemtitle {
+    min-height: 0;
+    padding: 11px 0 0;
+    color: var(--boc-ap-ink);
+    font-size: .92rem;
+    font-weight: 820;
+    line-height: 1.34;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .mform label {
+    font-weight: 820;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .mform .felement {
+    min-width: 0;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .mform .felement > .form-control,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .mform .felement > .form-select,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .mform .felement > input[type="text"],
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .mform .felement > input[type="password"],
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .mform .felement > textarea,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .mform .felement > select {
+    width: min(100%, 760px);
+    max-width: 100%;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-input.form-control,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-input.form-select,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) select.boc-accountprefs-input,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) textarea.boc-accountprefs-input {
+    min-height: 46px;
+    border: 1px solid color-mix(in srgb, var(--boc-ap-border) 80%, transparent);
+    border-radius: 14px;
+    background-color: rgba(255, 255, 255, .92);
+    color: var(--boc-ap-ink);
+    font-weight: 720;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .72), 0 10px 24px rgba(15, 23, 42, .05);
+    transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) textarea.boc-accountprefs-input {
+    min-height: 118px;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-input:focus {
+    border-color: color-mix(in srgb, var(--boc-ap-primary) 48%, var(--boc-ap-border));
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--boc-ap-primary) 14%, transparent), 0 14px 28px rgba(15, 23, 42, .08);
+    outline: 0;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .form-control-static {
+    display: inline-flex;
+    min-height: 46px;
+    align-items: center;
+    padding: 10px 14px;
+    border: 1px solid color-mix(in srgb, var(--boc-ap-border) 72%, transparent);
+    border-radius: 14px;
+    background: color-mix(in srgb, var(--boc-ap-primary) 7%, #fff);
+    color: var(--boc-ap-text);
+    font-weight: 760;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .form-control-feedback,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .form-text,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .fdescription {
+    color: var(--boc-ap-muted);
+    font-size: .84rem;
+    font-weight: 650;
+    line-height: 1.42;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .tox.tox-tinymce,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .filemanager,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .filepicker-filelist {
+    border-color: color-mix(in srgb, var(--boc-ap-border) 80%, transparent);
+    border-radius: 18px;
+    box-shadow: 0 14px 30px rgba(15, 23, 42, .08);
+    overflow: hidden;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .fp-restrictions {
+    color: var(--boc-ap-text);
+    font-weight: 720;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .form-check {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    min-height: 42px;
+    padding: 9px 12px 9px 2.2rem;
+    border-radius: 13px;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .form-check-input {
+    border-color: color-mix(in srgb, var(--boc-ap-primary) 36%, var(--boc-ap-border));
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .form-check-input:checked {
+    background-color: var(--boc-ap-primary);
+    border-color: var(--boc-ap-primary);
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-submit,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .mform input[type="submit"],
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .mform .btn {
+    min-height: 46px;
+    padding: 11px 18px;
+    border: 1px solid color-mix(in srgb, var(--boc-ap-border) 76%, transparent);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, .86);
+    color: var(--boc-ap-ink);
+    font-weight: 850;
+    box-shadow: 0 12px 24px rgba(15, 23, 42, .08);
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease, background .18s ease;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .mform input[name="submitbutton"],
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .mform input.btn-primary,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .mform button.btn-primary {
+    border-color: transparent;
+    background: linear-gradient(135deg, var(--boc-ap-primary), var(--boc-ap-accent));
+    color: #fff;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .mform input[type="submit"]:hover,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .mform input[type="submit"]:focus-visible,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .mform .btn:hover,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .mform .btn:focus-visible,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-nav-link:hover,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-nav-link:focus-visible {
+    transform: translateY(-2px);
+    border-color: color-mix(in srgb, var(--boc-ap-primary) 45%, var(--boc-ap-border));
+    box-shadow: 0 16px 34px rgba(15, 23, 42, .14);
+    outline: 3px solid color-mix(in srgb, var(--boc-ap-primary) 18%, transparent);
+    outline-offset: 2px;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) #fgroup_id_buttonar .felement,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .fitem_actionbuttons .felement,
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .mform .form-group.row:last-child .felement {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-guide {
+    display: grid;
+    gap: 14px;
+    overflow: hidden;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-guide::before {
+    content: "";
+    position: absolute;
+    top: -28px;
+    right: -48px;
+    width: 170px;
+    height: 170px;
+    border-radius: 42px;
+    background:
+        linear-gradient(135deg, color-mix(in srgb, var(--boc-ap-accent) 16%, transparent), transparent);
+    transform: rotate(18deg);
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-guide > * {
+    position: relative;
+    z-index: 1;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-nav {
+    display: grid;
+    gap: 10px;
+    padding: 13px;
+    border: 1px solid color-mix(in srgb, var(--boc-ap-border) 70%, transparent);
+    border-radius: 20px;
+    background: rgba(255, 255, 255, .72);
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-nav-title {
+    color: var(--boc-ap-muted);
+    font-size: .78rem;
+    font-weight: 850;
+    letter-spacing: .03em;
+    text-transform: uppercase;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-nav-list {
+    display: grid;
+    gap: 8px;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 46px;
+    padding: 8px 10px;
+    border: 1px solid color-mix(in srgb, var(--boc-ap-border) 70%, transparent);
+    border-radius: 15px;
+    background: rgba(255, 255, 255, .78);
+    color: var(--boc-ap-ink);
+    font-size: .92rem;
+    font-weight: 820;
+    text-decoration: none;
+    transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease, background .18s ease;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-nav-link[aria-current="page"] {
+    border-color: color-mix(in srgb, var(--boc-ap-primary) 44%, var(--boc-ap-border));
+    background: color-mix(in srgb, var(--boc-ap-primary) 11%, #fff);
+    color: var(--boc-ap-primary-strong);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--boc-ap-primary) 10%, transparent), 0 12px 26px color-mix(in srgb, var(--boc-ap-primary) 12%, transparent);
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-nav-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 11px;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-nav-icon svg {
+    width: 22px;
+    height: 22px;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-guide-list {
+    display: grid;
+    gap: 12px;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-guide-item {
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr);
+    gap: 12px;
+    align-items: start;
+    padding: 13px;
+    border: 1px solid color-mix(in srgb, var(--boc-ap-border) 70%, transparent);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, .74);
+    box-shadow: 0 12px 24px rgba(15, 23, 42, .07);
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-guide-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 32px rgba(15, 23, 42, .11);
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-guide-icon {
+    width: 48px;
+    height: 48px;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-guide-copy {
+    display: grid;
+    gap: 4px;
+    min-width: 0;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-guide-copy strong {
+    color: var(--boc-ap-ink);
+    font-size: .96rem;
+    font-weight: 850;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-guide-copy span {
+    color: var(--boc-ap-muted);
+    font-size: .85rem;
+    font-weight: 650;
+    line-height: 1.38;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-empty {
+    display: grid;
+    justify-items: center;
+    gap: 10px;
+    min-height: 210px;
+    padding: 26px;
+    border: 1px dashed color-mix(in srgb, var(--boc-ap-primary) 28%, var(--boc-ap-border));
+    border-radius: 20px;
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, .88), rgba(224, 242, 254, .52));
+    color: var(--boc-ap-text);
+    text-align: center;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-empty-icon {
+    width: 64px;
+    height: 64px;
+}
+
+body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-empty strong {
+    color: var(--boc-ap-ink);
+    font-size: 1.15rem;
+    font-weight: 850;
+}
+
+@keyframes boc-accountprefs-fade-up {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes boc-accountprefs-float {
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-8px) rotate(-1deg);
+    }
+}
+
+@keyframes boc-accountprefs-slide {
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(12px);
+    }
+}
+
+@keyframes boc-accountprefs-icon-pop {
+    0%,
+    100% {
+        transform: translateY(0) scale(1);
+    }
+    50% {
+        transform: translateY(-3px) scale(1.04);
+    }
+}
+
+@media (max-width: 1199.98px) {
+    body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) #page.drawers .main-inner {
+        width: min(100% - 24px, 1120px);
+    }
+
+    body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-hero,
+    body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-layout {
+        grid-template-columns: 1fr;
+    }
+
+    body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-metrics {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-nav-list,
+    body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-guide-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 767.98px) {
+    body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) #page.drawers .main-inner {
+        width: min(100% - 18px, 100%);
+        margin-top: 12px;
+        margin-bottom: 28px;
+    }
+
+    body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-shell {
+        gap: 14px;
+    }
+
+    body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-hero,
+    body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-workspace,
+    body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-guide {
+        border-radius: 18px;
+        padding: 14px;
+    }
+
+    body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-visual {
+        min-height: 178px;
+    }
+
+    body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-metrics,
+    body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-nav-list,
+    body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-guide-list {
+        grid-template-columns: 1fr;
+    }
+
+    body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-workspace-header {
+        align-items: flex-start;
+    }
+
+    body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .mform > .form-group.row,
+    body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-fieldset .form-group.row,
+    body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .mform .fitem.row {
+        grid-template-columns: 1fr;
+        gap: 6px;
+        padding: 8px 0;
+    }
+
+    body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .mform .col-form-label,
+    body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .mform .fitemtitle {
+        padding-top: 0;
+    }
+
+    body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .boc-accountprefs-submit,
+    body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .mform input[type="submit"] {
+        width: 100%;
+    }
+
+    body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .filemanager,
+    body.theme-boost-override-custom-accountprefs:not(.theme-boost-override-custom-notificationprefs) .tox.tox-tinymce {
+        max-width: 100%;
+        overflow-x: auto;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body.theme-boost-override-custom-accountprefs *,
+    body.theme-boost-override-custom-accountprefs *::before,
+    body.theme-boost-override-custom-accountprefs *::after {
+        animation-duration: .001ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .001ms !important;
+    }
+}

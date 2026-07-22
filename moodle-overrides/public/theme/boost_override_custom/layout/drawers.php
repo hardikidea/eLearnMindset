@@ -50,12 +50,42 @@ $iscourseindex = ($PAGE->pagelayout === 'coursecategory' && $PAGE->pagetype === 
         $PAGE->pagetype === 'course-search';
 $iscourseindexroot = $PAGE->pagetype === 'course-index-category' && optional_param('categoryid', 0, PARAM_INT) === 0;
 $currentpath = $PAGE->url->get_path();
+$isuserprofile = $currentpath === '/user/profile.php';
 $ismycourses = $currentpath === '/my/courses.php';
 $isgradeoverview = $currentpath === '/grade/report/overview/index.php';
 $isnotificationpreferences = $currentpath === '/message/notificationpreferences.php';
 $iscalendarview = $currentpath === '/calendar/view.php';
 $isuserpreferences = $currentpath === '/user/preferences.php';
 $isuserfiles = $currentpath === '/user/files.php';
+$accountpreferencepaths = [
+    '/user/edit.php',
+    '/user/language.php',
+    '/user/editor.php',
+    '/user/contentbank.php',
+    '/message/notificationpreferences.php',
+    '/login/change_password.php',
+    '/user/forum.php',
+    '/user/calendar.php',
+    '/message/edit.php',
+];
+$learningtoolpaths = [
+    '/blog/preferences.php',
+    '/blog/external_blogs.php',
+    '/blog/external_blog_edit.php',
+    '/blog/edit.php',
+    '/badges/mybadges.php',
+    '/badges/preferences.php',
+    '/badges/mybackpack.php',
+    '/reportbuilder/index.php',
+    '/blog/index.php',
+    '/mod/customcert/my_certificates.php',
+    '/mod/forum/user.php',
+    '/admin/tool/lp/plans.php',
+    '/report/usersessions/user.php',
+    '/admin/tool/dataprivacy/summary.php',
+];
+$isaccountpreferences = in_array($currentpath, $accountpreferencepaths, true);
+$islearningtoolpage = in_array($currentpath, $learningtoolpaths, true);
 $usesmodernheader = $isdashboard || in_array($currentpath, [
     '/user/profile.php',
     '/my/courses.php',
@@ -65,7 +95,7 @@ $usesmodernheader = $isdashboard || in_array($currentpath, [
     '/reportbuilder/index.php',
     '/user/preferences.php',
     '/message/notificationpreferences.php',
-], true);
+], true) || $isaccountpreferences || $islearningtoolpage;
 $extraclasses = ['uses-drawers'];
 if ($isfrontpage) {
     $extraclasses[] = 'theme-boost-override-custom-frontpage';
@@ -74,6 +104,11 @@ if ($isfrontpage) {
 if ($usesmodernheader) {
     $extraclasses[] = 'theme-boost-override-custom-dashboard-header';
     $PAGE->requires->css(new \moodle_url('/theme/boost_override_custom/style/dashboardheader.css'));
+}
+if ($isuserprofile) {
+    $extraclasses[] = 'theme-boost-override-custom-userprofile';
+    $PAGE->requires->css(new \moodle_url('/theme/boost_override_custom/style/userprofile.css'));
+    $PAGE->requires->js(new \moodle_url('/theme/boost_override_custom/javascript/userprofile.js'));
 }
 if ($ismycourses) {
     $extraclasses[] = 'theme-boost-override-custom-mycourses';
@@ -400,6 +435,16 @@ if ($isuserfiles) {
     $extraclasses[] = 'theme-boost-override-custom-userfiles';
     $PAGE->requires->css(new \moodle_url('/theme/boost_override_custom/style/userfiles.css'));
     $PAGE->requires->js(new \moodle_url('/theme/boost_override_custom/javascript/userfiles.js'));
+}
+if ($isaccountpreferences) {
+    $extraclasses[] = 'theme-boost-override-custom-accountprefs';
+    $PAGE->requires->css(new \moodle_url('/theme/boost_override_custom/style/accountprefs.css'));
+    $PAGE->requires->js(new \moodle_url('/theme/boost_override_custom/javascript/accountprefs.js'));
+}
+if ($islearningtoolpage) {
+    $extraclasses[] = 'theme-boost-override-custom-learningtools';
+    $PAGE->requires->css(new \moodle_url('/theme/boost_override_custom/style/learningtools.css'));
+    $PAGE->requires->js(new \moodle_url('/theme/boost_override_custom/javascript/learningtools.js'));
 }
 if ($iscourseindex) {
     $extraclasses[] = 'theme-boost-override-custom-courseindex';
