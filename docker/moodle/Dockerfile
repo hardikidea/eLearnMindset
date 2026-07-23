@@ -1,4 +1,4 @@
-FROM php:8.3-fpm-bookworm
+FROM php:8.5-fpm-bookworm
 
 ENV DEBIAN_FRONTEND=noninteractive
 ARG MOODLE_REPO=https://github.com/moodle/moodle.git
