@@ -1,7 +1,7 @@
 (function() {
     'use strict';
 
-    var pageSelector = 'body.theme-boost-override-custom-platform';
+    var pageSelector = 'body.theme-boost-override-custom-platform, body.theme-boost-override-custom-login';
     var scheduled = false;
 
     var clean = function(value) {
@@ -17,6 +17,176 @@
             return fallback;
         }
         return fallback;
+    };
+
+    var fontAwesomeIcon = function(name, extraClass) {
+        return '<i class="fa fa-fw ' + name + ' boc-product-icon' +
+            (extraClass ? ' ' + extraClass : '') + '" aria-hidden="true"></i>';
+    };
+
+    var referencedIconClass = function(container) {
+        var use = container.querySelector('use');
+        var reference = use ? (use.getAttribute('href') || use.getAttribute('xlink:href') || '') : '';
+        var referenceName = reference.replace(/^.*#/, '');
+        var references = {
+            bocIconHome: 'fa-home',
+            bocIconDiscover: 'fa-compass',
+            bocIconProgrammes: 'fa-university',
+            bocIconAdmissions: 'fa-id-card',
+            bocIconBoards: 'fa-language',
+            bocIconGrade: 'fa-bar-chart',
+            bocIconAbout: 'fa-info-circle',
+            bocIconContact: 'fa-envelope',
+            bocIconBolt: 'fa-bolt',
+            bocIconCourses: 'fa-book',
+            bocIconCatalogue: 'fa-folder-open',
+            bocIconActivity: 'fa-tasks',
+            bocIconQuiz: 'fa-question-circle',
+            bocIconCertificate: 'fa-certificate',
+            bocIconAttendance: 'fa-calendar-check-o',
+            bocIconParent: 'fa-user-plus',
+            bocIconNotice: 'fa-bullhorn',
+            bocIconCalendar: 'fa-calendar',
+            bocIconSecure: 'fa-shield',
+            bocIconUsers: 'fa-users',
+            bocIconStudent: 'fa-graduation-cap',
+            bocIconTeacher: 'fa-briefcase'
+        };
+
+        return references[referenceName] || '';
+    };
+
+    var loginComponentIcon = function(container) {
+        var item;
+        var rules = [
+            ['.boc-login-nav a', {
+                Home: 'fa-home',
+                Discover: 'fa-compass',
+                Programmes: 'fa-university',
+                Admissions: 'fa-id-card',
+                Boards: 'fa-language',
+                'Grade System': 'fa-bar-chart',
+                About: 'fa-info-circle',
+                Contact: 'fa-envelope'
+            }],
+            ['.boc-login-kicker', {
+                'Secure LMS access': 'fa-shield',
+                'Student learning': 'fa-graduation-cap',
+                'Teacher workspace': 'fa-briefcase',
+                'Parent connect': 'fa-user-plus',
+                'Course catalogue': 'fa-book',
+                'Interactive activities': 'fa-tasks',
+                'Assessment engine': 'fa-check-square-o',
+                'Grade system': 'fa-bar-chart',
+                Certificates: 'fa-certificate',
+                'Notices and support': 'fa-bullhorn'
+            }]
+        ];
+        var cardClasses = {
+            'boc-role-users': 'fa-users',
+            'boc-role-students': 'fa-graduation-cap',
+            'boc-role-teachers': 'fa-briefcase',
+            'boc-role-parents': 'fa-user-plus',
+            'boc-feature-course': 'fa-book',
+            'boc-feature-activity': 'fa-tasks',
+            'boc-feature-quiz': 'fa-question-circle',
+            'boc-feature-grade': 'fa-bar-chart',
+            'boc-feature-cert': 'fa-certificate',
+            'boc-feature-attendance': 'fa-calendar-check-o',
+            'boc-feature-parent': 'fa-user-plus',
+            'boc-feature-notice': 'fa-bullhorn',
+            'boc-feature-calendar': 'fa-calendar',
+            'boc-feature-secure': 'fa-shield'
+        };
+        var className;
+        var match;
+
+        for (var index = 0; index < rules.length; index++) {
+            item = container.closest(rules[index][0]);
+            if (item) {
+                match = rules[index][1][clean(item.textContent)];
+                if (match) {
+                    return match;
+                }
+            }
+        }
+
+        item = container.closest('.boc-login-role-card, .boc-login-feature-card');
+        if (item) {
+            className = Object.keys(cardClasses).find(function(candidate) {
+                return item.classList.contains(candidate);
+            });
+            if (className) {
+                return cardClasses[className];
+            }
+        }
+
+        return referencedIconClass(container);
+    };
+
+    var semanticIcon = function(value, fallback) {
+        var descriptor = clean(value).toLowerCase();
+        var rules = [
+            [/(log\s*out|sign\s*out)/, 'fa-sign-out'],
+            [/(log\s*in|sign\s*in|secure access)/, 'fa-sign-in'],
+            [/(forgot|reset).*(password)|password.*(forgot|reset)/, 'fa-key'],
+            [/(password|lock|security)/, 'fa-lock'],
+            [/(show|hide|visibility|reveal).*(password)?/, 'fa-eye'],
+            [/\b(cookies?|consent)\b/, 'fa-cookie-bite'],
+            [/\b(search|find|lookup)\b/, 'fa-search'],
+            [/\b(filter|funnel)\b/, 'fa-filter'],
+            [/\b(sort|order by)\b/, 'fa-sort'],
+            [/\b(upload|import)\b/, 'fa-upload'],
+            [/\b(download|export)\b/, 'fa-download'],
+            [/\bshare\b/, 'fa-share-alt'],
+            [/(copy link|copy url|\bcopy\b)/, 'fa-link'],
+            [/\b(star|favourite|favorite)\b/, 'fa-star'],
+            [/\b(view|open|preview|details)\b/, 'fa-eye'],
+            [/\b(edit|update|change|write)\b/, 'fa-pencil'],
+            [/\b(delete|remove|trash)\b/, 'fa-trash'],
+            [/\b(add|create|new)\b/, 'fa-plus'],
+            [/\b(save|apply|submit)\b/, 'fa-check'],
+            [/\bsend\b/, 'fa-paper-plane'],
+            [/\b(refresh|reload|reset)\b/, 'fa-refresh'],
+            [/\b(expand|fullscreen)\b/, 'fa-expand'],
+            [/\b(collapse|minimise|minimize)\b/, 'fa-compress'],
+            [/(previous|back|older|left|(?:^|\s)(?:<|<<|←)(?:\s|$))/, 'fa-chevron-left'],
+            [/(next|forward|newer|right|(?:^|\s)(?:>|>>|→)(?:\s|$))/, 'fa-chevron-right'],
+            [/\b(close|cancel|dismiss|clear)\b/, 'fa-times'],
+            [/\b(more|actions|menu|ellipsis)\b/, 'fa-ellipsis-v'],
+            [/\b(help|support|question)\b/, 'fa-question-circle'],
+            [/\b(info|about|guide)\b/, 'fa-info-circle'],
+            [/(browser sessions?|usersessions|\b(session|device|browser|computer)s?\b)/, 'fa-desktop'],
+            [/(dashboard|\/my\/|#home|\bhome\b)/, 'fa-home'],
+            [/\b(explore courses?|courses?|classes?|students?|teachers?|teaching)\b/, 'fa-graduation-cap'],
+            [/\b(discover|explore|browse)\b/, 'fa-compass'],
+            [/\b(programmes?|programs?|admissions?|university|college|campus)\b/, 'fa-university'],
+            [/\b(boards?|mediums?|languages?|translation)\b/, 'fa-language'],
+            [/\b(grade|result|performance|report|analytics|chart)\b/, 'fa-bar-chart'],
+            [/\b(calendars?|dates?|events?|schedules?|deadlines?)\b/, 'fa-calendar'],
+            [/\b(notifications?|reminders?|alerts?)\b/, 'fa-bell'],
+            [/\b(messages?|contacts?|emails?|mail)\b/, 'fa-envelope'],
+            [/\b(forums?|discussions?|comments?|feedback)\b/, 'fa-comments'],
+            [/\b(blogs?|journals?|posts?)\b/, 'fa-pencil-square-o'],
+            [/\b(certificates?|badges?|achievements?|awards?)\b/, 'fa-certificate'],
+            [/(learning plans?|\bcompetenc|\bchecklists?\b)/, 'fa-list-alt'],
+            [/\b(privacy|policy|shield|protection|retention)\b/, 'fa-shield'],
+            [/\b(file|folder|document)\b|content bank/, 'fa-folder-open'],
+            [/\b(profile|account|user|parent|principal)\b/, 'fa-user'],
+            [/\b(preference|setting|configure|manage)\b/, 'fa-sliders']
+        ];
+        var match = rules.find(function(rule) {
+            return rule[0].test(descriptor);
+        });
+
+        return match ? match[1] : (fallback || 'fa-arrow-right');
+    };
+
+    window.BoostOverrideCustomIcons = {
+        classFor: semanticIcon,
+        markup: function(name, extraClass) {
+            return fontAwesomeIcon(semanticIcon(name, 'fa-book'), extraClass);
+        }
     };
 
     var routeArea = function(path) {
@@ -38,48 +208,31 @@
         return match ? match[1] : 'learning';
     };
 
-    var uniqueId = function(area) {
-        var path = window.location.pathname;
-        var hash = 0;
-        var index;
-
-        for (index = 0; index < path.length; index += 1) {
-            hash = ((hash << 5) - hash) + path.charCodeAt(index);
-            hash |= 0;
-        }
-
-        return 'boc-platform-' + area + '-' + Math.abs(hash);
-    };
-
-    var iconSvg = function(area) {
-        var id = uniqueId(area);
-        var glyphs = {
-            course: '<path d="M12 5 4.5 8.8 12 12.6l7.5-3.8L12 5Z"/><path d="M7.1 11.2v3.4c0 1.7 2.2 3 4.9 3s4.9-1.3 4.9-3v-3.4"/>',
-            activity: '<path d="M7 5.2h10a2 2 0 0 1 2 2v9.6a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V7.2a2 2 0 0 1 2-2Z"/><path d="m10.2 9.1 4.5 2.9-4.5 2.9V9.1Z"/>',
-            report: '<path d="M6 18.5V13h3v5.5H6Zm4.5 0V9h3v9.5h-3Zm4.5 0V5.5h3v13h-3Z"/><path d="M5 20h14"/>',
-            calendar: '<path d="M6 5h12a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z"/><path d="M8 3v4m8-4v4M4 9h16M8 13h2m4 0h2m-8 3h2m4 0h2"/>',
-            message: '<path d="M5.5 5.5h13a2 2 0 0 1 2 2v7.2a2 2 0 0 1-2 2h-7l-4.7 3v-3H5.5a2 2 0 0 1-2-2V7.5a2 2 0 0 1 2-2Z"/><path d="M7.5 9.5h9m-9 3h6"/>',
-            user: '<circle cx="12" cy="8.2" r="3.6"/><path d="M5.2 20c.7-4 3-6 6.8-6s6.1 2 6.8 6"/>',
-            admin: '<path d="M12 3.5 19 6v5.3c0 4.2-2.8 7.4-7 9.2-4.2-1.8-7-5-7-9.2V6l7-2.5Z"/><path d="m8.7 12 2.1 2.1 4.5-5"/>',
-            content: '<path d="M6 4.5h9l3 3v12H6v-15Z"/><path d="M14.8 4.8v3h3M8.8 11h6.4m-6.4 3h6.4m-6.4 3h4"/>',
-            learning: '<path d="M6.2 5.5h11.6v13H6.2v-13Z"/><path d="M9 8.5h6m-6 3h6m-6 3h4"/>'
+    var pageAreaIcon = function(area) {
+        var icons = {
+            course: 'fa-graduation-cap',
+            activity: 'fa-play-circle',
+            report: 'fa-bar-chart',
+            calendar: 'fa-calendar',
+            message: 'fa-comments',
+            user: 'fa-user',
+            admin: 'fa-shield',
+            content: 'fa-folder-open',
+            learning: 'fa-book'
         };
 
-        return '<svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">' +
-            '<defs><linearGradient id="' + id + '-surface" x1="8" y1="5" x2="40" y2="43" gradientUnits="userSpaceOnUse">' +
-            '<stop stop-color="var(--boc-theme-primary, #0f6cbf)"/><stop offset=".55" stop-color="var(--boc-theme-accent, #0891b2)"/><stop offset="1" stop-color="var(--boc-theme-warning-bright, #f59e0b)"/></linearGradient>' +
-            '<filter id="' + id + '-shadow" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="5" stdDeviation="4" flood-color="#0f172a" flood-opacity=".2"/></filter></defs>' +
-            '<g class="boc-platform-symbol-depth" filter="url(#' + id + '-shadow)"><rect x="5" y="4" width="38" height="38" rx="10" fill="url(#' + id + '-surface)"/>' +
-            '<path d="M8 8h24c4 0 7 2.5 7 6.5-9-2.8-19.5-2.5-31 .8V8Z" fill="#fff" opacity=".24"/>' +
-            '<g fill="none" stroke="#fff" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">' + (glyphs[area] || glyphs.learning) + '</g></g></svg>';
+        return fontAwesomeIcon(icons[area] || icons.learning, 'boc-platform-symbol-glyph');
     };
 
     var hasSpecialPageDesign = function(body) {
+        if (body.classList.contains('pagelayout-mycourses')) {
+            return true;
+        }
+
         return [
             'theme-boost-override-custom-frontpage',
             'theme-boost-override-custom-courseindex',
             'theme-boost-override-custom-userprofile',
-            'theme-boost-override-custom-mycourses',
             'theme-boost-override-custom-gradeoverview',
             'theme-boost-override-custom-notificationprefs',
             'theme-boost-override-custom-calendarview',
@@ -103,8 +256,189 @@
         symbol = document.createElement('span');
         symbol.className = 'boc-platform-page-symbol';
         symbol.setAttribute('aria-hidden', 'true');
-        symbol.innerHTML = iconSvg(area);
+        symbol.innerHTML = pageAreaIcon(area);
         headings.prepend(symbol);
+    };
+
+    var controlDescriptor = function(control) {
+        return [
+            control.getAttribute('href'),
+            control.getAttribute('data-action'),
+            control.getAttribute('aria-label'),
+            control.getAttribute('title'),
+            control.getAttribute('name'),
+            control.getAttribute('value'),
+            control.className,
+            clean(control.textContent)
+        ].join(' ');
+    };
+
+    var isExcludedControl = function(control) {
+        return control.matches(
+            '.carousel-indicators button, .boc-login-dots button, .navbar-toggler, .toggle-sensitive-btn, ' +
+            '[role="switch"], .custom-switch *, .form-check-input, .potentialidp a, .potentialidp button, ' +
+            '.usermenu .dropdown-toggle, .userinitials'
+        );
+    };
+
+    var visibleControlText = function(control) {
+        var clone = control.cloneNode(true);
+
+        clone.querySelectorAll(
+            '.fa, .icon, svg, img, .accesshide, .sr-only, .visually-hidden, [aria-hidden="true"]'
+        ).forEach(function(item) {
+            item.remove();
+        });
+
+        return clean(clone.textContent);
+    };
+
+    var classifyActionControl = function(control) {
+        var hasIcon = Boolean(control.querySelector(
+            '.fa, [class^="fa-"], [class*=" fa-"], img.icon, svg.icon, .icon'
+        ));
+
+        control.classList.remove('boc-icon-only-control', 'boc-icon-text-control');
+        if (!hasIcon) {
+            return;
+        }
+
+        control.classList.add(visibleControlText(control) ? 'boc-icon-text-control' : 'boc-icon-only-control');
+    };
+
+    var decorateActionControls = function() {
+        var selectors = [
+            '.primary-navigation .nav-link',
+            '.secondary-navigation .nav-link',
+            '.navbar .login a',
+            '.boc-login-nav a',
+            '.btn',
+            '.btn-link',
+            'button',
+            'a[role="button"]',
+            '.dropdown-item',
+            '.page-link',
+            '.action-menu-item',
+            '.list-group-item-action',
+            '.drawer a.list-group-item',
+            '#region-main .profile_tree a[href]',
+            '#region-main .boc-learningtools-link',
+            '#region-main .boc-learningtools-primary-link',
+            '#region-main .boc-preferences-link',
+            '#region-main .boc-accountprefs-nav-link',
+            '#region-main .boc-category-cta',
+            '#region-main .boc-course-hover-cta',
+            '[class*="boc-hero"] a[href]',
+            '.boc-white-label-footer a[href]'
+        ].join(',');
+
+        document.querySelectorAll(selectors).forEach(function(control) {
+            var visibleLabel = clean(control.textContent);
+            var descriptor;
+            var icon;
+            var customIcon;
+
+            if (isExcludedControl(control)) {
+                return;
+            }
+            if (control.dataset.bocProductIconReady === '1' &&
+                    control.querySelector('.fa, [class^="fa-"], [class*=" fa-"]')) {
+                classifyActionControl(control);
+                return;
+            }
+            if (!visibleLabel && !clean(control.getAttribute('aria-label')) && !clean(control.getAttribute('title'))) {
+                return;
+            }
+            if (control.classList.contains('page-link') && (
+                    control.hasAttribute('aria-current') ||
+                    /^\d+$/.test(visibleControlText(control))
+            )) {
+                control.dataset.bocProductIconReady = '1';
+                return;
+            }
+
+            control.dataset.bocProductIconReady = '1';
+            control.classList.add('boc-product-action');
+            if (control.querySelector(
+                '.fa, [class^="fa-"], [class*=" fa-"], img.icon, svg.icon, .icon'
+            )) {
+                classifyActionControl(control);
+                return;
+            }
+            descriptor = controlDescriptor(control);
+            if (/^(?:x|×|…|\.{3}|<|>|<<|>>|←|→)$/i.test(visibleLabel)) {
+                control.textContent = '';
+            }
+
+            customIcon = control.querySelector(':scope > svg[class*="boc-"], :scope > span[class*="boc-"] > svg');
+            if (customIcon) {
+                if (customIcon.parentElement !== control && customIcon.parentElement &&
+                        customIcon.parentElement.children.length === 1) {
+                    customIcon.parentElement.remove();
+                } else {
+                    customIcon.remove();
+                }
+            }
+            icon = document.createElement('i');
+            icon.className = 'fa fa-fw ' + semanticIcon(
+                descriptor,
+                control.matches('button, .btn, [role="button"]') ? 'fa-check-circle' : 'fa-arrow-right'
+            ) + ' boc-product-icon';
+            icon.setAttribute('aria-hidden', 'true');
+            control.insertBefore(icon, control.firstChild);
+            classifyActionControl(control);
+        });
+    };
+
+    var normaliseSmallCustomIcons = function() {
+        var selector = [
+            'span[class*="boc-"][class*="-icon"]',
+            'div[class*="boc-"][class*="-icon"]',
+            'svg[class*="boc-"][class*="-icon"]'
+        ].join(',');
+
+        document.querySelectorAll(selector).forEach(function(container) {
+            var className = typeof container.className === 'string' ? container.className : container.getAttribute('class');
+            var descriptor;
+            var iconClass;
+            var preservedClasses;
+            var replacement;
+            var context;
+
+            if (!className || /product-icon|logo|avatar|visual|scene|illustration|art|defs|spinner|loader/i.test(className)) {
+                return;
+            }
+            if (container.dataset && container.dataset.bocProductIconReady === '1') {
+                return;
+            }
+            if (container.tagName.toLowerCase() !== 'svg' && !container.querySelector('svg')) {
+                return;
+            }
+
+            context = container.closest(
+                'a, button, h1, h2, h3, h4, article, section, li, .alert, .card, [class*="metric"], [class*="stat"]'
+            );
+            descriptor = (context ? clean(context.textContent).slice(0, 180) : '') + ' ' +
+                className.replace(/\bboc-login(?:-[\w-]+)?\b/g, '');
+            iconClass = loginComponentIcon(container) || semanticIcon(descriptor, 'fa-book');
+            preservedClasses = className.split(/\s+/).filter(function(candidate) {
+                return /^boc-/.test(candidate) && !/^boc-product/.test(candidate);
+            }).join(' ');
+            replacement = document.createElement('i');
+            replacement.className = 'fa fa-fw ' + iconClass +
+                ' boc-product-icon boc-product-standalone-icon' +
+                (preservedClasses ? ' ' + preservedClasses : '');
+            replacement.setAttribute('aria-hidden', 'true');
+
+            if (container.tagName.toLowerCase() === 'svg') {
+                container.replaceWith(replacement);
+            } else {
+                container.dataset.bocProductIconReady = '1';
+                container.classList.add('boc-product-icon-surface');
+                container.textContent = '';
+                container.appendChild(replacement);
+            }
+        });
     };
 
     var decorateAccessibleActions = function() {
@@ -155,6 +489,8 @@
         body.classList.add('boc-platform-ready');
 
         decoratePageHeader(body, area);
+        normaliseSmallCustomIcons();
+        decorateActionControls();
         decorateAccessibleActions();
         document.querySelectorAll('#region-main .mform').forEach(function(form) {
             form.classList.add('boc-platform-form');
@@ -200,7 +536,10 @@
     };
 
     var fitOpenDropdowns = function() {
-        document.querySelectorAll(pageSelector + ' .dropdown-menu.show').forEach(fitDropdown);
+        document.querySelectorAll(
+            'body.theme-boost-override-custom-platform .dropdown-menu.show, ' +
+            'body.theme-boost-override-custom-login .dropdown-menu.show'
+        ).forEach(fitDropdown);
     };
 
     var schedule = function() {

@@ -156,8 +156,16 @@
     </svg>
     <header class="boc-login-header" aria-label="Public site navigation">
         <a class="boc-login-brand" href="{{boclogin.homeurl}}">
-            <span class="boc-login-mark" aria-hidden="true">eM</span>
-            <span>{{boclogin.sitename}}</span>
+            {{#boclogin.hascompactlogo}}
+                <img class="boc-login-brand-logo" src="{{boclogin.compactlogourl}}" alt="">
+            {{/boclogin.hascompactlogo}}
+            {{^boclogin.hascompactlogo}}
+                <span class="boc-login-mark" aria-hidden="true">LMS</span>
+            {{/boclogin.hascompactlogo}}
+            <span class="boc-login-brand-copy">
+                <strong>{{boclogin.sitename}}</strong>
+                <small>{{boclogin.productname}}</small>
+            </span>
         </a>
         <nav class="boc-login-nav" aria-label="Primary navigation">
             {{#boclogin.navitems}}

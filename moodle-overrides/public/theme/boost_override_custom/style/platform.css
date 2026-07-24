@@ -36,10 +36,12 @@ body.theme-boost-override-custom-platform #page.drawers {
 
 body.theme-boost-override-custom-platform #page.drawers .main-inner,
 body.theme-boost-override-custom-platform.limitedwidth #page.drawers .main-inner {
-    width: var(--boc-theme-content-width, 100%);
-    max-width: none;
+    width: 100%;
+    max-width: var(--boc-theme-content-width, 1600px);
+    min-width: 0;
     margin-inline: auto;
     padding-inline: var(--boc-theme-content-gutter, clamp(14px, 2vw, 30px));
+    box-sizing: border-box;
 }
 
 body.theme-boost-override-custom-platform #topofscroll.main-inner {

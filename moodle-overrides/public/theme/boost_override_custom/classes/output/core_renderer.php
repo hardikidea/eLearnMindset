@@ -29,6 +29,54 @@ use moodle_url;
 class core_renderer extends \theme_boost\output\core_renderer {
 
     /**
+     * Return the theme-managed main logo, with Moodle's site logo as fallback.
+     *
+     * @param int|null $maxwidth Maximum width.
+     * @param int|null $maxheight Maximum height.
+     * @return moodle_url|false
+     */
+    public function get_logo_url($maxwidth = null, $maxheight = 200) {
+        $configured = theme_boost_override_custom_get_setting_file_url('mainlogo', 'mainlogo');
+
+        return $configured ?: parent::get_logo_url($maxwidth, $maxheight);
+    }
+
+    /**
+     * Return the theme-managed compact logo, then the main/site logo.
+     *
+     * @param int|null $maxwidth Maximum width.
+     * @param int|null $maxheight Maximum height.
+     * @return moodle_url|false
+     */
+    public function get_compact_logo_url($maxwidth = 300, $maxheight = 300) {
+        $configured = theme_boost_override_custom_get_setting_file_url('compactlogo', 'compactlogo');
+        $main = theme_boost_override_custom_get_setting_file_url('mainlogo', 'mainlogo');
+
+        return $configured ?: $main ?: parent::get_compact_logo_url($maxwidth, $maxheight) ?:
+            parent::get_logo_url($maxwidth, $maxheight);
+    }
+
+    /**
+     * Display the navbar logo whenever a theme or site logo is available.
+     *
+     * @return bool
+     */
+    public function should_display_navbar_logo() {
+        return !empty($this->get_compact_logo_url());
+    }
+
+    /**
+     * Return the theme-managed favicon, with Moodle's configured favicon fallback.
+     *
+     * @return moodle_url
+     */
+    public function favicon() {
+        $configured = theme_boost_override_custom_get_setting_file_url('favicon', 'favicon');
+
+        return $configured ?: parent::favicon();
+    }
+
+    /**
      * Replaces the front-page title card with the public landing experience.
      *
      * @return string HTML for the page header.

@@ -28,6 +28,15 @@
 defined('MOODLE_INTERNAL') || die();
 
 $PAGE->requires->css(new \moodle_url('/theme/boost_override_custom/style/login.css'));
+$PAGE->requires->css(new \moodle_url(
+    '/theme/boost_override_custom/style/whitelabel.css',
+    ['v' => '2026072410']
+));
+$PAGE->requires->js(new \moodle_url(
+    '/theme/boost_override_custom/javascript/platform.js',
+    ['v' => '2026072410']
+));
+$PAGE->requires->string_for_js('moreactions', 'theme_boost_override_custom');
 
 $countrecords = static function(string $table, string $select, array $params): int {
     global $DB;
@@ -114,11 +123,15 @@ $stats = [
     ),
 ];
 
+$brandcontext = theme_boost_override_custom_get_brand_context($OUTPUT);
 $boclogin = [
-    'sitename' => format_string($SITE->shortname, true, [
-        'context' => context_course::instance(SITEID),
-        'escape' => false,
-    ]),
+    'sitename' => $brandcontext['institutionname'],
+    'productname' => $brandcontext['productname'],
+    'tagline' => $brandcontext['tagline'],
+    'hasmainlogo' => $brandcontext['hasmainlogo'],
+    'mainlogourl' => $brandcontext['mainlogourl'],
+    'hascompactlogo' => $brandcontext['hascompactlogo'],
+    'compactlogourl' => $brandcontext['compactlogourl'],
     'homeurl' => (new \moodle_url('/'))->out(false),
     'loginurl' => (new \moodle_url('/login/index.php'))->out(false),
     'navitems' => [
@@ -251,6 +264,7 @@ $templatecontext = [
     'bodyattributes' => $bodyattributes,
     'leftinstructions' => $leftinstructions,
     'boclogin' => $boclogin,
+    'brand' => $brandcontext,
 ];
 
 echo $OUTPUT->render_from_template('theme_boost/login', $templatecontext);

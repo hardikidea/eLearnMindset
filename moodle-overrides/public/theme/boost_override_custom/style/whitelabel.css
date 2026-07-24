@@ -1,0 +1,1220 @@
+/**
+ * Shared white-label, solid-colour, and icon compatibility layer.
+ *
+ * This file intentionally loads after page-specific presentation styles. It
+ * normalises Moodle and Font Awesome controls without changing route markup,
+ * actions, permissions, or JavaScript behaviour.
+ */
+
+body.theme-boost-override-custom-platform,
+body.theme-boost-override-custom-login {
+    --boc-icon-inline: clamp(16px, var(--boc-theme-icon-size, 18px), 22px);
+    --boc-icon-compact: clamp(15px, calc(var(--boc-theme-icon-size, 18px) - 2px), 18px);
+    --boc-icon-action: clamp(17px, var(--boc-theme-icon-size, 18px), 20px);
+    --boc-icon-emphasis: clamp(22px, calc(var(--boc-theme-icon-size, 18px) + 6px), 30px);
+    --boc-icon-control-size: max(var(--boc-theme-control-height, 42px), 40px);
+    color: var(--text-secondary, #334155);
+    font-family: var(--boc-theme-font-family, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif);
+    font-size: var(--boc-theme-base-font-size, 16px);
+    overflow-x: clip;
+}
+
+body.theme-boost-override-custom-platform {
+    background-color: var(--page-background, #fff);
+    background-image: var(--boc-page-background-image, none);
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+body.theme-boost-override-custom-platform #page,
+body.theme-boost-override-custom-platform .drawers {
+    background-color: transparent;
+}
+
+body.theme-boost-override-custom-platform .main-inner {
+    width: calc(100% - (2 * var(--boc-theme-content-gutter, clamp(14px, 2vw, 30px))));
+    max-width: min(
+        var(--boc-theme-content-width, 1600px),
+        calc(100vw - (2 * var(--boc-theme-content-gutter, clamp(14px, 2vw, 30px))))
+    );
+    min-width: 0;
+    margin-inline: auto;
+    padding-inline: var(--boc-theme-content-gutter, clamp(14px, 2vw, 30px));
+    box-sizing: border-box;
+}
+
+body.theme-boost-override-custom-platform h1,
+body.theme-boost-override-custom-platform h2,
+body.theme-boost-override-custom-platform h3,
+body.theme-boost-override-custom-platform h4,
+body.theme-boost-override-custom-platform h5,
+body.theme-boost-override-custom-platform h6,
+body.theme-boost-override-custom-login h1,
+body.theme-boost-override-custom-login h2,
+body.theme-boost-override-custom-login h3 {
+    color: var(--text-primary, #0c3759);
+    letter-spacing: 0;
+}
+
+body.theme-boost-override-custom-platform a:not(.btn),
+body.theme-boost-override-custom-login a:not(.btn) {
+    color: var(--link-color, #0c3759);
+}
+
+body.theme-boost-override-custom-platform a:not(.btn):hover,
+body.theme-boost-override-custom-platform a:not(.btn):focus,
+body.theme-boost-override-custom-login a:not(.btn):hover,
+body.theme-boost-override-custom-login a:not(.btn):focus {
+    color: var(--link-hover-color, #b6000c);
+}
+
+/* Standard solid component surfaces. Decorative page and hero backgrounds are excluded. */
+body.theme-boost-override-custom-platform :where(
+    .btn,
+    .form-control,
+    .form-select,
+    .custom-select,
+    .input-group-text,
+    .card,
+    .modal-content,
+    .dropdown-menu,
+    .popover,
+    .toast,
+    .alert,
+    .page-link,
+    .nav-tabs .nav-link,
+    .list-group-item,
+    .badge,
+    .table
+),
+body.theme-boost-override-custom-login :where(
+    .btn,
+    .form-control,
+    .form-select,
+    .custom-select,
+    .input-group-text,
+    .card,
+    .modal-content,
+    .dropdown-menu,
+    .popover,
+    .toast,
+    .alert,
+    .page-link,
+    .nav-tabs .nav-link,
+    .badge
+) {
+    background-image: none !important;
+    border-color: var(--border-color, #d6dee6);
+}
+
+/* Buttons always use solid fills, including route-specific controls without Bootstrap classes. */
+body.theme-boost-override-custom-platform :where(button, [type="button"], [type="submit"], [role="button"]),
+body.theme-boost-override-custom-login :where(button, [type="button"], [type="submit"], [role="button"]) {
+    background-image: none !important;
+    border-image: none !important;
+}
+
+body.theme-boost-override-custom-platform :where(
+    [class*="boc-"][class*="-card"],
+    [class*="boc-"][class*="-panel"],
+    [class*="boc-"][class*="-menu"],
+    [class*="boc-"][class*="-modal"]
+),
+body.theme-boost-override-custom-login :where(
+    [class*="boc-"][class*="-card"],
+    [class*="boc-"][class*="-panel"],
+    [class*="boc-"][class*="-menu"],
+    [class*="boc-"][class*="-modal"]
+) {
+    background-color: var(--surface-background, #fff);
+    background-image: none !important;
+}
+
+body.theme-boost-override-custom-platform :where(
+    [class*="boc-"][class*="-button"],
+    [class*="boc-"][class*="-btn"]
+),
+body.theme-boost-override-custom-login :where(
+    [class*="boc-"][class*="-button"],
+    [class*="boc-"][class*="-btn"]
+) {
+    background-image: none !important;
+}
+
+body.theme-boost-override-custom-platform :where(
+    [class*="boc-"][class*="-badge"],
+    [class*="boc-"][class*="-chip"],
+    [class*="boc-"][class*="-tag"]
+),
+body.theme-boost-override-custom-login :where(
+    [class*="boc-"][class*="-badge"],
+    [class*="boc-"][class*="-chip"],
+    [class*="boc-"][class*="-tag"]
+) {
+    background-image: none !important;
+}
+
+body.theme-boost-override-custom-platform :where(
+    article[class*="boc-"],
+    form[class*="boc-"],
+    [class*="boc-"][class*="-stat"],
+    [class*="boc-"][class*="-metric"],
+    [class*="boc-"][class*="-control"],
+    [class*="boc-"][class*="-action"],
+    [class*="boc-"][class*="-item"],
+    [class*="boc-"][class*="-row"]
+),
+body.theme-boost-override-custom-login :where(
+    article[class*="boc-"],
+    form[class*="boc-"],
+    [class*="boc-"][class*="-stat"],
+    [class*="boc-"][class*="-metric"],
+    [class*="boc-"][class*="-control"],
+    [class*="boc-"][class*="-action"],
+    [class*="boc-"][class*="-item"],
+    [class*="boc-"][class*="-row"]
+) {
+    background-image: none !important;
+}
+
+body.theme-boost-override-custom-platform .btn-primary,
+body.theme-boost-override-custom-login .btn-primary {
+    background-color: var(--color-primary, #e4000f);
+    border-color: var(--color-primary, #e4000f);
+    color: #fff;
+}
+
+body.theme-boost-override-custom-platform .btn-primary:hover,
+body.theme-boost-override-custom-platform .btn-primary:focus,
+body.theme-boost-override-custom-login .btn-primary:hover,
+body.theme-boost-override-custom-login .btn-primary:focus {
+    background-color: var(--color-primary-strong, #b6000c);
+    border-color: var(--color-primary-strong, #b6000c);
+    color: #fff;
+}
+
+body.theme-boost-override-custom-platform .btn-secondary,
+body.theme-boost-override-custom-login .btn-secondary {
+    background-color: var(--color-secondary, #0c3759) !important;
+    background-image: none !important;
+    border-color: var(--color-secondary, #0c3759) !important;
+    color: #fff !important;
+}
+
+body.theme-boost-override-custom-platform .btn-secondary:is(:hover, :focus, :focus-visible, :active),
+body.theme-boost-override-custom-login .btn-secondary:is(:hover, :focus, :focus-visible, :active) {
+    background-color: var(--color-primary-strong, #b6000c) !important;
+    border-color: var(--color-primary-strong, #b6000c) !important;
+    color: #fff !important;
+}
+
+body.theme-boost-override-custom-login .loginform .toggle-sensitive-btn,
+body.theme-boost-override-custom-login .loginform .toggle-sensitive-btn:is(:hover, :focus, :focus-visible, :active) {
+    background-color: color-mix(in srgb, var(--color-primary, #e4000f) 10%, #fff) !important;
+    background-image: none !important;
+    border-color: color-mix(in srgb, var(--color-primary, #e4000f) 18%, #fff) !important;
+    color: var(--color-secondary, #0c3759) !important;
+}
+
+body.theme-boost-override-custom-login .loginform .toggle-sensitive-btn::before {
+    color: var(--color-secondary, #0c3759) !important;
+}
+
+body.theme-boost-override-custom-platform :where(
+    .page-item.active .page-link,
+    .page-link[aria-current="page"]
+),
+body.theme-boost-override-custom-login :where(
+    .page-item.active .page-link,
+    .page-link[aria-current="page"]
+) {
+    background-color: var(--color-primary, #e4000f) !important;
+    background-image: none !important;
+    border-color: var(--color-primary, #e4000f) !important;
+    color: #fff !important;
+}
+
+body.theme-boost-override-custom-platform :where(
+    .boc-contact-form button[type="submit"],
+    .boc-search-command-form button[type="submit"],
+    .boc-course-search button[type="submit"]
+),
+body.theme-boost-override-custom-login :where(
+    .loginform .btn-primary,
+    .boc-login-form button[type="submit"]
+) {
+    background-color: var(--color-primary, #e4000f) !important;
+    border-color: var(--color-primary, #e4000f) !important;
+    color: #fff !important;
+}
+
+body.theme-boost-override-custom-platform :where(
+    .boc-contact-form button[type="submit"],
+    .boc-search-command-form button[type="submit"],
+    .boc-course-search button[type="submit"]
+):hover,
+body.theme-boost-override-custom-platform :where(
+    .boc-contact-form button[type="submit"],
+    .boc-search-command-form button[type="submit"],
+    .boc-course-search button[type="submit"]
+):focus,
+body.theme-boost-override-custom-login :where(
+    .loginform .btn-primary,
+    .boc-login-form button[type="submit"]
+):hover,
+body.theme-boost-override-custom-login :where(
+    .loginform .btn-primary,
+    .boc-login-form button[type="submit"]
+):focus {
+    background-color: var(--color-primary-strong, #b6000c) !important;
+    border-color: var(--color-primary-strong, #b6000c) !important;
+}
+
+body.theme-boost-override-custom-platform .carousel-indicators button.active,
+body.theme-boost-override-custom-login .boc-login-dots button.is-active {
+    background-color: var(--color-primary, #e4000f) !important;
+}
+
+body.theme-boost-override-custom-platform :where(.form-control, .form-select, .custom-select),
+body.theme-boost-override-custom-login :where(.form-control, .form-select, .custom-select) {
+    min-height: var(--boc-theme-control-height, 42px);
+    background-color: var(--surface-background, #fff);
+    color: var(--text-primary, #0c3759);
+}
+
+body.theme-boost-override-custom-platform :where(.card, .modal-content, .dropdown-menu, .popover, .toast),
+body.theme-boost-override-custom-login :where(.card, .modal-content, .dropdown-menu, .popover, .toast) {
+    border-radius: var(--boc-theme-radius-md, 8px);
+    box-shadow: var(--boc-theme-shadow-soft, 0 10px 28px rgba(12, 55, 89, .08));
+}
+
+/* Native Moodle image icons and Font Awesome glyphs share one alignment contract. */
+body.theme-boost-override-custom-platform :where(
+    .btn,
+    .nav-link,
+    .dropdown-item,
+    .page-link,
+    .input-group-text,
+    .list-group-item-action,
+    .action-menu-item,
+    [role="button"]
+),
+body.theme-boost-override-custom-login :where(
+    .btn,
+    .nav-link,
+    .dropdown-item,
+    .page-link,
+    .input-group-text,
+    [role="button"]
+) {
+    align-items: center;
+}
+
+body.theme-boost-override-custom-platform :where(
+    .btn:not(.btn-link),
+    .dropdown-item,
+    .page-link,
+    .action-menu-item
+),
+body.theme-boost-override-custom-login :where(
+    .btn:not(.btn-link),
+    .dropdown-item,
+    .page-link
+) {
+    display: inline-flex;
+}
+
+body.theme-boost-override-custom-platform :where(
+    .btn,
+    .nav-link,
+    .dropdown-item,
+    .page-link,
+    .input-group-text,
+    .action-menu-item
+) > :where(.icon, .fa, [class^="fa-"], [class*=" fa-"]),
+body.theme-boost-override-custom-login :where(
+    .btn,
+    .nav-link,
+    .dropdown-item,
+    .page-link,
+    .input-group-text
+) > :where(.icon, .fa, [class^="fa-"], [class*=" fa-"]) {
+    flex: 0 0 auto;
+    margin-block: 0;
+    margin-inline: 0 .5rem;
+}
+
+body.theme-boost-override-custom-platform :where(
+    .btn,
+    .nav-link,
+    .dropdown-item,
+    .page-link,
+    .input-group-text,
+    .list-group-item-action,
+    .action-menu-item,
+    [role="button"]
+) :where(.icon, .fa, [class^="fa-"], [class*=" fa-"]),
+body.theme-boost-override-custom-login :where(
+    .btn,
+    .nav-link,
+    .dropdown-item,
+    .page-link,
+    .input-group-text,
+    [role="button"]
+) :where(.icon, .fa, [class^="fa-"], [class*=" fa-"]) {
+    font-size: var(--boc-icon-action);
+    line-height: 1;
+}
+
+body.theme-boost-override-custom-platform :where(
+    .btn,
+    .nav-link,
+    .dropdown-item,
+    .page-link,
+    .input-group-text,
+    .action-menu-item,
+    .table,
+    .breadcrumb
+) :where(img.icon, svg.icon),
+body.theme-boost-override-custom-login :where(
+    .btn,
+    .nav-link,
+    .dropdown-item,
+    .page-link,
+    .input-group-text
+) :where(img.icon, svg.icon) {
+    display: inline-block;
+    width: var(--boc-icon-action);
+    min-width: var(--boc-icon-action);
+    height: var(--boc-icon-action);
+    max-width: var(--boc-icon-action);
+    max-height: var(--boc-icon-action);
+    object-fit: contain;
+    vertical-align: -.125em;
+}
+
+body.theme-boost-override-custom-platform :where(
+    .btn,
+    .nav-link,
+    .dropdown-item,
+    .page-link,
+    .input-group-text,
+    .action-menu-item,
+    .table,
+    .breadcrumb
+) :where(.fa, [class^="fa-"], [class*=" fa-"]),
+body.theme-boost-override-custom-login :where(
+    .btn,
+    .nav-link,
+    .dropdown-item,
+    .page-link,
+    .input-group-text
+) :where(.fa, [class^="fa-"], [class*=" fa-"]) {
+    width: var(--boc-icon-action);
+    min-width: var(--boc-icon-action);
+    line-height: 1;
+    text-align: center;
+    vertical-align: -.125em;
+}
+
+body.theme-boost-override-custom-platform :where(
+    .primary-navigation,
+    .secondary-navigation,
+    .breadcrumb,
+    .dropdown-menu,
+    .pagination,
+    .action-menu
+) :where(.icon, .fa, img.icon, svg.icon),
+body.theme-boost-override-custom-login :where(
+    .boc-login-nav,
+    .dropdown-menu
+) :where(.icon, .fa, img.icon, svg.icon) {
+    width: var(--boc-icon-compact);
+    min-width: var(--boc-icon-compact);
+    height: var(--boc-icon-compact);
+    max-width: var(--boc-icon-compact);
+    max-height: var(--boc-icon-compact);
+    font-size: var(--boc-icon-compact);
+}
+
+body.theme-boost-override-custom-platform :where(.btn-icon, .icon-no-margin) > :where(.icon, .fa),
+body.theme-boost-override-custom-login :where(.btn-icon, .icon-no-margin) > :where(.icon, .fa) {
+    margin-inline: 0;
+}
+
+body.theme-boost-override-custom-platform .btn-icon,
+body.theme-boost-override-custom-login .btn-icon,
+body.theme-boost-override-custom-platform .boc-icon-only-control,
+body.theme-boost-override-custom-login .boc-icon-only-control {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--boc-icon-control-size);
+    min-width: var(--boc-icon-control-size);
+    height: var(--boc-icon-control-size);
+    min-height: var(--boc-icon-control-size);
+    padding: 0 !important;
+    aspect-ratio: 1;
+}
+
+body.theme-boost-override-custom-platform .boc-icon-only-control > :where(
+    .icon,
+    .fa,
+    img.icon,
+    svg.icon
+),
+body.theme-boost-override-custom-login .boc-icon-only-control > :where(
+    .icon,
+    .fa,
+    img.icon,
+    svg.icon
+) {
+    width: var(--boc-icon-action);
+    min-width: var(--boc-icon-action);
+    height: var(--boc-icon-action);
+    max-width: var(--boc-icon-action);
+    max-height: var(--boc-icon-action);
+    margin: 0 !important;
+    font-size: var(--boc-icon-action);
+}
+
+body.theme-boost-override-custom-platform .boc-icon-text-control,
+body.theme-boost-override-custom-login .boc-icon-text-control {
+    gap: var(--boc-product-control-gap, .55rem);
+}
+
+body.theme-boost-override-custom-platform [dir="rtl"] :where(
+    .btn,
+    .nav-link,
+    .dropdown-item,
+    .page-link,
+    .input-group-text
+) > :where(.icon, .fa),
+body.theme-boost-override-custom-login [dir="rtl"] :where(
+    .btn,
+    .nav-link,
+    .dropdown-item,
+    .page-link,
+    .input-group-text
+) > :where(.icon, .fa) {
+    margin-inline: .5rem 0;
+}
+
+body.theme-boost-override-custom-platform :where(a, button, input, select, textarea, [tabindex]):focus-visible,
+body.theme-boost-override-custom-login :where(a, button, input, select, textarea, [tabindex]):focus-visible {
+    outline: var(--boc-theme-focus-width, 3px) solid color-mix(in srgb, var(--focus-color, #e4000f) 46%, transparent);
+    outline-offset: 2px;
+}
+
+/* Header identity remains proportional for horizontal and compact logos. */
+body.theme-boost-override-custom-platform .navbar.fixed-top {
+    min-height: var(--boc-theme-header-height, 72px);
+    background-color: var(--header-background, #fff) !important;
+    background-image: none !important;
+    color: var(--header-foreground, #0c3759);
+    border-color: var(--border-color, #d6dee6);
+}
+
+body.theme-boost-override-custom-dashboard-header .navbar .container-fluid,
+body.theme-boost-override-custom-login .boc-login-header {
+    background-color: var(--header-background, #fff);
+    background-image: none !important;
+    border-color: var(--border-color, #d6dee6);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+
+body.theme-boost-override-custom-platform .navbar-brand {
+    width: min(var(--boc-theme-header-logo-width, 180px), 22vw);
+    min-width: 44px;
+    height: calc(var(--boc-theme-header-height, 72px) - 20px);
+}
+
+body.theme-boost-override-custom-platform .navbar-brand:not(:has(.logo)) {
+    width: min(300px, 30vw);
+}
+
+body.theme-boost-override-custom-dashboard-header .navbar-brand::before {
+    content: "LMS";
+    background: var(--color-primary, #e4000f);
+}
+
+body.theme-boost-override-custom-dashboard-header .navbar-brand:has(.logo)::before {
+    display: none;
+}
+
+body.theme-boost-override-custom-platform .navbar-brand .logo {
+    width: 100%;
+    height: 100%;
+    margin: 0 !important;
+    object-fit: contain;
+    object-position: left center;
+}
+
+body.theme-boost-override-custom-dashboard-header .primary-navigation .nav-link::after,
+body.theme-boost-override-custom-dashboard-header .moremenu .nav-link::after,
+body.theme-boost-override-custom-login .boc-login-nav a::after {
+    background: var(--color-primary, #e4000f);
+}
+
+body.theme-boost-override-custom-login .boc-login-brand-logo {
+    width: 38px;
+    height: 38px;
+    flex: 0 0 38px;
+    object-fit: contain;
+}
+
+body.theme-boost-override-custom-login .boc-login-brand-copy {
+    min-width: 0;
+    display: grid;
+    gap: 0;
+}
+
+body.theme-boost-override-custom-login .boc-login-brand-copy strong,
+body.theme-boost-override-custom-login .boc-login-brand-copy small {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+body.theme-boost-override-custom-login .boc-login-brand-copy strong {
+    color: var(--header-foreground, #0c3759);
+    font-size: 15px;
+    line-height: 1.2;
+}
+
+body.theme-boost-override-custom-login .boc-login-brand-copy small {
+    color: var(--text-secondary, #334155);
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.25;
+}
+
+body.theme-boost-override-custom-login .boc-login-mark {
+    background: var(--color-primary, #e4000f);
+}
+
+body.theme-boost-override-custom-login .loginform::before {
+    display: none;
+}
+
+body.theme-boost-override-custom-login .login-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 0 1.25rem;
+}
+
+body.theme-boost-override-custom-login .login-logo #logoimage {
+    width: auto;
+    max-width: min(220px, 72%);
+    height: auto;
+    max-height: 112px;
+    object-fit: contain;
+}
+
+body.theme-boost-override-custom-login .login-form-username::before {
+    background-color: color-mix(in srgb, var(--color-primary, #e4000f) 9%, #fff);
+    background-image: none;
+}
+
+body.theme-boost-override-custom-login .login-form-password::before {
+    background-color: color-mix(in srgb, var(--color-primary, #e4000f) 9%, #fff);
+    background-image: none;
+}
+
+body.theme-boost-override-custom-login .loginform .toggle-sensitive-btn::before {
+    background-image: none;
+}
+
+/* Inline SVG gradients from older saved theme markup resolve to the current solid palette. */
+body.theme-boost-override-custom-platform svg [fill^="url("],
+body.theme-boost-override-custom-login svg [fill^="url("] {
+    fill: var(--color-primary, #e4000f) !important;
+}
+
+body.theme-boost-override-custom-platform svg [stroke^="url("],
+body.theme-boost-override-custom-login svg [stroke^="url("] {
+    stroke: var(--color-secondary, #0c3759) !important;
+}
+
+/*
+ * Product control standard.
+ *
+ * Moodle and plugin controls keep their original markup and handlers. This
+ * layer only standardises solid fills, compact geometry, and icon alignment.
+ */
+body.theme-boost-override-custom-platform,
+body.theme-boost-override-custom-login {
+    --boc-product-radius-control: min(var(--boc-theme-radius-md, 6px), 6px);
+    --boc-product-radius-surface: min(var(--boc-theme-radius-md, 6px), 6px);
+    --boc-product-radius-chip: 4px;
+    --boc-product-icon-size: var(--boc-icon-action);
+    --boc-product-control-gap: .55rem;
+}
+
+body.theme-boost-override-custom-platform :where(
+    button,
+    .btn,
+    [role="button"],
+    input[type="button"],
+    input[type="submit"],
+    input[type="reset"],
+    .form-control,
+    .form-select,
+    .custom-select,
+    .input-group-text,
+    .dropdown-menu,
+    .dropdown-item,
+    .page-link,
+    .nav-tabs .nav-link,
+    .list-group-item-action,
+    .action-menu-item
+),
+body.theme-boost-override-custom-login :where(
+    button,
+    .btn,
+    [role="button"],
+    input[type="button"],
+    input[type="submit"],
+    input[type="reset"],
+    .form-control,
+    .form-select,
+    .custom-select,
+    .input-group-text,
+    .dropdown-menu,
+    .dropdown-item,
+    .page-link,
+    .nav-tabs .nav-link
+) {
+    border-radius: var(--boc-product-radius-control) !important;
+    background-image: none !important;
+    border-image: none !important;
+}
+
+body.theme-boost-override-custom-platform :where(
+    .card,
+    .modal-content,
+    .popover,
+    .toast,
+    .alert,
+    .filemanager,
+    .filepicker-filelist,
+    .boc-platform-form,
+    .boc-platform-table,
+    [class*="boc-"][class*="-card"],
+    [class*="boc-"][class*="-panel"],
+    [class*="boc-"][class*="-workspace"],
+    [class*="boc-"][class*="-menu"]
+),
+body.theme-boost-override-custom-login :where(
+    .card,
+    .modal-content,
+    .popover,
+    .toast,
+    .alert,
+    [class*="boc-"][class*="-card"],
+    [class*="boc-"][class*="-panel"]
+) {
+    border-radius: var(--boc-product-radius-surface) !important;
+}
+
+body.theme-boost-override-custom-platform :where(
+    .badge,
+    [class*="boc-"][class*="-badge"],
+    [class*="boc-"][class*="-chip"],
+    [class*="boc-"][class*="-tag"],
+    [class*="boc-"][class*="-kicker"],
+    [class*="boc-"][class*="-eyebrow"]
+),
+body.theme-boost-override-custom-login :where(
+    .badge,
+    [class*="boc-"][class*="-badge"],
+    [class*="boc-"][class*="-chip"],
+    [class*="boc-"][class*="-tag"],
+    [class*="boc-"][class*="-kicker"],
+    [class*="boc-"][class*="-eyebrow"]
+) {
+    border-radius: var(--boc-product-radius-chip) !important;
+    background-image: none !important;
+}
+
+body.theme-boost-override-custom-platform :where(
+    .btn,
+    button,
+    [role="button"],
+    .dropdown-item,
+    .page-link,
+    .nav-link,
+    .list-group-item-action,
+    .action-menu-item,
+    a.boc-product-action,
+    a[class*="boc-"][class*="-cta"],
+    a[class*="boc-"][class*="-button"],
+    a[class*="boc-"][class*="-btn"],
+    .boc-slider-slide a,
+    .boc-search-quicklinks a,
+    .boc-rail-links a
+),
+body.theme-boost-override-custom-login :where(
+    .btn,
+    button,
+    [role="button"],
+    .dropdown-item,
+    .page-link,
+    .nav-link,
+    a.boc-product-action
+) {
+    background-image: none !important;
+    border-image: none !important;
+    text-shadow: none !important;
+}
+
+/* Button-like links keep button affordance; only content links use underlines. */
+body.theme-boost-override-custom-platform :where(
+    a.btn,
+    a[role="button"],
+    a.boc-product-action,
+    a.dropdown-item,
+    a.page-link,
+    a.list-group-item-action,
+    a.action-menu-item,
+    a[class*="boc-"][class*="-cta"],
+    a[class*="boc-"][class*="-button"],
+    a[class*="boc-"][class*="-btn"],
+    .nav-tabs a.nav-link,
+    .boc-slider-slide a,
+    .boc-search-quicklinks a,
+    .boc-rail-links a
+):is(:link, :visited, :hover, :focus, :focus-visible, :active),
+body.theme-boost-override-custom-login :where(
+    a.btn,
+    a[role="button"],
+    a.boc-product-action,
+    a.dropdown-item,
+    a.page-link
+):is(:link, :visited, :hover, :focus, :focus-visible, :active) {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+    text-underline-offset: 0 !important;
+}
+
+body.theme-boost-override-custom-platform :where(
+    .btn-primary,
+    .boc-btn-primary,
+    .navbar .login a,
+    .boc-slider-slide a,
+    .boc-category-cta,
+    .boc-course-hover-cta,
+    .boc-search-command-form button[type="submit"],
+    .boc-contact-form button[type="submit"]
+),
+body.theme-boost-override-custom-login :where(
+    .btn-primary,
+    .boc-login-form button[type="submit"]
+) {
+    background-color: var(--color-primary, #e4000f) !important;
+    border-color: var(--color-primary, #e4000f) !important;
+    color: #fff !important;
+}
+
+body.theme-boost-override-custom-platform :where(
+    .btn-primary,
+    .boc-btn-primary,
+    .navbar .login a,
+    .boc-slider-slide a,
+    .boc-category-cta,
+    .boc-course-hover-cta,
+    .boc-search-command-form button[type="submit"],
+    .boc-contact-form button[type="submit"]
+):is(:hover, :focus-visible, :active),
+body.theme-boost-override-custom-login :where(
+    .btn-primary,
+    .boc-login-form button[type="submit"]
+):is(:hover, :focus-visible, :active) {
+    background-color: var(--color-primary-strong, #b6000c) !important;
+    border-color: var(--color-primary-strong, #b6000c) !important;
+    color: #fff !important;
+}
+
+body.theme-boost-override-custom-userpreferences .boc-preferences-chip[aria-pressed="true"] {
+    background-color: var(--color-primary, #e4000f) !important;
+    background-image: none !important;
+    border-color: var(--color-primary, #e4000f) !important;
+    color: #fff !important;
+}
+
+body.theme-boost-override-custom-login #loginbtn::after,
+body.theme-boost-override-custom-login #loginguestbtn::after {
+    content: none !important;
+    display: none !important;
+    background: none !important;
+}
+
+body.theme-boost-override-custom-platform :where(
+    .primary-navigation .nav-link,
+    .moremenu .nav-link,
+    .boc-product-action,
+    .boc-learningtools-link,
+    .boc-learningtools-primary-link,
+    .boc-preferences-link,
+    .boc-accountprefs-nav-link,
+    .profile_tree a[href]
+) {
+    gap: var(--boc-product-control-gap);
+    border-radius: var(--boc-product-radius-control) !important;
+}
+
+body.theme-boost-override-custom-platform .primary-navigation .nav-link::before,
+body.theme-boost-override-custom-platform .moremenu .nav-link::before {
+    content: none !important;
+    display: none !important;
+    -webkit-mask: none !important;
+    mask: none !important;
+}
+
+body.theme-boost-override-custom-dashboard-header .primary-navigation .nav-link::after,
+body.theme-boost-override-custom-dashboard-header .moremenu .nav-link::after,
+body.theme-boost-override-custom-frontpage .primary-navigation .nav-link::after,
+body.theme-boost-override-custom-courseindex .primary-navigation .nav-link::after {
+    height: 2px;
+    border-radius: 0 !important;
+    background: var(--color-primary, #e4000f) !important;
+}
+
+body.theme-boost-override-custom-platform .boc-product-icon,
+body.theme-boost-override-custom-login .boc-product-icon {
+    width: var(--boc-product-icon-size);
+    min-width: var(--boc-product-icon-size);
+    height: var(--boc-product-icon-size);
+    display: inline-grid;
+    place-items: center;
+    flex: 0 0 var(--boc-product-icon-size);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent !important;
+    color: currentColor;
+    font-size: var(--boc-product-icon-size);
+    line-height: 1;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    vertical-align: middle;
+}
+
+body.theme-boost-override-custom-platform .boc-product-icon-surface,
+body.theme-boost-override-custom-login .boc-product-icon-surface {
+    width: var(--boc-icon-emphasis) !important;
+    min-width: var(--boc-icon-emphasis) !important;
+    height: var(--boc-icon-emphasis) !important;
+    min-height: var(--boc-icon-emphasis) !important;
+    display: inline-grid !important;
+    place-items: center !important;
+    margin: 0;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
+}
+
+body.theme-boost-override-custom-platform .boc-product-standalone-icon,
+body.theme-boost-override-custom-login .boc-product-standalone-icon {
+    color: var(--color-primary, #e4000f);
+}
+
+body.theme-boost-override-custom-platform :where(
+    [class*="boc-"][class*="-icon"],
+    [class*="boc-"][class*="-icon"] > i,
+    .boc-category-meter > i
+) {
+    background-image: none !important;
+}
+
+body.theme-boost-override-custom-frontpage .boc-section-heading > span {
+    border-radius: var(--boc-product-radius-chip) !important;
+    background: var(--color-primary, #e4000f) !important;
+    color: #fff !important;
+    box-shadow: none !important;
+}
+
+body.theme-boost-override-custom-frontpage .boc-rail-block {
+    border-radius: var(--boc-product-radius-surface) !important;
+    background: var(--surface-background, #fff) !important;
+    box-shadow: var(--boc-theme-shadow-soft, 0 10px 28px rgba(12, 55, 89, .08));
+}
+
+body.theme-boost-override-custom-frontpage .boc-category-icon {
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    color: var(--color-primary, #e4000f) !important;
+    box-shadow: none !important;
+}
+
+body.theme-boost-override-custom-frontpage .boc-category-meter > i {
+    background-color: var(--color-primary, #e4000f) !important;
+}
+
+body.theme-boost-override-custom-platform .boc-platform-page-symbol {
+    width: 40px;
+    min-width: 40px;
+    height: 40px;
+    border: 1px solid var(--border-color, #d6dee6);
+    border-radius: var(--boc-product-radius-control) !important;
+    background: var(--surface-background, #fff) !important;
+    color: var(--color-primary, #e4000f);
+    box-shadow: none;
+}
+
+body.theme-boost-override-custom-platform .boc-platform-page-symbol .boc-platform-symbol-glyph {
+    font-size: 21px;
+}
+
+/* Profile and preferences navigation is compact, rectangular, and scannable. */
+body.theme-boost-override-custom-platform :where(
+    .profile_tree .editprofile a,
+    .profile_tree .viewmore a,
+    .boc-userprofile-card-misc li a,
+    .boc-userprofile-card-reports li a,
+    .boc-userprofile-card-privacy li a,
+    .boc-learningtools-link,
+    .boc-learningtools-primary-link,
+    .boc-preferences-link,
+    .boc-accountprefs-nav-link
+) {
+    min-height: 40px;
+    padding: 8px 10px;
+    border: 1px solid var(--border-color, #d6dee6);
+    border-radius: var(--boc-product-radius-control) !important;
+    background-color: var(--surface-background, #fff) !important;
+    background-image: none !important;
+    color: var(--text-primary, #0c3759);
+    box-shadow: none !important;
+    text-decoration: none;
+}
+
+body.theme-boost-override-custom-platform :where(
+    .profile_tree .editprofile a,
+    .profile_tree .viewmore a,
+    .boc-userprofile-card-misc li a,
+    .boc-userprofile-card-reports li a,
+    .boc-userprofile-card-privacy li a,
+    .boc-learningtools-link,
+    .boc-learningtools-primary-link,
+    .boc-preferences-link,
+    .boc-accountprefs-nav-link
+):is(:hover, :focus-visible, [aria-current="page"]) {
+    border-color: var(--color-primary, #e4000f);
+    background-color: color-mix(in srgb, var(--color-primary, #e4000f) 6%, #fff) !important;
+    color: var(--color-primary-strong, #b6000c);
+    box-shadow: none !important;
+    transform: none;
+}
+
+/* Login controls use persistent Font Awesome glyphs rather than image assets. */
+body.theme-boost-override-custom-login .login-form-username::before,
+body.theme-boost-override-custom-login .login-form-password::before,
+body.theme-boost-override-custom-login .loginform .toggle-sensitive-btn::before {
+    display: inline-grid;
+    place-items: center;
+    background: transparent !important;
+    background-image: none !important;
+    color: var(--color-secondary, #0c3759);
+    font-family: "Font Awesome 6 Free";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: 1;
+    text-rendering: auto;
+    box-shadow: none !important;
+}
+
+body.theme-boost-override-custom-login .login-form-username::before {
+    content: "\f007";
+}
+
+body.theme-boost-override-custom-login .login-form-password::before {
+    content: "\f023";
+}
+
+body.theme-boost-override-custom-login .loginform .toggle-sensitive-btn::before {
+    content: "\f06e";
+}
+
+/* Keep login artwork behind the readable panels and retain semantic icon scale. */
+body.theme-boost-override-custom-login .boc-login-main,
+body.theme-boost-override-custom-login .boc-login-feature-rail,
+body.theme-boost-override-custom-login .boc-white-label-footer {
+    position: relative;
+    z-index: 1;
+}
+
+body.theme-boost-override-custom-login .boc-login-nav-icon {
+    width: 16px;
+    min-width: 16px;
+    height: 16px;
+    color: var(--color-secondary, #0c3759);
+    font-size: 16px;
+}
+
+body.theme-boost-override-custom-login .boc-login-nav a:is(:hover, :focus-visible) .boc-login-nav-icon {
+    color: var(--color-primary, #e4000f);
+}
+
+body.theme-boost-override-custom-login .boc-login-kicker-icon {
+    width: 18px;
+    min-width: 18px;
+    height: 18px;
+    color: var(--color-primary, #e4000f);
+    font-size: 18px;
+}
+
+body.theme-boost-override-custom-login .boc-login-role-icon {
+    width: 30px;
+    min-width: 30px;
+    height: 30px;
+    color: var(--boc-role-tone, var(--color-primary, #e4000f));
+    font-size: 30px;
+}
+
+body.theme-boost-override-custom-login .boc-login-data-icon {
+    width: 24px;
+    min-width: 24px;
+    height: 24px;
+    color: var(--color-secondary, #0c3759);
+    font-size: 24px;
+}
+
+body.theme-boost-override-custom-login .boc-login-head-icon {
+    width: 17px;
+    min-width: 17px;
+    height: 17px;
+    color: var(--color-highlight, #e08405);
+    font-size: 17px;
+}
+
+body.theme-boost-override-custom-login .boc-login-feature-svg {
+    width: 34px;
+    min-width: 34px;
+    height: 34px;
+    color: var(--boc-feature-tone, var(--color-primary, #e4000f));
+    font-size: 34px;
+}
+
+/* Preserve only elements whose meaning is inherently circular. */
+body.theme-boost-override-custom-platform :where(
+    .userpicture,
+    .avatar,
+    .rounded-circle,
+    .form-check-input[type="radio"],
+    [role="switch"] .form-check-input
+),
+body.theme-boost-override-custom-login :where(
+    .userpicture,
+    .avatar,
+    .rounded-circle,
+    .form-check-input[type="radio"]
+) {
+    border-radius: 50% !important;
+}
+
+.boc-white-label-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem max(var(--boc-theme-content-gutter, 24px), calc((100vw - var(--boc-theme-content-width, 1600px)) / 2));
+    background-color: var(--footer-background, #0c3759);
+    color: var(--footer-foreground, #fff);
+    border-top: var(--boc-theme-border-width, 1px) solid var(--footer-background, #0c3759);
+}
+
+.boc-white-label-footer__brand,
+.boc-white-label-footer__links {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+}
+
+.boc-white-label-footer__logo {
+    width: auto;
+    max-width: 150px;
+    height: 38px;
+    object-fit: contain;
+}
+
+.boc-white-label-footer__identity {
+    display: grid;
+    gap: .1rem;
+}
+
+.boc-white-label-footer__identity strong {
+    color: inherit;
+}
+
+.boc-white-label-footer__identity small {
+    color: inherit;
+    opacity: .8;
+}
+
+.boc-white-label-footer a {
+    color: var(--footer-foreground, #fff) !important;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.boc-white-label-footer__meta {
+    text-align: right;
+}
+
+.boc-white-label-footer__meta small {
+    display: block;
+    opacity: .82;
+}
+
+@media (max-width: 767.98px) {
+    body.theme-boost-override-custom-platform,
+    body.theme-boost-override-custom-login {
+        --boc-icon-control-size: 44px;
+    }
+
+    body.theme-boost-override-custom-platform .main-inner {
+        width: calc(100% - 24px);
+        max-width: calc(100vw - 24px);
+        padding-inline: 12px;
+    }
+
+    body.theme-boost-override-custom-platform .navbar.fixed-top {
+        min-height: 64px;
+    }
+
+    body.theme-boost-override-custom-login .boc-login-nav {
+        display: none;
+    }
+
+    .boc-white-label-footer {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 1rem;
+    }
+
+    .boc-white-label-footer__links {
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .boc-white-label-footer__meta {
+        text-align: left;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body.theme-boost-override-custom-platform *,
+    body.theme-boost-override-custom-login * {
+        scroll-behavior: auto !important;
+    }
+}
